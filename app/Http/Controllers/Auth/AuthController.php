@@ -5,6 +5,10 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
+use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Support\Facades\Redirect;
+use App\Models\User;
+
 class AuthController extends Controller {
 
 	/*
@@ -34,5 +38,21 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
-
+	/**
+	 * Handle a login request to the application.
+	 *
+	 * @param  App\Http\Requests\LoginRequest  $request
+	 * @return Response
+	 */
+	public function postLogin(LoginRequest $request)
+	{
+		$credentials = ['username' => $request->input('username'), 'password' => $request->input('password')];
+		if ($this->auth->attempt($credentials, $request->has('memory')))
+		{
+			return redirect('/');
+		}
+		return redirect('/auth/login')
+		->with('error', 'Invalid credentials')
+		->withInput($request->only('username'));
+	}
 }

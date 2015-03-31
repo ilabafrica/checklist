@@ -13,7 +13,7 @@ return [
 	|
 	*/
 
-	'debug' => env('APP_DEBUG'),
+	'debug' => env('APP_DEBUG', true),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -135,7 +135,10 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
-
+		//	Vendor
+		'Illuminate\Html\HtmlServiceProvider',
+		'Zizaco\Entrust\EntrustServiceProvider',
+		'Laracasts\Flash\FlashServiceProvider',
 		/*
 		 * Application Service Providers...
 		 */
@@ -192,7 +195,11 @@ return [
 		'URL'       => 'Illuminate\Support\Facades\URL',
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
-
+		// vendor
+		'Form'        => 'Illuminate\Html\FormFacade',
+        'HTML'        => 'Illuminate\Html\HtmlFacade',
+        'Entrust' => 'Zizaco\Entrust\EntrustFacade',
+        'Flash'	=>	'Laracasts\Flash\Flash',
 	],
 
 ];
