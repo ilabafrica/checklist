@@ -102,11 +102,16 @@ return [
 	'select-town' =>	'Select Town',
 	'select-job-title' =>	'Select Job Title',
 	'operational-status' =>	'Operational Status',
+	'select-facility' =>	'Select Facility',
+
 	
 	/* Laboratories */
 	'lab'	=>	'Laboratory|Laboratories',
 	'create-lab'	=>	'Create Lab',
 	'edit-lab'	=>	'Edit Lab',
+	'select-lab-level' =>	'Select Lab Level',
+	'select-lab-affiliation' =>	'Select Lab Affiliation',
+	'select-lab-type' =>	'Select Lab Type',
 
 	/* Audit Types */
 	'audit-type'	=>	'Audit Type|Audit Types',

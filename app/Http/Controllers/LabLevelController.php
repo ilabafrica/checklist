@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LabLevelRequest;
 use App\Models\LabLevel;
 use Response;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LabLevelController extends Controller {
-
+    use SoftDeletes;
+    protected $dates = ['deleted_at'];
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -99,6 +101,12 @@ class LabLevelController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$labLevel= LabLevel::find($id);
+		$labLevel->delete();
+		return redirect('labLevel')->with('message', 'labLevel deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

@@ -99,6 +99,12 @@ class LabAffiliationController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$labAffiliation= LabAffiliation::find($id);
+		$labAffiliation->delete();
+		return redirect('labAffiliation')->with('message', 'LabAffiliation deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

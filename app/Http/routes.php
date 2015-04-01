@@ -99,16 +99,37 @@ Route::get("/town/{id}/delete", array(
     "as"   => "town.delete",
     "uses" => "TownController@delete"
 ));
+
 //	Lab Levels controller
 Route::resource('labLevel', 'LabLevelController');
+Route::get("/labLevel/{id}/delete", array(
+    "as"   => "labLevel.delete",
+    "uses" => "LabLevelController@delete"
+));
+
+
 //	Lab Affiliations controller
 Route::resource('labAffiliation', 'LabAffiliationController');
+Route::get("/labAffiliation/{id}/delete", array(
+    "as"   => "labAffiliation.delete",
+    "uses" => "LabAffiliationController@delete"
+));
 //	Lab Types controller
 Route::resource('labType', 'LabTypeController');
-//	Facilities controller
-Route::resource('facility', 'FacilityController');
+Route::get("/labType/{id}/delete", array(
+    "as"   => "labType.delete",
+    "uses" => "LabTypeController@delete"
+));
 //	Laboratories controller
 Route::resource('lab', 'LabController');
+Route::get("/lab/{id}/delete", array(
+    "as"   => "lab.delete",
+    "uses" => "LabController@delete"
+));
+
+
+
+
 //	Audit Types controller
 Route::resource('auditType', 'AuditTypeController');
 //	Audit field groups controller

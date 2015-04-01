@@ -37,11 +37,8 @@
                             <td>
                               <a href="{{ URL::to("labAffiliation/" . $labAffiliation->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
                               <a href="{{ URL::to("labAffiliation/" . $labAffiliation->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
-                              <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
-                              <button class="btn btn-sm btn-danger delete-item-link"
-                                data-toggle="modal" data-target=".confirm-delete-modal" 
-                                data-id='{{ URL::to("labAffiliation/" . $labAffiliation->id . "/delete") }}'>
-                                <span class="glyphicon glyphicon-trash"></span></button>
+                              <a href="{{ URL::to("labAffiliation/" . $labAffiliation->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
+                              
                             </td>
                         </tr>
                         @empty
