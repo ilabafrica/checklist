@@ -21,6 +21,7 @@ class ConstituencyController extends Controller {
 	{
 		//	Get all onstituencies
 		$constituencies = Constituency::all();
+		
 		return view('mfl.constituency.index', compact('constituencies'));
 	}
 
@@ -107,6 +108,13 @@ class ConstituencyController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$constituency= Constituency::find($id);
+		$constituency->delete();
+		return redirect('constituency')->with('message', 'Constituency deleted successfully.');
+	}
+
 	public function destroy($id)
 	{
 		//

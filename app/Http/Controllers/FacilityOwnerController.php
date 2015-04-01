@@ -99,6 +99,12 @@ class FacilityOwnerController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$facilityOwner= FacilityOwner::find($id);
+		$facilityOwner->delete();
+		return redirect('facilityOwner')->with('message', 'FacilityOwner deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

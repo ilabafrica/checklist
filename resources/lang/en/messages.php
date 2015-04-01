@@ -96,6 +96,13 @@ return [
 	'fax'	=>	'Fax',
 	'mobile'	=>	'Mobile',
 	'in-charge'	=>	'In-Charge',
+	'nearest-town' =>	'Nearest Town',
+	'select-facility-type' =>	'Select Facility Type',
+	'select-facility-owner' =>	'Select Facility Owner',
+	'select-town' =>	'Select Town',
+	'select-job-title' =>	'Select Job Title',
+	'operational-status' =>	'Operational Status',
+	
 	/* Laboratories */
 	'lab'	=>	'Laboratory|Laboratories',
 	'create-lab'	=>	'Create Lab',

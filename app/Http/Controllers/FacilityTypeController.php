@@ -99,6 +99,12 @@ class FacilityTypeController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$facilityType= FacilityType::find($id);
+		$facilityType->delete();
+		return redirect('facilityType')->with('message', 'FacilityType deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

@@ -156,6 +156,14 @@ class FacilityController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+
+		public function delete($id)
+	{
+		$facility= Facility::find($id);
+		$facility->delete();
+		return redirect('facility')->with('message', 'Facility deleted successfully.');
+	}
+
 	public function destroy($id)
 	{
 		//
