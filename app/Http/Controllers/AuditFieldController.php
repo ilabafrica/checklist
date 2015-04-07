@@ -155,6 +155,12 @@ class AuditFieldController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$auditField= AuditField::find($id);
+		$auditField->delete();
+		return redirect('auditField')->with('message', 'AuditField deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

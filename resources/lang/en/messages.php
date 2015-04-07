@@ -117,6 +117,8 @@ return [
 	'audit-type'	=>	'Audit Type|Audit Types',
 	'create-audit-type'	=>	'Create Audit Type',
 	'edit-audit-type'	=>	'Edit Audit Type',
+	'select-audit-type' =>	'Select Audit Type',
+
 	/* Audit Field Groups */
 	'audit-field-group'	=>	'Audit Field Group|Audit Field Groups',
 	'create-audit-field-group'	=>	'Create Audit Field Group',

@@ -2,9 +2,12 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class AuditField extends Model {
-
+	use SoftDeletes;
+    protected $dates = ['deleted_at'];
 	protected $table = 'audit_fields';
 	//	Constants for type of field
 	const HEADING = 0;

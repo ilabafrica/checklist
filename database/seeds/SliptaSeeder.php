@@ -181,6 +181,23 @@ class SliptaSeeder extends Seeder
             array("name" => "West Pokot", "hq" => "Kapenguria", "user_id" => "1")
 
         );
+
+
+
+        //facilities
+        $facilities = array(
+            array("code" => "19704", "name" => "ACK Nyandarua Medical Clinic", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> "Situated within Captain township 4km from olkalou town towards NRB","nearest_town" => "Captain","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 48", "town_id" => "3", "in_charge" => "Eliud Mwangi Kithaka", "title_id" => "1", "operational_status" => "Operational", "user_id" => "1"),
+            array("code" => "10039", "name" => "ACK Tumaini Medical Clinic", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Gatundu town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 84", "town_id" => "3", "in_charge" => "Assumpta", "title_id" => "1", "operational_status" => "Operational", "user_id" => "1"),
+            array("code" => "17473", "name" => "ASPE Medical Clinic", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Nyeri town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 229", "town_id" => "3", "in_charge" => "Jane Mwaita", "title_id" => "1", "operational_status" => "Operational", "user_id" => "1"),
+            array("code" => "11195", "name" => "Acode Medical Clinic Maungu", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Maungu town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 18", "town_id" => "3", "in_charge" => "Sr  Kameru", "title_id" => "1", "operational_status" => "Operational", "user_id" => "1"),
+            array("code" => "19520", "name" => "Aculaser Institute", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Westlands town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => " ", "town_id" => "3", "in_charge" => " ", "title_id" => "", "operational_status" => "Operational", "user_id" => "1")
+
+        );
+        foreach ($facilities as $facility) {
+         Facility::create($facility);
+        }
+        $this->command->info('Facility table seeded');
+
         foreach ($counties as $county) {
             County::create($county);
         }

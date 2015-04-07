@@ -45,11 +45,8 @@
                             <td>
                               <a href="{{ URL::to("auditField/" . $auditField->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
                               <a href="{{ URL::to("auditField/" . $auditField->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
-                              <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
-                              <button class="btn btn-sm btn-danger delete-item-link"
-                                data-toggle="modal" data-target=".confirm-delete-modal" 
-                                data-id='{{ URL::to("auditField/" . $auditField->id . "/delete") }}'>
-                                <span class="glyphicon glyphicon-trash"></span></button>
+                              <a href="{{ URL::to("auditField/" . $auditField->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
+                              
                             </td>
                         </tr>
                         @empty

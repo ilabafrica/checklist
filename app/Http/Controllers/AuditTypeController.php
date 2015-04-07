@@ -99,6 +99,12 @@ class AuditTypeController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$auditType= AuditType::find($id);
+		$auditType->delete();
+		return redirect('auditType')->with('message', 'AuditType deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

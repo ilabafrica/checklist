@@ -3,9 +3,11 @@
 use Illuminate\Database\Eloquent\Model;
 use App\Models\AuditFieldGroup;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AuditFieldGroup extends Model {
-
+	use SoftDeletes;
+    protected $dates = ['deleted_at'];
 	protected $table = 'audit_field_groups';
 
 	/**
@@ -48,4 +50,11 @@ class AuditFieldGroup extends Model {
 	}
 
 
+	/**
+* Relationship with auditType
+*/
+public function auditType()
+{
+ return $this->belongsTo('App\Models\AuditType');
+}
 }

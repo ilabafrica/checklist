@@ -43,6 +43,12 @@ Route::resource('privilege', 'PrivilegeController');
 Route::resource('authorization', 'AuthorizationController');
 //	User controller
 Route::resource('user', 'UserController');
+Route::get("/user/{id}/delete", array(
+    "as"   => "user.delete",
+    "uses" => "UserController@delete"
+));
+
+
 
 //	Facility controller
 Route::resource('facility', 'FacilityController');
@@ -128,14 +134,28 @@ Route::get("/lab/{id}/delete", array(
 ));
 
 
-
-
 //	Audit Types controller
 Route::resource('auditType', 'AuditTypeController');
+Route::get("/auditType/{id}/delete", array(
+    "as"   => "auditType.delete",
+    "uses" => "AuditTypeController@delete"
+));
+
+
 //	Audit field groups controller
 Route::resource('auditFieldGroup', 'AuditFieldGroupController');
+Route::get("/auditFieldGroup/{id}/delete", array(
+    "as"   => "auditFieldGroup.delete",
+    "uses" => "AuditFieldGroupController@delete"
+));
+
 //	Audit field controller
 Route::resource('auditField', 'AuditFieldController');
+Route::get("/auditField/{id}/delete", array(
+    "as"   => "auditField.delete",
+    "uses" => "AuditFieldController@delete"
+));
+
 //	Audits controller
 Route::resource('audit', 'AuditController');
 //	Audit responses
