@@ -117,7 +117,7 @@ return [
 	'label'	=>	'Label',
 	'label-text'	=>	'Label Text',
 	'required'	=>	'Required',
-	'table'	=>	'Include Table',
+	'text-area'	=>	'Include Textarea',
 	'option'	=>	'Option|Options',
 	'standard'	=>	'Standard|Standards',
 	'iso'	=>	'ISO',

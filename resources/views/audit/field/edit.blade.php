@@ -105,7 +105,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                         <label class="checkbox-inline">
-                            {!! Form::checkbox("table", '1', '') !!}{{ Lang::choice('messages.table', 1) }}
+                            {!! Form::checkbox("textarea", '1', '') !!}{{ Lang::choice('messages.text-area', 1) }}
                         </label>
                     </div>
                 </div>

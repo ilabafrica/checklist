@@ -35,7 +35,7 @@
                             </tbody>
                         </table>
                         <p>
-                            <a href="{{ route("audit.create") }}" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i><span> New Audit</span></a>
+                            <a href="{{ URL::to("audit/".$auditType->id."/1") }}" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i><span> New Audit</span></a>
                             <a href="{{ URL::to("/response") }}" class="btn btn-default"><i class="fa fa-book"></i><span> View Audit Data</span></a>
                             <a href="{{ URL::to("/result") }}" class="btn btn-success"><i class="fa fa-database"></i><span> View Summary</span></a>
                         </p>
