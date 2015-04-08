@@ -42,7 +42,7 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="margin-bottom: 0" role="navigation">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -55,7 +55,7 @@
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">
+            <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -265,7 +265,7 @@
             </ul>
             <!-- /.navbar-top-links -->
 
-            <div class="navbar-default sidebar" role="navigation">
+            <div class="navbar-default sidebar" role="navigation" id="sidebar">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
@@ -320,8 +320,55 @@
                         <li>
                             <a href="{{ URL::to('user')}}"><i class="fa fa-dashboard fa-fw"></i> {{ Lang::choice('messages.user', 2) }}</a>
                         </li>
+                        <li class="">
+                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
+                                <li>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li class="">
+                                    <a href="#">Third Level <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level collapse" aria-expanded="false" style="height: 0px;">
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
                         <li>
-                            <a href="{{ URL::to('audit')}}"><i class="fa fa-dashboard fa-fw"></i> {{ Lang::choice('messages.audit', 2) }}</a>
+                            <a href="{{ URL::to('audit')}}"><i class="fa fa-dashboard fa-fw"></i> {{ Lang::choice('messages.audit', 2) }}
+                            @if(Request::segment(1)=="audit")
+                                {{--*/ $auditType = App\Models\AuditType::find(Request::segment(2)) /*--}}@if($auditType->id)<span class="fa arrow"></span>@endif
+                            @endif
+                            </a>
+                            @if(Request::segment(1)=="audit")
+                                {{--*/ $auditType = App\Models\AuditType::find(Request::segment(2)) /*--}}
+                                @if($auditType->id)
+                                <ul class="nav nav-second-level collapse">
+                                    @foreach($auditType->auditFieldGroup as $afg)
+
+                                    <li><a href="{{ URL::to("audit/".$auditType->id."/".$afg->id) }}"><i class="fa fa-tag"></i> {{ $afg->name }}</a></li>
+                                    @endforeach
+                                    <li><a href="{{ URL::to('auditFieldGroup')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-field-group', 2) }} </a></li>
+                                    <li><a href="{{ URL::to('auditField')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-field', 2) }} </a></li>
+                                </ul>
+                                @endif
+                            @endif
                         </li>
                         <li>
                             <a href="{{ URL::to('audit')}}"><i class="fa fa-dashboard fa-fw"></i> Reports</a>

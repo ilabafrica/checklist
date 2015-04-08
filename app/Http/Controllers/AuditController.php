@@ -41,13 +41,28 @@ class AuditController extends Controller {
 	}
 
 	/**
+	 * Show the form depending on audit type and section selected
+	 *
+	 * @return Response
+	 */
+	public function loadPage($auditType, $section)
+	{
+		//	Get audit field groups - main first
+		$auditFieldGroup = AuditFieldGroup::find($section);
+		return view('audit.audit.create', compact('auditFieldGroup'));
+	}
+
+	/**
 	 * Store a newly created resource in storage.
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(AuditRequest $request)
 	{
-		//
+		//	Save the dynamically created form
+		//	Save response first
+		dd($request->all());
+
 	}
 
 	/**

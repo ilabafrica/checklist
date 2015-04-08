@@ -83,3 +83,5 @@ Route::any("/result", array(
     "as"   => "audit.result",
     "uses" => "AuditController@result"
 ));
+//	Load audit page according to audit type and page
+Route::get("audit/{auditType}/{section}", "AuditController@loadPage");
