@@ -59,12 +59,12 @@ class CreateAuditTables extends Migration {
 			$table->increments('id')->unsigned();
 			$table->integer('audit_field_group_id')->unsigned();
 			$table->string('name')->nullable();
-			$table->string('label')->nullable();
+			$table->text('label')->nullable();
 			$table->text('description')->nullable();
 			$table->text('comment')->nullable();
 			$table->string('field_type', 100);
 			$table->integer('required')->nullable();
-			$table->integer('table')->nullable();
+			$table->integer('textarea')->nullable();
 			$table->string('options')->nullable();
 			$table->string('iso')->nullable();
 			$table->integer('score')->nullable();

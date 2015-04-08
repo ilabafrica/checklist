@@ -31,7 +31,7 @@ class AuditFieldController extends Controller {
 	public function create()
 	{
 		//	Get parent fields
-		$parents = AuditField::lists('label', 'id');
+		$parents = AuditField::lists('name', 'id');
 		//	Get all audit field groups
 		$auditFieldGroups = AuditFieldGroup::lists('name', 'id');
 		//	Field types
@@ -55,7 +55,7 @@ class AuditFieldController extends Controller {
 		$auditField->comment = $request->comment;
 		$auditField->field_type = $request->field_type;
 		$auditField->required = $request->required;
-		$auditField->table = $request->table;
+		$auditField->textarea = $request->textarea;
 		$auditField->options = $request->options;
 		$auditField->iso = $request->iso;
 		$auditField->score = $request->score;
@@ -129,7 +129,7 @@ class AuditFieldController extends Controller {
 		$auditField->comment = $request->comment;
 		$auditField->field_type = $request->field_type;
 		$auditField->required = $request->required;
-		$auditField->table = $request->table;
+		$auditField->textarea = $request->textarea;
 		$auditField->options = $request->options;
 		$auditField->iso = $request->iso;
 		$auditField->score = $request->score;

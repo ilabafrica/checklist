@@ -30,7 +30,7 @@ class AuditField extends Model {
 	//	Constants for whether field is required
 	const REQUIRED = 1;
 	//	Constants for whether field is to include tabular display
-	const TABLE = 1;
+	const TXTAREA = 1;
 	/**
 	 * Audit field relationship
 	 */

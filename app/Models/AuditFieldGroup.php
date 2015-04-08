@@ -49,6 +49,14 @@ class AuditFieldGroup extends Model {
 		DB::table('afg_parent_child')->insert($fieldAdded);
 	}
 
+	/**
+	 * Return parent audit field groups for the audit type selected
+	 */
+	public static function parentGroups($id)
+	{
+	  return AuditFieldGroup::where('audit_type_id', $id)
+	  									->whereNotIn('id', DB::table('afg_parent_child')->pluck('field_group_id'));
+	}
 
 	/**
 * Relationship with auditType
