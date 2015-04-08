@@ -99,6 +99,12 @@ class TitleController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$title= Title::find($id);
+		$title->delete();
+		return redirect('title')->with('message', 'Title deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

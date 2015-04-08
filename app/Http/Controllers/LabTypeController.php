@@ -99,6 +99,12 @@ class LabTypeController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$labType= LabType::find($id);
+		$labType->delete();
+		return redirect('labType')->with('message', 'LabType deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

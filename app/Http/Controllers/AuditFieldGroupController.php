@@ -134,6 +134,14 @@ class AuditFieldGroupController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+
+	public function delete($id)
+	{
+		$auditFieldGroup= AuditFieldGroup::find($id);
+		$auditFieldGroup->delete();
+		return redirect('auditFieldGroup')->with('message', 'AuditFieldGroup deleted successfully.');
+	}
+
 	public function destroy($id)
 	{
 		//

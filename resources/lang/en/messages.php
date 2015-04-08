@@ -96,15 +96,29 @@ return [
 	'fax'	=>	'Fax',
 	'mobile'	=>	'Mobile',
 	'in-charge'	=>	'In-Charge',
+	'nearest-town' =>	'Nearest Town',
+	'select-facility-type' =>	'Select Facility Type',
+	'select-facility-owner' =>	'Select Facility Owner',
+	'select-town' =>	'Select Town',
+	'select-job-title' =>	'Select Job Title',
+	'operational-status' =>	'Operational Status',
+	'select-facility' =>	'Select Facility',
+
+	
 	/* Laboratories */
 	'lab'	=>	'Laboratory|Laboratories',
 	'create-lab'	=>	'Create Lab',
 	'edit-lab'	=>	'Edit Lab',
+	'select-lab-level' =>	'Select Lab Level',
+	'select-lab-affiliation' =>	'Select Lab Affiliation',
+	'select-lab-type' =>	'Select Lab Type',
 
 	/* Audit Types */
 	'audit-type'	=>	'Audit Type|Audit Types',
 	'create-audit-type'	=>	'Create Audit Type',
 	'edit-audit-type'	=>	'Edit Audit Type',
+	'select-audit-type' =>	'Select Audit Type',
+
 	/* Audit Field Groups */
 	'audit-field-group'	=>	'Audit Field Group|Audit Field Groups',
 	'create-audit-field-group'	=>	'Create Audit Field Group',

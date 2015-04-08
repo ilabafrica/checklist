@@ -103,6 +103,13 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+
+	public function delete($id)
+	{
+		$user= User::find($id);
+		$user->delete();
+		return redirect('user')->with('message', 'User deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

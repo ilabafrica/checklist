@@ -109,6 +109,12 @@ class TownController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$town= Town::find($id);
+		$town->delete();
+		return redirect('town')->with('message', 'Town deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

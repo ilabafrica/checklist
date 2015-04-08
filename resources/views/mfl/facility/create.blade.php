@@ -111,7 +111,7 @@
                 <div class="form-group">
                     {!! Form::label('title_id', Lang::choice('messages.title', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('title_id', array(''=>trans('messages.select-town'))+$titles,'', 
+                        {!! Form::select('title_id', array(''=>trans('messages.select-job-title'))+$titles,'', 
                             array('class' => 'form-control', 'id' => 'title_id')) !!}
                     </div>
                 </div>

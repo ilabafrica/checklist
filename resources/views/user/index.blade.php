@@ -25,8 +25,8 @@
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
-                            <th>{{ Lang::choice('messages.gender', 1) }}</th>
-                            <th>{{ Lang::choice('messages.dob', 1) }}</th>
+                        <!--<th>{{ Lang::choice('messages.gender', 1) }}</th>
+                            <th>{{ Lang::choice('messages.dob', 1) }}</th>-->
                             <th>{{ Lang::choice('messages.email', 1) }}</th>
                             <th>{{ Lang::choice('messages.phone', 1) }}</th>
                             <th>{{ Lang::choice('messages.address', 1) }}</th>
@@ -37,19 +37,16 @@
                         @forelse($users as $user)
                         <tr>
                             <td>{{ $user->name }}</td>
-                            <td>{{ $user->gender }}</td>
-                            <td>{{ $user->dob }}</td>
+                        <!--<td>{{ $user->gender }}</td>
+                            <td>{{ $user->dob }}</td>-->
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>
                             <td>{{ $user->address }}</td>
                             <td>
                               <a href="{{ URL::to("user/" . $user->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
                               <a href="{{ URL::to("user/" . $user->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
-                              <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
-                              <button class="btn btn-sm btn-danger delete-item-link"
-                                data-toggle="modal" data-target=".confirm-delete-modal" 
-                                data-id='{{ URL::to("user/" . $user->id . "/delete") }}'>
-                                <span class="glyphicon glyphicon-trash"></span></button>
+                              <a href="{{ URL::to("user/" . $user->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
+                              
                             </td>
                         </tr>
                         @empty

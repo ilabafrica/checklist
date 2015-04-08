@@ -99,6 +99,13 @@ class CountyController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+
+		public function delete($id)
+	{
+		$county= County::find($id);
+		$county->delete();
+		return redirect('county')->with('message', 'County deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//

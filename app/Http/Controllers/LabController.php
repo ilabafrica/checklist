@@ -132,6 +132,12 @@ class LabController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{
+		$lab= Lab::find($id);
+		$lab->delete();
+		return redirect('lab')->with('message', 'Lab deleted successfully.');
+	}
 	public function destroy($id)
 	{
 		//
