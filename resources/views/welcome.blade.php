@@ -130,6 +130,9 @@
 
         </div>
         <!-- /.row -->
+
+    <hr>
+    <p>Copyright © Your Website | <a href="">Privacy Policy</a> | <a href="">Terms of Use</a></p>
     </div>
     <!-- /.container -->
 

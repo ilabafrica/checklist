@@ -42,7 +42,8 @@
                               <a href="{{ URL::to("lab/" . $lab->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
                               <a href="{{ URL::to("lab/" . $lab->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
                               <a href="{{ URL::to("lab/" . $lab->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
-                              
+                              <a href="{{ URL::to("lab/" . $lab->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-send"></i><span> Select</span></a>
+                              <a href="{{ URL::to("lab/" . $lab->id) }}" class="btn btn-default btn-sm"><i class="fa fa-folder-open"></i><span> Start Audit</span></a>
                             </td>
                         </tr>
                         @empty
