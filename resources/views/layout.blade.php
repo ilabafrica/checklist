@@ -9,24 +9,24 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>{{ Config::get('slipta.name') }}</title>
+
+    <!-- Font awesome css -->
+    <link rel="stylesheet" href="{{ URL::asset('css/font-awesome.min.css') }}">
 
     <!-- Bootstrap Core CSS -->
-    <link href="{{ URL::asset('bower_components/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
-    <link href="{{ URL::asset('bower_components/metisMenu/dist/metisMenu.min.css') }}" rel="stylesheet">
+    <link href="{{ URL::asset('admin/css/metisMenu.min.css') }}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="{{ URL::asset('dist/css/sb-admin-2.css') }}" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="{{ URL::asset('bower_components/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ URL::asset('admin/css/sb-admin-2.css') }}" rel="stylesheet">
 
     <!-- Datatables -->
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('dist/css/dataTables.bootstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('admin/css/dataTables.bootstrap.css') }}" />
     <!-- Datepicker -->
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('dist/css/bootstrap-datetimepicker.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('admin/css/bootstrap-datetimepicker.min.css') }}" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -42,7 +42,7 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <nav class="navbar navbar-inverse" role="navigation">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
@@ -50,213 +50,87 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="#">{{ Config::get('slipta.name') }}</a>
                 <a class="navbar-brand" id="menu-toggle" href="#"><i class="fa fa-exchange"></i></a>
             </div>
             <!-- /.navbar-header -->
-
-            <ul class="nav navbar-nav navbar-right">
+            <!-- Audit, Lab - Depending on permissions -->
+            <ul class="nav navbar-top-links navbar-left">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                        <span class="fa fa-clipboard"></span> {{ Lang::choice('messages.audit', 1) }}  <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('lab.index') }}"><span class="fa fa-clipboard"></span> {{ Lang::choice('messages.new-audit', 1) }}</a>
+                        </li>
+                        <li><a href="#"><span class="fa fa-search"></span> {{ Lang::choice('messages.search-audit', 1) }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
+                        <li><a href="#" class="text-success"> {{ Lang::choice('messages.with-selected-audit', 1) }}</a>
+                        </li>
+                        <li><a href="#"><span class="fa fa-smile-o"></span> {{ Lang::choice('messages.show-owners', 1) }}</a>
+                        </li>
+                        <li><a href="#"><span class="fa fa-book"></span> {{ Lang::choice('messages.view-audit', 1) }}</a>
+                        </li>
+                        <li><a href="#"><span class="fa fa-pencil"></span> {{ Lang::choice('messages.edit-audit', 1) }}</a>
+                        </li>
+                        <li><a href="#"><span class="fa fa-external-link"></span> {{ Lang::choice('messages.export-audit', 1) }}</a>
+                        </li>
+                        <li><a href="#"><span class="fa fa-trash-o"></span> {{ Lang::choice('messages.delete-audit', 1) }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
+                        <li><a href="#"> {{ Lang::choice('messages.change-audit-state', 1) }}</a>
+                        </li>
+                        <li><a href="#"><span class="fa fa-check-square-o"></span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>Read All Messages</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
+                        <li><a href="#"><span class="fa fa-bar-chart-o"></span> {{ Lang::choice('messages.run-reports', 1) }}</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#"><span class="fa fa-download"></span> {{ Lang::choice('messages.import-audit', 1) }}</a>
                         </li>
                     </ul>
-                    <!-- /.dropdown-messages -->
                 </li>
-                <!-- /.dropdown -->
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                        <span class="fa fa-stack-exchange"></span> {{ Lang::choice('messages.lab', 1) }}  <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu dropdown-tasks">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 1</strong>
-                                        <span class="pull-right text-muted">40% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                            <span class="sr-only">40% Complete (success)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('lab.create') }}"><span class="fa fa-tag"></span> {{ Lang::choice('messages.new-lab', 1) }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 2</strong>
-                                        <span class="pull-right text-muted">20% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                            <span class="sr-only">20% Complete</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 3</strong>
-                                        <span class="pull-right text-muted">60% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                            <span class="sr-only">60% Complete (warning)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 4</strong>
-                                        <span class="pull-right text-muted">80% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                            <span class="sr-only">80% Complete (danger)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Tasks</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
+                        <li><a href="{{ route('lab.index') }}"><span class="fa fa-send"></span> {{ Lang::choice('messages.select-lab', 1) }}</a>
                         </li>
                     </ul>
-                    <!-- /.dropdown-tasks -->
                 </li>
-                <!-- /.dropdown -->
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                        <span class="fa fa-user"></span> {{ Lang::choice('messages.user', 1) }}  <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{ route('user.create') }}"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.new-user', 1) }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
+                        <li><a href="{{ route('user.index') }}"><span class="fa fa-search"></span> {{ Lang::choice('messages.find-user', 1) }}</a>
                         </li>
                     </ul>
-                    <!-- /.dropdown-alerts -->
                 </li>
+            </ul>
+            <!-- End Audit, Lab -->
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="text-muted">{{ Auth::user()->name }}</li>
                 <!-- /.dropdown -->
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"></span>  <span class="caret"></span>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.user-profile', 1) }}</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span> {{ Lang::choice('messages.change-password', 1) }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> {{ Lang::choice('messages.sign-out', 1) }}</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -265,22 +139,22 @@
             </ul>
             <!-- /.navbar-top-links -->
 
-            <div class="navbar-default sidebar" role="navigation" id="sidebar">
+            <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
                                 <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
+                                    <span class="input-group-btn">
                                     <button class="btn btn-default" type="button">
-                                        <i class="fa fa-search"></i>
+                                        <span class="glyphicon glyphicon-search"></span>
                                     </button>
                                 </span>
                             </div>
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="index.html"><i class="fa fa-dashboard fa-fw"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
+                            <a href="{{ url('home') }}"><i class="fa fa-dashboard fa-fw"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> MFL Catalog<span class="fa arrow"></span></a>
@@ -294,10 +168,9 @@
                                 <li><a href="{{ URL::to('title')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.title', 2) }} </a></li>
 
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Lab Catalog<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-stack-exchange"></i> Lab Catalog<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li><a href="{{ URL::to('lab')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.lab', 2) }}</a></li>
                                 <li><a href="{{ URL::to('labLevel')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.lab-level', 2) }} </a></li>
@@ -305,83 +178,74 @@
                                 <li><a href="{{ URL::to('labType')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.lab-type', 2) }} </a></li>
 
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Audit Configuration<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-sliders"></i> Audit Configuration<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li><a href="{{ URL::to('auditType')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-type', 2) }}</a></li>
                                 <li><a href="{{ URL::to('auditFieldGroup')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-field-group', 2) }} </a></li>
                                 <li><a href="{{ URL::to('auditField')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-field', 2) }} </a></li>
-
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="{{ URL::to('user')}}"><i class="fa fa-dashboard fa-fw"></i> {{ Lang::choice('messages.user', 2) }}</a>
+                            <a href="{{ URL::to('user')}}"><i class="fa fa-users"></i> {{ Lang::choice('messages.user', 2) }}</a>
                         </li>
-                        <li class="">
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse" aria-expanded="false" style="height: 0px;">
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li class="">
-                                    <a href="#">Third Level <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level collapse" aria-expanded="false" style="height: 0px;">
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        <li>
-                            <a href="{{ URL::to('audit')}}"><i class="fa fa-dashboard fa-fw"></i> {{ Lang::choice('messages.audit', 2) }}
-                            @if(Request::segment(1)=="audit")
-                                {{--*/ $auditType = App\Models\AuditType::find(Request::segment(2)) /*--}}@if($auditType->id)<span class="fa arrow"></span>@endif
-                            @endif
-                            </a>
-                            @if(Request::segment(1)=="audit")
-                                {{--*/ $auditType = App\Models\AuditType::find(Request::segment(2)) /*--}}
-                                @if($auditType->id)
+                        @if(Request::segment(1)=="audit")
+                        {{--*/ $auditType = App\Models\AuditType::find(Request::segment(3)) /*--}}
+                        {{--*/ $lab = App\Models\Lab::find(Request::segment(2)) /*--}}
+                            @if($auditType->id)
+                            <li>
+                                <a href="#"><i class="fa fa-clipboard"></i> {!! $auditType->name !!}<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level collapse">
-                                    @foreach($auditType->auditFieldGroup as $afg)
-
-                                    <li><a href="{{ URL::to("audit/".$auditType->id."/".$afg->id) }}"><i class="fa fa-tag"></i> {{ $afg->name }}</a></li>
-                                    @endforeach
-                                    <li><a href="{{ URL::to('auditFieldGroup')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-field-group', 2) }} </a></li>
-                                    <li><a href="{{ URL::to('auditField')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-field', 2) }} </a></li>
+                                @foreach($auditType->auditFieldGroup as $fg)
+                                    @if(count($fg->children)!=0)
+                                    <li>
+                                        <a href="#"><i class="fa fa-folder-open"></i> {!! $fg->name !!}<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level collapse">
+                                            @foreach($fg->children as $kid)
+                                                @if(count($kid->children)!=0)
+                                                <li>
+                                                    <a href="#"><i class="fa fa-folder-open"></i> {!! $kid->name !!}<span class="fa arrow"></span></a>
+                                                    <ul class="nav nav-third-level collapse">
+                                                        @foreach($kid->children as $grand)
+                                                            <li>
+                                                                <a href="{{ url('/audit/'.$lab->id.'/'.$auditType->id.'/'.$grand->id) }}"><i class="fa fa-paperclip"></i> {!! $grand->name !!} </a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </li>
+                                                @else
+                                                    <li>
+                                                        <a href="{{ url('/audit/'.$lab->id.'/'.$auditType->id.'/'.$kid->id) }}"><i class="fa fa-paperclip"></i> {!! $kid->name !!} </a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                    @else
+                                        <li>
+                                            <a href="{{ url('/audit/'.$lab->id.'/'.$auditType->id.'/'.$fg->id) }}"><i class="fa fa-paperclip"></i> {!! $fg->name !!} </a>
+                                        </li>
+                                    @endif
+                                @endforeach
                                 </ul>
-                                @endif
+                            </li>
                             @endif
+                        @endif
+                        <li>
+                            <a href="{{ URL::to('audit')}}"><i class="fa fa-book"></i> {{ Lang::choice('messages.audit', 2) }}</a>
                         </li>
                         <li>
-                            <a href="{{ URL::to('audit')}}"><i class="fa fa-dashboard fa-fw"></i> Reports</a>
+                            <a href="{{ URL::to('audit')}}"><i class="fa fa-bar-chart-o"></i> Reports</a>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Access Controls<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-database"></i> Access Controls<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li><a href="{{ URL::to('permission')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.permission', 2) }}</a></li>
                                 <li><a href="{{ URL::to('role')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.role', 2) }}</a></li>
                                 <li><a href="{{ URL::to('privilege')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.privilege', 2) }}</a></li>
                                 <li><a href="{{ URL::to('authorization')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.authorization', 2) }}</a></li>
                             </ul>
-                            <!-- /.nav-second-level -->
                         </li>
                     </ul>
                 </div>
@@ -389,38 +253,28 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
-        <!-- Page Content -->
         <div id="page-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    @yield('content')
-                    <!-- /.col-lg-12 -->
-                </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
+            @yield('content')
+        <hr>
+        <p>Copyright © Your Website | <a href="">Privacy Policy</a> | <a href="">Terms of Use</a></p>
         </div>
-        <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
-
     <!-- jQuery -->
-    <script src="{{ URL::asset('bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/jquery.min.js') }}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="{{ URL::asset('bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/bootstrap.min.js') }}"></script>
 
     <!-- Metis Menu Plugin JavaScript -->
-    <script src="{{ URL::asset('bower_components/metisMenu/dist/metisMenu.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/metisMenu.min.js') }}"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="{{ URL::asset('dist/js/sb-admin-2.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('dist/js/jquery.dataTables.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('dist/js/dataTables.bootstrap.js') }}"></script>
-    <script src="{{ URL::asset('dist/js/moment.js') }}"></script>
-    <script src="{{ URL::asset('dist/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/sb-admin-2.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('admin/js/jquery.dataTables.js') }}"></script>
+    <script type="text/javascript" src="{{ URL::asset('admin/js/dataTables.bootstrap.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/moment.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/bootstrap-datetimepicker.min.js') }}"></script>
 </body>
 
 </html>

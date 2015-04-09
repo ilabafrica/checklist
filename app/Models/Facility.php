@@ -8,6 +8,11 @@ class Facility extends Model {
  protected $dates = ['deleted_at'];
  protected $table = 'facilities';
 
+/**
+* Operational Status
+*/
+const OPERATIONAL = 1;
+const NOTOPERATIONAL = 0;
 
 
 /**

@@ -11,6 +11,7 @@ use App\Models\Facility;
 use App\Models\LabLevel;
 use App\Models\LabAffiliation;
 use App\Models\LabType;
+use App\Models\AuditType;
 use Response;
 
 class LabController extends Controller {
@@ -142,5 +143,16 @@ class LabController extends Controller {
 	{
 		//
 	}
-
+	/**
+	 * Select a lab, ready to begin audit
+	 *
+	 */
+	public function select($id)
+	{
+		//	Return selected lab
+		$lab= Lab::find($id);
+		//	Get available audit types
+		$auditTypes = AuditType::all();
+		return view('audit.audit.select', compact('lab', 'auditTypes'));
+	}
 }

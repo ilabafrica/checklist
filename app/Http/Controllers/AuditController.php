@@ -8,8 +8,10 @@ use App\Http\Requests\AuditRequest;
 use App\Models\AuditType;
 use App\Models\Audit;
 use App\Models\AuditFieldGroup;
+use App\Models\Lab;
+use App\Models\AuditResponse;
 use Response;
-
+use Auth;
 
 class AuditController extends Controller {
 
@@ -38,6 +40,35 @@ class AuditController extends Controller {
 		//	Get audit field groups - main first
 		$auditFieldGroups = AuditFieldGroup::where('audit_type_id', 1)->get();
 		return view('audit.audit.create', compact('auditType', 'auditFieldGroups'));
+	}
+	/**
+	 * Begin the audit in the selected lab
+	 *
+	 * @return Response
+	 */
+	public function start($lab, $auditType, $section)
+	{
+		//	Get the selected lab
+		$laboratory = Lab::find($lab);
+		//	Get the selected audit
+		$audit = AuditType::find($auditType);
+		//	Get first audit field group for selected audit
+		$page = AuditFieldGroup::find($section);
+		//	Get audit field groups - main first
+		$auditFieldGroups = AuditFieldGroup::where('audit_type_id', $audit)->get();
+		/* Save audit response first */
+		if(Auth::check()){
+			$user_id = Auth::user()->id;
+			$update_user_id = Auth::user()->id;
+		}
+		$auditResponse = new AuditResponse;
+		$auditResponse->user_id = $user_id;
+		$auditResponse->lab_id = $laboratory->id;
+		$auditResponse->audit_type_id = $audit->id;
+		$auditResponse->status = 0;
+		$auditResponse->update_user_id = $update_user_id;
+		$auditResponse->save();
+		return view('audit.audit.create', compact('auditFieldGroups', 'laboratory', 'audit', 'page'));
 	}
 
 	/**
