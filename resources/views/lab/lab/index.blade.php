@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-<br /><br /><br />
+<br />
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
@@ -39,11 +39,10 @@
                             <td>{{ $lab->labAffiliation->name }}</td>
                             <td>{{ $lab->labType->name}}</td>
                             <td>
-                              <a href="{{ URL::to("lab/" . $lab->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
-                              <a href="{{ URL::to("lab/" . $lab->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
-                              <a href="{{ URL::to("lab/" . $lab->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
-                              <a href="{{ URL::to("lab/" . $lab->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-send"></i><span> Select</span></a>
-                              <a href="{{ URL::to("lab/" . $lab->id) }}" class="btn btn-default btn-sm"><i class="fa fa-folder-open"></i><span> Start Audit</span></a>
+                              <a href="{{ URL::to("lab/" . $lab->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {{Lang::choice('messages.view', 1)}}</span></a>
+                              <a href="{{ URL::to("lab/" . $lab->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> {{Lang::choice('messages.edit', 1)}}</span></a>
+                              <a href="{{ URL::to("lab/" . $lab->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> {{Lang::choice('messages.delete', 1)}}</span></a>
+                              <a href="{{ URL::to("lab/" . $lab->id ."/select") }}" class="btn btn-default btn-sm"><i class="fa fa-folder-open"></i><span> {{Lang::choice('messages.start-audit', 1)}}</span></a>
                             </td>
                         </tr>
                         @empty

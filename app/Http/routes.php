@@ -132,7 +132,10 @@ Route::get("/lab/{id}/delete", array(
     "as"   => "lab.delete",
     "uses" => "LabController@delete"
 ));
-
+Route::get("/lab/{id}/select", array(
+    "as"   => "lab.select",
+    "uses" => "LabController@select"
+));
 
 //	Audit Types controller
 Route::resource('auditType', 'AuditTypeController');
@@ -168,5 +171,7 @@ Route::any("/result", array(
     "as"   => "audit.result",
     "uses" => "AuditController@result"
 ));
+//  Start an audit
+Route::get("audit/{lab}/{audit}/{section}", "AuditController@start");
 //	Load audit page according to audit type and page
-Route::get("audit/{auditType}/{section}", "AuditController@loadPage");
+//Route::get("audit/{lab}/{audit}/{section}", "AuditController@loadPage");

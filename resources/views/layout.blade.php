@@ -61,7 +61,7 @@
                         <span class="fa fa-clipboard"></span> {{ Lang::choice('messages.audit', 1) }}  <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#"><span class="fa fa-clipboard"></span> {{ Lang::choice('messages.new-audit', 1) }}</a>
+                        <li><a href="{{ route('lab.index') }}"><span class="fa fa-clipboard"></span> {{ Lang::choice('messages.new-audit', 1) }}</a>
                         </li>
                         <li><a href="#"><span class="fa fa-search"></span> {{ Lang::choice('messages.search-audit', 1) }}</a>
                         </li>
@@ -98,10 +98,8 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('lab.create') }}"><span class="fa fa-tag"></span> {{ Lang::choice('messages.new-lab', 1) }}</a>
                         </li>
-                        <li><a href="#"><span class="fa fa-send"></span> {{ Lang::choice('messages.select-lab', 1) }}</a>
-                        </li>
                         <li class="divider"></li>
-                        <li><a href="#"><span class="fa fa-pencil"></span> {{ Lang::choice('messages.edit-selected-lab', 1) }}</a>
+                        <li><a href="{{ route('lab.index') }}"><span class="fa fa-send"></span> {{ Lang::choice('messages.select-lab', 1) }}</a>
                         </li>
                     </ul>
                 </li>
@@ -127,12 +125,12 @@
                         <span class="glyphicon glyphicon-user"></span>  <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> User Profile</a>
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.user-profile', 1) }}</a>
                         </li>
-                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Settings</a>
+                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span> {{ Lang::choice('messages.change-password', 1) }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                        <li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> {{ Lang::choice('messages.sign-out', 1) }}</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -192,25 +190,50 @@
                         <li>
                             <a href="{{ URL::to('user')}}"><i class="fa fa-users"></i> {{ Lang::choice('messages.user', 2) }}</a>
                         </li>
-                        <li>
-                            <a href="{{ URL::to('audit')}}"><i class="fa fa-book"></i> {{ Lang::choice('messages.audit', 2) }}
-                            @if(Request::segment(1)=="audit")
-                                {{--*/ $auditType = App\Models\AuditType::find(Request::segment(2)) /*--}}@if($auditType->id)<span class="fa arrow"></span>@endif
-                            @endif
-                            </a>
-                            @if(Request::segment(1)=="audit")
-                                {{--*/ $auditType = App\Models\AuditType::find(Request::segment(2)) /*--}}
-                                @if($auditType->id)
+                        @if(Request::segment(1)=="audit")
+                        {{--*/ $auditType = App\Models\AuditType::find(Request::segment(3)) /*--}}
+                        {{--*/ $lab = App\Models\Lab::find(Request::segment(2)) /*--}}
+                            @if($auditType->id)
+                            <li>
+                                <a href="#"><i class="fa fa-clipboard"></i> {!! $auditType->name !!}<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level collapse">
-                                    @foreach($auditType->auditFieldGroup as $afg)
-
-                                    <li><a href="{{ URL::to("audit/".$auditType->id."/".$afg->id) }}"><i class="fa fa-tag"></i> {{ $afg->name }}</a></li>
-                                    @endforeach
-                                    <li><a href="{{ URL::to('auditFieldGroup')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-field-group', 2) }} </a></li>
-                                    <li><a href="{{ URL::to('auditField')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-field', 2) }} </a></li>
+                                @foreach($auditType->auditFieldGroup as $fg)
+                                    @if(count($fg->children)!=0)
+                                    <li>
+                                        <a href="#"><i class="fa fa-folder-open"></i> {!! $fg->name !!}<span class="fa arrow"></span></a>
+                                        <ul class="nav nav-third-level collapse">
+                                            @foreach($fg->children as $kid)
+                                                @if(count($kid->children)!=0)
+                                                <li>
+                                                    <a href="#"><i class="fa fa-folder-open"></i> {!! $kid->name !!}<span class="fa arrow"></span></a>
+                                                    <ul class="nav nav-third-level collapse">
+                                                        @foreach($kid->children as $grand)
+                                                            <li>
+                                                                <a href="{{ url('/audit/'.$lab->id.'/'.$auditType->id.'/'.$grand->id) }}"><i class="fa fa-paperclip"></i> {!! $grand->name !!} </a>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </li>
+                                                @else
+                                                    <li>
+                                                        <a href="{{ url('/audit/'.$lab->id.'/'.$auditType->id.'/'.$kid->id) }}"><i class="fa fa-paperclip"></i> {!! $kid->name !!} </a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                    @else
+                                        <li>
+                                            <a href="{{ url('/audit/'.$lab->id.'/'.$auditType->id.'/'.$fg->id) }}"><i class="fa fa-paperclip"></i> {!! $fg->name !!} </a>
+                                        </li>
+                                    @endif
+                                @endforeach
                                 </ul>
-                                @endif
+                            </li>
                             @endif
+                        @endif
+                        <li>
+                            <a href="{{ URL::to('audit')}}"><i class="fa fa-book"></i> {{ Lang::choice('messages.audit', 2) }}</a>
                         </li>
                         <li>
                             <a href="{{ URL::to('audit')}}"><i class="fa fa-bar-chart-o"></i> Reports</a>

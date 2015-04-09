@@ -29,6 +29,10 @@ return [
 	'parent'	=>	'Parent Field',
 	'date'	=>	'Date',
 	'action'	=>	'Action|Actions',
+	'reset'	=>	'Reset',
+	'close'	=>	'Close',
+	'next'	=>	'Next',
+	'sign-out'	=>	'Sign out',
 	/* Roles */
 	'role'	=>	'Role|Roles',
 	'create-role'	=>	'Create Role',
@@ -47,6 +51,8 @@ return [
 	'user'	=>	'User|Users',
 	'create-user'	=>	'Create User',
 	'edit-user'	=>	'Edit User',
+	'user-profile'	=>	'User Profile',
+	'change-password'	=>	'Change Password',
 	/* Facility Types */
 	'facility-type'	=>	'Facility Type|Facility Types',
 	'create-facility-type'	=>	'Create Facility Type',
@@ -170,5 +176,10 @@ return [
 	'edit-selected-lab'	=>	'Edit Selected Lab',
 	'new-user'	=>	'New User',
 	'find-user'	=>	'Find User',
-	'audits-owned'	=>	'Audits owned by you'
+	'audits-owned'	=>	'Audits owned by you',
+	'start-audit'	=>	'Start Audit',
+	'new-audit-in-selected-lab'	=>	'New Audit in Seleted Lab',
+	'selected-lab'	=>	'Selected Lab: ',
+	'selected-audit'	=>	'Selected Audit: ',
+	'non-compliant'	=>	'Non-Compliant',
 ];

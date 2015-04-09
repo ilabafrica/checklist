@@ -10,6 +10,7 @@ use App\Models\County;
 use App\Models\Constituency;
 use App\Models\Town;
 use App\Models\Title;
+use App\Models\Facility;
 use App\Models\LabLevel;
 use App\Models\LabAffiliation;
 use App\Models\LabType;
@@ -182,27 +183,29 @@ class SliptaSeeder extends Seeder
             array("name" => "West Pokot", "hq" => "Kapenguria", "user_id" => "1")
 
         );
-
-
-
-        //facilities
-        $facilities = array(
-            array("code" => "19704", "name" => "ACK Nyandarua Medical Clinic", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> "Situated within Captain township 4km from olkalou town towards NRB","nearest_town" => "Captain","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 48", "town_id" => "3", "in_charge" => "Eliud Mwangi Kithaka", "title_id" => "1", "operational_status" => "Operational", "user_id" => "1"),
-            array("code" => "10039", "name" => "ACK Tumaini Medical Clinic", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Gatundu town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 84", "town_id" => "3", "in_charge" => "Assumpta", "title_id" => "1", "operational_status" => "Operational", "user_id" => "1"),
-            array("code" => "17473", "name" => "ASPE Medical Clinic", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Nyeri town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 229", "town_id" => "3", "in_charge" => "Jane Mwaita", "title_id" => "1", "operational_status" => "Operational", "user_id" => "1"),
-            array("code" => "11195", "name" => "Acode Medical Clinic Maungu", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Maungu town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 18", "town_id" => "3", "in_charge" => "Sr  Kameru", "title_id" => "1", "operational_status" => "Operational", "user_id" => "1"),
-            array("code" => "19520", "name" => "Aculaser Institute", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Westlands town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => " ", "town_id" => "3", "in_charge" => " ", "title_id" => "", "operational_status" => "Operational", "user_id" => "1")
-
-        );
-        foreach ($facilities as $facility) {
-         Facility::create($facility);
-        }
-        $this->command->info('Facility table seeded');
-
         foreach ($counties as $county) {
             County::create($county);
         }
         $this->command->info('Counties table seeded');
+
+        /* Constituencies table */
+        $constituencies = array(
+            array("name" => "Ganze", "county_id" => "13", "user_id" => "1"),
+        );
+        foreach ($constituencies as $constituency) {
+            Constituency::create($constituency);
+        }
+        $this->command->info('Constituencies table seeded');
+        /* Towns table */
+        $towns = array(
+            array("name" => "Mombasa", "constituency_id" => "1", "postal_code" => "80100", "user_id" => "1"),
+            array("name" => "Kilifi", "constituency_id" => "1", "postal_code" => "80108", "user_id" => "1"),
+            array("name" => "Kaloleni", "constituency_id" => "1", "postal_code" => "80105", "user_id" => "1"),
+        );
+        foreach ($towns as $town) {
+            Town::create($town);
+        }
+        $this->command->info('Towns table seeded');
 
         /* Titles table */
         $titles = array(
@@ -249,6 +252,19 @@ class SliptaSeeder extends Seeder
             LabType::create($labType);
         }
         $this->command->info('SLMTA lab types table seeded');
+
+        /* Facilities table */
+        $facilities = array(
+            array("code" => "19704", "name" => "ACK Nyandarua Medical Clinic", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> "Situated within Captain township 4km from olkalou town towards NRB","nearest_town" => "Captain","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 48", "town_id" => "1", "in_charge" => "Eliud Mwangi Kithaka", "title_id" => "1", "operational_status" => "1", "user_id" => "1"),
+            array("code" => "10039", "name" => "ACK Tumaini Medical Clinic", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Gatundu town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 84", "town_id" => "3", "in_charge" => "Assumpta", "title_id" => "1", "operational_status" => "1", "user_id" => "1"),
+            array("code" => "17473", "name" => "ASPE Medical Clinic", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Nyeri town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 229", "town_id" => "3", "in_charge" => "Jane Mwaita", "title_id" => "1", "operational_status" => "1", "user_id" => "1"),
+            array("code" => "11195", "name" => "Acode Medical Clinic Maungu", "facility_type_id" => "13", "facility_owner_id" => "3", "description"=> " ","nearest_town" => "Maungu town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 18", "town_id" => "2", "in_charge" => "Sr  Kameru", "title_id" => "1", "operational_status" => "1", "user_id" => "1"),
+        );
+        foreach ($facilities as $facility) {
+            Facility::create($facility);
+        }
+        $this->command->info('Facilities table seeded');
+
         /* Audit Types */
         $auditTypes = array(
             array("name" => "SLIPTA", "description" => "SLIPTA Template", "user_id" => "1"),
