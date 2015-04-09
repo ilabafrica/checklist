@@ -120,14 +120,13 @@
             <ul class="nav navbar-top-links navbar-right">
                 <li class="text-muted">{{ Auth::user()->name }}</li>
                 <!-- /.dropdown -->
+                {!! HTML::image('images/profiles/'.Auth::user()->image, Lang::choice('messages.no-photo-available', 1), array('class'=>'btn btn-default btn-circle')) !!}
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                         <span class="glyphicon glyphicon-user"></span>  <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.user-profile', 1) }}</a>
-                        </li>
-                        <li><a href="#"><span class="glyphicon glyphicon-cog"></span> {{ Lang::choice('messages.change-password', 1) }}</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> {{ Lang::choice('messages.sign-out', 1) }}</a>
