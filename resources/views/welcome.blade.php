@@ -66,7 +66,7 @@
         <hr>
 
         <!-- Title -->
-        <div class="row">
+        <div class="row" style="display:none;">
             <div class="col-lg-12">
                 <h3>Latest Features</h3>
             </div>
@@ -74,7 +74,7 @@
         <!-- /.row -->
 
         <!-- Page Features -->
-        <div class="row text-center">
+        <div class="row text-center" style="display:none;">
 
             <div class="col-md-3 col-sm-6 hero-feature">
                 <div class="thumbnail">
@@ -131,8 +131,8 @@
         </div>
         <!-- /.row -->
 
-    <hr>
-    <p>Copyright © Your Website | <a href="">Privacy Policy</a> | <a href="">Terms of Use</a></p>
+    <hr style="display:none;">
+    <p>Copyright &copy; {!! date('Y') !!} | <a href="http://www.ilabafrica.ac.ke">@iLabAfrica</a></p>
     </div>
     <!-- /.container -->
 

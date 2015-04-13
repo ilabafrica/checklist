@@ -118,13 +118,10 @@
             </ul>
             <!-- End Audit, Lab -->
             <ul class="nav navbar-top-links navbar-right">
-                <li class="text-muted">{{ Auth::user()->name }}</li>
                 <!-- /.dropdown -->
-                {!! HTML::image('images/profiles/'.Auth::user()->image, Lang::choice('messages.no-photo-available', 1), array('class'=>'btn btn-default btn-circle')) !!}
+                {!! HTML::image(Auth::user()->image?'images/profiles/'.Auth::user()->image:'images/profiles/default.PNG', Lang::choice('messages.no-photo-available', 1), array('class'=>'btn btn-default btn-circle')) !!}
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        <span class="glyphicon glyphicon-user"></span>  <span class="caret"></span>
-                    </a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{ Auth::user()->name }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.user-profile', 1) }}</a>
                         </li>
@@ -256,7 +253,7 @@
         <div id="page-wrapper">
             @yield('content')
         <hr>
-        <p>Copyright © Your Website | <a href="">Privacy Policy</a> | <a href="">Terms of Use</a></p>
+        <p>Copyright &copy; {!! date('Y') !!} | <a href="http://www.ilabafrica.ac.ke">@iLabAfrica</a></p>
         </div>
     </div>
     <!-- /#wrapper -->
