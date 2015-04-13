@@ -26,7 +26,7 @@
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css" href="{{ URL::asset('admin/css/dataTables.bootstrap.css') }}" />
     <!-- Datepicker -->
-    <link rel="stylesheet" type="text/css" href="{{ URL::asset('admin/css/bootstrap-datetimepicker.min.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('admin/css/datepicker.css') }}" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -190,8 +190,9 @@
                             <a href="{{ URL::to('user')}}"><i class="fa fa-users"></i> {{ Lang::choice('messages.user', 2) }}</a>
                         </li>
                         @if(Request::segment(1)=="audit")
-                        {{--*/ $auditType = App\Models\AuditType::find(Request::segment(3)) /*--}}
-                        {{--*/ $lab = App\Models\Lab::find(Request::segment(2)) /*--}}
+                        {{--*/ $response = App\Models\AuditResponse::find(Request::segment(2)) /*--}}
+                        {{--*/ $auditType = $response->auditType /*--}}
+                        {{--*/ $lab = $response->lab /*--}}
                             @if($auditType->id)
                             <li>
                                 <a href="#"><i class="fa fa-clipboard"></i> {!! $auditType->name !!}<span class="fa arrow"></span></a>
@@ -208,14 +209,14 @@
                                                     <ul class="nav nav-third-level collapse">
                                                         @foreach($kid->children as $grand)
                                                             <li>
-                                                                <a href="{{ url('/audit/'.$lab->id.'/'.$auditType->id.'/'.$grand->id) }}"><i class="fa fa-paperclip"></i> {!! $grand->name !!} </a>
+                                                                <a href="{{ url('/audit/'.$response->id.'/create/'.$grand->id) }}"><i class="fa fa-paperclip"></i> {!! $grand->name !!} </a>
                                                             </li>
                                                         @endforeach
                                                     </ul>
                                                 </li>
                                                 @else
                                                     <li>
-                                                        <a href="{{ url('/audit/'.$lab->id.'/'.$auditType->id.'/'.$kid->id) }}"><i class="fa fa-paperclip"></i> {!! $kid->name !!} </a>
+                                                        <a href="{{ url('/audit/'.$response->id.'/create/'.$kid->id) }}"><i class="fa fa-paperclip"></i> {!! $kid->name !!} </a>
                                                     </li>
                                                 @endif
                                             @endforeach
@@ -223,7 +224,7 @@
                                     </li>
                                     @else
                                         <li>
-                                            <a href="{{ url('/audit/'.$lab->id.'/'.$auditType->id.'/'.$fg->id) }}"><i class="fa fa-paperclip"></i> {!! $fg->name !!} </a>
+                                            <a href="{{ url('/audit/'.$response->id.'/create/'.$fg->id) }}"><i class="fa fa-paperclip"></i> {!! $fg->name !!} </a>
                                         </li>
                                     @endif
                                 @endforeach
@@ -273,7 +274,7 @@
     <script type="text/javascript" src="{{ URL::asset('admin/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('admin/js/dataTables.bootstrap.js') }}"></script>
     <script src="{{ URL::asset('admin/js/moment.js') }}"></script>
-    <script src="{{ URL::asset('admin/js/bootstrap-datetimepicker.min.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/bootstrap-datepicker.js') }}"></script>
 </body>
 
 </html>

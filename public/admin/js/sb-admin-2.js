@@ -52,16 +52,62 @@ $(document).ready( function () {
 function toggle(className, obj){
     var $input = $(obj);
     if($input.prop('checked'))
-        $(className).show();
-    else
         $(className).hide();
+    else
+        $(className).show();
 }
 /*End toggle function*/
 /* Bootstrap 3 datepicker */
 $(function () {
-    $('#start').datetimepicker();
-    $('#stop').datetimepicker();
-    $('#date-of-birth').datetimepicker();
-    $('#date').datetimepicker();
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd'
+    });
 });
 /* End datepicker */
+/*Dynamic loading of select list options*/
+$('#section_id').change(function(){
+    $.get("/reports/dropdown", 
+        { option: $(this).val() }, 
+        function(data) {
+            var test_type = $('#test_type');
+            test_type.empty();
+            test_type.append("<option value=''>Select Test Type</option>");
+            $.each(data, function(index, element) {
+                test_type.append("<option value='"+ element.id +"'>" + element.name + "</option>");
+            });
+        });
+});
+/*End dynamic select list options*/
+/* Toggle buttons */
+$('.btn-toggle').click(function() {
+    $(this).find('.btn').toggleClass('active');  
+    
+    if ($(this).find('.btn-primary').size()>0) {
+        $(this).find('.btn').toggleClass('btn-primary');
+    }
+    if ($(this).find('.btn-danger').size()>0) {
+        $(this).find('.btn').toggleClass('btn-danger');
+    }
+    if ($(this).find('.btn-success').size()>0) {
+        $(this).find('.btn').toggleClass('btn-success');
+    }
+    if ($(this).find('.btn-info').size()>0) {
+        $(this).find('.btn').toggleClass('btn-info');
+    }
+    
+    $(this).find('.btn').toggleClass('btn-default');
+       
+});
+/* Dynamic loading of selected audit type */
+$('#auditType').change(function(){
+    $.get("/audit/select", 
+        { option: $(this).val() }, 
+        function(data) {
+            var audit_type_id = $('#audit_type_id');
+            audit_type_id.empty();
+            $.each(data, function(index, element) {
+                audit_type_id.val(element.id);
+            });
+        });
+});
+/* End dynamic selected audit type */

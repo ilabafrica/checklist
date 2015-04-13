@@ -59,10 +59,9 @@ function toggle(className, obj){
 /*End toggle function*/
 /* Bootstrap 3 datepicker */
 $(function () {
-    $('#start').datetimepicker();
-    $('#stop').datetimepicker();
-    $('#date-of-birth').datetimepicker();
-    $('#date').datetimepicker();
+    $('.datepicker').datepicker({
+        format: 'mm-dd-yyyy'
+    });
 });
 /* End datepicker */
 /* Begin js for tree */

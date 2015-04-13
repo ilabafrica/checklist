@@ -33,7 +33,7 @@
                         {!! Form::text('name', Input::old('name'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     {!! Form::label('gender', Lang::choice('messages.gender', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
                         <label class="radio-inline">{!! Form::radio('gender', App\Models\User::MALE, true) !!}{{ Lang::choice('messages.sex', 1) }}</label>
@@ -42,8 +42,9 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('dob', Lang::choice('messages.dob', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
+                    <div class="col-sm-offset-4 col-sm-7 input-group input-append date datepicker" id="date-of-birth" style="margin-left:170px;">
                         {!! Form::text('dob', Input::old('dob'), array('class' => 'form-control')) !!}
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
                 </div>
                 <div class="form-group">

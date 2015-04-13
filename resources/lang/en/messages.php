@@ -185,4 +185,5 @@ return [
 	'selected-lab'	=>	'Selected Lab: ',
 	'selected-audit'	=>	'Selected Audit: ',
 	'non-compliant'	=>	'Non-Compliant',
+	'audit-status'	=>	'Complete|Incomplete',
 ];

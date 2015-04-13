@@ -12,6 +12,7 @@ use App\Models\Lab;
 use App\Models\AuditResponse;
 use Response;
 use Auth;
+use Input;
 
 class AuditController extends Controller {
 
@@ -46,29 +47,16 @@ class AuditController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function start($lab, $auditType, $section)
+	public function assess($response, $section)
 	{
+		$assessment = AuditResponse::find($response);
 		//	Get the selected lab
-		$laboratory = Lab::find($lab);
+		$laboratory = $assessment->lab;
 		//	Get the selected audit
-		$audit = AuditType::find($auditType);
+		$audit = $assessment->auditType;
 		//	Get first audit field group for selected audit
 		$page = AuditFieldGroup::find($section);
-		//	Get audit field groups - main first
-		$auditFieldGroups = AuditFieldGroup::where('audit_type_id', $audit)->get();
-		/* Save audit response first */
-		if(Auth::check()){
-			$user_id = Auth::user()->id;
-			$update_user_id = Auth::user()->id;
-		}
-		$auditResponse = new AuditResponse;
-		$auditResponse->user_id = $user_id;
-		$auditResponse->lab_id = $laboratory->id;
-		$auditResponse->audit_type_id = $audit->id;
-		$auditResponse->status = 0;
-		$auditResponse->update_user_id = $update_user_id;
-		$auditResponse->save();
-		return view('audit.audit.create', compact('auditFieldGroups', 'laboratory', 'audit', 'page'));
+		return view('audit.audit.create', compact('assessment', 'laboratory', 'audit', 'page'));
 	}
 
 	/**
@@ -76,11 +64,16 @@ class AuditController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function loadPage($auditType, $section)
+	public function start($response)
 	{
-		//	Get audit field groups - main first
-		$auditFieldGroup = AuditFieldGroup::find($section);
-		return view('audit.audit.create', compact('auditFieldGroup'));
+		$assessment = AuditResponse::find($response);
+		//	Get the selected lab
+		$laboratory = $assessment->lab;
+		//	Get the selected audit
+		$audit = $assessment->auditType;
+		//	Get first audit field group for selected audit
+		$page = $audit->auditFieldGroup->first();
+		return view('audit.audit.create', compact('assessment', 'laboratory', 'audit', 'page'));
 	}
 
 	/**
@@ -90,9 +83,22 @@ class AuditController extends Controller {
 	 */
 	public function store(AuditRequest $request)
 	{
+		//dd(count(Input::all()));
 		//	Save the dynamically created form
-		//	Save response first
+		$audit = new Audit;
 		dd($request->all());
+		for($i = 0; $i<count($request->all()); $i++){
+			var_dump($request[$i]);
+		}
+		/*foreach ($request->all() as $key => $value) {
+			//var_dump($request->8);
+			$audit->audit_response_id = $request->audit_response_id;
+			$audit->audit_field_id = $key;
+			$audit->value = $value;
+			$audit->save();
+		}*/
+		//$audit->save();
+		//dd($request->all());
 
 	}
 
@@ -159,5 +165,16 @@ class AuditController extends Controller {
 	{
 		return view('audit.audit.result');
 	}
-
+	/**
+	 * Return audit type selected to display in status
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function selected()
+	{
+		$input = Input::get('option');
+        $audit = AuditType::find($input);
+        return Response::make($audit->get(['id','name']));
+	}
 }

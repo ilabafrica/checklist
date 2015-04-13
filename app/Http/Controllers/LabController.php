@@ -153,6 +153,6 @@ class LabController extends Controller {
 		$lab= Lab::find($id);
 		//	Get available audit types
 		$auditTypes = AuditType::all();
-		return view('audit.audit.select', compact('lab', 'auditTypes'));
+		return view('audit.response.create', compact('lab', 'auditTypes'));
 	}
 }
