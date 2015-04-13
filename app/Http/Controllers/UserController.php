@@ -45,6 +45,7 @@ class UserController extends Controller {
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address = $request->address;
+        $user->image = $this->imageModifier($request, $request->all()['photo']);
         $user->save();
 
         return redirect('user')->with('message', 'User created successfully.');
@@ -92,6 +93,7 @@ class UserController extends Controller {
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address = $request->address;
+        $user->image = $this->imageModifier($request, $request->all()['photo']);
         $user->save();
 
         return redirect('user')->with('message', 'User updated successfully.');
@@ -114,5 +116,22 @@ class UserController extends Controller {
 	{
 		//
 	}
-
+	/**
+     * Change the image name, move it to images/profile, and return its new name
+     *
+     * @param $request
+     * @param $data
+     * @return string
+     */
+    private function imageModifier($request, $image)
+    {
+        if(empty($image)){
+            $filename = 'default.png';
+        }else{
+            $ext = $request->file('photo')->getClientOriginalExtension();
+            $filename = uniqid() . "." . $ext;
+            $request->file('photo')->move('images/profiles/', $filename);
+        }
+        return $filename;
+    }
 }

@@ -53,6 +53,9 @@ return [
 	'edit-user'	=>	'Edit User',
 	'user-profile'	=>	'User Profile',
 	'change-password'	=>	'Change Password',
+	'profile-photo'	=>	'Profile Photo',
+	'no-photo-available'	=>	'No photo available',
+	'photo'	=>	'photo',
 	/* Facility Types */
 	'facility-type'	=>	'Facility Type|Facility Types',
 	'create-facility-type'	=>	'Create Facility Type',

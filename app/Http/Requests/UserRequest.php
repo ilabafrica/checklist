@@ -38,7 +38,6 @@ class UserRequest extends Request {
 		$id = $this->route('user');
 		$name = $this->input('name');
 		$email = $this->input('email');
-		return Role::where(compact('id', 'name', 'email'))->exists() ? $id : '';
+		return User::where(compact('id', 'name', 'email'))->exists() ? $id : '';
 	}
-
 }

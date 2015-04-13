@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-<br /><br /><br />
+<br />
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
@@ -13,6 +13,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.create-user', 1) }} </div>
     <div class="panel-body">
+    {!! Form::open(array('route' => 'user.store', 'id' => 'form-add-user', 'enctype' => 'multipart/form-data', 'class' => 'form-horizontal', 'files' => 'true')) !!}
         <div class="col-lg-6 main">
             <!-- Begin form --> 
             @if($errors->all())
@@ -21,7 +22,6 @@
                 {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
             </div>
             @endif
-            {!! Form::open(array('route' => 'user.store', 'id' => 'form-add-user', 'class' => 'form-horizontal')) !!}
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                 <!-- ./ csrf token -->
@@ -100,9 +100,24 @@
                     <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                     </div>
                 </div>
-            {!! Form::close() !!} 
-            <!-- End form -->
-        </div> 
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="thumbnail">
+                        {!! HTML::image('images/profiles/default.png', Lang::choice('messages.no-photo-available', 1), array('class'=>'img-responsive img-thumbnail user-image')) !!}
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-offset-1">
+                    <div class="form-group">
+                        <label>{{ Lang::choice('messages.profile-photo', 1) }}</label>
+                        {!! Form::file(Lang::choice('messages.photo', 1), null, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {!! Form::close() !!} 
+        <!-- End form -->  
     </div>
 </div>
 @stop
