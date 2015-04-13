@@ -36,6 +36,8 @@
                     <!-- CSRF Token -->
                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                     <!-- ./ csrf token -->
+                    <!-- Hidden fields for audit_response_id -->
+                    {!! Form::hidden('audit_response_id', $assessment->id, array('id' => 'audit_response_id')) !!}
                     <!-- Content goes here -->
                     <!-- Begin Fields logic -->
                     <!-- Check if fieldgroup has children -->
@@ -75,7 +77,7 @@
                                             @elseif($grand->field_type==App\Models\AuditField::DATE)
                                             <div class="form-group">
                                                 {!! Form::label($grand->name, $grand->label, array('class' => 'col-sm-4 control-label')) !!}
-                                                <div class="col-sm-3 form-group input-group date" id="date" style="padding-left:15px;">
+                                                <div class="col-sm-3 form-group input-group input-append date datepicker" style="padding-left:15px;">
                                                     {!! Form::text($grand->id, Input::old($grand->id), array('class' => 'form-control', 'style'=>'width:auto')) !!}
                                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                                 </div>
@@ -256,7 +258,7 @@
                                         @elseif($kid->field_type==App\Models\AuditField::DATE)
                                         <div class="form-group">
                                             {!! Form::label($kid->name, $kid->label, array('class' => 'col-sm-4 control-label')) !!}
-                                            <div class="col-sm-3 form-group input-group date" id="date" style="padding-left:15px;">
+                                            <div class="col-sm-3 form-group input-group input-append date datepicker" style="padding-left:15px;">
                                                 {!! Form::text($kid->id, Input::old($kid->id), array('class' => 'form-control', 'style'=>'width:auto')) !!}
                                                 <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                             </div>
@@ -439,7 +441,7 @@
                                     @elseif($kid->field_type==App\Models\AuditField::DATE)
                                     <div class="form-group">
                                         {!! Form::label($kid->name, $kid->label, array('class' => 'col-sm-4 control-label')) !!}
-                                        <div class="col-sm-3 form-group input-group date" id="date" style="padding-left:15px;">
+                                        <div class="col-sm-3 form-group input-group input-append date datepicker" style="padding-left:15px;">
                                             {!! Form::text($kid->id, Input::old($kid->id), array('class' => 'form-control', 'style'=>'width:auto')) !!}
                                             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                         </div>
@@ -623,7 +625,7 @@
                             @elseif($kid->field_type==App\Models\AuditField::DATE)
                             <div class="form-group">
                                 {!! Form::label($kid->name, $kid->label, array('class' => 'col-sm-4 control-label')) !!}
-                                <div class="col-sm-3 form-group input-group date" id="date" style="padding-left:15px;">
+                                <div class="col-sm-3 form-group input-group input-append date datepicker" style="padding-left:15px;">
                                     {!! Form::text($kid->id, Input::old($kid->id), array('class' => 'form-control', 'style'=>'width:auto')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
@@ -780,7 +782,7 @@
                     <div class="form-group">
                         <div class="col-sm-offset-7 col-sm-5">
                         @if($page->id == App\Models\AuditType::find(1)->auditFieldGroup->first()['id'])
-                        <a href="{{ url('/audit/'.$laboratory->id.'/'.$audit->id.'/2') }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
+                        <a href="{{ url('/audit/'.$assessment->id.'/create/2') }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
                         @else
                         {!! Form::button("<i class='glyphicon glyphicon-ok-circle'></i> ".Lang::choice('messages.save', 1), 
                               array('class' => 'btn btn-success', 'onclick' => 'submit()')) !!}

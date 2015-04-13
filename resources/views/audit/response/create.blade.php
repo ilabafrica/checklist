@@ -24,7 +24,7 @@
     <!-- Hidden field for lab -->
     {!! Form::hidden('lab_id', $lab->id, array('id' => 'lab_id')) !!}
     <!-- Hidden field for audit type -->
-    {!! Form::hidden('audit_lab_id', '', array('id' => 'audit_lab_id')) !!}
+    {!! Form::hidden('audit_type_id', '1', array('id' => 'audit_type_id')) !!}
 <div class="row">
     <div class="col-md-6">
         <div class="panel panel-default">

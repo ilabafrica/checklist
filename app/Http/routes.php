@@ -161,17 +161,24 @@ Route::get("/auditField/{id}/delete", array(
 
 //	Audits controller
 Route::resource('audit', 'AuditController');
-//	Audit responses
-Route::any("/response", array(
-    "as"   => "audit.response",
-    "uses" => "AuditController@response"
-));
+
 //	Audit data
 Route::any("/result", array(
     "as"   => "audit.result",
     "uses" => "AuditController@result"
 ));
 //  Start an audit
-Route::get("audit/{lab}/{audit}/{section}", "AuditController@start");
+Route::any("audit/{response}/create", array(
+    "as"   => "audit.start",
+    "uses" => "AuditController@start"
+));
+Route::get("audit/{response}/create/{section}", "AuditController@assess");
 //	Load audit page according to audit type and page
 //Route::get("audit/{lab}/{audit}/{section}", "AuditController@loadPage");
+//  Audit response
+Route::resource('assessment', 'AuditResponseController');
+//  Route for ajax loading of selected audit type
+Route::get('/audit/select', array(
+    "as"    =>  "audit.select",
+    "uses"  =>  "AuditController@selected"
+));
