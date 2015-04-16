@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LabAffiliationRequest;
 use App\Models\LabAffiliation;
 use Response;
+use Auth;
 
 class LabAffiliationController extends Controller {
 
@@ -43,7 +44,7 @@ class LabAffiliationController extends Controller {
 		$labAffiliation = new LabAffiliation;
         $labAffiliation->name = $request->name;
         $labAffiliation->description = $request->description;
-        $labAffiliation->user_id = 1;
+        $labAffiliation->user_id = Auth::user()->id;;
         $labAffiliation->save();
 
         return redirect('labAffiliation')->with('message', 'Lab affiliation created successfully.');
@@ -87,7 +88,7 @@ class LabAffiliationController extends Controller {
 		$labAffiliation = LabAffiliation::findOrFail($id);;
         $labAffiliation->name = $request->name;
         $labAffiliation->description = $request->description;
-        $labAffiliation->user_id = 1;
+        $labAffiliation->user_id = Auth::user()->id;;
         $labAffiliation->save();
 
         return redirect('labAffiliation')->with('message', 'Lab affiliation updated successfully.');

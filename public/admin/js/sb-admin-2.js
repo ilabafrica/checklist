@@ -111,3 +111,13 @@ $('#auditType').change(function(){
         });
 });
 /* End dynamic selected audit type */
+/* Setting the score */
+$("form input:radio").click(function(){
+    alert($('input.radio').attr('name'));
+});
+$("form input:checkbox").click(function(){
+    alert('Rihakoro');
+});
+/* End setting the score */
+/* Setting the total */
+/* End setting the total */

@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Audit extends Model {
+class Review extends Model {
 
-	protected $table = 'audits';
+	protected $table = 'reviews';
 
 }

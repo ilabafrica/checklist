@@ -9,6 +9,7 @@ use App\Http\Requests\ConstituencyRequest;
 use App\Models\Constituency;
 use App\Models\County;
 use Response;
+use Auth;
 
 class ConstituencyController extends Controller {
 
@@ -47,7 +48,7 @@ class ConstituencyController extends Controller {
 		$constituency = new Constituency;
         $constituency->name = $request->name;
         $constituency->county_id = $request->county_id;
-        $constituency->user_id = 1;
+        $constituency->user_id = Auth::user()->id;;
         $constituency->save();
 
         return redirect('constituency')->with('message', 'Constituency created successfully.');
@@ -96,7 +97,7 @@ class ConstituencyController extends Controller {
 		$constituency = Constituency::findOrFail($id);;
         $constituency->name = $request->name;
         $constituency->county_id = $request->county_id;
-        $constituency->user_id = 1;
+        $constituency->user_id = Auth::user()->id;;
         $constituency->save();
 
         return redirect('constituency')->with('message', 'Constituency updated successfully.');

@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\FacilityOwnerRequest;
 use App\Models\FacilityOwner;
 use Response;
+use Auth;
 
 class FacilityOwnerController extends Controller {
 
@@ -43,7 +44,7 @@ class FacilityOwnerController extends Controller {
 		$facilityOwner = new FacilityOwner;
         $facilityOwner->name = $request->name;
         $facilityOwner->description = $request->description;
-        $facilityOwner->user_id = 1;
+        $facilityOwner->user_id = Auth::user()->id;;
         $facilityOwner->save();
 
         return redirect('facilityOwner')->with('message', 'Facility owner created successfully.');
@@ -87,7 +88,7 @@ class FacilityOwnerController extends Controller {
 		$facilityOwner = FacilityOwner::findOrFail($id);;
         $facilityOwner->name = $request->name;
         $facilityOwner->description = $request->description;
-        $facilityOwner->user_id = 1;
+        $facilityOwner->user_id = Auth::user()->id;;
         $facilityOwner->save();
 
         return redirect('facilityOwner')->with('message', 'Facility owner updated successfully.');

@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="panel panel-primary">
-    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.create-user', 1) }} </div>
+    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.edit-user', 1) }} </div>
     <div class="panel-body">
 
         {!! Form::model($user, array('route' => array('user.update', $user->id), 

@@ -56,9 +56,13 @@ class CreateLabTables extends Migration {
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('facility_id')->unsigned();
+			$table->integer('lab_type_id')->unsigned();
+			$table->string('name')->nullable();
+			$table->string('address', 100)->nullable();
+			$table->string('lab_number')->nullable();
 			$table->integer('lab_level_id')->unsigned();
 			$table->integer('lab_affiliation_id')->unsigned();
-			$table->integer('lab_type_id')->unsigned();
+			
 			$table->integer('user_id')->unsigned();
 
             $table->foreign('facility_id')->references('id')->on('facilities');

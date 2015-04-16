@@ -119,11 +119,11 @@
             <!-- End Audit, Lab -->
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown -->
-                {!! HTML::image(Auth::user()->image?'images/profiles/'.Auth::user()->image:'images/profiles/default.PNG', Lang::choice('messages.no-photo-available', 1), array('class'=>'btn btn-default btn-circle')) !!}
+                {!! HTML::image('images/profiles/'.Auth::user()->image, Lang::choice('messages.no-photo-available', 1), array('class'=>'btn btn-default btn-circle')) !!}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{ Auth::user()->name }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.user-profile', 1) }}</a>
+                        <li><a href="{{ url('user/'.Auth::user()->id.'/edit') }}"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.user-profile', 1) }}</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> {{ Lang::choice('messages.sign-out', 1) }}</a>
@@ -179,8 +179,12 @@
                             <a href="#"><i class="fa fa-sliders"></i> Audit Configuration<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li><a href="{{ URL::to('auditType')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-type', 2) }}</a></li>
-                                <li><a href="{{ URL::to('auditFieldGroup')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-field-group', 2) }} </a></li>
-                                <li><a href="{{ URL::to('auditField')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-field', 2) }} </a></li>
+                                <li><a href="{{ URL::to('assessment')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.assessment', 2) }} </a></li>
+                                <li><a href="{{ URL::to('section')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.section', 2) }} </a></li>
+                                <li><a href="{{ URL::to('note')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.note', 2) }} </a></li>
+                                <li><a href="{{ URL::to('answer')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.answer', 2) }} </a></li>
+                                <li><a href="{{ URL::to('question')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.question', 2) }} </a></li>
+                                
                             </ul>
                         </li>
                         <li>
@@ -230,7 +234,7 @@
                             @endif
                         @endif
                         <li>
-                            <a href="{{ URL::to('audit')}}"><i class="fa fa-book"></i> {{ Lang::choice('messages.audit', 2) }}</a>
+                            <a href="{{ URL::to('review')}}"><i class="fa fa-book"></i> {{ Lang::choice('messages.audit', 2) }}</a>
                         </li>
                         <li>
                             <a href="{{ URL::to('audit')}}"><i class="fa fa-bar-chart-o"></i> Reports</a>
@@ -253,7 +257,7 @@
         <div id="page-wrapper">
             @yield('content')
         <hr>
-        <p>Copyright &copy; {!! date('Y') !!} | <a href="http://www.ilabafrica.ac.ke">@iLabAfrica</a></p>
+        <p>Copyright &copy; {{ date('Y') }} | <a href="http://www.ilabafrica.ac.ke">@iLabAfrica</a></p>
         </div>
     </div>
     <!-- /#wrapper -->
