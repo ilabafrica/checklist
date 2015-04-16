@@ -1,7 +1,7 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use App\Models\AuditResponse;
+use App\Models\Assessment;
 
 class AssessmentRequest extends Request {
 
@@ -12,7 +12,7 @@ class AssessmentRequest extends Request {
 	 */
 	public function authorize()
 	{
-		return false;
+		return true;
 	}
 
 	/**
@@ -24,11 +24,7 @@ class AssessmentRequest extends Request {
 	{
 		$id = $this->ingnoreId();
 		return [
-            'user_id'   => 'required:audit_responses,user_id,'.$id,
-            'lab_id'   => 'required:audit_responses,lab_id,'.$id,
-            'audit_type_id'   => 'required:audit_responses,audit_type_id,'.$id,
-            'status'   => 'required:audit_responses,status,'.$id,
-            'update_user_id'   => 'required:audit_responses,update_user_id,',
+            'name'   => 'required|unique:assessments,name,'.$id,
         ];
 	}
 	/**
@@ -36,11 +32,8 @@ class AssessmentRequest extends Request {
 	*/
 	public function ingnoreId(){
 		$id = $this->route('assessment');
-		$user_id = $this->input('user_id');
-		$lab_id = $this->input('lab_id');
-		$audit_type_id = $this->input('audit_type_id');
-		$status = $this->input('status');
-		$update_user_id = $this->input('update_user_id');
-		return AuditResponse::where(compact('id', 'user_id', 'lab_id', 'audit_type_id', 'status'))->exists() ? $id : '';
+		$name = $this->input('name');
+		return Assessment::where(compact('id', 'name'))->exists() ? $id : '';
 	}
+
 }

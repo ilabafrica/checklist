@@ -12,6 +12,7 @@ use App\Models\FacilityOwner;
 use App\Models\Town;
 use App\Models\Title;
 use Response;
+use Auth;
 
 class FacilityController extends Controller {
 
@@ -68,7 +69,7 @@ class FacilityController extends Controller {
         $town->in_charge = $request->in_charge;
         $town->title_id = $request->title_id;
         $town->operational_status = $request->operational_status;
-        $town->user_id = 1;
+        $town->user_id = Auth::user()->id;;
         $town->save();
 
         return redirect('facility')->with('message', 'Facility created successfully.');
@@ -144,7 +145,7 @@ class FacilityController extends Controller {
         $town->in_charge = $request->in_charge;
         $town->title_id = $request->title_id;
         $town->operational_status = $request->operational_status;
-        $town->user_id = 1;
+        $town->user_id = Auth::user()->id;;
         $town->save();
 
         return redirect('facility')->with('message', 'Facility updated successfully.');

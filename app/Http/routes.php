@@ -145,11 +145,11 @@ Route::get("/auditType/{id}/delete", array(
 ));
 
 
-//	Audit field groups controller
-Route::resource('auditFieldGroup', 'AuditFieldGroupController');
-Route::get("/auditFieldGroup/{id}/delete", array(
-    "as"   => "auditFieldGroup.delete",
-    "uses" => "AuditFieldGroupController@delete"
+//	Audit sections controller
+Route::resource('section', 'SectionController');
+Route::get("/section/{id}/delete", array(
+    "as"   => "section.delete",
+    "uses" => "SectionController@delete"
 ));
 
 //	Audit field controller
@@ -160,7 +160,29 @@ Route::get("/auditField/{id}/delete", array(
 ));
 
 //	Audits controller
-Route::resource('audit', 'AuditController');
+Route::resource('review', 'ReviewController');
+//  Start an audit
+Route::any("review/assess", array(
+    "as"   => "review.start",
+    "uses" => "ReviewController@start"
+));
+//  Proceed with audit
+Route::any("review/create/{assessment}/{section}", array(
+    "as"   => "review.perform",
+    "uses" => "ReviewController@create"
+));
+
+//  Answers controller
+Route::resource('answer', 'AnswerController');
+
+//  Notes controller
+Route::resource('note', 'NoteController');
+
+//  Assessments - Baseline, Mid-term, Exit etc
+Route::resource('assessment', 'AssessmentController');
+
+//  Questions controller
+Route::resource('question', 'QuestionController');
 
 //	Audit data
 Route::any("/result", array(
@@ -175,8 +197,7 @@ Route::any("audit/{response}/create", array(
 Route::get("audit/{response}/create/{section}", "AuditController@assess");
 //	Load audit page according to audit type and page
 //Route::get("audit/{lab}/{audit}/{section}", "AuditController@loadPage");
-//  Audit response
-Route::resource('assessment', 'AuditResponseController');
+
 //  Route for ajax loading of selected audit type
 Route::get('/audit/select', array(
     "as"    =>  "audit.select",

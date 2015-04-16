@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CountyRequest;
 use App\Models\County;
 use Response;
+use Auth;
 
 class CountyController extends Controller {
 
@@ -43,7 +44,7 @@ class CountyController extends Controller {
 		$county = new County;
         $county->name = $request->name;
         $county->hq = $request->hq;
-        $county->user_id = 1;
+        $county->user_id = Auth::user()->id;;
         $county->save();
 
         return redirect('county')->with('message', 'County created successfully.');
@@ -87,7 +88,7 @@ class CountyController extends Controller {
 		$county = County::findOrFail($id);;
         $county->name = $request->name;
         $county->hq = $request->hq;
-        $county->user_id = 1;
+        $county->user_id = Auth::user()->id;;
         $county->save();
 
         return redirect('county')->with('message', 'County updated successfully.');

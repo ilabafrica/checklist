@@ -1,9 +1,9 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use App\Models\Audit;
+use App\Models\Review;
 
-class AuditRequest extends Request {
+class ReviewRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.

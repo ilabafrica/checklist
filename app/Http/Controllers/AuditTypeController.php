@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\AuditTypeRequest;
 use App\Models\AuditType;
 use Response;
+use Auth;
 
 class AuditTypeController extends Controller {
 
@@ -43,7 +44,7 @@ class AuditTypeController extends Controller {
 		$auditType = new AuditType;
         $auditType->name = $request->name;
         $auditType->description = $request->description;
-        $auditType->user_id = 1;
+        $auditType->user_id = Auth::user()->id;;
         $auditType->save();
 
         return redirect('auditType')->with('message', 'Audit type created successfully.');
@@ -87,7 +88,7 @@ class AuditTypeController extends Controller {
 		$auditType = AuditType::findOrFail($id);;
         $auditType->name = $request->name;
         $auditType->description = $request->description;
-        $auditType->user_id = 1;
+        $auditType->user_id = Auth::user()->id;;
         $auditType->save();
 
         return redirect('auditType')->with('message', 'Audit type updated successfully.');

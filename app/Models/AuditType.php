@@ -9,10 +9,10 @@ class AuditType extends Model {
 	protected $table = 'audit_types';
 
 	/**
-	 * Audit field group relationship
+	 * Audit section relationship
 	 */
-	public function auditFieldGroup()
+	public function sections()
 	{
-	  return $this->hasMany('App\Models\AuditFieldGroup');
+	  return $this->hasMany('App\Models\Section');
 	}
 }

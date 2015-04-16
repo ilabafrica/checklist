@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\LabTypeRequest;
 use App\Models\LabType;
 use Response;
+use Auth;
 
 class LabTypeController extends Controller {
 
@@ -43,7 +44,7 @@ class LabTypeController extends Controller {
 		$labType = new LabType;
         $labType->name = $request->name;
         $labType->description = $request->description;
-        $labType->user_id = 1;
+        $labType->user_id = Auth::user()->id;;
         $labType->save();
 
         return redirect('labType')->with('message', 'Lab type created successfully.');
@@ -87,7 +88,7 @@ class LabTypeController extends Controller {
 		$labType = LabType::findOrFail($id);;
         $labType->name = $request->name;
         $labType->description = $request->description;
-        $labType->user_id = 1;
+        $labType->user_id = Auth::user()->id;;
         $labType->save();
 
         return redirect('labType')->with('message', 'Lab type updated successfully.');

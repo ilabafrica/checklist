@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\TitleRequest;
 use App\Models\Title;
 use Response;
+use Auth;
 
 class TitleController extends Controller {
 
@@ -43,7 +44,7 @@ class TitleController extends Controller {
 		$title = new Title;
         $title->name = $request->name;
         $title->description = $request->description;
-        $title->user_id = 1;
+        $title->user_id = Auth::user()->id;;
         $title->save();
 
         return redirect('title')->with('message', 'Title created successfully.');
@@ -87,7 +88,7 @@ class TitleController extends Controller {
 		$title = Title::findOrFail($id);;
         $title->name = $request->name;
         $title->description = $request->description;
-        $title->user_id = 1;
+        $title->user_id = Auth::user()->id;;
         $title->save();
 
         return redirect('title')->with('message', 'Title updated successfully.');

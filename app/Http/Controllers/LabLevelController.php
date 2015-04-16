@@ -9,6 +9,7 @@ use App\Http\Requests\LabLevelRequest;
 use App\Models\LabLevel;
 use Response;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Auth;
 
 class LabLevelController extends Controller {
     use SoftDeletes;
@@ -45,7 +46,7 @@ class LabLevelController extends Controller {
 		$labLevel = new LabLevel;
         $labLevel->name = $request->name;
         $labLevel->description = $request->description;
-        $labLevel->user_id = 1;
+        $labLevel->user_id = Auth::user()->id;;
         $labLevel->save();
 
         return redirect('labLevel')->with('message', 'Lab level created successfully.');
@@ -89,7 +90,7 @@ class LabLevelController extends Controller {
 		$labLevel = LabLevel::findOrFail($id);;
         $labLevel->name = $request->name;
         $labLevel->description = $request->description;
-        $labLevel->user_id = 1;
+        $labLevel->user_id = Auth::user()->id;;
         $labLevel->save();
 
         return redirect('labLevel')->with('message', 'Lab level updated successfully.');

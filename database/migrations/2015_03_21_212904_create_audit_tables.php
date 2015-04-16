@@ -25,12 +25,25 @@ class CreateAuditTables extends Migration {
             $table->softDeletes();
 			$table->timestamps();
 		});
-		//	Audit Field Groups
-		Schema::create('audit_field_groups', function(Blueprint $table)
+		//	Assessments
+		Schema::create('assessments', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
 			$table->string('name');
 			$table->string('description', 100);
+			$table->integer('user_id')->unsigned();
+
+            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->softDeletes();
+			$table->timestamps();
+		});
+		//	Paragraphs of text within the audit
+		Schema::create('notes', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->string('name');
+			$table->text('description');
 			$table->integer('audit_type_id')->unsigned();
 			$table->integer('user_id')->unsigned();
 
@@ -40,63 +53,140 @@ class CreateAuditTables extends Migration {
             $table->softDeletes();
 			$table->timestamps();
 		});
+		//	Audit Field Groups - Sections
+		Schema::create('sections', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->string('name');
+			$table->string('label')->nullable();
+			$table->string('description', 100);
+			$table->integer('audit_type_id')->unsigned();
+			$table->smallInteger('total_points')->nullable();
+			$table->smallInteger('order');
+			$table->integer('user_id')->unsigned();
+
+            $table->foreign('audit_type_id')->references('id')->on('audit_types');
+            $table->foreign('user_id')->references('id')->on('users');
+
+            $table->softDeletes();
+			$table->timestamps();
+		});
 		//	Audit field groups parent-child relationship
-		Schema::create('afg_parent_child', function(Blueprint $table)
+		Schema::create('section_parent_child', function(Blueprint $table)
         {
             $table->increments('id')->unsigned();
-            $table->integer('field_group_id')->unsigned();
+            $table->integer('section_id')->unsigned();
             $table->integer('parent_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('field_group_id')->references('id')->on('audit_field_groups');
-            $table->foreign('parent_id')->references('id')->on('audit_field_groups');
-            $table->unique(array('field_group_id','parent_id'));
+            $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('parent_id')->references('id')->on('sections');
+            $table->unique(array('section_id','parent_id'));
         });
-		//	Audit Fields
-		Schema::create('audit_fields', function(Blueprint $table)
+        //	Section notes
+        Schema::create('section_notes', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
-			$table->integer('audit_field_group_id')->unsigned();
+			$table->integer('section_id')->unsigned();
+			$table->integer('note_id')->unsigned();
+
+            $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('note_id')->references('id')->on('notes');
+            $table->unique(array('section_id','note_id'));
+
+            $table->softDeletes();
+			$table->timestamps();
+		});
+		//	Audit Fields - Questions
+		Schema::create('questions', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->integer('section_id')->unsigned();
 			$table->string('name')->nullable();
-			$table->text('label')->nullable();
+			$table->string('title')->nullable();
 			$table->text('description')->nullable();
-			$table->text('comment')->nullable();
-			$table->string('field_type', 100);
+			$table->tinyInteger('question_type');
 			$table->integer('required')->nullable();
-			$table->integer('textarea')->nullable();
-			$table->string('options')->nullable();
-			$table->string('iso')->nullable();
+			$table->string('info')->nullable();
+			$table->string('comment')->nullable();
 			$table->integer('score')->nullable();
+			$table->tinyInteger('one_star')->nullable();
 
 			$table->integer('user_id')->unsigned();
 
-            $table->foreign('audit_field_group_id')->references('id')->on('audit_field_groups');
+            $table->foreign('section_id')->references('id')->on('sections');
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->softDeletes();
 			$table->timestamps();
 		});
 		//	Audit fields parent-child relationship
-		Schema::create('af_parent_child', function(Blueprint $table)
+		Schema::create('question_parent_child', function(Blueprint $table)
         {
             $table->increments('id')->unsigned();
-            $table->integer('field_id')->unsigned();
+            $table->integer('question_id')->unsigned();
             $table->integer('parent_id')->unsigned();
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('field_id')->references('id')->on('audit_fields');
-            $table->foreign('parent_id')->references('id')->on('audit_fields');
-            $table->unique(array('field_id','parent_id'));
+            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('parent_id')->references('id')->on('questions');
+            $table->unique(array('question_id','parent_id'));
+        });
+        //	Question notes
+        Schema::create('question_notes', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->integer('question_id')->unsigned();
+			$table->integer('note_id')->unsigned();
+
+            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('note_id')->references('id')->on('notes');
+            $table->unique(array('question_id','note_id'));
+
+            $table->softDeletes();
+			$table->timestamps();
+		});
+        //	Audit answers to the questions
+		Schema::create('answers', function(Blueprint $table)
+        {
+            $table->increments('id')->unsigned();
+            $table->string('name');
+            $table->string('description');
+            $table->integer('user_id')->unsigned();
+
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+        });
+        //	Audit question-answers
+		Schema::create('question_answers', function(Blueprint $table)
+        {
+            $table->increments('id')->unsigned();
+            $table->integer('question_id')->unsigned();
+            $table->integer('answer_id')->unsigned();
+
+            $table->softDeletes();
+            $table->timestamps();
+
+            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('answer_id')->references('id')->on('answers');
+            $table->unique(array('question_id','answer_id'));
         });
 		//	Audit Responses
-		Schema::create('audit_responses', function(Blueprint $table)
+		Schema::create('reviews', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('user_id')->unsigned();
 			$table->integer('lab_id')->unsigned();
 			$table->integer('audit_type_id')->unsigned();
+			$table->text('summary_commendations')->nullable();
+			$table->text('summary_challenges')->nullable();
+			$table->text('recommendations')->nullable();
+			$table->smallInteger('total_points')->nullable();
+			$table->tinyInteger('stars')->nullable();
 			$table->integer('status');
 			$table->integer('update_user_id')->unsigned();
 
@@ -107,16 +197,150 @@ class CreateAuditTables extends Migration {
             $table->softDeletes();
 			$table->timestamps();
 		});
-		//	Audit
-		Schema::create('audits', function(Blueprint $table)
+		//	Laboratory profile review
+		Schema::create('review_lab_profiles', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
-			$table->integer('audit_response_id')->unsigned();
-			$table->integer('audit_field_id')->unsigned();
-			$table->string('value');
+			$table->integer('review_id')->unsigned();
+			$table->string('telephone', 100)->nullable();
+			$table->string('email', 100)->nullable();
+			$table->string('head');
+			$table->string('head_work_telephone')->nullable();
+			$table->string('head_personal_telephone')->nullable();
+			$table->integer('lab_level_id')->unsigned();
+			$table->integer('lab_affiliation_id')->unsigned();
+			$table->tinyInteger('degree_staff');
+			$table->char('degree_staff_adequate', 1);
+			$table->tinyInteger('diploma_staff');
+			$table->char('diploma_staff_adequate', 1);
+			$table->tinyInteger('certificate_staff');
+			$table->char('certificate_staff_adequate', 1);
+			$table->tinyInteger('microscopist');
+			$table->char('microscopist_adequate', 1);
+			$table->tinyInteger('data_clerk');
+			$table->char('data_clerk_adequate', 1);
+			$table->tinyInteger('cleaner');
+			$table->char('cleaner_adequate', 1);
+			$table->char('cleaner_dedicated', 1);
+			$table->char('cleaner_trained', 1);
+			$table->tinyInteger('driver');
+			$table->char('driver_adequate', 1);
+			$table->char('driver_dedicated', 1);
+			$table->char('driver_trained', 1);
+			$table->tinyInteger('other_staff');
+			$table->char('other_staff_adequate', 1);
+			$table->char('sufficient_space', 1);
+			$table->char('equipment', 1);
+			$table->char('supplies', 1);
+			$table->char('personnel', 1);
+			$table->char('infrastructure', 1);
+			$table->char('other', 1);
+			$table->string('other_description');
 
-			$table->foreign('audit_response_id')->references('id')->on('audit_responses');
-            $table->foreign('audit_field_id')->references('id')->on('audit_fields');
+			$table->foreign('review_id')->references('id')->on('reviews');
+            
+            $table->softDeletes();
+			$table->timestamps();
+		});
+		//	SLMTA Info
+		Schema::create('review_slmta_info', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->integer('review_id')->unsigned();
+			$table->tinyInteger('official_slmta');
+			$table->smallInteger('tests_before_slmta');
+			$table->smallInteger('tests_this_year');
+			$table->smallInteger('cohort_id');
+			$table->date('baseline_audit_date')->nullable();
+			$table->date('slmta_workshop_date')->nullable();
+			$table->date('exit_audit_date')->nullable();
+			$table->smallInteger('baseline_score')->nullable();
+			$table->smallInteger('baseline_stars_obtained');
+			$table->smallInteger('exit_score')->nullable();
+			$table->smallInteger('exit_stars_obtained');
+			$table->date('last_audit_date')->nullable();
+			$table->smallInteger('last_audit_score')->nullable();
+			$table->tinyInteger('prior_audit_status');
+			$table->date('audit_start_date');
+			$table->date('audit_end_date');
+
+			$table->foreign('review_id')->references('id')->on('reviews');
+
+            $table->softDeletes();
+			$table->timestamps();
+		});
+		//	Audit response sections
+		Schema::create('review_sections', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->integer('review_id')->unsigned();
+			$table->integer('section_id')->unsigned();
+			$table->smallInteger('total_points');
+			$table->smallInteger('audited_score');
+
+			$table->foreign('review_id')->references('id')->on('reviews');
+            $table->foreign('section_id')->references('id')->on('sections');
+
+            $table->softDeletes();
+			$table->timestamps();
+		});
+		//	Audit data
+		Schema::create('review_question_answers', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->integer('review_id')->unsigned();
+			$table->integer('question_id')->unsigned();
+			$table->integer('answer_id')->unsigned();
+			$table->tinyInteger('score');
+
+			$table->foreign('review_id')->references('id')->on('reviews');
+            $table->foreign('question_id')->references('id')->on('questions');
+            $table->foreign('answer_id')->references('id')->on('answers');
+            $table->unique(array('review_id', 'question_id','answer_id'));
+
+            $table->softDeletes();
+			$table->timestamps();
+		});
+		//	Audit Comment/Non-compliance
+		Schema::create('review_notes', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->integer('review_id')->unsigned();
+			$table->integer('question_id')->unsigned();
+			$table->text('note');
+			$table->string('non_compliance');
+
+			$table->foreign('review_id')->references('id')->on('reviews');
+			$table->foreign('question_id')->references('id')->on('questions');
+
+            $table->softDeletes();
+			$table->timestamps();
+		});
+		//	Audit Action plan
+		Schema::create('review_action_plans', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->integer('review_id')->unsigned();
+			$table->text('action');
+			$table->string('responsible_person');
+			$table->string('timeline');
+
+			$table->foreign('review_id')->references('id')->on('reviews');
+
+            $table->softDeletes();
+			$table->timestamps();
+		});
+		//	Auditors
+		Schema::create('review_auditors', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->integer('review_id')->unsigned();
+			$table->integer('lead')->unsigned();
+			$table->integer('auditor')->unsigned();
+
+			$table->foreign('review_id')->references('id')->on('reviews');
+			$table->foreign('lead')->references('id')->on('users');
+			$table->foreign('auditor')->references('id')->on('users');
 
             $table->softDeletes();
 			$table->timestamps();
@@ -130,12 +354,21 @@ class CreateAuditTables extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('audits');
-		Schema::dropIfExists('audit_responses');
-		Schema::dropIfExists('af_parent_child');
-		Schema::dropIfExists('audit_fields');
-		Schema::dropIfExists('afg_parent_child');
-		Schema::dropIfExists('audit_field_groups');
+		Schema::dropIfExists('review_auditors');
+		Schema::dropIfExists('review_action_plans');
+		Schema::dropIfExists('review_notes');
+		Schema::dropIfExists('review_question_answers');
+		Schema::dropIfExists('review_sections');
+		Schema::dropIfExists('reviews');
+		Schema::dropIfExists('question_answers');
+		Schema::dropIfExists('answers');
+		Schema::dropIfExists('question_notes');
+		Schema::dropIfExists('question_parent_child');
+		Schema::dropIfExists('questions');
+		Schema::dropIfExists('section_notes');
+		Schema::dropIfExists('section_parent_child');
+		Schema::dropIfExists('sections');
+		Schema::dropIfExists('notes');
 		Schema::dropIfExists('audit_types');
 	}
 
