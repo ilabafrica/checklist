@@ -77,6 +77,16 @@ $('#section_id').change(function(){
             });
         });
 });
+
+$('.radiocc').change(function(){
+    var count = 0;
+    $.each($('.radiocc'), function(){
+        if( $(this).is(':checked')){
+            console.log($(this).val());
+        }    
+    });
+    //console.log(count);
+})
 /*End dynamic select list options*/
 /* Toggle buttons */
 $('.btn-toggle').click(function() {
@@ -112,12 +122,182 @@ $('#auditType').change(function(){
 });
 /* End dynamic selected audit type */
 /* Setting the score */
-$("form input:radio").click(function(){
+/*$("form input:radio").click(function(){
     alert($('input.radio').attr('name'));
 });
 $("form input:checkbox").click(function(){
     alert('Rihakoro');
-});
+});*/
 /* End setting the score */
 /* Setting the total */
 /* End setting the total */
+/* Functions to watch radio buttons and set scores */
+function noteChange() {
+  changed = true;
+}
+function getRadioClicked(name) {
+  $("input:radio[name="+name+"]").click(function() {
+    var value = $this.val();
+  });
+}
+function click_sub_sec(name) {
+    var ssid = name.substr(0, 5);
+    $('#'+ssid+'_score').click();
+}
+function watch_yna(name, score) {
+    var selector = "input[name='"+ name +"']";
+    $(selector).change(function() {
+        var out = 0;
+        // alert($(this).val());
+        switch($(this).val()) {
+        case 'YES':
+        case 'N/A':
+            out = score;
+            break;
+
+        case 'NO':
+            out = 0;
+            break;
+        default:
+            out = 0;
+        };
+        $('#'+name+'_score').val(out.toString());
+        $('#'+name+'_icon').remove();
+        changed = true;
+        set_total(name.substr(0,3));
+    });
+}
+
+function watch_ynp(name, score) {
+    var selector = "input[name='"+ name +"']";
+    $(selector).change(function() {
+        var out = 0;
+        // alert($(this).val());
+        switch($(this).val()) {
+        case 'YES':
+            out = score;
+            break;
+        case 'PARTIAL':
+            out = 1;
+            break;
+        case 'NO':
+            out = 0;
+            break;
+        default:
+            out = 0;
+        };
+        $('#'+name+'_score').val(out.toString());
+        $('#'+name+'_icon').remove();
+        changed = true;
+        if (name.length == 5) {// this is a sub section
+            $('input[name="'+ name+'"]:checked').each( function() {
+                $('#'+name+'_inc').val(0);
+            });
+        }
+        set_total(name.substr(0,3));
+    });
+}
+function set_score(id, score) {
+    var ct = $('#'+id).attr('rel');
+    var p = id.split('_')[0];
+    var yesct = 0,
+    noct = 0, 
+    nact= 0,
+    unset = 0;
+    var val, thisid;
+    $('input[name^="'+p+'"]:checked').each(function(i) {
+        var thisname = $(this).attr('name');
+        var x = p;
+        if (thisname.substr(0, 5) == p && (thisname.substr(-2) == 'yn'
+            || thisname.substr(-3) == 'yna'|| thisname.substr(-3) == 'ynp')) {
+            switch($(this).val()) {
+            case 'YES':
+            case 'N/A':
+                yesct++; 
+                break;
+            case 'NO': noct++;break;
+            // what happens for PARTIAL
+            default: unset++; 
+            }
+            
+            var rel = $('#'+id).attr('rel');
+            var calcval = 0;
+            var ynp = 'NO';
+            rel = parseInt(rel);
+            if (yesct == rel) {
+                calcval = score;
+                ynp = 'YES';
+            } else if (yesct <rel && yesct > 0) {
+                calcval = 1;
+                ynp = 'PARTIAL';
+            } 
+            var incct = rel - (yesct + noct);
+            $('#'+p+'_inc').val(incct.toString());
+            $('#'+id).val(calcval.toString());
+            $('#'+p+'_ynp').val(ynp);
+            set_total(id.substr(0,3));
+        }
+    });
+}
+
+function set_total(id) {
+    var myid = id+ '_total';
+    var incid = id + '_secinc';
+    var total = 0;
+    var val, abc;
+   $('input[name$="_score"]').each( function(i) {
+       val = $(this).val();
+       val = parseInt(val);
+       val = (isNaN(val)) ? 0: val;
+       total = total + val;
+       $('#'+myid).val(total);
+       abc = 0;
+   });
+   total = 0;
+   $('input[name$="_inc"]').each( function(i) {
+       val = $(this).val();
+       val = parseInt(val);
+       val = (isNaN(val)) ? 0: val;
+       total = total + val;
+       $('#'+incid).val(total);
+       abc = 0;
+   });
+    var xx= 0;
+}
+function count_ynaa_add(name) {
+    var yesct = 0,
+        noct = 0, 
+        nact= 0;
+    var i, val;
+    $('input[name$="_ynaa"]:checked').each( function(i) {
+        switch($(this).val()) {
+        case 'YES': yesct++; break;
+        case 'NO':  noct++; break;
+        case 'N/A': nact++; break;
+        default: 
+        }
+        $('#'+name+'_y_ct').val(yesct);
+        $('#'+name+'_n_ct').val(noct);
+        $('#'+name+'_na_ct').val(nact);
+    });
+    var na;
+}
+
+function count_ynp_add(name) {
+    var yesct = 0,
+        noct = 0, 
+        pct= 0;
+    var i, val;
+    $('input[name$="_ynp"]:checked').each( function(i) {
+        switch($(this).val()) {
+        case 'YES': yesct++; break;
+        case 'NO':  noct++; break;
+        case 'PARTIAL': pct++; break;
+        default: 
+        }
+        $('#'+name+'_y_ct').val(yesct);
+        $('#'+name+'_n_ct').val(noct);
+        $('#'+name+'_p_ct').val(pct);
+    });
+    var na;
+}

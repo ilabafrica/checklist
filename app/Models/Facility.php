@@ -20,4 +20,11 @@ class Facility extends Model {
 	{
 	 return $this->belongsTo('App\Models\FacilityType');
 	}
+	/**
+	* Relationship with town
+	*/
+	public function town()
+	{
+	 return $this->belongsTo('App\Models\Town');
+	}
 }

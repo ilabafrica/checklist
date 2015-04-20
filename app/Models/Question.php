@@ -30,14 +30,14 @@ class Question extends Model {
 	 */
 	public function answers()
 	{
-	  return $this->belongsToMany('App\Models\Answer', 'question_answers', 'answer_id', 'question_id');
+	  return $this->belongsToMany('App\Models\Answer', 'question_answers', 'question_id', 'answer_id');
 	}
 	/**
 	 * answers relationship
 	 */
 	public function notes()
 	{
-	  return $this->belongsToMany('App\Models\Note', 'question_notes', 'note_id', 'question_id');
+	  return $this->belongsToMany('App\Models\Note', 'question_notes', 'question_id', 'note_id');
 	}
 	//	Set parent for audit field if selected
 	public function setParent($field){

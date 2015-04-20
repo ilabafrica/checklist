@@ -179,7 +179,6 @@ class CreateAuditTables extends Migration {
 		Schema::create('reviews', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
-			$table->integer('user_id')->unsigned();
 			$table->integer('lab_id')->unsigned();
 			$table->integer('audit_type_id')->unsigned();
 			$table->text('summary_commendations')->nullable();
@@ -188,6 +187,7 @@ class CreateAuditTables extends Migration {
 			$table->smallInteger('total_points')->nullable();
 			$table->tinyInteger('stars')->nullable();
 			$table->integer('status');
+			$table->integer('user_id')->unsigned();
 			$table->integer('update_user_id')->unsigned();
 
             $table->foreign('audit_type_id')->references('id')->on('audit_types');
@@ -202,40 +202,38 @@ class CreateAuditTables extends Migration {
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
-			$table->string('telephone', 100)->nullable();
-			$table->string('email', 100)->nullable();
 			$table->string('head');
 			$table->string('head_work_telephone')->nullable();
 			$table->string('head_personal_telephone')->nullable();
-			$table->integer('lab_level_id')->unsigned();
-			$table->integer('lab_affiliation_id')->unsigned();
-			$table->tinyInteger('degree_staff');
-			$table->char('degree_staff_adequate', 1);
-			$table->tinyInteger('diploma_staff');
-			$table->char('diploma_staff_adequate', 1);
-			$table->tinyInteger('certificate_staff');
-			$table->char('certificate_staff_adequate', 1);
-			$table->tinyInteger('microscopist');
-			$table->char('microscopist_adequate', 1);
-			$table->tinyInteger('data_clerk');
-			$table->char('data_clerk_adequate', 1);
-			$table->tinyInteger('cleaner');
-			$table->char('cleaner_adequate', 1);
-			$table->char('cleaner_dedicated', 1);
-			$table->char('cleaner_trained', 1);
-			$table->tinyInteger('driver');
-			$table->char('driver_adequate', 1);
-			$table->char('driver_dedicated', 1);
-			$table->char('driver_trained', 1);
-			$table->tinyInteger('other_staff');
-			$table->char('other_staff_adequate', 1);
-			$table->char('sufficient_space', 1);
-			$table->char('equipment', 1);
-			$table->char('supplies', 1);
-			$table->char('personnel', 1);
-			$table->char('infrastructure', 1);
-			$table->char('other', 1);
-			$table->string('other_description');
+			$table->tinyInteger('degree_staff')->nullable();
+			$table->char('degree_staff_adequate', 1)->nullable();
+			$table->tinyInteger('diploma_staff')->nullable();
+			$table->char('diploma_staff_adequate', 1)->nullable();
+			$table->tinyInteger('certificate_staff')->nullable();
+			$table->char('certificate_staff_adequate', 1)->nullable();
+			$table->tinyInteger('microscopist')->nullable();
+			$table->char('microscopist_adequate', 1)->nullable();
+			$table->tinyInteger('data_clerk')->nullable();
+			$table->char('data_clerk_adequate', 1)->nullable();
+			$table->tinyInteger('phlebotomist')->nullable();
+			$table->char('phlebotomist_adequate', 1)->nullable();
+			$table->tinyInteger('cleaner')->nullable();
+			$table->char('cleaner_adequate', 1)->nullable();
+			$table->char('cleaner_dedicated', 1)->nullable();
+			$table->char('cleaner_trained', 1)->nullable();
+			$table->tinyInteger('driver')->nullable();
+			$table->char('driver_adequate', 1)->nullable();
+			$table->char('driver_dedicated', 1)->nullable();
+			$table->char('driver_trained', 1)->nullable();
+			$table->tinyInteger('other_staff')->nullable();
+			$table->char('other_staff_adequate', 1)->nullable();
+			$table->char('sufficient_space', 1)->nullable();
+			$table->char('equipment', 1)->nullable();
+			$table->char('supplies', 1)->nullable();
+			$table->char('personnel', 1)->nullable();
+			$table->char('infrastructure', 1)->nullable();
+			$table->char('other', 1)->nullable();
+			$table->string('other_description')->nullable();
 
 			$table->foreign('review_id')->references('id')->on('reviews');
             
@@ -248,6 +246,7 @@ class CreateAuditTables extends Migration {
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
 			$table->tinyInteger('official_slmta');
+			$table->integer('assessment_id')->unsigned();
 			$table->smallInteger('tests_before_slmta');
 			$table->smallInteger('tests_this_year');
 			$table->smallInteger('cohort_id');
@@ -265,6 +264,7 @@ class CreateAuditTables extends Migration {
 			$table->date('audit_end_date');
 
 			$table->foreign('review_id')->references('id')->on('reviews');
+			$table->foreign('assessment_id')->references('id')->on('assessments');
 
             $table->softDeletes();
 			$table->timestamps();
@@ -296,7 +296,7 @@ class CreateAuditTables extends Migration {
 			$table->foreign('review_id')->references('id')->on('reviews');
             $table->foreign('question_id')->references('id')->on('questions');
             $table->foreign('answer_id')->references('id')->on('answers');
-            $table->unique(array('review_id', 'question_id','answer_id'));
+            $table->unique(array('review_id', 'question_id'));
 
             $table->softDeletes();
 			$table->timestamps();
@@ -331,17 +331,15 @@ class CreateAuditTables extends Migration {
 			$table->timestamps();
 		});
 		//	Auditors
-		Schema::create('review_auditors', function(Blueprint $table)
+		Schema::create('review_assessors', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
-			$table->integer('lead')->unsigned();
-			$table->integer('auditor')->unsigned();
+			$table->integer('assessor_id')->unsigned();
 
 			$table->foreign('review_id')->references('id')->on('reviews');
-			$table->foreign('lead')->references('id')->on('users');
-			$table->foreign('auditor')->references('id')->on('users');
-
+			$table->foreign('assessor_id')->references('id')->on('users');
+			
             $table->softDeletes();
 			$table->timestamps();
 		});

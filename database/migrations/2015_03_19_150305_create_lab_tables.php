@@ -59,6 +59,9 @@ class CreateLabTables extends Migration {
 			$table->integer('lab_type_id')->unsigned();
 			$table->string('name')->nullable();
 			$table->string('address', 100)->nullable();
+			$table->string('fax')->nullable();
+			$table->string('telephone')->nullable();
+			$table->string('email')->nullable();
 			$table->string('lab_number')->nullable();
 			$table->integer('lab_level_id')->unsigned();
 			$table->integer('lab_affiliation_id')->unsigned();

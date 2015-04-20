@@ -15,4 +15,11 @@ class AuditType extends Model {
 	{
 	  return $this->hasMany('App\Models\Section');
 	}
+	/**
+	 * Reviews relationship
+	 */
+	public function reviews()
+	{
+	  return $this->hasMany('App\Models\Review');
+	}
 }
