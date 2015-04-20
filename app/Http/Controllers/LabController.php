@@ -11,7 +11,9 @@ use App\Models\Facility;
 use App\Models\LabLevel;
 use App\Models\LabAffiliation;
 use App\Models\LabType;
+use App\Models\AuditType;
 use Response;
+use Auth;
 
 class LabController extends Controller {
 
@@ -57,7 +59,7 @@ class LabController extends Controller {
         $lab->lab_level_id = $request->lab_level_id;
         $lab->lab_affiliation_id = $request->lab_affiliation_id;
         $lab->lab_type_id = $request->lab_type_id;
-        $lab->user_id = 1;
+        $lab->user_id = Auth::user()->id;;
         $lab->save();
 
         return redirect('lab')->with('message', 'Lab created successfully.');
@@ -120,7 +122,7 @@ class LabController extends Controller {
         $lab->lab_level_id = $request->lab_level_id;
         $lab->lab_affiliation_id = $request->lab_affiliation_id;
         $lab->lab_type_id = $request->lab_type_id;
-        $lab->user_id = 1;
+        $lab->user_id = Auth::user()->id;;
         $lab->save();
 
         return redirect('lab')->with('message', 'Lab updated successfully.');
@@ -142,5 +144,16 @@ class LabController extends Controller {
 	{
 		//
 	}
-
+	/**
+	 * Select a lab, ready to begin audit
+	 *
+	 */
+	public function select($id)
+	{
+		//	Return selected lab
+		$lab= Lab::find($id);
+		//	Get available audit types
+		$auditTypes = AuditType::all();
+		return view('audit.review.select', compact('lab', 'auditTypes'));
+	}
 }

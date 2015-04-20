@@ -9,6 +9,7 @@ use App\Http\Requests\TownRequest;
 use App\Models\Town;
 use App\Models\Constituency;
 use Response;
+use Auth;
 
 class TownController extends Controller {
 
@@ -47,7 +48,7 @@ class TownController extends Controller {
         $town->name = $request->name;
         $town->constituency_id = $request->constituency_id;
         $town->postal_code = $request->postal_code;
-        $town->user_id = 1;
+        $town->user_id = Auth::user()->id;;
         $town->save();
 
         return redirect('town')->with('message', 'Town created successfully.');
@@ -97,7 +98,7 @@ class TownController extends Controller {
         $town->name = $request->name;
         $town->constituency_id = $request->constituency_id;
         $town->postal_code = $request->postal_code;
-        $town->user_id = 1;
+        $town->user_id = Auth::user()->id;;
         $town->save();
 
         return redirect('town')->with('message', 'Town updated successfully.');

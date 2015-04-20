@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-<br /><br /><br />
+<br />
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
@@ -11,8 +11,11 @@
     </div>
 </div>
 <div class="panel panel-primary">
-    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.create-user', 1) }} </div>
+    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.edit-user', 1) }} </div>
     <div class="panel-body">
+
+        {!! Form::model($user, array('route' => array('user.update', $user->id), 
+        'method' => 'PUT', 'enctype' => 'multipart/form-data', 'id' => 'form-edit-user', 'class' => 'form-horizontal', 'files' => 'true')) !!}
         <div class="col-lg-6 main">
             <!-- Begin form --> 
             @if($errors->all())
@@ -21,8 +24,6 @@
                 {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
             </div>
             @endif
-            {!! Form::model($user, array('route' => array('user.update', $user->id), 
-        'method' => 'PUT', 'id' => 'form-edit-user', 'class' => 'form-horizontal')) !!}
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                 <!-- ./ csrf token -->
@@ -32,7 +33,7 @@
                         {!! Form::text('name', Input::old('name'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
-                 <div class="form-group">
+                <div class="form-group">
                     {!! Form::label('gender', Lang::choice('messages.gender', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
                         <label class="radio-inline">{!! Form::radio('gender', App\Models\User::MALE, true) !!}{{ Lang::choice('messages.sex', 1) }}</label>
@@ -41,8 +42,9 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('dob', Lang::choice('messages.dob', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
+                    <div class="col-sm-offset-4 col-sm-7 input-group input-append date datepicker" id="date-of-birth" style="margin-left:170px;">
                         {!! Form::text('dob', Input::old('dob'), array('class' => 'form-control')) !!}
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -100,9 +102,25 @@
                     <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                     </div>
                 </div>
-            {!! Form::close() !!} 
-            <!-- End form -->
-        </div> 
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="thumbnail">
+                        {!! HTML::image('images/profiles/'.$user->image, Lang::choice('messages.no-photo-available', 1), array('class'=>'img-responsive img-thumbnail user-image')) !!}
+                        
+                    </div>
+                </div>
+                <div class="col-md-8 col-sm-offset-1">
+                    <div class="form-group">
+                        <label>{{ Lang::choice('messages.profile-photo', 1) }}</label>
+                        {!! Form::file(Lang::choice('messages.photo', 1), null, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {!! Form::close() !!} 
+        <!-- End form --> 
     </div>
 </div>
 @stop

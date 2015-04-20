@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\FacilityTypeRequest;
 use App\Models\FacilityType;
 use Response;
+use Auth;
 
 class FacilityTypeController extends Controller {
 
@@ -43,7 +44,7 @@ class FacilityTypeController extends Controller {
 		$facilityType = new FacilityType;
         $facilityType->name = $request->name;
         $facilityType->description = $request->description;
-        $facilityType->user_id = 1;
+        $facilityType->user_id = Auth::user()->id;;
         $facilityType->save();
 
         return redirect('facilityType')->with('message', 'Facility type created successfully.');
@@ -87,7 +88,7 @@ class FacilityTypeController extends Controller {
 		$facilityType = FacilityType::findOrFail($id);;
         $facilityType->name = $request->name;
         $facilityType->description = $request->description;
-        $facilityType->user_id = 1;
+        $facilityType->user_id = Auth::user()->id;;
         $facilityType->save();
 
         return redirect('facilityType')->with('message', 'Facility type updated successfully.');

@@ -59,10 +59,9 @@ function toggle(className, obj){
 /*End toggle function*/
 /* Bootstrap 3 datepicker */
 $(function () {
-    $('#start').datetimepicker();
-    $('#stop').datetimepicker();
-    $('#date-of-birth').datetimepicker();
-    $('#date').datetimepicker();
+    $('.datepicker').datepicker({
+        format: 'mm-dd-yyyy'
+    });
 });
 /* End datepicker */
 /* Begin js for tree */
@@ -136,34 +135,3 @@ $('#tree2').treed({openedClass:'glyphicon-folder-open', closedClass:'glyphicon-f
         $('#name_label').show();
     }
 }).trigger('change');*/
-/* Toggle sidebar menu */
-$("#menu-toggle").click(function(e) {
-    e.preventDefault();
-    $("#sidebar").toggleClass("toggled");
-});
- $("#menu-toggle-2").click(function(e) {
-    e.preventDefault();
-    $("#sidebar").toggleClass("toggled-2");
-    $('#menu ul').hide();
-});
-
- function initMenu() {
-  $('#menu ul').hide();
-  $('#menu ul').children('.current').parent().show();
-  //$('#menu ul:first').show();
-  $('#menu li a').click(
-    function() {
-      var checkElement = $(this).next();
-      if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
-        return false;
-        }
-      if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
-        $('#menu ul:visible').slideUp('normal');
-        checkElement.slideDown('normal');
-        return false;
-        }
-      }
-    );
-  }
-$(document).ready(function() {initMenu();});
-/* End toggling */

@@ -8,4 +8,11 @@ class AuditType extends Model {
     protected $dates = ['deleted_at'];
 	protected $table = 'audit_types';
 
+	/**
+	 * Audit section relationship
+	 */
+	public function sections()
+	{
+	  return $this->hasMany('App\Models\Section');
+	}
 }

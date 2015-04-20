@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-<br /><br /><br />
+<br />
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
@@ -17,7 +17,7 @@
             <!-- Begin form --> 
             @if($errors->all())
             <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">{{Lang::choice('messages.close', 1)}}</span></button>
                 {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
             </div>
             @endif
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('lab_affiliation_id', Lang::choice('messages.lab-level', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    {!! Form::label('lab_affiliation_id', Lang::choice('messages.lab-affiliation', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
                         {!! Form::select('lab_affiliation_id', array(''=>trans('messages.select-lab-affiliation'))+$labAffiliations,
                             old('labAffiliation') ? old('labAffiliation') : $labAffiliation, 
@@ -51,7 +51,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('lab_type_id', Lang::choice('messages.lab-level', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    {!! Form::label('lab_type_id', Lang::choice('messages.lab-type', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
                         {!! Form::select('lab_type_id', array(''=>trans('messages.select-lab-type'))+$labTypes,
                             old('labType') ? old('labType') : $labType, 
@@ -62,7 +62,7 @@
                     <div class="col-sm-offset-4 col-sm-8">
                     {!! Form::button("<i class='glyphicon glyphicon-ok-circle'></i> ".Lang::choice('messages.save', 1), 
                           array('class' => 'btn btn-success', 'onclick' => 'submit()')) !!}
-                          {!! Form::button("<i class='glyphicon glyphicon-remove-circle'></i> ".'Reset', 
+                          {!! Form::button("<i class='glyphicon glyphicon-remove-circle'></i> ".Lang::choice('messages.reset', 1), 
                           array('class' => 'btn btn-default', 'onclick' => 'reset()')) !!}
                     <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                     </div>
