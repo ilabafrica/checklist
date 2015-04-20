@@ -46,7 +46,7 @@
                         </tr>
                         @forelse($users as $userKey=>$user)
                             <tr>
-                                <td>{{$user->username}}</td>
+                                <td>{{$user->name}}</td>
                                 @forelse($roles as $roleKey=>$role)
                                 <td>
                                     @if ($role == App\Models\Role::getAdminRole() && $user == App\Models\User::getAdminUser())

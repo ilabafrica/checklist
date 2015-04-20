@@ -29,13 +29,13 @@
                 <div class="form-group">
                     {!! Form::label('name', Lang::choice('messages.name', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('name', Input::old('name'), array('class' => 'form-control')) !!}
+                        {!! Form::text('name', Input::old('name'), array('class' => 'form-control', 'disabled')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('display_name', Lang::choice('messages.display-name', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('display_name', Input::old('display_name'), array('class' => 'form-control')) !!}
+                        {!! Form::text('display_name', Input::old('display_name'), array('class' => 'form-control', 'disabled')) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -57,16 +57,7 @@
             {!! Form::close() !!} 
             <!-- End form -->
         </div>
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ Lang::choice('messages.help', 1) }}
-                </div>
-                <div class="panel-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                </div>
-            </div>
-        </div> 
+       
     </div>
 </div>
 @stop

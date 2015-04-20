@@ -12,18 +12,18 @@
 </div>
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.privilege', '2') }} 
-        <span class="panel-btn">
+       <!--  <span class="panel-btn">
             <a class="btn btn-sm btn-info" href="{{ URL::to("role/create") }}" >
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 {{ Lang::choice('messages.create-role', '1') }}
             </a>
         </span>
         <span class="panel-btn">
-            <a class="btn btn-sm btn-info" href="{{ URL::to("permission/create") }}" >
+           <a class="btn btn-sm btn-info" href="{{ URL::to("permission/create") }}" >
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 {{ Lang::choice('messages.create-permission', '1') }}
             </a>
-        </span>
+        </span>-->
     </div>
     <div class="panel-body">
         <div class="row">
@@ -31,7 +31,7 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>{{ Lang::choice('messages.privilege', 2) }}</th>
+                            <th>{{ Lang::choice('messages.permission', 2) }}</th>
                             <th colspan="{{ count($roles)}}">{{ Lang::choice('messages.role', 2) }}</th>
                         </tr>
                     </thead>
