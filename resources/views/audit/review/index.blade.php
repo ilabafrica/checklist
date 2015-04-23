@@ -18,7 +18,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{$audit->id}}" aria-expanded="false" class="collapsed"><h5>{{ $audit->name }}</h5></a>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{$audit->id}}" aria-expanded="false" class="collapsed"><h5><strong>{{ $audit->name }}</strong></h5></a>
                     </h4>
                 </div>
                 <div id="collapse{{$audit->id}}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
@@ -36,8 +36,8 @@
                         </table>
                         <p>
                             <a href="#" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i><span> {{ Lang::choice('messages.new-audit', 1) }}</span></a>
-                            <a href="#" class="btn btn-default"><i class="fa fa-book"></i><span> {{ Lang::choice('messages.view-audit-data', 1) }}</span></a>
-                            <a href="#" class="btn btn-success"><i class="fa fa-database"></i><span> {{ Lang::choice('messages.view-summary', 1) }}</span></a>
+                            <a href="{{ url('review/assessment/'.$audit->id) }}" class="btn btn-default"><i class="fa fa-book"></i><span> {{ Lang::choice('messages.view-audit-data', 1) }}</span></a>
+                            <a href="{{ url('review/summary/'.$audit->id) }}" class="btn btn-success"><i class="fa fa-database"></i><span> {{ Lang::choice('messages.view-summary', 1) }}</span></a>
                         </p>
                     </div>
                     </div>

@@ -13,6 +13,7 @@ class Question extends Model {
 	const CHOICE = 0;
 	const DATE = 1;
 	const FIELD = 2;
+	const TEXTAREA = 3;
 
 	//	Constants for whether field is required
 	const REQUIRED = 1;
@@ -112,42 +113,26 @@ class Question extends Model {
 		DB::table('question_notes')->insert($fieldAdded);
 	}
 	/**
-	 * Display audit field according to field type
-	 */
-	/**
-	 * Display audit field according to field type
-	 */
-	/*public function fieldHTML($fieldType)
+	* Relationship with review questions answers
+	*/
+	public function qa($review)
 	{
-		switch($fieldType){
-			case AuditField::HEADING:
-				break;
-			case AuditField::INSTRUCTION:
-				break;
-			case AuditField::LABEL:
-				break;
-			case AuditField::QUESTION:
-				break;
-			case AuditField::SUBHEADING:
-				break;
-			case AuditField::TEXT:
-				break;
-			case AuditField::DATE:
-				break;
-			case AuditField::CHOICE:
-				break;
-			case AuditField::SELECT:
-				break;
-			case AuditField::TEXTAREA:
-				break;
-			case AuditField::CHECKBOX:
-				break;
-			case AuditField::MAINQUESTION:
-				break;
-			case AuditField::SUBQUESTION:
-				break;
-		}
+		$row = DB::table('review_question_answers')->where('review_id', $review)->where('question_id', $this->id)->lists('answer');
+		if(count($row)>0)
+			return $row;
+	}
+	/**
+	* Audit notes
+	*/
+	public function note($review){
+		return DB::table('review_notes')->where('review_id', $review)->where('question_id', $this->id)->first();
+	}
 
-		return $this->belongsToMany('App\Models\AuditField', 'af_parent_child', 'parent_id', 'field_id');
-	}*/
+	/**
+	* Audited scores
+	*/
+	public function points($review)
+	{
+		return DB::table('review_question_scores')->where('review_id', $review)->where('question_id', $this->id)->first();
+	}
 }

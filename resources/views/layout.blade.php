@@ -166,52 +166,6 @@
                             <a href="{{ URL::to('user')}}"><i class="fa fa-users"></i> {{ Lang::choice('messages.user', 2) }}</a>
                         </li>
                         <li>
-                            <a href="{{ URL::to('review')}}"><i class="fa fa-users"></i> {{ Lang::choice('messages.review', 2) }}</a>
-                        </li>
-                        @if(Request::segment(1)=="audit")
-                        {{--*/ $response = App\Models\Review::find(Request::segment(2)) /*--}}
-                        {{--*/ $auditType = $response->auditType /*--}}
-                        {{--*/ $lab = $response->lab /*--}}
-                            @if($auditType->id)
-                            <li>
-                                <a href="#"><i class="fa fa-clipboard"></i> {!! $auditType->name !!}<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level collapse">
-                                @foreach($auditType->auditFieldGroup as $fg)
-                                    @if(count($fg->children)!=0)
-                                    <li>
-                                        <a href="#"><i class="fa fa-folder-open"></i> {!! $fg->name !!}<span class="fa arrow"></span></a>
-                                        <ul class="nav nav-third-level collapse">
-                                            @foreach($fg->children as $kid)
-                                                @if(count($kid->children)!=0)
-                                                <li>
-                                                    <a href="#"><i class="fa fa-folder-open"></i> {!! $kid->name !!}<span class="fa arrow"></span></a>
-                                                    <ul class="nav nav-third-level collapse">
-                                                        @foreach($kid->children as $grand)
-                                                            <li>
-                                                                <a href="{{ url('/audit/'.$response->id.'/create/'.$grand->id) }}"><i class="fa fa-paperclip"></i> {!! $grand->name !!} </a>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
-                                                </li>
-                                                @else
-                                                    <li>
-                                                        <a href="{{ url('/audit/'.$response->id.'/create/'.$kid->id) }}"><i class="fa fa-paperclip"></i> {!! $kid->name !!} </a>
-                                                    </li>
-                                                @endif
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                    @else
-                                        <li>
-                                            <a href="{{ url('/audit/'.$response->id.'/create/'.$fg->id) }}"><i class="fa fa-paperclip"></i> {!! $fg->name !!} </a>
-                                        </li>
-                                    @endif
-                                @endforeach
-                                </ul>
-                            </li>
-                            @endif
-                        @endif
-                        <li>
                             <a href="{{ URL::to('review')}}"><i class="fa fa-book"></i> {{ Lang::choice('messages.audit', 2) }}</a>
                         </li>
                         <li>

@@ -270,16 +270,15 @@ class CreateAuditTables extends Migration {
 			$table->timestamps();
 		});
 		//	Audit response sections
-		Schema::create('review_sections', function(Blueprint $table)
+		Schema::create('review_question_scores', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
-			$table->integer('section_id')->unsigned();
-			$table->smallInteger('total_points');
+			$table->integer('question_id')->unsigned();
 			$table->smallInteger('audited_score');
 
 			$table->foreign('review_id')->references('id')->on('reviews');
-            $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('question_id')->references('id')->on('questions');
 
             $table->softDeletes();
 			$table->timestamps();
@@ -290,12 +289,10 @@ class CreateAuditTables extends Migration {
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
 			$table->integer('question_id')->unsigned();
-			$table->integer('answer_id')->unsigned();
-			$table->tinyInteger('score');
+			$table->string('answer');
 
 			$table->foreign('review_id')->references('id')->on('reviews');
             $table->foreign('question_id')->references('id')->on('questions');
-            $table->foreign('answer_id')->references('id')->on('answers');
             $table->unique(array('review_id', 'question_id'));
 
             $table->softDeletes();

@@ -78,15 +78,6 @@ $('#section_id').change(function(){
         });
 });
 
-$('.radiocc').change(function(){
-    var count = 0;
-    $.each($('.radiocc'), function(){
-        if( $(this).is(':checked')){
-            console.log($(this).val());
-        }    
-    });
-    //console.log(count);
-})
 /*End dynamic select list options*/
 /* Toggle buttons */
 $('.btn-toggle').click(function() {
@@ -121,6 +112,49 @@ $('#auditType').change(function(){
         });
 });
 /* End dynamic selected audit type */
+/* Functions to submit action plan without page reload */
+function saveActionPlan(rid){
+    follow_up_action =  $("#action_"+rid).val();
+    responsible_person =  $("#person_"+rid).val();
+    timeline =  $("#timeline_"+rid).val();
+    _token: JSON.stringify($('input[name=_token]').val());
+    $.ajax({
+        type: 'POST',
+        url:  '/review/plan',
+        data: {review_id: rid, follow_up_action: follow_up_action, responsible_person: responsible_person, timeline: timeline, action: "add", '_token': $('input[name=_token]').val()},
+        success: function(){
+            drawActionPlan(rid);
+        }
+    });
+}
+/**
+ * Request a json string from the server containing contents of the action plan table for this review
+ * and then draws a table based on this data.
+ * @param  {int} rid      Review Id
+ * @return {void}          No return
+ */
+function drawActionPlan(rid){
+    $.getJSON('/review/plan', { review_id: rid, action: "draw"}, 
+        function(data){
+            var tableBody ="";
+            $.each(data, function(index, elem){
+                tableBody += "<tr>"
+                +" <td>"+elem.follow_up_action+" </td>"
+                +" <td>"+elem.responsible_person+"</td>"
+                +" <td>"+elem.timeline+"</td>"
+                +" <td> </td>"
+                +"</tr>";
+            });
+            tableBody += "<tr>"
+                +"<td><textarea id='action_"+rid+"' class='form-control' rows='3'></textarea></td>"
+                +"<td><textarea id='person_"+rid+"' class='form-control' rows='3'></textarea></td>"
+                +"<td><textarea id='timeline_"+rid+"' class='form-control' rows='3'></textarea></td>"
+                +"<td><a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='saveObservation("+rid+")'><i class='fa fa-save'></i> Save</a></td>"
+                +"</tr>";
+            $("#action_plan_"+rid).html(tableBody);
+        }
+    );
+}
 /* Setting the score */
 /*$("form input:radio").click(function(){
     alert($('input.radio').attr('name'));
@@ -132,114 +166,63 @@ $("form input:checkbox").click(function(){
 /* Setting the total */
 /* End setting the total */
 /* Functions to watch radio buttons and set scores */
-function noteChange() {
-  changed = true;
+//  Function to return the question ID dynamically
+function questionId(str){
+    return str.split('_')[1];
 }
-function getRadioClicked(name) {
-  $("input:radio[name="+name+"]").click(function() {
-    var value = $this.val();
-  });
-}
-function click_sub_sec(name) {
-    var ssid = name.substr(0, 5);
-    $('#'+ssid+'_score').click();
-}
-function watch_yna(name, score) {
-    var selector = "input[name='"+ name +"']";
-    $(selector).change(function() {
-        var out = 0;
-        // alert($(this).val());
-        switch($(this).val()) {
-        case 'YES':
-        case 'N/A':
-            out = score;
-            break;
-
-        case 'NO':
-            out = 0;
-            break;
-        default:
-            out = 0;
-        };
-        $('#'+name+'_score').val(out.toString());
-        $('#'+name+'_icon').remove();
-        changed = true;
-        set_total(name.substr(0,3));
+//  Function to set the score for the main question if elements are selected
+function noteChange(name, points){
+    var id = questionId(name);
+    var count = 0;
+    var sum = 0;
+    var questions = $('.radio_'+id).length;
+    var answers = ['YES', 'PARTIAL', 'NO'];
+    $.each($('.radio_'+id), function(){
+        if( $(this).is(':checked')){
+            sum+=parseInt($(this).val());
+            count++;
+            //console.log($(this).val());
+        }    
     });
+    if(sum==questions){
+        $('#points_'+id).val(points);
+        $('#answer_'+id).val(answers[0]);
+    }
+    else if(sum==count*2){
+        $('#points_'+id).val(0);
+        $('#answer_'+id).val(answers[2]);
+    }
+    else{
+        $('#points_'+id).val(1);
+        $('#answer_'+id).val(answers[1]);
+    }
 }
-
-function watch_ynp(name, score) {
-    var selector = "input[name='"+ name +"']";
-    $(selector).change(function() {
-        var out = 0;
-        // alert($(this).val());
-        switch($(this).val()) {
-        case 'YES':
-            out = score;
-            break;
-        case 'PARTIAL':
-            out = 1;
-            break;
-        case 'NO':
-            out = 0;
-            break;
-        default:
-            out = 0;
-        };
-        $('#'+name+'_score').val(out.toString());
-        $('#'+name+'_icon').remove();
-        changed = true;
-        if (name.length == 5) {// this is a sub section
-            $('input[name="'+ name+'"]:checked').each( function() {
-                $('#'+name+'_inc').val(0);
-            });
-        }
-        set_total(name.substr(0,3));
+//  Set score for main question
+function scoreMain(name, points){
+    var id = questionId(name);
+    var count = 0;
+    var answer = 0;
+    $.each($('.radio_'+id), function(){
+        if( $(this).is(':checked')){
+            answer+=parseInt($(this).val());
+        }    
     });
+    if(answer == 1)
+        $('#points_'+id).val(points);
+    else if(answer == 2)
+        $('#points_'+id).val(0);
+    else
+        $('#points_'+id).val(1);
 }
-function set_score(id, score) {
-    var ct = $('#'+id).attr('rel');
-    var p = id.split('_')[0];
-    var yesct = 0,
-    noct = 0, 
-    nact= 0,
-    unset = 0;
-    var val, thisid;
-    $('input[name^="'+p+'"]:checked').each(function(i) {
-        var thisname = $(this).attr('name');
-        var x = p;
-        if (thisname.substr(0, 5) == p && (thisname.substr(-2) == 'yn'
-            || thisname.substr(-3) == 'yna'|| thisname.substr(-3) == 'ynp')) {
-            switch($(this).val()) {
-            case 'YES':
-            case 'N/A':
-                yesct++; 
-                break;
-            case 'NO': noct++;break;
-            // what happens for PARTIAL
-            default: unset++; 
-            }
-            
-            var rel = $('#'+id).attr('rel');
-            var calcval = 0;
-            var ynp = 'NO';
-            rel = parseInt(rel);
-            if (yesct == rel) {
-                calcval = score;
-                ynp = 'YES';
-            } else if (yesct <rel && yesct > 0) {
-                calcval = 1;
-                ynp = 'PARTIAL';
-            } 
-            var incct = rel - (yesct + noct);
-            $('#'+p+'_inc').val(incct.toString());
-            $('#'+id).val(calcval.toString());
-            $('#'+p+'_ynp').val(ynp);
-            set_total(id.substr(0,3));
-        }
+//  Function to set the sub-total score for a section
+function sub_total(){
+    console.log('This shit works!');
+}
+/*$('.page_12').on('input', function(){
+    $.each($('.page_12'), function(){
+        console.log('This shit works!');
     });
-}
-
+});*/
 function set_total(id) {
     var myid = id+ '_total';
     var incid = id + '_secinc';
@@ -263,41 +246,4 @@ function set_total(id) {
        abc = 0;
    });
     var xx= 0;
-}
-function count_ynaa_add(name) {
-    var yesct = 0,
-        noct = 0, 
-        nact= 0;
-    var i, val;
-    $('input[name$="_ynaa"]:checked').each( function(i) {
-        switch($(this).val()) {
-        case 'YES': yesct++; break;
-        case 'NO':  noct++; break;
-        case 'N/A': nact++; break;
-        default: 
-        }
-        $('#'+name+'_y_ct').val(yesct);
-        $('#'+name+'_n_ct').val(noct);
-        $('#'+name+'_na_ct').val(nact);
-    });
-    var na;
-}
-
-function count_ynp_add(name) {
-    var yesct = 0,
-        noct = 0, 
-        pct= 0;
-    var i, val;
-    $('input[name$="_ynp"]:checked').each( function(i) {
-        switch($(this).val()) {
-        case 'YES': yesct++; break;
-        case 'NO':  noct++; break;
-        case 'PARTIAL': pct++; break;
-        default: 
-        }
-        $('#'+name+'_y_ct').val(yesct);
-        $('#'+name+'_n_ct').val(noct);
-        $('#'+name+'_p_ct').val(pct);
-    });
-    var na;
 }

@@ -29,7 +29,7 @@ class Section extends Model {
 	 */
 	public function children()
 	{
-		return $this->belongsToMany('App\Models\Section', 'section_parent_child', 'section_id', 'parent_id');
+		return $this->belongsToMany('App\Models\Section', 'section_parent_child', 'parent_id', 'section_id');
 	}
 	//	Set parent for audit field group if selected
 	public function setParent($field){

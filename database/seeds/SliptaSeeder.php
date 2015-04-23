@@ -866,23 +866,96 @@ class SliptaSeeder extends Seeder
         $question_workerBioTrained = Question::create(array("section_id" => $sec_sec12->id, "name" => "Laboratory workers trained in Biosafety", "title" => "", "description" => "12.10 Are drivers/couriers and cleaners working with the laboratory trained in Biosafety practices relevant to their job tasks?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
         $question_safetyOfficer = Question::create(array("section_id" => $sec_sec12->id, "name" => "Trained safety officer designated to implement and monitor the safety program ", "title" => "", "description" => "12.21 Is a trained safety officer designated to implement and monitor the safety program in the laboratory, including the training of other staff?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
         //  Criteria 1
-        $question_controlValMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Control values quantitative tests", "title" => "2.1 Monitoring of Control values", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_controlValMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Control values semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_controlValMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Control values qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_stdsMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal standards quantitative tests", "title" => "2.2 Monitoring with internal standards", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_stdsMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal standards semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_stdsMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal standards qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_newBatchMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "New batch of kits quantitative tests", "title" => "2.3 Monitoring with internal standards", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_newBatchMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "New batch of kits semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_newBatchMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "New batch of kits qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_stdsKitsValMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal controls and kits validation quantitative tests", "title" => "2.4 Documentation of internal controls and kits validation", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_stdsKitsValMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal controls and kits validation semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_stdsKitsValMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal controls and kits validation qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_controlValMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Control values quantitative tests", "title" => "2.1 Monitoring of Control values", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_controlValMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Control values semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_controlValMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Control values qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal standards quantitative tests", "title" => "2.2 Monitoring with internal standards", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal standards semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal standards qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_newBatchMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "New batch of kits quantitative tests", "title" => "2.3 Monitoring with internal standards", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_newBatchMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "New batch of kits semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_newBatchMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "New batch of kits qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsKitsValMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal controls and kits validation quantitative tests", "title" => "2.4 Documentation of internal controls and kits validation", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsKitsValMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal controls and kits validation semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsKitsValMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal controls and kits validation qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_critCommRec = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Criteria 1 comments and recommendations", "title" => "COMMENTS and RECOMMENDATIONS", "description" => "COMMENTS and RECOMMENDATIONS", "question_type" => "3", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
         //  Criteria 2
-        /*$question_hivSer1 = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV panel", "title" => "HIV Serology", "description" => "Most recent HIV panel", "question_type" => "1", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_hivSer2 = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Internal standards semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        $question_stdsMonQual = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Internal standards qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
-        */
+        $criteria2_hivSerology = Question::create(array("section_id" => $sec_criteria2->id, "name" => "HIV Serology", "title" => "HIV Serology", "description" => "HIV Serology", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV panel date", "title" => "3.1 Most recent HIV panel", "description" => "2.1 Most recent HIV panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV panel date", "title" => "3.2 Second most recent HIV panel", "description" => "2.2 Second most recent HIV panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR = Question::create(array("section_id" => $sec_criteria2->id, "name" => "HIV DNA PCR", "title" => "HIV DNA PCR", "description" => "HIV DNA PCR", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV DNA PCR panel date", "title" => "3.3 Most recent HIV DNA PCR panel", "description" => "2.3 Most recent HIV DNA PCR panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV DNA PCR panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV DNA PCR panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV DNA PCR panel date", "title" => "3.4 Second most recent HIV DNA PCR panel", "description" => "2.4 Second most recent HIV DNA PCR panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV DNA PCR panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV DNA PCR panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivViralLoad = Question::create(array("section_id" => $sec_criteria2->id, "name" => "HIV Viral Load", "title" => "HIV Viral Load", "description" => "HIV Viral Load", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Viral Load panel date", "title" => "3.5 Most recent Viral Load panel", "description" => "2.5 Most recent Viral Load panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Viral Load panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Viral Load panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Viral Load panel date", "title" => "3.6 Second most recent Viral Load panel", "description" => "2.6 Second most recent Viral Load panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Viral Load panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Viral Load panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD4 = Question::create(array("section_id" => $sec_criteria2->id, "name" => "CD4 Count", "title" => "CD4 Count", "description" => "CD4 Count", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD41date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent CD4 panel date", "title" => "3.7 Most recent CD4 panel", "description" => "2.7 Most recent CD4 panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD41res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent CD4 panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD41per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent CD4 panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD42date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent CD4 panel date", "title" => "3.8 Second most recent CD4 panel", "description" => "2.8 Second most recent CD4 panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD42res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent CD4 panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD42per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent CD4 panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Chemistry", "title" => "Chemistry", "description" => "Chemistry", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Chemistry panel date", "title" => "3.9 Most recent Chemistry panel", "description" => "2.9 Most recent Chemistry panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Chemistry panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Chemistry panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Chemistry panel date", "title" => "3.10 Second most recent Chemistry panel", "description" => "2.10 Second most recent Chemistry panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Chemistry panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Chemistry panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Hematology", "title" => "Hematology", "description" => "Hematology", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Hematology panel date", "title" => "3.11 Most recent Hematology panel", "description" => "2.11 Most recent Hematology panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Hematology panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Hematology panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Hematology panel date", "title" => "3.12 Second most recent Hematology panel", "description" => "2.12 Second most recent Hematology panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Hematology panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Hematology panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Malaria", "title" => "Malaria", "description" => "Malaria", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Malaria panel date", "title" => "3.13 Most recent Malaria panel", "description" => "2.13 Most recent Malaria panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Malaria panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Malaria panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Malaria panel date", "title" => "3.14 Second most recent Malaria panel", "description" => "2.14 Second most recent Malaria panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Malaria panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Malaria panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tb = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Mycobacterium Tuberculosis", "title" => "Mycobacterium Tuberculosis", "description" => "Mycobacterium Tuberculosis", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB smear panel date", "title" => "3.15 Most recent TB smear panel", "description" => "2.15 Most recent TB smear panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB smear panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB smear panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB smear panel date", "title" => "3.16 Second most recent TB smear panel", "description" => "2.16 Second most recent TB smear panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB smear panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB smear panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB culture panel date", "title" => "3.17 Most recent TB culture panel", "description" => "2.17 Most recent TB culture panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB culture panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB culture panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB culture panel date", "title" => "3.18 Second most recent TB culture panel", "description" => "2.18 Second most recent TB culture panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB culture panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB culture panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent drug susceptibility panel date", "title" => "3.19 Most recent drug susceptibility panel", "description" => "2.19 Most recent drug susceptibility panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent drug susceptibility panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent drug susceptibility panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent drug susceptibility panel date", "title" => "3.20 Second most recent drug susceptibility panel", "description" => "2.20 Second most recent drug susceptibility panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent drug susceptibility panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent drug susceptibility panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Other disease of significance", "title" => "Other disease of public health significance (please specify)", "description" => "Malaria", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other11date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent PT panel date", "title" => "3.21 Most recent PT panel", "description" => "2.21 Most recent PT panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other11res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent PT panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other11per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent PT panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other12date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent PT panel date", "title" => "3.22 Second most recent PT panel", "description" => "2.22 Second most recent PT panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other12res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent PT panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other12per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent PT panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        
         $this->command->info('Questions table seeded');
 
          /* Question-Notes */
@@ -2709,6 +2782,166 @@ class SliptaSeeder extends Seeder
             array("question_id" => $question_safetyOfficer->id, "answer_id" => $answer_partial->id));
         DB::table('question_answers')->insert(
             array("question_id" => $question_safetyOfficer->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonSQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonSQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonSQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQual->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQual->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQual->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonSQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonSQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonSQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQual->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQual->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQual->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonSQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonSQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonSQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQual->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQual->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQual->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonSQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonSQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonSQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQual->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQual->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQual->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivPanel1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivPanel1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivPanel2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivPanel2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivDNAPCR1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivDNAPCR1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivDNAPCR2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivDNAPCR2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_viralLoad1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_viralLoad1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_viralLoad2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_viralLoad2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_CD41res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_CD41res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_CD42res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_CD42res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_chemistry1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_chemistry1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_chemistry2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_chemistry2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hematology1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hematology1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hematology2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hematology2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_malaria1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_malaria1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_malaria2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_malaria2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbSmear1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbSmear1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbSmear2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbSmear2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbCulture1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbCulture1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbCulture2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbCulture2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbDrug1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbDrug1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbDrug2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbDrug2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_other11res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_other11res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_other12res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_other12res->id, "answer_id" => $answer_no->id));
         
         $this->command->info('Question-answers table seeded');
 
@@ -3139,6 +3372,154 @@ class SliptaSeeder extends Seeder
             array("question_id" => $question_spillKit->id, "parent_id" => $question_stdSafetyEquip->id));
         DB::table('question_parent_child')->insert(
             array("question_id" => $question_firstAid->id, "parent_id" => $question_stdSafetyEquip->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_controlValMonSQ->id, "parent_id" => $criteria1_controlValMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_controlValMonQual->id, "parent_id" => $criteria1_controlValMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_stdsMonSQ->id, "parent_id" => $criteria1_stdsMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_stdsMonQual->id, "parent_id" => $criteria1_stdsMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_newBatchMonSQ->id, "parent_id" => $criteria1_newBatchMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_newBatchMonQual->id, "parent_id" => $criteria1_newBatchMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonSQ->id, "parent_id" => $criteria1_stdsKitsValMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQual->id, "parent_id" => $criteria1_stdsKitsValMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel1date->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel1res->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel1per->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel2date->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel2res->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel2per->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR1date->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR1res->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR1per->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR2date->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR2res->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR2per->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad1date->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad1res->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad1per->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad2date->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad2res->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad2per->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD41date->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD41res->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD41per->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD42date->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD42res->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD42per->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry1date->id, "parent_id" => $criteria2_chemistry->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry1res->id, "parent_id" => $criteria2_chemistry->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry1per->id, "parent_id" => $criteria2_chemistry->id));
+         DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry2date->id, "parent_id" => $criteria2_chemistry->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry2res->id, "parent_id" => $criteria2_chemistry->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry2per->id, "parent_id" => $criteria2_chemistry->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology1date->id, "parent_id" => $criteria2_hematology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology1res->id, "parent_id" => $criteria2_hematology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology1per->id, "parent_id" => $criteria2_hematology->id));
+         DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology2date->id, "parent_id" => $criteria2_hematology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology2res->id, "parent_id" => $criteria2_hematology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology2per->id, "parent_id" => $criteria2_hematology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria1date->id, "parent_id" => $criteria2_malaria->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria1res->id, "parent_id" => $criteria2_malaria->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria1per->id, "parent_id" => $criteria2_malaria->id));
+         DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria2date->id, "parent_id" => $criteria2_malaria->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria2res->id, "parent_id" => $criteria2_malaria->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria2per->id, "parent_id" => $criteria2_malaria->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear1date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear1res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear1per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear2date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear2res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear2per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture1date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture1res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture1per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture2date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture2res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture2per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug1date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug1res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug1per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug2date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug2res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug2per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other11date->id, "parent_id" => $criteria2_other->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other11res->id, "parent_id" => $criteria2_other->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other11per->id, "parent_id" => $criteria2_other->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other12date->id, "parent_id" => $criteria2_other->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other12res->id, "parent_id" => $criteria2_other->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other12per->id, "parent_id" => $criteria2_other->id));
         
         $this->command->info('Question parent-child table seeded');
     }

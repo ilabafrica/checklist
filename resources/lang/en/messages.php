@@ -32,7 +32,13 @@ return [
 	'reset'	=>	'Reset',
 	'close'	=>	'Close',
 	'next'	=>	'Next',
+	'back'	=>	'Back',
 	'sign-out'	=>	'Sign out',
+	'count'	=>	'No.',
+	'yes'	=>	'Yes',
+	'no'	=>	'No',
+	'insufficient-data'	=>	'Insufficient Data',
+	'save-and-continue'	=>	'Save and Continue',
 	/* Roles */
 	'role'	=>	'Role|Roles',
 	'create-role'	=>	'Create Role',
@@ -135,7 +141,7 @@ return [
 	'point'	=>	'Point|Points',
 	'select-note'	=>	'Select Note',
 	/* Audit Fields */
-	'question'	=>	'Audit Question|Audit Questions',
+	'question'	=>	'Question|Questions',
 	'create-question'	=>	'Create Question',
 	'edit-question'	=>	'Edit Question',
 	'id-name'	=>	'ID/Name',
@@ -157,7 +163,6 @@ return [
 	'response-no'	=>	'Response No.',
 	'assessor'	=>	'Assessor',
 	'result'	=>	'Result|Results',
-	'no'	=>	'No.',
 	'response'	=>	'Response',
 	'please-select'	=>	'---Please Select---',
 	'new-audit'	=>	'New Audit',
@@ -203,6 +208,7 @@ return [
 	'order'	=>	'Order Section',
 	'select-order'	=>	'Select Order Section',
 	/* SLMTA Info */
+	'slmta-info'	=>	'SLMTA Info',
 	'official-slmta'	=>	'Official SLMTA Audit?',
 	'audit-start-date'	=>	'Audit Start Date',
 	'audit-end-date'	=>	'Audit End Date',
@@ -230,6 +236,7 @@ return [
 	'four-stars'	=>	'4 Stars',
 	'five-stars'	=>	'5 Stars',
 	/* Lab Info */
+	'lab-info'	=>	'Lab Info',
 	'select-lead'	=>	'Select Lead Auditor',
 	'names-affiliations-of-auditors'	=>	'Name(s) and Affiliation(s) of Auditor(s)',
 	'lab-name'	=>	'Laboratory Name',
@@ -242,9 +249,7 @@ return [
 	'lab-head-telephone-personal'	=>	'Telephone (Head of Laboratory - Personal)',
 	'lab-head-telephone-work'	=>	'Telephone (Head of Laboratory - Work)',
 	/* Staffing Summary */
-	'yes'	=>	'Yes',
-	'no'	=>	'No',
-	'insufficient-data'	=>	'Insufficient Data',
+	'staffing-summary'	=>	'Staffing Summary',
 	'profession'	=>	'Profession',
 	'fulltime-employees'	=>	'No. of Full Time Employees',
 	'adequate'	=>	'Adequate for Facility Operations',
@@ -262,7 +267,9 @@ return [
 	'driver-trained'	=>	'Has the driver(s) been trained in biosafety?',
 	'other'	=>	'Other',
 	'staff-note'	=>	'If the laboratory has IT specialists accountants or non-laboratory-trained management staff, this should be indicated in the description of the organizational structure on the following page.',
+	'sub-total'	=>	'Subtotal',
 	/* Organizational Structure */
+	'org-structure'	=>	'Org Structure',
 	'org-structure-note'	=>	'<strong>Does the laboratory have sufficient space, equipment, supplies, personnel, infrastructure, etc. to execute the correct and timely performance of each test and maintain the quality management system?</strong> If no, please elaborate in the summary and recommendations section at the end of the checklist.',
 	'sufficient-space'	=>	'Sufficient Space',
 	'equipment'	=>	'Equipment',
@@ -272,8 +279,33 @@ return [
 	'other-specify'	=>	'Other - Please specify:',
 	/* Sections */
 	'general-note'	=>	'For each item, please circle either Yes (Y), Partial (P), or No (N). All elements of the question must be satisfactorily present to indicate "yes". Provide explanation or further comments for each "partial" or "no" response.',
+	/* Criteria */
+	'criteria-1'	=>	'Criteria 1',
+	'criteria-one'	=>	'Are internal control procedures routinely conducted for all test methods?',
+	'frequency'	=>	'Frequency',
+	'daily'	=>	'Daily',
+	'weekly'	=>	'Weekly',
+	'with-every-run'	=>	'W/Every Run',
+	'criteria-2'	=>	'Criteria 2',
+	'criteria-two'	=>	'Has the laboratory achieved acceptable PT results of at least 80% on the two most recent PT challenges?',
+	'date-of-panel-receipt'	=>	'Date of panel receipt',
+	'within-days'	=>	'Were results reported within 15 days?',
+	'percentage-correct'	=>	'Results & % Correct',
 	/* Reports */
 	'report'	=>	'Report|Reports',
 	'view-summary'	=>	'View Summary',
 	'view-audit-data'	=>	'View Audit Data',
+	'download-summary'	=>	'Download Summary',
+	'total-audits'	=>	'Audits Done',
+	/* Summary */
+	'summary'	=>	'Summary',
+	'commendations'	=>	'Commendations',
+	'challenges'	=>	'Challenges',
+	'recommendations'	=>	'Recommendations',
+	/* Action Plan */
+	'action-plan'	=>	'ACTION PLAN (if applicable)|Action Plan',
+	'follow-up-actions'	=>	'Follow-Up Actions',
+	'responsible-persons'	=>	'Responsible Persons',
+	'timeline'	=>	'Timeline',
+	'signature'	=>	'Signature',
 ];
