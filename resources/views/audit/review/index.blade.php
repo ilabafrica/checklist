@@ -13,10 +13,12 @@
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit', 2) }}
         <span class="panel-btn">
-            <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
+         <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 {{ Lang::choice('messages.create-audit', 1) }}
-            </a>
+         </a>
+           
+
         </span>
     </div>
     <div class="panel-body">
