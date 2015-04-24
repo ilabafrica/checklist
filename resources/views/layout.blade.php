@@ -57,7 +57,7 @@
             <!-- Audit, Lab - Depending on permissions -->
             <ul class="nav navbar-top-links navbar-left">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="{{ route('review.index') }}" role="button" aria-expanded="false">
+                    <a href="{{ route('review.index') }}" role="button" aria-expanded="false">
                         <span class="fa fa-clipboard"></span> {{ Lang::choice('messages.audit', 2) }}
                     </a>
                 </li>
