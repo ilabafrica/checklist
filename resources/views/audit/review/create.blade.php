@@ -906,7 +906,7 @@
                                                                     {!! Form::text('answer_'.$question->id, '', array('class' => 'form-control', 'id' => 'answer_'.$question->id, 'readonly')) !!}
                                                                 </div>
                                                                 <div class="col-sm-6">
-                                                                    <div class="form-group input-group"><input type="text" name="points_{{$question->id}}" id="points_{{$question->id}}" class="form-control page_{{$page->id}}" oninput="sub_total()"><span class="input-group-addon">/{!! $question->score !!}</span></div>
+                                                                    <div class="form-group input-group"><input type="text" name="points_{{$question->id}}" id="points_{{$question->id}}" class="form-control page_{{$page->id}}" oninput="sub_total('page_{{$page->id}}')" readonly><span class="input-group-addon">/{!! $question->score !!}</span></div>
                                                                 </div>
                                                             </div>
                                                         @else
@@ -917,7 +917,7 @@
                                                                 @endforeach
                                                                 </div>
                                                                 <div class="col-sm-4">
-                                                                    <div class="form-group input-group"><input type="text" name="points_{{$question->id}}" id="points_{{$question->id}}" class="form-control page_{{$page->id}}" oninput="sub_total()"><span class="input-group-addon">/{!! $question->score !!}</span></div>
+                                                                    <div class="form-group input-group"><input type="text" name="points_{{$question->id}}" id="points_{{$question->id}}" class="form-control page_{{$page->id}}" oninput="sub_total('page_{{$page->id}}')" readonly><span class="input-group-addon">/{!! $question->score !!}</span></div>
                                                                 </div>
                                                             </div>
                                                         @endif
@@ -940,7 +940,7 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-4">
-                                                    {{ $kid->description }}<br /><i><small>{{ $kid->info }}</small></i>
+                                                    {!! $kid->title?'<strong><u>'.$kid->title.'</u></strong><br />':''.$kid->description !!}<br /><i><small>{{ $kid->info }}</small></i>
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <div class="row">

@@ -102,4 +102,12 @@ class Section extends Model {
 	{
 		return Section::where('order', $this->id)->get();
 	}
+	/**
+	* Get Subtotal score
+	*/
+	public function subtotal($review)
+	{
+		$questions = $this->questions->lists('id');
+		return DB::table('review_question_scores')->where('review_id', $review)->whereIn('question_id', $questions)->sum('audited_score');
+	}
 }

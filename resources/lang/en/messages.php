@@ -35,8 +35,9 @@ return [
 	'back'	=>	'Back',
 	'sign-out'	=>	'Sign out',
 	'count'	=>	'No.',
-	'yes'	=>	'Yes',
-	'no'	=>	'No',
+	'yes'	=>	'Yes|YES',
+	'no'	=>	'No|NO',
+	'partial'	=>	'Partial|PARTIAL',
 	'insufficient-data'	=>	'Insufficient Data',
 	'save-and-continue'	=>	'Save and Continue',
 	/* Roles */

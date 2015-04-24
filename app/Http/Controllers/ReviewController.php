@@ -13,8 +13,7 @@ use App\Models\User;
 use Auth;
 use Input;
 use Lang;
-
-use Illuminate\Http\Request;
+use Request;
 
 class ReviewController extends Controller {
 
@@ -97,7 +96,7 @@ class ReviewController extends Controller {
 	    $slmta = DB::table('review_slmta_info')->where('review_id', $review->id)->get();
 	    //dd(Input::all());
 	    if(!$slmta){
-	    	$slmta_data = array('review_id' => $review->id, 'official_slmta' => Input::get('official_slmta'), 'assessment_id' => Input::get('assessment_id'), 'tests_before_slmta' => Input::get('tests_before_slmta'), 'tests_this_year' => Input::get('tests_this_year'), 'cohort_id' => Input::get('cohort_id'), 'baseline_audit_date' => Input::get('baseline_audit_date'), 'slmta_workshop_date' => Input::get('slmta_workshop_date'), 'exit_audit_date' => Input::get('exit_audit_date'), 'baseline_score' => Input::get('baseline_score'), 'baseline_stars_obtained' => Input::get('baseline_stars'), 'exit_score' => Input::get('exit_score'), 'exit_stars_obtained' => Input::get('exit_stars'), 'last_audit_date' => Input::get('last_audit_date'), 'last_audit_score' => Input::get('last_audit_score'), 'prior_audit_status' => Input::get('prior_audit_status'), 'audit_start_date' => Input::get('audit_start_date'), 'audit_end_date' => Input::get('audit_end_date'));
+	    	$slmta_data = array('review_id' => $review->id, 'official_slmta' => Input::get('official_slmta'), 'assessment_id' => Input::get('assessment_id'), 'tests_before_slmta' => Input::get('tests_before_slmta'), 'tests_this_year' => Input::get('tests_this_year'), 'cohort_id' => Input::get('cohort_id'), 'baseline_audit_date' => Input::get('baseline_audit_date'), 'slmta_workshop_date' => Input::get('slmta_workshop_date'), 'exit_audit_date' => Input::get('exit_audit_date'), 'baseline_score' => Input::get('baseline_score'), 'baseline_stars_obtained' => Input::get('baseline_stars'), 'exit_score' => Input::get('exit_score'), 'exit_stars_obtained' => Input::get('exit_stars'), 'last_audit_date' => Input::get('last_audit_date'), 'last_audit_score' => Input::get('last_audit_score'), 'prior_audit_status' => Input::get('prior_audit_status'), 'audit_start_date' => Input::get('audit_start_date'), 'audit_end_date' => Input::get('audit_end_date'), 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s'));
 	    	DB::table('review_slmta_info')->insert($slmta_data);
 	    }
 	    if(count($slmta)>0){
@@ -169,6 +168,7 @@ class ReviewController extends Controller {
 		    	if(Input::get('other_description'))
 		    		$lab_profile = array_merge($lab_profile, ['other_description' => Input::get('other_description')]);
 		    	//	Update the lab_profile
+		    	$lab_profile = array_merge($lab_profile, ['updated_at' => date('Y-m-d H:i:s')]);
 		    	if(count($lab_profile)>0)
 		    		DB::table('review_lab_profiles')->where('id', $profile->id)->update($lab_profile);
 		    }
@@ -180,10 +180,10 @@ class ReviewController extends Controller {
 					$fieldId = $this->strip($key);
 					$review_data = $review_data = DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->get();
 					if(!$review_data){
-						DB::table('review_question_answers')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'answer' => $value]);
+						DB::table('review_question_answers')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'answer' => $value, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 					else{
-						DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['answer' => $value]);
+						DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['answer' => $value, 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 				}
 				else if((stripos($key, 'pt') !==FALSE) || (stripos($key, 'date') !==FALSE) || (stripos($key, 'percent') !==FALSE)){
@@ -191,10 +191,10 @@ class ReviewController extends Controller {
 					$data = $value;
 					$review_data = $review_data = DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->get();
 					if(!$review_data){
-						DB::table('review_question_answers')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'answer' => $data]);
+						DB::table('review_question_answers')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'answer' => $data, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 					else{
-						DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['answer' => $data]);
+						DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['answer' => $data, 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 				}
 				else if(stripos($key, 'text') !==FALSE){
@@ -203,18 +203,18 @@ class ReviewController extends Controller {
 					$notes = $value;
 					if(!$review_notes){
 						if(Input::get('check_'.$fieldId)){
-							DB::table('review_notes')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'note' => $notes, 'non_compliance' => '1']);
+							DB::table('review_notes')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'note' => $notes, 'non_compliance' => '1', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 						}
 						else{
-							DB::table('review_notes')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'note' => $notes]);
+							DB::table('review_notes')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'note' => $notes, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 						}
 					}
 					else{
 						if(Input::get('check_'.$fieldId)){
-							DB::table('review_notes')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['note' => $notes, 'non_compliance' => '1']);
+							DB::table('review_notes')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['note' => $notes, 'non_compliance' => '1', 'updated_at' => date('Y-m-d H:i:s')]);
 						}
 						else{
-							DB::table('review_notes')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['note' => $notes]);
+							DB::table('review_notes')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['note' => $notes, 'updated_at' => date('Y-m-d H:i:s')]);
 						}
 					}
 				}
@@ -223,10 +223,10 @@ class ReviewController extends Controller {
 					$rqs = DB::table('review_question_scores')->where('review_id', $review->id)->where('question_id', $fieldId)->get();
 					$score = $value;
 					if(!$rqs){
-						DB::table('review_question_scores')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'audited_score' => $value]);
+						DB::table('review_question_scores')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'audited_score' => $value, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 					else{
-						DB::table('review_question_scores')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['audited_score' => $value]);
+						DB::table('review_question_scores')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['audited_score' => $value, 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 				}
 			}
@@ -247,11 +247,12 @@ class ReviewController extends Controller {
         $section = Section::find(Input::get('section_id'));
         $page = $section->next()->first();
         //	Redirect to the next page
-        if(Input::has(Lang::choice('messages.save', 1))){
+
+        if(Request::has('Save')){
         	return redirect('review/'.$review->id.'/edit/'.$section->id);
         }
-        else if(Input::has(Lang::choice('messages.save-and-continue', 1))){
-			return redirect('review/create/'.$review->id.'/'.$page->id);
+        else{
+        	return redirect('review/create/'.$review->id.'/'.$page->id);
 		}
 	}
 
@@ -342,6 +343,7 @@ class ReviewController extends Controller {
 			$slmta_data = array_merge($slmta_data, ['assessment_id' => Input::get('assessment_id')]);
 		if(Input::get('tests_before_slmta'))
 			$slmta_data = array_merge($slmta_data, ['tests_before_slmta' => Input::get('tests_before_slmta')]);
+		$slmta_data = array_merge($slmta_data, ['updated_at' => date('Y-m-d H:i:s')]);
 		if(count($slmta_data)>0){
 	    	DB::table('review_slmta_info')->where('id', $slmta->id)->update($slmta_data);
 		}
@@ -354,6 +356,7 @@ class ReviewController extends Controller {
 			$lab_profile_1 = array_merge($lab_profile_1, ['head_work_telephone' => Input::get('head_work_telephone')]);
 		if(Input::get('head_personal_telephone'))
 			$lab_profile_1 = array_merge($lab_profile_1, ['head_personal_telephone' => Input::get('head_personal_telephone')]);
+		$lab_profile_1 = array_merge($lab_profile_1, ['updated_at' => date('Y-m-d H:i:s')]);
 		if(count($lab_profile_1)>0){
 			DB::table('review_lab_profiles')->where('id', $profile->id)->update($lab_profile_1);
 		}
@@ -418,6 +421,7 @@ class ReviewController extends Controller {
     		$lab_profile_2 = array_merge($lab_profile_2, ['other' => Input::get('other')]);
     	if(Input::get('other_description'))
     		$lab_profile_2 = array_merge($lab_profile_2, ['other_description' => Input::get('other_description')]);
+    	$lab_profile_2 = array_merge($lab_profile_2, ['updated_at' => date('Y-m-d H:i:s')]);
     	//	Update the lab_profile
     	if(count($lab_profile_2)>0)
     		DB::table('review_lab_profiles')->where('id', $profile->id)->update($lab_profile_2);
@@ -428,10 +432,10 @@ class ReviewController extends Controller {
 					$fieldId = $this->strip($key);
 					$review_data = $review_data = DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->get();
 					if(!$review_data){
-						DB::table('review_question_answers')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'answer' => $value]);
+						DB::table('review_question_answers')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'answer' => $value, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 					else{
-						DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['answer' => $value]);
+						DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['answer' => $value, 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 				}
 				else if((stripos($key, 'pt') !==FALSE) || (stripos($key, 'date') !==FALSE) || (stripos($key, 'percent') !==FALSE)){
@@ -439,10 +443,10 @@ class ReviewController extends Controller {
 					$data = $value;
 					$review_data = $review_data = DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->get();
 					if(!$review_data){
-						DB::table('review_question_answers')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'answer' => $data]);
+						DB::table('review_question_answers')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'answer' => $data, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 					else{
-						DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['answer' => $data]);
+						DB::table('review_question_answers')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['answer' => $data, 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 				}
 				else if(stripos($key, 'text') !==FALSE){
@@ -451,10 +455,10 @@ class ReviewController extends Controller {
 					$notes = $value;
 					if(!$review_notes){
 						if(Input::get('check_'.$fieldId)){
-							DB::table('review_notes')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'note' => $notes, 'non_compliance' => '1']);
+							DB::table('review_notes')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'note' => $notes, 'non_compliance' => '1', 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 						}
 						else{
-							DB::table('review_notes')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'note' => $notes]);
+							DB::table('review_notes')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'note' => $notes, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 						}
 					}
 					else{
@@ -462,7 +466,7 @@ class ReviewController extends Controller {
 							DB::table('review_notes')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['note' => $notes, 'non_compliance' => '1']);
 						}
 						else{
-							DB::table('review_notes')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['note' => $notes]);
+							DB::table('review_notes')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['note' => $notes, 'updated_at' => date('Y-m-d H:i:s')]);
 						}
 					}
 				}
@@ -471,10 +475,10 @@ class ReviewController extends Controller {
 					$rqs = DB::table('review_question_scores')->where('review_id', $review->id)->where('question_id', $fieldId)->get();
 					$score = $value;
 					if(!$rqs){
-						DB::table('review_question_scores')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'audited_score' => $value]);
+						DB::table('review_question_scores')->insert(['review_id' => $review->id, 'question_id' => $fieldId, 'audited_score' => $value, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 					else{
-						DB::table('review_question_scores')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['audited_score' => $value]);
+						DB::table('review_question_scores')->where('review_id', $review->id)->where('question_id', $fieldId)->update(['audited_score' => $value, 'updated_at' => date('Y-m-d H:i:s')]);
 					}
 				}
 			}
@@ -487,6 +491,7 @@ class ReviewController extends Controller {
 			$summary = array_merge($summary, ['summary_challenges' => Input::get('challenges')]);
 		if(Input::get('recommendations'))
 			$summary = array_merge($summary, ['recommendations' => Input::get('recommendations')]);
+		$summary = array_merge($summary, ['updated_at' => date('Y-m-d H:i:s')]);
 		if(count($summary)>0)
 			DB::table('reviews')->where('review_id', $review->id)->update($summary);
 		//	Get variables ready for processing of new audit
@@ -495,11 +500,11 @@ class ReviewController extends Controller {
         $section = Section::find(Input::get('section_id'));
         $page = $section->next()->first();
         //	Redirect to the next page
-        if(Input::has(Lang::choice('messages.save', 1))){
+        if(Request::has('Save')){
         	return redirect('review/'.$review->id.'/edit/'.$section->id);
         }
-        else if(Input::has(Lang::choice('messages.save-and-continue', 1))){
-			return redirect('review/'.$review->id.'/edit/'.$page->id);
+        else{
+        	return redirect('review/'.$review->id.'/edit/'.$page->id);
 		}
 	}
 
@@ -574,7 +579,7 @@ class ReviewController extends Controller {
 		$plan = array();
 		$id = Input::get('id');
 		if($action == 'add'){
-			DB::table('review_action_plans')->insert(['review_id', $review_id, 'action' => $follow_up_action, 'responsible_person' => $responsible_person, 'timeline' => $timeline]);
+			DB::table('review_action_plans')->insert(['review_id', $review_id, 'action' => $follow_up_action, 'responsible_person' => $responsible_person, 'timeline' => $timeline, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 			return 0;
 		}
 		else if($action == 'update'){
@@ -584,6 +589,7 @@ class ReviewController extends Controller {
 				$plan = array_merge($plan, ['responsible_person' => $responsible_person]);
 			if($timeline)
 				$plan = array_merge($plan, ['timeline' => $timeline]);
+			$plan = array_merge($plan, ['updated_at' => date('Y-m-d H:i:s')]);
 			if(count($plan)>0)
 				DB::table('review_action_plans')->where('id', $id)->update($plan);
 		}

@@ -904,10 +904,10 @@
                                                         @if(count($question->children)>0)
                                                             <div class="row">
                                                                 <div class="col-sm-6">
-                                                                    {!! Form::text('answer_'.$question->id, '', array('class' => 'form-control', 'id' => 'answer_'.$question->id, 'disabled')) !!}
+                                                                    {!! Form::text('answer_'.$question->id, $question->decode($review->id), array('class' => 'form-control', 'id' => 'answer_'.$question->id, 'readonly')) !!}
                                                                 </div>
                                                                 <div class="col-sm-6">
-                                                                    <div class="form-group input-group"><input type="text" name="points_{{$question->id}}" id="points_{{$question->id}}" value="{!!$question->points($review->id)?$question->points($review->id)->audited_score:''!!}" class="form-control" disabled><span class="input-group-addon">/{!! $question->score !!}</span></div>
+                                                                    <div class="form-group input-group"><input type="text" name="points_{{$question->id}}" id="points_{{$question->id}}" value="{!!$question->points($review->id)?$question->points($review->id)->audited_score:''!!}" class="form-control page_{{$page->id}}" oninput="sub_total('page_{{$page->id}}')" readonly><span class="input-group-addon">/{!! $question->score !!}</span></div>
                                                                 </div>
                                                             </div>
                                                         @else
@@ -918,7 +918,7 @@
                                                                 @endforeach
                                                                 </div>
                                                                 <div class="col-sm-4">
-                                                                    <div class="form-group input-group"><input type="text" name="points_{{$question->id}}" id="points_{{$question->id}}" value="{!!$question->points($review->id)?$question->points($review->id)->audited_score:''!!}" class="form-control" disabled><span class="input-group-addon">/{!! $question->score !!}</span></div>
+                                                                    <div class="form-group input-group"><input type="text" name="points_{{$question->id}}" id="points_{{$question->id}}" value="{!!$question->points($review->id)?$question->points($review->id)->audited_score:''!!}" class="form-control page_{{$page->id}}" oninput="sub_total('page_{{$page->id}}')" readonly><span class="input-group-addon">/{!! $question->score !!}</span></div>
                                                                 </div>
                                                             </div>
                                                         @endif
@@ -990,7 +990,7 @@
                                                 <strong>{{ $page->name }} : {{ $page->label }} {!! Lang::choice('messages.sub-total', 1) !!}</strong>
                                             </div>
                                             <div class="col-sm-3">
-                                                <div class="form-group input-group"><input type="text" name="subtotal_{{$page->id}}" id="subtotal_{{$page->id}}" class="form-control" disabled><span class="input-group-addon">/{!! $page->total_points !!}</span></div>
+                                                <div class="form-group input-group"><input type="text" name="subtotal_{{$page->id}}" id="subtotal_{{$page->id}}" value="{!! $page->subtotal($review->id) !!}" class="form-control" readonly><span class="input-group-addon">/{!! $page->total_points !!}</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -1004,9 +1004,9 @@
                         <a href="{{ url('review/'.$review->id.'/edit/'.$page->next()->first()->id) }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
                         @else
                         {!! Form::submit(Lang::choice('messages.save', 1), 
-                              array('class' => 'btn btn-success', 'id' =>Lang::choice('messages.save', 1), 'name' =>Lang::choice('messages.save', 1), 'onclick' => 'submit()')) !!}
+                              array('class' => 'btn btn-success', 'name' =>Lang::choice('messages.save', 1), 'onclick' => 'submit()')) !!}
                         {!! Form::submit(Lang::choice('messages.save-and-continue', 1), 
-                              array('class' => 'btn btn-info', 'id' =>Lang::choice('messages.save-and-continue', 1), 'name' =>Lang::choice('messages.save-and-continue', 1), 'onclick' => 'submit()')) !!}
+                              array('class' => 'btn btn-info', 'name' =>Lang::choice('messages.save-and-continue', 1), 'onclick' => 'submit()')) !!}
                         @endif
                         <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                         </div>

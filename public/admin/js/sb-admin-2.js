@@ -181,19 +181,18 @@ function noteChange(name, points){
         if( $(this).is(':checked')){
             sum+=parseInt($(this).val());
             count++;
-            //console.log($(this).val());
         }    
     });
-    if(sum==questions){
-        $('#points_'+id).val(points);
+    if(sum==count){
+        $('#points_'+id).val(points).trigger('input');
         $('#answer_'+id).val(answers[0]);
     }
     else if(sum==count*2){
-        $('#points_'+id).val(0);
+        $('#points_'+id).val(0).trigger('input');
         $('#answer_'+id).val(answers[2]);
     }
     else{
-        $('#points_'+id).val(1);
+        $('#points_'+id).val(1).trigger('input');
         $('#answer_'+id).val(answers[1]);
     }
 }
@@ -208,21 +207,22 @@ function scoreMain(name, points){
         }    
     });
     if(answer == 1)
-        $('#points_'+id).val(points);
+        $('#points_'+id).val(points).trigger('input');
     else if(answer == 2)
-        $('#points_'+id).val(0);
+        $('#points_'+id).val(0).trigger('input');
     else
-        $('#points_'+id).val(1);
+        $('#points_'+id).val(1).trigger('input');
 }
 //  Function to set the sub-total score for a section
-function sub_total(){
-    console.log('This shit works!');
-}
-/*$('.page_12').on('input', function(){
-    $.each($('.page_12'), function(){
-        console.log('This shit works!');
+function sub_total(name){
+    var id = questionId(name);
+    var sum = 0;
+    $.each($('.page_'+id), function(){
+            sum+=parseInt($(this).val());
     });
-});*/
+    
+    $('#subtotal_'+id).val(sum);
+}
 function set_total(id) {
     var myid = id+ '_total';
     var incid = id + '_secinc';

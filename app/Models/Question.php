@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Lang;
 
 
 class Question extends Model {
@@ -134,5 +135,19 @@ class Question extends Model {
 	public function points($review)
 	{
 		return DB::table('review_question_scores')->where('review_id', $review)->where('question_id', $this->id)->first();
+	}
+	/**
+	* Decode audited scores
+	*/
+	public function decode($review)
+	{
+		$score = $this->points($review)->audited_score;
+		if($score == $this->score)
+			return Lang::choice('messages.yes', 2);
+		else if($score == 0)
+			return Lang::choice('messages.no', 2);
+		else if($score == 1)
+			return Lang::choice('messages.partial', 2);
+
 	}
 }
