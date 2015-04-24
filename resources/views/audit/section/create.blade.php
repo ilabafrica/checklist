@@ -80,20 +80,20 @@
                                     $cnt = 0;
                                     $zebra = "";
                                 ?>
-                            @foreach($notes as $key=>$value)
-                                {!! ($cnt%4==0)?"<div class='row $zebra'>":"" !!}
-                                <?php
-                                    $cnt++;
-                                    $zebra = (((int)$cnt/4)%2==1?"row-striped":"");
-                                ?>
-                                <div class="col-md-6">
-                                    <label  class="checkbox-inline">
-                                        <input type="checkbox" name="notes[]" value="{{ $value->id}}" />{{ $value->name }}
-                                    </label>
+                                @foreach($notes as $key=>$value)
+                                    {!! ($cnt%4==0)?"<div class='row $zebra'>":"" !!}
+                                    <?php
+                                        $cnt++;
+                                        $zebra = (((int)$cnt/4)%2==1?"row-striped":"");
+                                    ?>
+                                    <div class="col-md-6">
+                                        <label  class="checkbox-inline">
+                                            <input type="checkbox" name="notes[]" value="{{ $value->id}}" />{{ $value->name }}
+                                        </label>
+                                    </div>
+                                    {!! ($cnt%4==0)?"</div>":"" !!}
+                                @endforeach
                                 </div>
-                                {!! ($cnt%4==0)?"</div>":"" !!}
-                            @endforeach
-                            </div>
                             </div>
                         </div>
                     </div>

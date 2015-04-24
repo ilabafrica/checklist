@@ -77,6 +77,7 @@ $('#section_id').change(function(){
             });
         });
 });
+
 /*End dynamic select list options*/
 /* Toggle buttons */
 $('.btn-toggle').click(function() {
@@ -111,13 +112,138 @@ $('#auditType').change(function(){
         });
 });
 /* End dynamic selected audit type */
+/* Functions to submit action plan without page reload */
+function saveActionPlan(rid){
+    follow_up_action =  $("#action_"+rid).val();
+    responsible_person =  $("#person_"+rid).val();
+    timeline =  $("#timeline_"+rid).val();
+    _token: JSON.stringify($('input[name=_token]').val());
+    $.ajax({
+        type: 'POST',
+        url:  '/review/plan',
+        data: {review_id: rid, follow_up_action: follow_up_action, responsible_person: responsible_person, timeline: timeline, action: "add", '_token': $('input[name=_token]').val()},
+        success: function(){
+            drawActionPlan(rid);
+        }
+    });
+}
+/**
+ * Request a json string from the server containing contents of the action plan table for this review
+ * and then draws a table based on this data.
+ * @param  {int} rid      Review Id
+ * @return {void}          No return
+ */
+function drawActionPlan(rid){
+    $.getJSON('/review/plan', { review_id: rid, action: "draw"}, 
+        function(data){
+            var tableBody ="";
+            $.each(data, function(index, elem){
+                tableBody += "<tr>"
+                +" <td>"+elem.follow_up_action+" </td>"
+                +" <td>"+elem.responsible_person+"</td>"
+                +" <td>"+elem.timeline+"</td>"
+                +" <td> </td>"
+                +"</tr>";
+            });
+            tableBody += "<tr>"
+                +"<td><textarea id='action_"+rid+"' class='form-control' rows='3'></textarea></td>"
+                +"<td><textarea id='person_"+rid+"' class='form-control' rows='3'></textarea></td>"
+                +"<td><textarea id='timeline_"+rid+"' class='form-control' rows='3'></textarea></td>"
+                +"<td><a class='btn btn-sm btn-danger' href='javascript:void(0)' onclick='saveObservation("+rid+")'><i class='fa fa-save'></i> Save</a></td>"
+                +"</tr>";
+            $("#action_plan_"+rid).html(tableBody);
+        }
+    );
+}
 /* Setting the score */
-$("form input:radio").click(function(){
+/*$("form input:radio").click(function(){
     alert($('input.radio').attr('name'));
 });
 $("form input:checkbox").click(function(){
     alert('Rihakoro');
-});
+});*/
 /* End setting the score */
 /* Setting the total */
 /* End setting the total */
+/* Functions to watch radio buttons and set scores */
+//  Function to return the question ID dynamically
+function questionId(str){
+    return str.split('_')[1];
+}
+//  Function to set the score for the main question if elements are selected
+function noteChange(name, points){
+    var id = questionId(name);
+    var count = 0;
+    var sum = 0;
+    var questions = $('.radio_'+id).length;
+    var answers = ['YES', 'PARTIAL', 'NO'];
+    $.each($('.radio_'+id), function(){
+        if( $(this).is(':checked')){
+            sum+=parseInt($(this).val());
+            count++;
+        }    
+    });
+    if(sum==count){
+        $('#points_'+id).val(points).trigger('input');
+        $('#answer_'+id).val(answers[0]);
+    }
+    else if(sum==count*2){
+        $('#points_'+id).val(0).trigger('input');
+        $('#answer_'+id).val(answers[2]);
+    }
+    else{
+        $('#points_'+id).val(1).trigger('input');
+        $('#answer_'+id).val(answers[1]);
+    }
+}
+//  Set score for main question
+function scoreMain(name, points){
+    var id = questionId(name);
+    var count = 0;
+    var answer = 0;
+    $.each($('.radio_'+id), function(){
+        if( $(this).is(':checked')){
+            answer+=parseInt($(this).val());
+        }    
+    });
+    if(answer == 1)
+        $('#points_'+id).val(points).trigger('input');
+    else if(answer == 2)
+        $('#points_'+id).val(0).trigger('input');
+    else
+        $('#points_'+id).val(1).trigger('input');
+}
+//  Function to set the sub-total score for a section
+function sub_total(name){
+    var id = questionId(name);
+    var sum = 0;
+    $.each($('.page_'+id), function(){
+            sum+=parseInt($(this).val());
+    });
+    
+    $('#subtotal_'+id).val(sum);
+}
+function set_total(id) {
+    var myid = id+ '_total';
+    var incid = id + '_secinc';
+    var total = 0;
+    var val, abc;
+   $('input[name$="_score"]').each( function(i) {
+       val = $(this).val();
+       val = parseInt(val);
+       val = (isNaN(val)) ? 0: val;
+       total = total + val;
+       $('#'+myid).val(total);
+       abc = 0;
+   });
+   total = 0;
+   $('input[name$="_inc"]').each( function(i) {
+       val = $(this).val();
+       val = parseInt(val);
+       val = (isNaN(val)) ? 0: val;
+       total = total + val;
+       $('#'+incid).val(total);
+       abc = 0;
+   });
+    var xx= 0;
+}

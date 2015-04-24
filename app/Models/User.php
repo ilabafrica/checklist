@@ -47,5 +47,13 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{
 		return User::find(1);
 	}
-
+	/**
+	 * Relationship with reviews
+	 *
+	 * @return Review object
+	 */
+	public function reviews()
+	{
+		return $this->hasMany('App\Models\Review');
+	}	
 }

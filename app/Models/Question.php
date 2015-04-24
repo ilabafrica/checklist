@@ -3,6 +3,7 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Lang;
 
 
 class Question extends Model {
@@ -13,6 +14,7 @@ class Question extends Model {
 	const CHOICE = 0;
 	const DATE = 1;
 	const FIELD = 2;
+	const TEXTAREA = 3;
 
 	//	Constants for whether field is required
 	const REQUIRED = 1;
@@ -30,14 +32,14 @@ class Question extends Model {
 	 */
 	public function answers()
 	{
-	  return $this->belongsToMany('App\Models\Answer', 'question_answers', 'answer_id', 'question_id');
+	  return $this->belongsToMany('App\Models\Answer', 'question_answers', 'question_id', 'answer_id');
 	}
 	/**
 	 * answers relationship
 	 */
 	public function notes()
 	{
-	  return $this->belongsToMany('App\Models\Note', 'question_notes', 'note_id', 'question_id');
+	  return $this->belongsToMany('App\Models\Note', 'question_notes', 'question_id', 'note_id');
 	}
 	//	Set parent for audit field if selected
 	public function setParent($field){
@@ -112,42 +114,40 @@ class Question extends Model {
 		DB::table('question_notes')->insert($fieldAdded);
 	}
 	/**
-	 * Display audit field according to field type
-	 */
-	/**
-	 * Display audit field according to field type
-	 */
-	/*public function fieldHTML($fieldType)
+	* Relationship with review questions answers
+	*/
+	public function qa($review)
 	{
-		switch($fieldType){
-			case AuditField::HEADING:
-				break;
-			case AuditField::INSTRUCTION:
-				break;
-			case AuditField::LABEL:
-				break;
-			case AuditField::QUESTION:
-				break;
-			case AuditField::SUBHEADING:
-				break;
-			case AuditField::TEXT:
-				break;
-			case AuditField::DATE:
-				break;
-			case AuditField::CHOICE:
-				break;
-			case AuditField::SELECT:
-				break;
-			case AuditField::TEXTAREA:
-				break;
-			case AuditField::CHECKBOX:
-				break;
-			case AuditField::MAINQUESTION:
-				break;
-			case AuditField::SUBQUESTION:
-				break;
-		}
+		$row = DB::table('review_question_answers')->where('review_id', $review)->where('question_id', $this->id)->lists('answer');
+		if(count($row)>0)
+			return $row;
+	}
+	/**
+	* Audit notes
+	*/
+	public function note($review){
+		return DB::table('review_notes')->where('review_id', $review)->where('question_id', $this->id)->first();
+	}
 
-		return $this->belongsToMany('App\Models\AuditField', 'af_parent_child', 'parent_id', 'field_id');
-	}*/
+	/**
+	* Audited scores
+	*/
+	public function points($review)
+	{
+		return DB::table('review_question_scores')->where('review_id', $review)->where('question_id', $this->id)->first();
+	}
+	/**
+	* Decode audited scores
+	*/
+	public function decode($review)
+	{
+		$score = $this->points($review)->audited_score;
+		if($score == $this->score)
+			return Lang::choice('messages.yes', 2);
+		else if($score == 0)
+			return Lang::choice('messages.no', 2);
+		else if($score == 1)
+			return Lang::choice('messages.partial', 2);
+
+	}
 }

@@ -14,7 +14,7 @@ class Lab extends Model {
 	*/
 	public function facility()
 	{
-	 return $this->belongsTo('App\Models\Facility');
+		return $this->belongsTo('App\Models\Facility');
 	}
 
 	/**
@@ -22,7 +22,7 @@ class Lab extends Model {
 	*/
 	public function labLevel()
 	{
-	 return $this->belongsTo('App\Models\LabLevel');
+		return $this->belongsTo('App\Models\LabLevel');
 	}
 
 	/**
@@ -30,7 +30,7 @@ class Lab extends Model {
 	*/
 	public function labAffiliation()
 	{
-	 return $this->belongsTo('App\Models\LabAffiliation');
+		return $this->belongsTo('App\Models\LabAffiliation');
 	}
 
 
@@ -39,6 +39,6 @@ class Lab extends Model {
 	*/
 	public function labType()
 	{
-	 return $this->belongsTo('App\Models\LabType');
+		return $this->belongsTo('App\Models\LabType');
 	}
 }
