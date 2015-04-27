@@ -10,11 +10,11 @@ class Constituency extends Model {
 	protected $table = 'constituencies';
    
 
-/**
-* Relationship with county
-*/
-public function county()
-{
- return $this->belongsTo('App\Models\County');
-}
+	/**
+	* Relationship with county
+	*/
+	public function county()
+	{
+	 return $this->belongsTo('App\Models\County');
+	}
 }

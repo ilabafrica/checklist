@@ -139,6 +139,7 @@ return [
 		'Illuminate\Html\HtmlServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
 		'Laracasts\Flash\FlashServiceProvider',
+		'Maatwebsite\Excel\ExcelServiceProvider',
 		/*
 		 * Application Service Providers...
 		 */
@@ -200,6 +201,7 @@ return [
         'HTML'        => 'Illuminate\Html\HtmlFacade',
         'Entrust' => 'Zizaco\Entrust\EntrustFacade',
         'Flash'	=>	'Laracasts\Flash\Flash',
+        'Excel' => 'Maatwebsite\Excel\Facades\Excel',
 	],
 
 ];

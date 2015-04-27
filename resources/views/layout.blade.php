@@ -34,6 +34,9 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <!-- jQuery -->
+    <script src="{{ URL::asset('admin/js/jquery.min.js') }}"></script>
+
 
 </head>
 
@@ -86,7 +89,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="{{ route('review.index') }}" role="button" aria-expanded="false">
+                    <a href="{{ route('review.index') }}" role="button" aria-expanded="false">
                         <span class="fa fa-bar-chart"></span> {{ Lang::choice('messages.report', 2) }}
                     </a>
                 </li>
@@ -193,9 +196,7 @@
         </div>
     </div>
     <!-- /#wrapper -->
-    <!-- jQuery -->
-    <script src="{{ URL::asset('admin/js/jquery.min.js') }}"></script>
-
+    
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ URL::asset('admin/js/bootstrap.min.js') }}"></script>
 

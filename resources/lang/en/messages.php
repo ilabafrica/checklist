@@ -298,6 +298,9 @@ return [
 	'view-audit-data'	=>	'View Audit Data',
 	'download-summary'	=>	'Download Summary',
 	'total-audits'	=>	'Audits Done',
+	'non-compliance-report'	=>	'Non-compliance Report',
+	'bar-chart'	=>	'Compare scores in a Bar chart',
+	'spider-chart'	=>	'Compare scores in a Spider chart',
 	/* Summary */
 	'summary'	=>	'Summary',
 	'commendations'	=>	'Commendations',
@@ -309,4 +312,9 @@ return [
 	'responsible-persons'	=>	'Responsible Persons',
 	'timeline'	=>	'Timeline',
 	'signature'	=>	'Signature',
+	/* Non-compliance report */
+	'non-conformities'	=>	'Non Conformities',
+	'checklist-question'	=>	'Checklist Question',
+	'iso'	=>	'ISO 15189 References',
+	'major-minor'	=>	'Major/Minor',
 ];

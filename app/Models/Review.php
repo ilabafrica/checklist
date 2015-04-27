@@ -141,4 +141,11 @@ class Review extends Model {
 	{
 		return DB::table('review_action_plans')->where('review_id', $this->id)->get();
 	}
+	/**
+	* Non-compliancies 
+	*/
+	public function noncompliance()
+	{
+		return DB::table('review_notes')->where('review_id', $this->id)->where('non_compliance', Answer::NONCOMPLIANT)->orderBy('question_id')->get();
+	}
 }

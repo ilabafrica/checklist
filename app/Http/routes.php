@@ -222,3 +222,18 @@ Route::get('/audit/select', array(
     "as"    =>  "audit.select",
     "uses"  =>  "AuditController@selected"
 ));
+//  Reports
+Route::any('/report/{id}', array(
+    "as"    =>  "report.index",
+    "uses"  =>  "ReportController@index"
+));
+//  Export to excel
+Route::any('/review/{id}/export', array(
+    "as"    =>  "report.excel",
+    "uses"  =>  "ReportController@export"
+));
+//  Export non-compliance report to excel
+Route::any('/review/{id}/non-compliance', array(
+    "as"    =>  "report.noncompliance",
+    "uses"  =>  "ReportController@noncompliance"
+));

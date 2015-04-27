@@ -15,7 +15,7 @@
     <a class="btn btn-sm btn-info" href="{{ URL::to('review/'.$review->id.'/edit') }}" >
         <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-audit', 1) }}</span>
     </a>
-    <a class="btn btn-sm btn-info" href="" >
+    <a class="btn btn-sm btn-info" href="" onclick="window.history.back();return false;">
         <i class="fa fa-reply"></i><span> {{ Lang::choice('messages.back', 1) }}</span>
     </a>
     </span></div>
@@ -375,7 +375,7 @@
                                             <tr>
                                                 <td>{!! $plan->action !!}</td>
                                                 <td>{!! $plan->responsible_person !!}</td>
-                                                <td>{!! $timeline !!}</td>
+                                                <td>{!! $plan->timeline !!}</td>
                                             </tr>
                                             @empty
                                             <tr>
@@ -413,8 +413,8 @@
                                     @elseif($question->score != 0)
                                     <tr>
                                         <td>{!! $question->id !!}</td>
-                                        <td>{!!$question->title?'<u><strong>'.$question->title.'</strong></u><br />':''!!}<strong>{!! $question->description !!}</strong></td>
-                                        <td>{!! $kid->qa($review->id)?App\Models\Answer::find((int)$kid->qa($review->id)[0])->name:'' !!}</td>
+                                        <td>{!! $question->title?'<u><strong>'.$question->title.'</strong></u><br />':''!!}<strong>{!! $question->description !!}</strong></td>
+                                        <td>{!! $question->qa($review->id)?App\Models\Answer::find((int)$question->qa($review->id)[0])->name:'' !!}</td>
                                     </tr>
                                     @endif
                                 @endforeach

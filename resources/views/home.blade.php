@@ -28,15 +28,35 @@
                 <table class="table table-striped table-bordered table-hover search-table">
                     <thead>
                         <tr>
-                            <th>{{ Lang::choice('messages.facility', 1) }}</th>
-                            <th>{{ Lang::choice('messages.lab-level', 1) }}</th>
-                            <th>{{ Lang::choice('messages.lab-affiliation', 1) }}</th>
-                            <th>{{ Lang::choice('messages.lab-type', 1) }}</th>
+                            <th>{{ Lang::choice('messages.response-no', 1) }}</th>
+                            <th>{{ Lang::choice('messages.lab', 1) }}</th>
+                            <th>{{ Lang::choice('messages.audit', 1) }}</th>
+                            <th>{{ Lang::choice('messages.date', 1) }}</th>
+                            <th>{{ Lang::choice('messages.status', 1) }}</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                       
+                        @forelse($reviews as $review)
+                        <tr>
+                            <td>{{ $review->id }}</td>
+                            <td>{{ $review->lab->facility->name }}</td>
+                            <td>{{ $review->auditType->name }}</td>
+                            <td>{{ $review->created_at }}</td>
+                            <td>{!! $review->status==App\Models\Review::COMPLETE?'<span class="label label-success">'.Lang::choice('messages.audit-status', 1).'</span>':'<span class="label label-warning">'.Lang::choice('messages.audit-status', 2).'</span>' !!}</td>
+                            <td>
+                              <a href="{{ URL::to("review/" . $review->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {{ Lang::choice('messages.view', 1) }}</span></a>
+                              <a href="{{ URL::to("review/" . $review->id . "/edit") }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit', 1) }}</span></a>
+                              <a href="{{ URL::to("review/" . $review->id . "/export") }}" class="btn btn-default btn-sm"><i class="fa fa-external-link"></i><span> {{ Lang::choice('messages.export-audit', 1) }}</span></a>
+                              <a href="{{ URL::to("report/" . $review->id) }}" class="btn btn-info btn-sm"><i class="fa fa-bar-chart"></i><span> {{ Lang::choice('messages.run-reports', 1) }}</span></a>
+                              <a href="{{ URL::to("review/" . $review->id . "/complete") }}" class="btn btn-danger btn-sm"><i class="fa fa-check-square-o"></i><span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</span></a>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                          <td colspan="3">{{ Lang::choice('messages.no-records-found', 1) }}</td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

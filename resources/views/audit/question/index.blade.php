@@ -1,6 +1,6 @@
 @extends("layout")
 @section("content")
-<br /><br /><br />
+<br />
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">

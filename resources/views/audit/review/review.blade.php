@@ -21,6 +21,9 @@
                 <span class="fa fa-download"></span>
                 {{ Lang::choice('messages.import-audit', 1) }}
             </a>
+            <a class="btn btn-sm btn-info" href="" onclick="window.history.back();return false;">
+                <i class="fa fa-reply"></i><span> {{ Lang::choice('messages.back', 1) }}</span>
+            </a>
         </span>
     </div>
     <div class="panel-body">
@@ -52,7 +55,7 @@
                               <a href="{{ URL::to("review/" . $response->id . "/edit") }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit', 1) }}</span></a>
                               <a href="{{ URL::to("review/" . $response->id . "/complete") }}" class="btn btn-danger btn-sm"><i class="fa fa-check-square-o"></i><span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</span></a>
                               <a href="{{ URL::to("review/" . $response->id . "/export") }}" class="btn btn-default btn-sm"><i class="fa fa-external-link"></i><span> {{ Lang::choice('messages.export-audit', 1) }}</span></a>
-                              <a href="{{ URL::to("review/" . $response->id . "/reports") }}" class="btn btn-info btn-sm"><i class="fa fa-bar-chart"></i><span> {{ Lang::choice('messages.run-reports', 1) }}</span></a>
+                              <a href="{{ URL::to("report/" . $response->id) }}" class="btn btn-info btn-sm"><i class="fa fa-bar-chart"></i><span> {{ Lang::choice('messages.run-reports', 1) }}</span></a>
                             </td>
                         </tr>
                         @empty
