@@ -20,6 +20,7 @@ use App\Models\Section;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Note;
+use App\Models\Lab;
 class SliptaSeeder extends Seeder
 {
     public function run()
@@ -285,6 +286,15 @@ class SliptaSeeder extends Seeder
         }
         $this->command->info('Audit types table seeded');
 
+        /* Laboratories */
+        $labs = array(
+            array("facility_id" => "3", "lab_type_id" => "1", "lab_level_id" => "3", "lab_affiliation_id" => "1", "user_id" => "1")
+        );
+        foreach ($labs as $lab) {
+            Lab::create($lab);
+        }
+        $this->command->info('Laboratories table seeded');
+
         /* Assessments */
         $assessments = array(
             array("name" => "Baseline Audit", "description" => "", "user_id" => "1"),
@@ -299,12 +309,13 @@ class SliptaSeeder extends Seeder
         $this->command->info('Assessments table seeded');
 
         /* Answers */
-        $answerYes = Answer::create(array("name" => "Yes", "description" => "Yes(Y)", "user_id" => "1"));
-        $answerNo = Answer::create(array("name" => "No", "description" => "No(N)", "user_id" => "1"));
-        $answerPartial = Answer::create(array("name" => "Partial", "description" => "Partial(P)", "user_id" => "1"));
-        $answerDaily = Answer::create(array("name" => "Daily", "description" => "", "user_id" => "1"));
-        $answerWeekly = Answer::create(array("name" => "Weekly", "description" => "", "user_id" => "1"));
-        $answerEveryRun = Answer::create(array("name" => "W/Every Run", "description" => "With Every Run", "user_id" => "1"));
+        $answer_yes = Answer::create(array("name" => "Yes", "description" => "Yes(Y)", "user_id" => "1"));
+        $answer_no = Answer::create(array("name" => "No", "description" => "No(N)", "user_id" => "1"));
+        $answer_na = Answer::create(array("name" => "Not Applicable", "description" => "N/A", "user_id" => "1"));
+        $answer_partial = Answer::create(array("name" => "Partial", "description" => "Partial(P)", "user_id" => "1"));
+        $answer_daily = Answer::create(array("name" => "Daily", "description" => "", "user_id" => "1"));
+        $answer_weekly = Answer::create(array("name" => "Weekly", "description" => "", "user_id" => "1"));
+        $answer_everyRun = Answer::create(array("name" => "W/Every Run", "description" => "With Every Run", "user_id" => "1"));
         
         $this->command->info('Answers table seeded');
 
@@ -437,7 +448,7 @@ class SliptaSeeder extends Seeder
         $sec_slmtaInfo = Section::create(array("name" => "SLMTA Info", "label" => "SLMTA Information", "description" => "", "audit_type_id" => "1", "total_points" => "0", "order" => $sec_mainPage->id, "user_id" => "1"));
         $sec_labProfile = Section::create(array("name" => "Lab Profile", "label" => "Laboratory Profile", "description" => "", "audit_type_id" => "1", "total_points" => "0", "order" => 0, "user_id" => "1"));
         $sec_labInfo = Section::create(array("name" => "Lab Info", "label" => "Lab Information", "description" => "", "audit_type_id" => "1", "total_points" => "0", "order" => $sec_slmtaInfo->id, "user_id" => "1"));
-        $sec_staffSummary = Section::create(array("name" => "Staffing Summary", "label" => "Staffing Summary", "description" => "", "audit_type_id" => "1", "total_points" => "0", "order" => $sec_labInfo->id, "user_id" => "1"));
+        $sec_staffSummary = Section::create(array("name" => "Staffing Summary", "label" => "Laboratory Staffing Summary", "description" => "", "audit_type_id" => "1", "total_points" => "0", "order" => $sec_labInfo->id, "user_id" => "1"));
         $sec_orgStructure = Section::create(array("name" => "Org Structure", "label" => "Organizational Structure", "description" => "", "audit_type_id" => "1", "total_points" => "0", "order" => $sec_staffSummary->id, "user_id" => "1"));
         $sec_part2 = Section::create(array("name" => "Part II", "label" => "Part II", "description" => "", "audit_type_id" => "1", "total_points" => "0", "order" => 0, "user_id" => "1"));
         $sec_prelude = Section::create(array("name" => "Prelude", "label" => "PART II: LABORATORY AUDITS", "description" => "", "audit_type_id" => "1", "total_points" => "0", "order" => $sec_orgStructure->id, "user_id" => "1"));
@@ -523,5 +534,2999 @@ class SliptaSeeder extends Seeder
         DB::table('section_notes')->insert(
             array("section_id" => $sec_sliptaCert->id, "note_id" => $note_certification->id));
         $this->command->info('Section-Note table seeded');
+
+        /* Questions */
+        //  Section 1 - Documents and Records
+        $question_labQManual = Question::create(array("section_id" => $sec_sec1->id, "name" => "Laboratory Quality Manual", "title" => "1.1 Laboratory Quality Manual", "description" => "Is there a current laboratory quality manual, composed of the quality management system’s policies and procedures, and has the manual content been communicated to and understood and implemented by all staff?", "question_type" => "0", "required" => "1", "info" => "ISO 15189: 4.2.3, 4.2.4", "comment" => "", "score" => "4", "one_star" => "", "user_id" => "1"));
+        $question_labQStructure = Question::create(array("section_id" => $sec_sec1->id, "name" => "Structure defined per ISO15189", "title" => "", "description" => "1.1.1 Structure defined per ISO15189, Section 4.2.4", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_labQPolicy = Question::create(array("section_id" => $sec_sec1->id, "name" => "Quality policy statement", "title" => "", "description" => "1.1.2 Quality policy statement that includes scope of service, standard of service, objectives of the quality management system, and management commitment to compliance", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_labQMS = Question::create(array("section_id" => $sec_sec1->id, "name" => "Lab QMS Structure", "title" => "", "description" => "1.1.3 Description of the quality management system and the structure of its documentation", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_labSProcedures = Question::create(array("section_id" =>$sec_sec1->id, "name" => "Lab Supporting Procedures", "title" => "", "description" => "1.1.4 Reference to supporting procedures, including technical procedures", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_labRoles = Question::create(array("section_id" => $sec_sec1->id, "name" => "Description of Lab Roles and Responsibilities", "title" => "", "description" => "1.1.5 Description of the roles and responsibilities of the laboratory manager, quality manager, and other personnel responsible for ensuring compliance", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_labDocManReview = Question::create(array("section_id" => $sec_sec1->id, "name" => "Documentation of Annual Review", "title" => "", "description" => "1.1.6 Documentation of at least annual management review and approval.", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_docInfoCon = Question::create(array("section_id" => $sec_sec1->id, "name" => "Document and Information Control System", "title" => "1.2 Document and Information Control System", "description" => "Does the laboratory have a system in place to control all documents and information (internal and external sources)?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_docRecords = Question::create(array("section_id" => $sec_sec1->id, "name" => "Document and Records", "title" => "1.3 Document and Records", "description" => "Are documents and records properly maintained, easily accessible and fully detailed in an up-to-date Master List?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_poSops = Question::create(array("section_id" => $sec_sec1->id, "name" => "Laboratory Policies and Standard Operating Procedures", "title" => "1.4 Laboratory Policies and Standard Operating Procedures", "description" => "Are policies and standard operating procedures (SOPs) for laboratory functions current, available and approved by authorized personnel?", "question_type" => "0", "required" => "1", "info" => "ISO 15189 4.3.2", "comment" => "", "score" => "5", "one_star" => "", "user_id" => "1"));
+        $question_docRecControl = Question::create(array("section_id" => $sec_sec1->id, "name" => "Document & Record Control", "title" => "1.4.1 Document & Record Control", "description" => "Defines the writing, checking, authorization, review, identification, amendments, control & communication of revisions to and retention & safe disposal of all documents and records", "question_type" => "0", "required" => "1", "info" => "Standard ISO15189: 4.3.1, 4.13.1-3", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_confOfInterest = Question::create(array("section_id" => $sec_sec1->id, "name" => "Conflict of Interest", "title" => "1.4.2 Conflict of Interest", "description" => "Defines the systems in place to identify and avoid potential conflicts of interest and commercial, financial, political or other pressures that may affect the quality and integrity of operations", "question_type" => "0", "required" => "1", "info" => "Standard: ISO15189: 4.1", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_communication = Question::create(array("section_id" => $sec_sec1->id, "name" => "Communication", "title" => "1.4.3 Communication", "description" => "Defines the systems in place to ensure effectiveness of the quality management systems", "question_type" => "0", "required" => "1", "info" => "ISO15189: 4.1.6", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_revOfContracts = Question::create(array("section_id" => $sec_sec1->id, "name" => "Review of Contracts", "title" => "1.4.4 Review of Contracts (Supplier and Customer)", "description" => "Defines the maintenance of all records, original requests, inquiries, verbal discussions and requests for additional examinations, meetings, and meeting minutes.", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.4", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_referralExam = Question::create(array("section_id" => $sec_sec1->id, "name" => "Examination by Referral Laboratories", "title" => "1.4.5 Examination by Referral Laboratories", "description" => "Defines the 1) evaluation, selection, and performance monitoring of referral laboratories, 2) packaging and tracking of referred samples, 3) and reporting of results from referral labs", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.5.1", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_purInvCon = Question::create(array("section_id" => $sec_sec1->id, "name" => "Purchasing and Inventory Control", "title" => "1.4.6 Purchasing and Inventory Control", "description" => "Defines the processes for 1) requesting, ordering and receipt of supplies, 2) the selection of approved suppliers, 3) acceptance/rejection criteria for purchased items, 4) safe handling; 5) storage; inventory control system; 6) monitoring and handling of expired consumables", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.6", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_advisory = Question::create(array("section_id" => $sec_sec1->id, "name" => "Advisory Services", "title" => "1.4.7 Advisory Services", "description" => "Defines the required qualifications and responsibility for providing advice on: 1) choice of examinations; 2) the use of the services; 3) repeat frequency; 4) required type of sample; 5) interpretation of results; and 6) maintenance of records of communication with lab users", "question_type" => "0", "required" => "1", "info" => "ISO 15189: 4.7", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_compFeedback = Question::create(array("section_id" => $sec_sec1->id, "name" => "Resolution of Complaints and Feedback", "title" => "1.4.8 Resolution of Complaints and Feedback", "description" => "Defines how 1) complaints and feedback shall be recorded, 2) steps to determine whether patient’s results have been compromised, 3) investigative and corrective actions taken as required, 4) timeframe for closure and feedback to the complainant", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.8", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_nonConformities = Question::create(array("section_id" => $sec_sec1->id, "name" => "Identification and Control of Nonconformities", "title" => "1.4.9 Identification and Control of Nonconformities", "description" => "Defines the 1) types of nonconformities that could be identified, 2) how/where to record, 3) who is responsible for problem resolution; 4) when examinations are to be halted, 5) the recall of released results and 6) person responsible for authorizing release of results after corrective action has been taken", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.9", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_corrAction = Question::create(array("section_id" => $sec_sec1->id, "name" => "Corrective Action", "title" => "1.4.10 Corrective Action", "description" => "Defines 1) where to record, 2) how to perform root cause analysis, 3) who will be responsible for implementing action plans within the stipulated timeframes, and 4) monitoring the effectiveness of these actions in overcoming the identified problems.", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.10", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_prevAction = Question::create(array("section_id" => $sec_sec1->id, "name" => "Preventive Action", "title" => "1.4.11 Preventive Action", "description" => "Defines what tools will be used, where the action plan will be recorded, who will be responsible for ensuring the implementation within an agreed time frame and the monitoring of its effectiveness", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.11", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_contImpro = Question::create(array("section_id" => $sec_sec1->id, "name" => "Continual Improvement", "title" => "1.4.12 Continual Improvement", "description" => "Defines what quality indicators will be used and how action plans for these areas will be recorded, evaluated, and reviewed for effectiveness of improvement", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.12", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_quaTechRec = Question::create(array("section_id" => $sec_sec1->id, "name" => "Quality and Technical Records", "title" => "1.4.13 Quality and Technical Records", "description" => "Defines what are quality and technical records, how amendments would be done, traceability, storage, retention and accessibility of all hard and electronic records", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.13", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_inAudits = Question::create(array("section_id" => $sec_sec1->id, "name" => "Internal Audits", "title" => "1.4.14 Internal Audits", "description" => "Defines the internal audit process, including roles and responsibilities, types of audits, frequency of audits, auditing forms to be used, what will be covered, and identification of personnel responsible for ensuring closure of any nonconformances raised within the agreed timeframe and effectiveness of corrective actions implemented.", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.14", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_manReview = Question::create(array("section_id" => $sec_sec1->id, "name" => "Management Review", "title" => "1.4.15 Management Review", "description" => "Defines frequency, agenda (in line with 4.15.2 a-m), key attendees required, and plan that will include goals, objectives, action plans, responsibilities, due dates and how decisions/actions taken will be communicated to the relevant persons", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 4.15", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_persFiles = Question::create(array("section_id" => $sec_sec1->id, "name" => "Personnel Records/Files", "title" => "1.4.16 Personnel Records/Files", "description" => "Defines organizational plan, personnel policies, what is required in a personnel file (minimum in line with ISO 15189 Section 5.1.2) and location of personnel files", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 5.1", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_persTraining = Question::create(array("section_id" => $sec_sec1->id, "name" => "Personnel Training", "title" => "1.4.17 Personnel Training", "description" => "Defines staff appraisals, staff orientation, initial training, refresher training, continuous education program, recommended and required trainings, and record-keeping of training", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 5.1.4, 5.1.6, 5.1.9", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_competencyAudit = Question::create(array("section_id" => $sec_sec1->id, "name" => "Competency audit", "title" => "1.4.18 Competency audit", "description" => "Defines the methods, ongoing competency testing and training, and criteria used to assess competency of personnel", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 5.1.11", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_Auth = Question::create(array("section_id" => $sec_sec1->id, "name" => "Authorization", "title" => "1.4.19 Authorization", "description" => "Defines the level of authorization for all tasks, roles and deputies for all staff", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 5.1.7", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_Accomo = Question::create(array("section_id" => $sec_sec1->id, "name" => "Accommodation and Environmental Conditions", "title" => "1.4.20 Accommodation and Environmental Conditions", "description" => "Defines any specific environmental and accommodation requirements, and the responsibility, monitoring, controlling, and recording of these requirements.", "question_type" => "0", "required" => "1", "info" => "Standard: ISO 15189: 5.2.5", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_Equip = Question::create(array("section_id" => $sec_sec1->id, "name" => "Equipment", "title" => "1.4.21 Equipment", "description" => "Defines what records are to be maintained in equipment file, the minimum information required on equipment label; action to be taken for defective equipment and maintenance frequency; and access control", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_EquiCalib = Question::create(array("section_id" => $sec_sec1->id, "name" => "Calibration of Equipment", "title" => "1.4.22 Calibration of Equipment", "description" => "Defines frequency; the use of reference standards where applicable; what is required on the calibration label or calibration record and what action to be taken if calibration fails", "question_type" => "0", "required" => "1", "info" => "ISO 15189: 5.3", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_preExamPro = Question::create(array("section_id" => $sec_sec1->id, "name" => "Pre-examination Procedures", "title" => "1.4.23 Pre-examination Procedures (Handbook)", "description" => "Defines Specimen Collection, sample and volume requirements; unique identification, special handling; minimum requirements for completion of a requisition form, transportation and receipt of samples", "question_type" => "0", "required" => "1", "info" => "ISO 15189: 5.4.2,5.4.3", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_speStoRe = Question::create(array("section_id" => $sec_sec1->id, "name" => "Specimen Storage and Retention", "title" => "1.4.24 Specimen Storage and Retention", "description" => "Defines pre- and post-sampling storage conditions, stability and retention times", "question_type" => "0", "required" => "1", "info" => "ISO 15189: 5.7.2", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_exSops = Question::create(array("section_id" => $sec_sec1->id, "name" => "Examination SOPs", "title" => "1.4.25 Examination SOPs", "description" => "Defines all sub-clauses of ISO15189 Section 5.5.3 (a-q)", "question_type" => "0", "required" => "1", "info" => "ISO 15189: 5.5.3", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_equiVal = Question::create(array("section_id" => $sec_sec1->id, "name" => "Equipment Validation", "title" => "1.4.26 Equipment Validation/Verification", "description" => "Defines methods to be used, how the lab ensures that equipment taken out of the control from the lab is checked and shown to be functioning satisfactorily before being returned to laboratory use, validation/verification acceptance criteria and person responsible for final authorization for intended use", "question_type" => "0", "required" => "1", "info" => "ISO 15189: 5.5.2", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_interSer = Question::create(array("section_id" => $sec_sec1->id, "name" => "Interrupted Services", "title" => "1.4.27 Interrupted Services", "description" => "Defines backup procedures for equipment failure, power failure, unavailability of consumables and other resources", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_exVal = Question::create(array("section_id" => $sec_sec1->id, "name" => "Examination Validation", "title" => "1.4.28 Examination Validation/Verification", "description" => "Defines methods to be used, acceptance criteria, and person responsible for final authorization for intended use", "question_type" => "0", "required" => "1", "info" => "ISO 15189: 5.5.2", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_quaAssurance = Question::create(array("section_id" => $sec_sec1->id, "name" => "Quality Assurance", "title" => "1.4.29 Quality Assurance", "description" => "Defines the use of IQC and EQC, setting up of ranges, monitoring performance and troubleshooting guidelines", "question_type" => "0", "required" => "1", "info" => "ISO 15189 5.6", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_resRep = Question::create(array("section_id" => $sec_sec1->id, "name" => "Reporting of Results", "title" => "1.4.30 Reporting of Results", "description" => "Defines the standardized format of a report (in line with ISO15189: Section 5.8.3), methods of communication, release of results to authorized persons, alteration of reports and reissuance of amended reports.", "question_type" => "0", "required" => "1", "info" => "ISO 15189: 5.8", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_patConf = Question::create(array("section_id" => $sec_sec1->id, "name" => "Patient Confidentiality", "title" => "1.4.31 Patient Confidentiality", "description" => "Defines the tools used to ensure patient confidentiality and access control to laboratory facilities and records (electronic and paper records)", "question_type" => "0", "required" => "1", "info" => "ISO 15189: 5.8.13", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_labSafeMan = Question::create(array("section_id" => $sec_sec1->id, "name" => "Laboratory Safety or Safety Manual", "title" => "1.4.32 Laboratory Safety or Safety Manual", "description" => "Defines the contents to be included.", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 7.5", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_poSopsA = Question::create(array("section_id" => $sec_sec1->id, "name" => "Policy and SOPs Accessibility", "title" => "1.5 Policy and SOPs Accessibility", "description" => "Are policies and SOPs easily accessible/ available to all staff and written in a language commonly understood by respective staff?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_poSopsComm = Question::create(array("section_id" => $sec_sec1->id, "name" => "Policies and SOPs Communication", "title" => "1.6 Policies and SOPs Communication", "description" => "Is there documented evidence that all relevant policies and SOPs have been communicated to and are understood and implemented by all staff as related to their responsibilities?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_docConLog = Question::create(array("section_id" => $sec_sec1->id, "name" => "Document Control Log", "title" => "1.7 Document Control Log", "description" => "Are policies and procedures dated to reflect when it was put into effect and when it was discontinued?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_discPoSops = Question::create(array("section_id" => $sec_sec1->id, "name" => "Discontinued Policies and SOPs", "title" => "1.8 Discontinued Policies and SOPs", "description" => "Are invalid or discontinued policies and procedures removed from use and retained or archived for the time period required by lab and/or national policy?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_dataFiles = Question::create(array("section_id" => $sec_sec1->id, "name" => "Data Files", "title" => "1.9 Data Files", "description" => "Are test results and technical and quality records archived in accordance with national/international guidelines?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_arcResA = Question::create(array("section_id" => $sec_sec1->id, "name" => "Archived Results Accessibility", "title" => "1.10 Archived Results Accessibility", "description" => "Are archived records and results easily retrievable in a timely manner?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        //  Section 2 - Management Review
+        $question_workBudget = Question::create(array("section_id" => $sec_sec2->id, "name" => "Workplan and Budget", "title" => "2.1 Workplan and Budget", "description" => "Does management develop and implement a workplan and develop a budget that supports the laboratory’s testing operations and maintenance of the quality system?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_quaTechRecRev = Question::create(array("section_id" => $sec_sec2->id, "name" => "Review of Quality and Technical Records", "title" => "2.2 Review of Quality and Technical Records", "description" => "Does the laboratory supervisor routinely perform a documented review of all quality and technical records?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "5", "one_star" => "", "user_id" => "1"));
+        $question_prevActItems = Question::create(array("section_id" => $sec_sec2->id, "name" => "Follow-up of action items from previous reviews", "title" => "", "description" => "2.2.1 Follow-up of action items from previous reviews", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_corrActStatus = Question::create(array("section_id" => $sec_sec2->id, "name" => "Status of corrective actions taken", "title" => "", "description" => "2.2.2 Status of corrective actions taken and required preventive actions", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_repFromPersonnel = Question::create(array("section_id" => $sec_sec2->id, "name" => "Reports from personnel", "title" => "", "description" => "2.2.3 Reports from personnel", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_workVolChange = Question::create(array("section_id" => $sec_sec2->id, "name" => "Changes in volume and type of work", "title" => "", "description" => "2.2.4 Changes in volume and type of work the laboratory undertakes", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_bioRefRangeChange = Question::create(array("section_id" => $sec_sec2->id, "name" => "Changes in the suitability of biological reference ranges", "title" => "", "description" => "2.2.5 Changes in the suitability of biological reference ranges", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_cliHandbook = Question::create(array("section_id" => $sec_sec2->id, "name" => "Changes in the client handbook", "title" => "", "description" => "2.2.6 Changes in the client handbook", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_envMonLog = Question::create(array("section_id" => $sec_sec2->id, "name" => "Environmental monitoring log sheets", "title" => "", "description" => "2.2.7 Environmental monitoring log sheets", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_speRejLog = Question::create(array("section_id" => $sec_sec2->id, "name" => "Specimen rejection logbook", "title" => "", "description" => "2.2.8 Specimen rejection logbook", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_equiCalibManRec = Question::create(array("section_id" => $sec_sec2->id, "name" => "Equipment calibration and maintenance records", "title" => "", "description" => "2.2.9 Equipment calibration and maintenance records", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_iqcRec = Question::create(array("section_id" => $sec_sec2->id, "name" => "IQC records across all test areas", "title" => "", "description" => "2.2.10 IQC records across all test areas", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_ptIntLabCo = Question::create(array("section_id" => $sec_sec2->id, "name" => "PTs and other forms of Inter-laboratory comparisons", "title" => "", "description" => "2.2.11 Outcomes of PTs and other forms of Inter-laboratory comparisons", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_tatMon = Question::create(array("section_id" => $sec_sec2->id, "name" => "Monitoring of turnaround time", "title" => "", "description" => "2.2.12 Monitoring of turnaround time", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_qInd = Question::create(array("section_id" => $sec_sec2->id, "name" => "Quality indicators", "title" => "", "description" => "2.2.13 Quality indicators", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_recentIntAudRec = Question::create(array("section_id" => $sec_sec2->id, "name" => "Outcomes from recent internal audit records", "title" => "", "description" => "2.2.14 Outcomes from recent internal audit records", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_extAudRec = Question::create(array("section_id" => $sec_sec2->id, "name" => "Results of audit(s) or audits by external bodies", "title" => "", "description" => "2.2.15 Results of audit(s) or audits by external bodies", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_custCompFeed = Question::create(array("section_id" => $sec_sec2->id, "name" => "Customer complaints and feedback", "title" => "", "description" => "2.2.16 Customer complaints and feedback", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_occIncLogs = Question::create(array("section_id" => $sec_sec2->id, "name" => "Occurrence/incidence logs", "title" => "", "description" => "2.2.17 Occurrence/incidence logs, nonconformities and corrective action reports", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_impProRes = Question::create(array("section_id" => $sec_sec2->id, "name" => "Results of improvement projects", "title" => "", "description" => "2.2.18 Results of improvement projects", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_operPro = Question::create(array("section_id" => $sec_sec2->id, "name" => "Operational procedures", "title" => "", "description" => "2.2.19 Operational procedures (for potential sources of non-conformance and opportunities for improvement)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_refLabPerfEval = Question::create(array("section_id" => $sec_sec2->id, "name" => "Evaluation of performance of referral laboratories", "title" => "", "description" => "2.2.20 Evaluation of performance of referral laboratories", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_suppPerfEval = Question::create(array("section_id" => $sec_sec2->id, "name" => "Evaluation of supplier performance", "title" => "", "description" => "2.2.21 Evaluation of supplier performance", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_docReview = Question::create(array("section_id" => $sec_sec2->id, "name" => "Document Review", "title" => "", "description" => "2.2.22 Document Review", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_revActPlanDoc = Question::create(array("section_id" => $sec_sec2->id, "name" => "Documentation of review and action planning", "title" => "", "description" => "2.2.23 Documentation of review and action planning with staff for resolution and follow-up review", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualQMSrev = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual Review of Quality Management Systems", "title" => "2.3 Annual Review of Quality Management Systems", "description" => "Does the laboratory management annually perform a review of all quality systems at a management review meeting?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "", "user_id" => "1"));
+        $question_annualPrevActItems = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual follow-up of action items from previous management reviews", "title" => "", "description" => "2.3.1 Follow-up of action items from previous management reviews", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualCorrActStatus = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual status of corrective actions taken", "title" => "", "description" => "2.3.2 Status of corrective actions taken and required preventive actions", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualRepFromPersonnel = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual reports from managerial and supervisory personnel", "title" => "", "description" => "2.3.3  Reports from managerial and supervisory personnel", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualWorkVolChange = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual changes in volume and type of work", "title" => "", "description" => "2.3.4 Changes in volume and type of work the laboratory undertakes", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualBioRefRangeChange = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual changes in the suitability of biological reference ranges", "title" => "", "description" => "2.3.5 Changes in the suitability of biological reference ranges", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualCliHandbook = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual changes in the client handbook", "title" => "", "description" => "2.3.6 Changes in the client handbook", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualEnvMonLog = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual environmental monitoring log sheets", "title" => "", "description" => "2.3.7 Environmental monitoring log sheets", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualSpeRejLog = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual specimen rejection logbook", "title" => "", "description" => "2.3.8 Specimen rejection logbook", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualEquiCalibManRec = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual equipment calibration and maintenance records", "title" => "", "description" => "2.3.9 Equipment calibration and maintenance records", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualIqcRec = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual IQC records across all test areas", "title" => "", "description" => "2.3.10 IQC records across all test areas", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualPtIntLabCo = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual PTs and other forms of Inter-laboratory comparisons", "title" => "", "description" => "2.3.11 Outcomes of PTs and other forms of Inter-laboratory comparisons", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualTatMon = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual Turnaround time", "title" => "", "description" => "2.3.12 Turnaround time", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualQInd = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual Quality indicators", "title" => "", "description" => "2.3.13 Quality indicators", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualRecentIntAudRec = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual outcomes from recent internal audit records", "title" => "", "description" => "2.3.14 Outcomes from recent internal audit records", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualExtAudRec = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual results of audit(s) or audits by external bodies", "title" => "", "description" => "2.3.15 Results of audit(s) or audits by external bodies", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualCustCompFeed = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual customer complaints and feedback", "title" => "", "description" => "2.3.16 Customer complaints and feedback", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualOccIncLogs = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual occurrence/incidence logs", "title" => "", "description" => "2.3.17 Occurrence/incidence logs, nonconformities and corrective action reports", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualImpProRes = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual results of improvement projects", "title" => "", "description" => "2.3.18 Results of improvement projects", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualOperPro = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual operational procedures", "title" => "", "description" => "2.3.19 Operational procedures (for potential sources of non-conformance and opportunities for improvement)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualRefLabPerfEval = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual evaluation of performance of referral laboratories", "title" => "", "description" => "2.3.20 Evaluation of performance of referral laboratories", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualSuppPerfEval = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual evaluation of supplier performance", "title" => "", "description" => "2.3.21 Evaluation of supplier performance", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualDocReview = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual document Review", "title" => "", "description" => "2.3.22 Document Review", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_annualRevActPlanDoc = Question::create(array("section_id" => $sec_sec2->id, "name" => "Annual documentation of review and action planning", "title" => "", "description" => "2.3.23 Documentation of review and action planning with staff for resolution and follow-up review", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_QMSImpMe = Question::create(array("section_id" => $sec_sec2->id, "name" => "Quality Management System Improvement Measures", "title" => "2.4 Quality Management System Improvement Measures", "description" => "Does the laboratory identify and undertake quality improvement projects?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "", "user_id" => "1"));
+        $question_commSysLabOper = Question::create(array("section_id" => $sec_sec2->id, "name" => "Communications System on Laboratory Operations", "title" => "2.5 Communications System on Laboratory Operations", "description" => "Does the laboratory communicate with upper management regularly regarding personnel, facility, and operational needs?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        //  Section 3 - Organization & Personnel
+        $question_workSchCo = Question::create(array("section_id" => $sec_sec3->id, "name" => "Workload, Schedule and Coverage", "title" => "3.1 Workload, Schedule and Coverage", "description" => "Do work schedules show task assignments & coordination of work for adequate lab staff coverage?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_duRoDaRo = Question::create(array("section_id" => $sec_sec3->id, "name" => "Duty Roster And Daily Routine", "title" => "3.2 Duty Roster And Daily Routine", "description" => "Are daily routine work tasks established, assigned (duty roster and workstation assignments/tasks), monitored and supervised by qualified professional staff, and which indicates that only authorized personnel perform specific tasks?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_orgChart = Question::create(array("section_id" => $sec_sec3->id, "name" => "Organizational Chart and External/Internal Reporting Systems", "title" => "3.3 Organizational Chart and External/Internal Reporting Systems", "description" => "Are lines of authority and responsibility clearly defined for all lab staff, including the designation of a supervisor and deputies for all key functions?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_qmsOversight = Question::create(array("section_id" => $sec_sec3->id, "name" => "Quality Management System Oversight", "title" => "3.4 Quality Management System Oversight", "description" => "Is there a quality officer/manager with delegated responsibility to oversee compliance with the quality management system?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "", "user_id" => "1"));
+        $question_perFilSys = Question::create(array("section_id" => $sec_sec3->id, "name" => "Personnel Filing System", "title" => "3.5 Personnel Filing System", "description" => "Are Personnel Files present?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "", "user_id" => "1"));
+        $question_empOri = Question::create(array("section_id" => $sec_sec3->id, "name" => "Employee Orientation", "title" => "", "description" => "3.5.1 Employee Orientation", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_educTra = Question::create(array("section_id" => $sec_sec3->id, "name" => "Education & Training", "title" => "", "description" => "3.5.2 Education & Training (e.g., degrees/certificates)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_prevExp = Question::create(array("section_id" => $sec_sec3->id, "name" => "Previous experience and work history (e.g. CV)", "title" => "", "description" => "3.5.3 Previous experience and work history (e.g. CV)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_writtenJobDesc = Question::create(array("section_id" => $sec_sec3->id, "name" => "Written job description", "title" => "", "description" => "3.5.4 Written job description with documentation that staff member received and signed a copy of their job description", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_letterOfEmp = Question::create(array("section_id" => $sec_sec3->id, "name" => "Letter of employment or appointment", "title" => "", "description" => "3.5.5 Letter of employment or appointment", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_revOfJobSops = Question::create(array("section_id" => $sec_sec3->id, "name" => "Review of job-relevant SOPs", "title" => "", "description" => "3.5.6 Review of job-relevant SOPs", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_docRevSafetyMan = Question::create(array("section_id" => $sec_sec3->id, "name" => "Documented review of safety manual", "title" => "", "description" => "3.5.7 Documented review of safety manual, evidence of safety training", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_revOfProForEmp = Question::create(array("section_id" => $sec_sec3->id, "name" => "Review of procedure for employees", "title" => "", "description" => "3.5.8 Review of procedure for employees to communicate concerns about test quality and laboratory safety", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_regWithProf = Question::create(array("section_id" => $sec_sec3->id, "name" => "Registration with professional board", "title" => "", "description" => "3.5.9 Registration with professional board", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_traRecDoc = Question::create(array("section_id" => $sec_sec3->id, "name" => "Training record documenting", "title" => "", "description" => "3.5.10 Training record documenting trainings received, vendor training received on-site", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_periodicPerfRev = Question::create(array("section_id" => $sec_sec3->id, "name" => "Periodic Performance Review", "title" => "", "description" => "3.5.11 Periodic Performance Review – including Observation, Competency audit, Coaching / Feedback, on-the-job training", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_docEmpRecog = Question::create(array("section_id" => $sec_sec3->id, "name" => "Documentation of employee recognition", "title" => "", "description" => "3.5.12 Documentation of employee recognition (i.e., employee of the month, letter of commendation, etc.)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_hrData = Question::create(array("section_id" => $sec_sec3->id, "name" => "Human Resource (HR) Data", "title" => "", "description" => "3.5.13 Human Resource (HR) Data – (vaccination status, accidental exposure during work injuries, accident history, leave days taken, etc.)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_staffCompAudit = Question::create(array("section_id" => $sec_sec3->id, "name" => "Staff Competency audit and Training", "title" => "3.6 Staff Competency audit and Training", "description" => "Is there a system for competency audit of personnel (both new hires and existing staff) and does it include planning and documentation of retraining and reaudit, when indicated?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "", "user_id" => "1"));
+        $question_labStaffTra = Question::create(array("section_id" => $sec_sec3->id, "name" => "Laboratory Staff Training", "title" => "3.7 Laboratory Staff Training", "description" => "Does the laboratory have adequate training policies, procedures, and/or training plans, including cross-training within the laboratory team, one-on-one mentoring, and/or off-site external training?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_staffMeet = Question::create(array("section_id" => $sec_sec3->id, "name" => "Staff Meetings", "title" => "3.8 Staff Meetings", "description" => "Are staff meetings held regularly?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "4", "one_star" => "", "user_id" => "1"));
+        $question_prevStaffMeet = Question::create(array("section_id" => $sec_sec3->id, "name" => "Follow-up of action items from previous staff meetings", "title" => "", "description" => "3.8.1 Follow-up of action items from previous staff meetings", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_probCompDis = Question::create(array("section_id" => $sec_sec3->id, "name" => "Discussion about problems and complaints", "title" => "", "description" => "3.8.2 Discussion about problems and complaints", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_revOfDoc = Question::create(array("section_id" => $sec_sec3->id, "name" => "Review of documentation", "title" => "", "description" => "3.8.3 Review of documentation", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_commOnRevSops = Question::create(array("section_id" => $sec_sec3->id, "name" => "Communication on reviewed SOPs", "title" => "", "description" => "3.8.4 Communication on reviewed/revised/redundant SOPs", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_systematicPro = Question::create(array("section_id" => $sec_sec3->id, "name" => "Systemic and or recurrent problems", "title" => "", "description" => "3.8.5 Systemic and or recurrent problems and issues addressed, including actions to prevent recurrence", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_priorCorrAct = Question::create(array("section_id" => $sec_sec3->id, "name" => "Prior corrective actions review", "title" => "", "description" => "3.8.6 Review of results from prior corrective actions", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_discEvalOfImp = Question::create(array("section_id" => $sec_sec3->id, "name" => "Discussion and evaluation of improvement topics", "title" => "", "description" => "3.8.7 Discussion and evaluation of improvement topics/projects", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_staffFeed = Question::create(array("section_id" => $sec_sec3->id, "name" => "Feedback given by staff", "title" => "", "description" => "3.8.8 Feedback given by staff that have attended meetings, training, conferences etc.", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_exempPerf = Question::create(array("section_id" => $sec_sec3->id, "name" => "Recognition of employees for exemplary performance", "title" => "", "description" => "3.8.9 Recognition of employees for exemplary performance (i.e., employee of the month, letter of commendation, etc.)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_relayOfReports = Question::create(array("section_id" => $sec_sec3->id, "name" => "Relay of reports and updates", "title" => "", "description" => "3.8.10 Relay of reports and updates from lab attendance at meetings with clinicians (the use of lab services and/or attendance at clinical rounds)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_recordMon = Question::create(array("section_id" => $sec_sec3->id, "name" => "Recording and monitoring of meeting notes", "title" => "", "description" => "3.8.11 Recording and monitoring of meeting notes for progress on issues", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        //  Section 4 - Client Management and Customer Service
+        $question_advTraQS = Question::create(array("section_id" => $sec_sec4->id, "name" => "Advice and Training by Qualified Staff", "title" => "4.1 Advice and Training by Qualified Staff", "description" => "Do staff members with appropriate professional qualifications provide clients with advice and/or training regarding required types of samples, choice of examinations, repeat frequency, and interpretation of results?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_labHandbook = Question::create(array("section_id" => $sec_sec4->id, "name" => "Laboratory Handbook for Clients", "title" => "4.2 Laboratory Handbook for Clients", "description" => "Is there a laboratory handbook for laboratory users that includes information on services offered, quality assurance, laboratory operations, sample collection, transport and agreed turnaround times?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_commPoOnDelays = Question::create(array("section_id" => $sec_sec4->id, "name" => "Communication Policy on Delays in Service", "title" => "4.3 Communication Policy on Delays in Service", "description" => "Is timely, documented notification provided to customers when the laboratory experiences delays or interruptions in testing (due to equipment failure, stock outs, staff levels, etc.) or finds it necessary to change examination procedures?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_evalTool = Question::create(array("section_id" => $sec_sec4->id, "name" => "Evaluation Tool and Follow up", "title" => "4.4 Evaluation Tool and Follow up", "description" => "Is there a tool for regularly evaluating client satisfaction and is the feedback received effectively utilized to improve services?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        //  Section 5 - Equipment
+        $question_properEquiPro = Question::create(array("section_id" => $sec_sec5->id, "name" => "Adherence to Proper Equipment Protocol", "title" => "5.1 Adherence to Proper Equipment Protocol", "description" => "Is equipment installed and placed as specified in the operator’s manuals and uniquely labeled or marked?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_equipMethVal = Question::create(array("section_id" => $sec_sec5->id, "name" => "Equipment and Method Validation", "title" => "5.2 Equipment and Method Validation/Verification and Documentation", "description" => "Are newly introduced equipment and methods validated/verified on-site and are records documenting validation available?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_equipRecMan = Question::create(array("section_id" => $sec_sec5->id, "name" => "Equipment Record Maintenance", "title" => "5.3 Equipment Record Maintenance", "description" => "Is current equipment inventory data available on all equipment in the laboratory?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_equipName = Question::create(array("section_id" => $sec_sec5->id, "name" => "Name of equipment", "title" => "", "description" => "5.3.1 Name of equipment", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_manfCont = Question::create(array("section_id" => $sec_sec5->id, "name" => "Manufacturer's contact details", "title" => "", "description" => "5.3.2 Manufacturer’s contact details", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_condReceived = Question::create(array("section_id" => $sec_sec5->id, "name" => "Condition received (new, used, reconditioned)", "title" => "", "description" => "5.3.3 Condition received (new, used, reconditioned)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_serialNo = Question::create(array("section_id" => $sec_sec5->id, "name" => "Serial number", "title" => "", "description" => "5.3.4 Serial number", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_dateOfPur = Question::create(array("section_id" => $sec_sec5->id, "name" => "Date of purchase", "title" => "", "description" => "5.3.5 Date of purchase", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_outOfSer = Question::create(array("section_id" => $sec_sec5->id, "name" => "Date out of service", "title" => "", "description" => "5.3.6 Date when put 'out of service'", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_dateSerEntry = Question::create(array("section_id" => $sec_sec5->id, "name" => "Date of entry into service", "title" => "", "description" => "5.3.7 Date of entry into service", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_equipManRec = Question::create(array("section_id" => $sec_sec5->id, "name" => "Equipment Maintenance Records", "title" => "5.4 Equipment Maintenance Records", "description" => "Is relevant equipment service information readily available in the laboratory?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_serviceContInf = Question::create(array("section_id" => $sec_sec5->id, "name" => "Service contract information", "title" => "", "description" => "5.4.1 Service contract information", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_serviceProCont = Question::create(array("section_id" => $sec_sec5->id, "name" => "Contact details for service provider", "title" => "", "description" => "5.4.2 Contact details for service provider", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_decontaRec = Question::create(array("section_id" => $sec_sec5->id, "name" => "Decontamination Records", "title" => "", "description" => "5.4.3 Decontamination Records", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_perfManRec = Question::create(array("section_id" => $sec_sec5->id, "name" => "Performance and maintenance records", "title" => "", "description" => "5.4.4 Performance and maintenance records", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_lastSerDate = Question::create(array("section_id" => $sec_sec5->id, "name" => "Last date of service", "title" => "", "description" => "5.4.5 Last date of service", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_nextSerDate = Question::create(array("section_id" => $sec_sec5->id, "name" => "Next date of service", "title" => "", "description" => "5.4.6 Next date of service", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_currLoc = Question::create(array("section_id" => $sec_sec5->id, "name" => "Current location", "title" => "", "description" => "5.4.7 Current location", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_obsoEquipPro = Question::create(array("section_id" => $sec_sec5->id, "name" => "Obsolete Equipment Procedures", "title" => "5.5 Obsolete Equipment Procedures", "description" => "Is non-functioning equipment appropriately labeled and removed from the laboratory & storage areas?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_equipCalibPro = Question::create(array("section_id" => $sec_sec5->id, "name" => "Adherence to Equipment Calibration Protocol", "title" => "5.6 Adherence to Equipment Calibration Protocol", "description" => "Is routine calibration of laboratory equipment (including pipettes, centrifuges, balances, and thermometers) scheduled, as indicated on the equipment, and verified?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_equipPrevMan = Question::create(array("section_id" => $sec_sec5->id, "name" => "Equipment Preventive Maintenance", "title" => "5.7 Equipment Preventive Maintenance", "description" => "Is routine preventive maintenance performed on all equipment and recorded according to SOPs/log sheet?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_equipSerMan = Question::create(array("section_id" => $sec_sec5->id, "name" => "Equipment Service Maintenance", "title" => "5.8 Equipment Service Maintenance", "description" => "Is equipment routinely serviced according to schedule by qualified and competent personnel and is this information documented in appropriate logs?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_equipPartsRe = Question::create(array("section_id" => $sec_sec5->id, "name" => "Equipment Parts for Repair", "title" => "5.9 Equipment Parts for Repair", "description" => "Are parts available to perform minor repairs as per manufacturer’s instructions?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_equipMalf = Question::create(array("section_id" => $sec_sec5->id, "name" => "Equipment Malfunction", "title" => "5.10 Equipment Malfunction - Response and Documentation", "description" => "Is equipment malfunction resolved by the effectiveness of the corrective action program and the associated root cause analysis?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_equipRepMon = Question::create(array("section_id" => $sec_sec5->id, "name" => "Equipment Repair Monitoring and Documentation", "title" => "5.11 Equipment Repair Monitoring and Documentation", "description" => "Are repair orders monitored to determine if the service is completed? Does the laboratory verify and document that it is in proper working order before being put it back into service?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_equipFailPlan = Question::create(array("section_id" => $sec_sec5->id, "name" => "Equipment Failure - Contingency Plan", "title" => "5.12 Equipment Failure - Contingency Plan", "description" => "Are there back-up procedures for equipment failure (including SOPs for handling specimens during these times, identification of a back-up lab for testing, and referral procedures)?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_manManual = Question::create(array("section_id" => $sec_sec5->id, "name" => "Manufacturer's Operator Manual", "title" => "5.13 Manufacturer's Operator Manual", "description" => "Are the equipment manufacturer’s operator manuals readily available to testing staff, and where possible, available in the language understood by staff?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_effOfQMS = Question::create(array("section_id" => $sec_sec5->id, "name" => "Communication on Effectiveness of QMS", "title" => "5.14 Communication on Effectiveness of Quality Management System", "description" => "Are equipment specifications and maintenance needs routinely communicated to upper management?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_labTestSer = Question::create(array("section_id" => $sec_sec5->id, "name" => "Laboratory Testing Services", "title" => "5.15 Laboratory Testing Services", "description" => "Has the laboratory provided uninterrupted testing services, with no disruptions due to equipment failure in the last year (or since the last audit)?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        //  Section 6 - Internal Audit
+        $question_internalAudits = Question::create(array("section_id" => $sec_sec6->id, "name" => "Internal Audits", "title" => "6.1 Internal Audits", "description" => "Are internal audits conducted at intervals as defined in the quality manual and do these audits address areas important to patient care?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "5", "one_star" => "", "user_id" => "1"));
+        $question_inAuditCarriers = Question::create(array("section_id" => $sec_sec6->id, "name" => "Internal Audit Carriers", "title" => "", "description" => "6.1.1 Are audits being carried out by persons who are not involved in lab activities in the section being audited?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_inAuditConductor = Question::create(array("section_id" => $sec_sec6->id, "name" => "Internal Audit Carriers conductors", "title" => "", "description" => "6.1.2 Are the personnel conducting the internal audits trained and competent in auditing?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_causeAnalysis = Question::create(array("section_id" => $sec_sec6->id, "name" => "Cause Analysis", "title" => "", "description" => "6.1.3 Is cause analysis performed for nonconformities/noted deficiencies?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_inAuditFindings = Question::create(array("section_id" => $sec_sec6->id, "name" => "Internal audit findings", "title" => "", "description" => "6.1.4 Are internal audit findings documented and presented to the laboratory management and relevant staff for review?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_auditRecomm = Question::create(array("section_id" => $sec_sec6->id, "name" => "Audit Recommendations and Action Plan & Follow up", "title" => "6.2 Audit Recommendations and Action Plan & Follow up", "description" => "Are recommendations for corrective/preventive actions made based on audit findings; is an action plan developed with clear timelines and documented follow-up?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "5", "one_star" => "", "user_id" => "1"));
+        //  Section 7 - Purchasing and Inventory
+        $question_invBudget = Question::create(array("section_id" => $sec_sec7->id, "name" => "Inventory and Budgeting System", "title" => "7.1 Inventory and Budgeting System", "description" => "Is there a system for accurately forecasting needs for supplies and reagents?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_serSuppPerfRev = Question::create(array("section_id" => $sec_sec7->id, "name" => "Service Supplier Performance Review", "title" => "7.2 Service Supplier Performance Review", "description" => "Are supply & reagent specifications periodically reviewed and are approved suppliers identified?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_manSuppList = Question::create(array("section_id" => $sec_sec7->id, "name" => "Manufacturer/Supplier List", "title" => "7.3 Manufacturer/Supplier List", "description" => "Is an up-to-date list of approved manufacturers/suppliers available and includes their complete contact information?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_budgetaryPro = Question::create(array("section_id" => $sec_sec7->id, "name" => "Budgetary Projections", "title" => "7.4 Budgetary Projections", "description" => "Are budgetary projections based on personnel, test, facility and equipment needs, and quality assurance procedures and materials?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_manRevSuppReq = Question::create(array("section_id" => $sec_sec7->id, "name" => "Management Review of Supply Requests", "title" => "7.5 Management Review of Supply Requests", "description" => "Does management review the finalized supply requests?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_orderTrack = Question::create(array("section_id" => $sec_sec7->id, "name" => "Order Tracking, Inspection, and Documentation", "title" => "7.6 Order Tracking, Inspection, and Documentation", "description" => "Are all orders tracked until delivery and inspected, receipted, and labeled with date of receipt when the orders are checked in?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_invConSys = Question::create(array("section_id" => $sec_sec7->id, "name" => "Inventory Control System", "title" => "7.7 Inventory Control System", "description" => "Is an inventory control system in place?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_consumeAccRej = Question::create(array("section_id" => $sec_sec7->id, "name" => "Acceptance and rejection of consumables", "title" => "", "description" => "7.7.1 Acceptance and rejection of consumables", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_lotNumberRec = Question::create(array("section_id" => $sec_sec7->id, "name" => "Recording of lot number", "title" => "", "description" => "7.7.2 Recording of lot number, date of receipt, received by and date placed into service", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_consumeStorage = Question::create(array("section_id" => $sec_sec7->id, "name" => "Storage of consumables", "title" => "", "description" => "7.7.3 Storage of consumables", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_labInvSys = Question::create(array("section_id" => $sec_sec7->id, "name" => "Laboratory Inventory System", "title" => "7.8 Laboratory Inventory System", "description" => "Are inventory records complete and accurate, with minimum and maximum stock levels denoted?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_usageRateTrack = Question::create(array("section_id" => $sec_sec7->id, "name" => "Usage Rate Tracking of Consumables", "title" => "7.9 Usage Rate Tracking of Consumables", "description" => "Is the consumption rate monitored?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_invStockCount = Question::create(array("section_id" => $sec_sec7->id, "name" => "Inventory Control System – Stock Counts", "title" => "7.10 Inventory Control System – Stock Counts", "description" => "Are stock counts routinely performed?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_storageArea = Question::create(array("section_id" => $sec_sec7->id, "name" => "Storage Area", "title" => "7.11 Storage Area", "description" => "Are storage areas set up and monitored appropriately?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_storageWellOrg = Question::create(array("section_id" => $sec_sec7->id, "name" => "Storage area well-organized", "title" => "", "description" => "7.11.1 Is the storage area well-organized and free of clutter?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_desigPlaces = Question::create(array("section_id" => $sec_sec7->id, "name" => "Designated places", "title" => "", "description" => "7.11.2 Are there designated places labeled for all inventory items?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_hazardousChem = Question::create(array("section_id" => $sec_sec7->id, "name" => "Hazardous chemicals stored appropriately", "title" => "", "description" => "7.11.3 Are hazardous chemicals stored appropriately?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_coldStorage = Question::create(array("section_id" => $sec_sec7->id, "name" => "Adequate cold storage", "title" => "", "description" => "7.11.4 Is adequate cold storage available?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_storageAreaMon = Question::create(array("section_id" => $sec_sec7->id, "name" => "Storage areas monitored", "title" => "", "description" => "7.11.5 Are storage areas monitored as per prescribed storage conditions?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_ambientTemp = Question::create(array("section_id" => $sec_sec7->id, "name" => "Ambient temperature", "title" => "", "description" => "7.11.6 Is the ambient temperature monitored routinely?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_directSunlight = Question::create(array("section_id" => $sec_sec7->id, "name" => "Storage in direct sunlight", "title" => "", "description" => "7.11.7 Is storage in direct sunlight avoided?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_adequateVent = Question::create(array("section_id" => $sec_sec7->id, "name" => "Storage area adequately ventilated", "title" => "", "description" => "7.11.8 Is the storage area adequately ventilated?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_cleanDustPests = Question::create(array("section_id" => $sec_sec7->id, "name" => "Clean and free of dust and pests", "title" => "", "description" => "7.11.9 Is the storage area clean and free of dust and pests?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_accessControl = Question::create(array("section_id" => $sec_sec7->id, "name" => "Storage areas access-controlled", "title" => "", "description" => "7.11.10 Are storage areas access-controlled?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_wastageMin = Question::create(array("section_id" => $sec_sec7->id, "name" => "Inventory Organization and Wastage Minimization", "title" => "7.12 Inventory Organization and Wastage Minimization", "description" => "Is First-Expiration-First-Out (FEFO) practiced?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_dispExProd = Question::create(array("section_id" => $sec_sec7->id, "name" => "Disposal of Expired Products", "title" => "7.13 Disposal of Expired Products", "description" => "Are expired products labeled and disposed properly?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_prodExpiration = Question::create(array("section_id" => $sec_sec7->id, "name" => "Product Expiration", "title" => "7.14 Product Expiration", "description" => "Are all reagents/test kits in use (and in stock) currently within the manufacturer-assigned expiration dates or within stability?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_labTestServices = Question::create(array("section_id" => $sec_sec7->id, "name" => "Laboratory Testing Services", "title" => "7.15 Laboratory Testing Services", "description" => "Has the laboratory provided uninterrupted testing services, with no disruptions due to stock outs in the last year or since last assessment?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        //  Section 8 - Process Control and Internal & External Quality Assurance
+        $question_patIdGuide = Question::create(array("section_id" => $sec_sec8->id, "name" => "Patient Identification guidelines", "title" => "", "description" => "Are guidelines for patient identification, specimen collection (including client safety), labeling, and transport readily available to persons responsible for primary sample collection?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_sampRecPro = Question::create(array("section_id" => $sec_sec8->id, "name" => "Adequate sample receiving procedures", "title" => "", "description" => "8.2 Are adequate sample receiving procedures in place?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "Some Elements Required", "score" => "3", "one_star" => "", "user_id" => "1"));
+        $question_specLabel = Question::create(array("section_id" => $sec_sec8->id, "name" => "Specimens Labelled", "title" => "", "description" => "8.2.1 Are specimens labeled with patient ID, test, and date, time of collection, date of collection and authorized requester?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "1", "user_id" => "1"));
+        $question_reqForm = Question::create(array("section_id" => $sec_sec8->id, "name" => "Requisition form", "title" => "", "description" => "8.2.2 Are all test requests accompanied by an acceptable and approved test requisition form?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "1", "user_id" => "1"));
+        $question_afterHours = Question::create(array("section_id" => $sec_sec8->id, "name" => "Specimen received after hours", "title" => "", "description" => "8.2.3 If not a 24 hour lab, is there a documented method for handling of specimens received after hours?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_transSheet = Question::create(array("section_id" => $sec_sec8->id, "name" => "Sample delivery or transmittal sheet", "title" => "", "description" => "8.2.4 Are all samples that are either received or referred to a higher level laboratory accompanied by a sample delivery checklist or transmittal sheet?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_accRejCrit = Question::create(array("section_id" => $sec_sec8->id, "name" => "Acceptance/rejection criteria", "title" => "", "description" => "8.2.5 Are received specimens evaluated according to acceptance/rejection criteria?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_specLogged = Question::create(array("section_id" => $sec_sec8->id, "name" => "Specimen logged", "title" => "", "description" => "8.2.6 Are specimens logged appropriately upon receipt in the laboratory (including date, time, and name of receiving officer)?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "1", "user_id" => "1"));
+        $question_portions = Question::create(array("section_id" => $sec_sec8->id, "name" => "Portions tracked", "title" => "", "description" => "8.2.7 When samples are split, can the portions be traced back to the primary sample?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_2IdSys = Question::create(array("section_id" => $sec_sec8->id, "name" => "Two-identifier system", "title" => "", "description" => "8.2.8 Is a two-identifier system in use and is each sample assigned a unique identifying number?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_urgentSpec = Question::create(array("section_id" => $sec_sec8->id, "name" => "Urgent Specimen", "title" => "", "description" => "8.2.9 Are procedures in place to process 'urgent' specimens and verbal requests?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_corrWorksta = Question::create(array("section_id" => $sec_sec8->id, "name" => "Specimens delivered to the correct workstations", "title" => "", "description" => "8.2.10 Are specimens delivered to the correct workstations in a timely manner?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_specStoredApp = Question::create(array("section_id" => $sec_sec8->id, "name" => "Specimens stored appropriately", "title" => "", "description" => "8.3 Are specimens stored appropriately prior to testing?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_specDispSafe = Question::create(array("section_id" => $sec_sec8->id, "name" => "Specimens disposed of in a safe manner", "title" => "", "description" => "8.3.1 Are specimens disposed of in a safe manner?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_specPackage = Question::create(array("section_id" => $sec_sec8->id, "name" => "Specimens packaged appropriately", "title" => "", "description" => "8.4 Are specimens packaged appropriately according to local and or international regulations and transported to referral laboratories within acceptable timeframes?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_referredSpecLog = Question::create(array("section_id" => $sec_sec8->id, "name" => "Referred specimens tracked properly", "title" => "", "description" => "8.5 Are referred specimens tracked properly using a logbook or tracking form?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_procManual = Question::create(array("section_id" => $sec_sec8->id, "name" => "Complete procedure manual", "title" => "", "description" => "8.6 Is complete procedure manual available at the workstation or in the work area?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "1", "user_id" => "1"));
+        $question_reagentLogbook = Question::create(array("section_id" => $sec_sec8->id, "name" => "Reagent logbook for lot number and dates", "title" => "", "description" => "8.7 Is there a reagent logbook for lot number and dates of opening that reflects verification of new lots?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_consumeVer = Question::create(array("section_id" => $sec_sec8->id, "name" => "Consumables verified before use", "title" => "", "description" => "8.8 Is each new lot number, new shipment of reagents, or consumables verified before use?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_inQualCo = Question::create(array("section_id" => $sec_sec8->id, "name" => "Internal quality control performed", "title" => "", "description" => "8.9  Is internal quality control performed, documented, and verified before releasing patient results?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "1", "user_id" => "1"));
+        $question_qcResMon = Question::create(array("section_id" => $sec_sec8->id, "name" => "QC results monitored and reviewed", "title" => "", "description" => "8.10 Are QC results monitored and reviewed (biases, shifts, trends, and Levy-Jennings charts)? Is there documentation of corrective action when quality control results exceed the acceptable range in a timely manner?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "", "user_id" => "1"));
+        $question_envConditons = Question::create(array("section_id" => $sec_sec8->id, "name" => "", "title" => "", "description" => "8.11 Are environmental conditions are checked and reviewed accurately?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_roomTemp = Question::create(array("section_id" => $sec_sec8->id, "name" => "Room temperature", "title" => "", "description" => "8.11.1 Room temperature", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_freezers = Question::create(array("section_id" => $sec_sec8->id, "name" => "Freezers", "title" => "", "description" => "8.11.2 Freezers", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_refrigerator = Question::create(array("section_id" => $sec_sec8->id, "name" => "Refrigerator", "title" => "", "description" => "8.11.3 Refrigerator", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_incubators = Question::create(array("section_id" => $sec_sec8->id, "name" => "Incubators", "title" => "", "description" => "8.11.4 Incubators", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_waterBath = Question::create(array("section_id" => $sec_sec8->id, "name" => "Water Bath", "title" => "", "description" => "8.11.5 Water Bath", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_accRanges = Question::create(array("section_id" => $sec_sec8->id, "name" => "Acceptable ranges defined", "title" => "", "description" => "8.12 Have acceptable ranges been defined for all temperature- dependent equipment with procedures and documentation of action taken in response to out of range temperatures?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_externalPT = Question::create(array("section_id" => $sec_sec8->id, "name" => "External Proficiency Tests", "title" => "", "description" => "8.13 Does the laboratory participate in external Proficiency Testing (PT) or exercise an alternative performance audit system when appropriate?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "1", "user_id" => "1"));
+        $question_sampDist = Question::create(array("section_id" => $sec_sec8->id, "name" => "Samples routinely distributed", "title" => "", "description" => "8.13.1 Are blinded characterized samples routinely distributed for testing to determine accuracy?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_ptProvAccreditted = Question::create(array("section_id" => $sec_sec8->id, "name" => "PT samples come from providers who are accredited", "title" => "", "description" => "8.13.2 Do PT samples come from providers who are accredited or approved?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_ptSpecHandledNormally = Question::create(array("section_id" => $sec_sec8->id, "name" => "PT specimens handled normally", "title" => "", "description" => "8.13.3 Are PT specimens handled and tested the same way as patient specimens?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_ptResCauseAnalysis = Question::create(array("section_id" => $sec_sec8->id, "name" => "Cause analysis performed for unacceptable PT results", "title" => "", "description" => "8.13.4 Is cause analysis performed for unacceptable PT results?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_ptResCorrAct = Question::create(array("section_id" => $sec_sec8->id, "name" => "Corrective action for unacceptable PT results", "title" => "", "description" => "8.13.5 Is corrective action documented for unacceptable PT results?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_testReqResCheck = Question::create(array("section_id" => $sec_sec8->id, "name" => "Test requests checked with test results", "title" => "", "description" => "8.14 Are test requests checked with test results, thereby assuring the accuracy and completion of all tests?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        //  Section 9 - Information Management
+        $question_testResRepSys = Question::create(array("section_id" => $sec_sec9->id, "name" => "Test Result Reporting System", "title" => "9.1 Test Result Reporting System", "description" => "Are test results legible, technically verified by an authorized person, and confirmed against patient identity?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_testPersonnel = Question::create(array("section_id" => $sec_sec9->id, "name" => "Testing Personnel", "title" => "9.2 Testing Personnel", "description" => "Are testing personnel identified on the requisition and record?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_testResRec = Question::create(array("section_id" => $sec_sec9->id, "name" => "Test Result Records", "title" => "9.3 Test Result Records", "description" => "Are test results recorded in a logbook or electronic record in a timely manner?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_analyticSys = Question::create(array("section_id" => $sec_sec9->id, "name" => "Analytic System/Method Tracing", "title" => "9.4 Analytic System/Method Tracing", "description" => "When more than one instrument is in use for the same test, are test results traceable to the equipment used for testing?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_resXCheckSys = Question::create(array("section_id" => $sec_sec9->id, "name" => "Result Cross-check System", "title" => "9.5 Result Cross-check System", "description" => "Is there a system for reviewing for transcription errors?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_arcDataLabel = Question::create(array("section_id" => $sec_sec9->id, "name" => "Archived Data Labeling and Storage", "title" => "9.6 Archived Data Labeling and Storage", "description" => "Are archived results (paper or data-storage media) properly labeled and stored in a secure location accessible only to authorized personnel?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_backupSys = Question::create(array("section_id" => $sec_sec9->id, "name" => "Information and Data Backup System", "title" => "9.7 Information and Data Backup System", "description" => "Are there documented procedures to prevent the loss of test result data in the event of hardware/software failure, fire or theft?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_testResReport = Question::create(array("section_id" => $sec_sec9->id, "name" => "Test Result Report", "title" => "9.8 Test Result Report", "description" => "Is the laboratory result report(s) in a standard form determined to be acceptable by its customers?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_reportId = Question::create(array("section_id" => $sec_sec9->id, "name" => "Laboratory issuing the report clearly identified", "title" => "", "description" => "9.8.1 Is the laboratory issuing the report clearly identified?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "1", "user_id" => "1"));
+        $question_patDemography = Question::create(array("section_id" => $sec_sec9->id, "name" => "Report contains the patient demography", "title" => "", "description" => "9.8.2 Does the report contain the patient's name, address, and the hospital/destination of the report?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "1", "user_id" => "1"));
+        $question_testRequester = Question::create(array("section_id" => $sec_sec9->id, "name" => "Person requesting the test indicated", "title" => "", "description" => "9.8.3 Is the name of the person requesting the test indicated on the report?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_specTestInc = Question::create(array("section_id" => $sec_sec9->id, "name" => "Sample received and the test requested included", "title" => "", "description" => "9.8.4 Is the type of sample received and the test requested included in the report?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_specCollDate = Question::create(array("section_id" => $sec_sec9->id, "name" => "Date and time for specimen collection", "title" => "", "description" => "9.8.5 Are the date and time for specimen collection, receipt of specimen, and release of report indicated?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_bioRefRange = Question::create(array("section_id" => $sec_sec9->id, "name" => "Report indicates biological reference ranges", "title" => "", "description" => "9.8.6 Does the report indicate biological reference ranges for each test?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_siUnits = Question::create(array("section_id" => $sec_sec9->id, "name" => "SI units", "title" => "", "description" => "9.8.7 Is the result reported in SI units where applicable?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_resInterp = Question::create(array("section_id" => $sec_sec9->id, "name" => "Space for interpretation of results", "title" => "", "description" => "9.8.8 Is there space for interpretation of results, when applicable, and for indication of when specimens are received and unsuitable for the procedure requested for testing?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "1", "user_id" => "1"));
+        $question_authority = Question::create(array("section_id" => $sec_sec9->id, "name" => "Result contain the name of the person authorizing release", "title" => "", "description" => "9.8.9 Does the result contain the name of the person authorizing release of the report and the signature of the person accepting responsibility for its content?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_testResult = Question::create(array("section_id" => $sec_sec9->id, "name" => "Test Result", "title" => "9.9 Test Result", "description" => "Are test results validated, interpreted and released by appropriately-authorized personnel?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        //  Section 10 - Corerective Action
+        $question_rootCause = Question::create(array("section_id" => $sec_sec10->id, "name" => "Root Cause", "title" => "", "description" => "10.1 Are all laboratory-documented occurrence reports indicating the root cause of the problem(s) and corrective & preventive actions taken to prevent recurrence? (There must be at least a description of what happened and what was done to prevent it from happening again.)", "question_type" => "0", "required" => "1", "info" => "There must be at least a description of what happened and what was done to prevent it from happening again", "comment" => "", "score" => "5", "one_star" => "", "user_id" => "1"));
+        $question_nonConfWork = Question::create(array("section_id" => $sec_sec10->id, "name" => "Non-conforming work reviewed", "title" => "", "description" => "10.2 Is non-conforming work reviewed and submitted for troubleshooting and cause analysis?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_nonConfAspQMS = Question::create(array("section_id" => $sec_sec10->id, "name" => "Non-conforming aspects of the quality management system documented", "title" => "", "description" => "10.3 Is corrective action performed on all non-conforming aspects of the quality management system documented?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "", "user_id" => "1"));
+        $question_resWithheld = Question::create(array("section_id" => $sec_sec10->id, "name" => "Results withheld", "title" => "", "description" => "10.3.1 Are results withheld, if indicated by the level of control violated? (ISO 4.9.1 part d)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_recCorrect = Question::create(array("section_id" => $sec_sec10->id, "name" => "Recalled and corrected", "title" => "", "description" => "10.3.2 Have these been recalled and corrected, if results have been released? (ISO 4.9.1 part f)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_approvedAuthPer = Question::create(array("section_id" => $sec_sec10->id, "name" => "Approved by an authorized person", "title" => "", "description" => "10.3.3 Is this approved by an authorized person, when testing resumes? (ISO 4.9.1.part g)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_discResTrack = Question::create(array("section_id" => $sec_sec10->id, "name" => "Discordant results tracked", "title" => "", "description" => "10.4 Are discordant results tracked and appropriate corrective action taken?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        //  Section 11 - Occurence/Incident Management & Process Improvement
+        $question_graphTools = Question::create(array("section_id" => $sec_sec11->id, "name" => "Graphical tools (charts and graphs) used", "title" => "", "description" => "11.1 Are graphical tools (charts and graphs) used to communicate quality findings and identify trends?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_qIndTracked = Question::create(array("section_id" => $sec_sec11->id, "name" => "Quality indicators selected, tracked, and reviewed", "title" => "", "description" => "11.2 Are quality indicators (TAT, rejected specimens, stock outs, etc.) selected, tracked, and reviewed regularly to monitor laboratory performance and identify potential quality improvement activities?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "5", "one_star" => "", "user_id" => "1"));
+        $question_labPerfImprove = Question::create(array("section_id" => $sec_sec11->id, "name" => "Quality indicators used to improve lab performance", "title" => "", "description" => "11.3 Are the outcomes of internal and external audits, PT, customer feedback and all other information derived from the tracking of quality indicators used to improve lab performance?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "", "user_id" => "1"));
+        $question_effLabPerfImpro = Question::create(array("section_id" => $sec_sec11->id, "name" => "Effectiveness of improved quality of lab performance", "title" => "", "description" => "11.4 Is the outcome of the action taken checked and monitored to determine the effectiveness of improved quality of lab performance?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        //  Section 12 - Facilities and Safety
+        $question_sizeOfLab = Question::create(array("section_id" => $sec_sec12->id, "name" => "Size of the laboratory adequate", "title" => "", "description" => "12.1 Is the size of the laboratory adequate and the layout of the laboratory, as a whole, organized so that workstations are positioned for optimal workflow?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_patCareTest = Question::create(array("section_id" => $sec_sec12->id, "name" => "Patient care and testing", "title" => "", "description" => "12.2 Are the patient care and testing areas of the laboratory distinctly separate from one another?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_workstationMan = Question::create(array("section_id" => $sec_sec12->id, "name" => "Individual workstation maintained", "title" => "", "description" => "12.3 Is each individual workstation maintained free of clutter and set up for efficient operation?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_equipPlacement = Question::create(array("section_id" => $sec_sec12->id, "name" => "Equipment placement", "title" => "", "description" => "12.3.1 Does the equipment placement/layout facilitate optimum workflow?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_neededSupplies = Question::create(array("section_id" => $sec_sec12->id, "name" => "Needed supplies present and easily accessible", "title" => "", "description" => "12.3.2 Are all needed supplies present and easily accessible?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_chairStool = Question::create(array("section_id" => $sec_sec12->id, "name" => "Stools at the workstations", "title" => "", "description" => "12.3.3 Are the chairs/stools at the workstations appropriate for bench height and the testing operations being performed? (ISO 15190: 6.3.5)", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 6.3.5", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_refMaterial = Question::create(array("section_id" => $sec_sec12->id, "name" => "Reference material readily available", "title" => "", "description" => "12.3.4 Is reference material readily available ( critical values and required action, population reference ranges, frequently called numbers?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_phyWorkEnv = Question::create(array("section_id" => $sec_sec12->id, "name" => "Physical work environment appropriate", "title" => "", "description" => "12.4 Is the physical work environment appropriate for testing?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_freeOfClutter = Question::create(array("section_id" => $sec_sec12->id, "name" => "Free of clutter", "title" => "", "description" => "12.4.1 Free of clutter", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 13.0", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_adVent = Question::create(array("section_id" => $sec_sec12->id, "name" => "Adequately ventilated", "title" => "", "description" => "12.4.2 Adequately ventilated?", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 6.3.3", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_excessMo = Question::create(array("section_id" => $sec_sec12->id, "name" => "Free of excess moisture", "title" => "", "description" => "12.4.3 Free of excess moisture?", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 6.3.2", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_lit = Question::create(array("section_id" => $sec_sec12->id, "name" => "Adequately lit", "title" => "", "description" => "12.4.4 Adequately lit?", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 6.3.1", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_climateCon = Question::create(array("section_id" => $sec_sec12->id, "name" => "Climate-controlled", "title" => "", "description" => "12.4.5 Climate-controlled for optimum equipment function?", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 6.3.2", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_filtersChecked = Question::create(array("section_id" => $sec_sec12->id, "name" => "Filters checked", "title" => "", "description" => "12.4.6 Are filters checked, cleaned and/or replaced at regular intervals, where air-conditioning is installed?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_wireCables = Question::create(array("section_id" => $sec_sec12->id, "name" => "Wires and cables properly located", "title" => "", "description" => "12.4.7 Are wires and cables properly located and protected from traffic?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_generator = Question::create(array("section_id" => $sec_sec12->id, "name" => "Functioning back-up power supply", "title" => "", "description" => "12.4.8 Is there a functioning back-up power supply (generator)?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_criticalEquip = Question::create(array("section_id" => $sec_sec12->id, "name" => "Critical equipment supported by uninterrupted power", "title" => "", "description" => "12.4.9 Is critical equipment supported by uninterrupted power source (UPS) systems?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_waterHazards = Question::create(array("section_id" => $sec_sec12->id, "name" => "Equipment placed away from water hazards", "title" => "", "description" => "12.4.10 Is equipment placed appropriately (away from water hazards, out of traffic areas)?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_prolongedPowerDis = Question::create(array("section_id" => $sec_sec12->id, "name" => "Prolonged electricity disruption", "title" => "", "description" => "12.4.11 Is a contingency plan in place for continued testing in the event of prolonged electricity disruption?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_deionizedWater = Question::create(array("section_id" => $sec_sec12->id, "name" => "Deionized water (DI) or distilled water", "title" => "", "description" => "12.4.12 Are appropriate provisions made for adequate water supply, including deionized water (DI) or distilled water, if needed?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_clericalWork = Question::create(array("section_id" => $sec_sec12->id, "name" => "Clerical work completed outside the testing area", "title" => "", "description" => "12.4.13 Is clerical work completed outside the testing area?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_majSafetySignage = Question::create(array("section_id" => $sec_sec12->id, "name" => "Major safety signage posted", "title" => "", "description" => "12.4.14 Is major safety signage posted and enforced including NO EATING, SMOKING, DRINKING?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_secUnauthorized = Question::create(array("section_id" => $sec_sec12->id, "name" => "Secured from unauthorized access", "title" => "", "description" => "12.5 Is the laboratory properly secured from unauthorized access with appropriate signage?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_dedColdRoom = Question::create(array("section_id" => $sec_sec12->id, "name" => "Laboratory-dedicated cold and room temperature", "title" => "", "description" => "12.6 Is laboratory-dedicated cold and room temperature storage free of staff food items, and are patient samples stored separately from reagents and blood products in the laboratory refrigerators and freezers?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_workAreaClean = Question::create(array("section_id" => $sec_sec12->id, "name" => "Work area clean and free of leakage", "title" => "", "description" => "12.7 Is the work area clean and free of leakage & spills, and are disinfection procedures conducted and documented?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_bioSafetyCab = Question::create(array("section_id" => $sec_sec12->id, "name" => "Certified and appropriate Biosafety cabinet", "title" => "", "description" => "12.8 Is a certified and appropriate Biosafety cabinet (or an acceptable alternative processing procedure) in use for all specimens or organisms considered to be highly contagious by airborne routes? (Biosafety cabinet should be recertified according to national protocol).", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_labSafetyManual = Question::create(array("section_id" => $sec_sec12->id, "name" => "Laboratory safety manual available", "title" => "", "description" => "12.9 Is a laboratory safety manual available, accessible, and up-to-date?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "3", "one_star" => "", "user_id" => "1"));
+        $question_bloboPre = Question::create(array("section_id" => $sec_sec12->id, "name" => "Blood and Body Fluid Precautions", "title" => "", "description" => "12.9.1 Blood and Body Fluid Precautions", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_hazardWasteDisp = Question::create(array("section_id" => $sec_sec12->id, "name" => "Hazardous Waste Disposal", "title" => "", "description" => "12.9.2 Hazardous Waste Disposal", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_hazardChem = Question::create(array("section_id" => $sec_sec12->id, "name" => "Hazardous Chemicals", "title" => "", "description" => "12.9.3 Hazardous Chemicals / Materials", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_msds = Question::create(array("section_id" => $sec_sec12->id, "name" => "MSDS Sheets", "title" => "", "description" => "12.9.4 MSDS Sheets", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_persProEquip = Question::create(array("section_id" => $sec_sec12->id, "name" => "Personal protective equipment", "title" => "", "description" => "12.9.5 Personal protective equipment", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_vaccination = Question::create(array("section_id" => $sec_sec12->id, "name" => "Vaccination", "title" => "", "description" => "12.9.6 Vaccination", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_prophylaxis = Question::create(array("section_id" => $sec_sec12->id, "name" => "Post-Exposure Prophylaxis", "title" => "", "description" => "12.9.7 Post-Exposure Prophylaxis", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_fireSafety = Question::create(array("section_id" => $sec_sec12->id, "name" => "Fire Safety", "title" => "", "description" => "12.9.8 Fire Safety", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_elecSafety = Question::create(array("section_id" => $sec_sec12->id, "name" => "Electrical safety", "title" => "", "description" => "12.9.9 Electrical safety", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_suffWasteDisp = Question::create(array("section_id" => $sec_sec12->id, "name" => "Sufficient waste disposal available", "title" => "", "description" => "12.10 Is sufficient waste disposal available and is waste separated into infectious and non-infectious waste, with infectious waste autoclaved, incinerated, or buried?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_hazardMaterials = Question::create(array("section_id" => $sec_sec12->id, "name" => "Hazardous materials properly handled", "title" => "", "description" => "12.11 Are hazardous chemicals / materials properly handled?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_hazardChemLabeled = Question::create(array("section_id" => $sec_sec12->id, "name" => "Hazardous chemicals properly labeled", "title" => "", "description" => "12.11.1 Are hazardous chemicals properly labeled?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_hazardChemStored = Question::create(array("section_id" => $sec_sec12->id, "name" => "Hazardous chemicals properly stored", "title" => "", "description" => "12.11.2 Are hazardous chemicals properly stored?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_hazardChemUtilized = Question::create(array("section_id" => $sec_sec12->id, "name" => "Hazardous chemicals properly utilized", "title" => "", "description" => "12.11.3 Are hazardous chemicals properly utilized?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_hazardChemDisposed = Question::create(array("section_id" => $sec_sec12->id, "name" => "Hazardous chemicals properly disposed", "title" => "", "description" => "12.11.4 Are hazardous chemicals properly disposed?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "1", "user_id" => "1"));
+        $question_sharpsHandled = Question::create(array("section_id" => $sec_sec12->id, "name" => "Sharp containers handled", "title" => "", "description" => "12.12 Are 'sharps' handled and disposed of properly in 'sharps' containers that are appropriately utilized?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_overallSafety = Question::create(array("section_id" => $sec_sec12->id, "name" => "Overall safety program", "title" => "", "description" => "12.13 Is fire safety included as part of the laboratory’s overall safety program?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_elecCords = Question::create(array("section_id" => $sec_sec12->id, "name" => "All electricals in good repair", "title" => "", "description" => "12.13.1 Are all electrical cords, plugs, and receptacles used appropriately and in good repair?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_extinguisher = Question::create(array("section_id" => $sec_sec12->id, "name" => "Appropriate fire extinguisher available", "title" => "", "description" => "12.13.2 Is an appropriate fire extinguisher available, properly placed, in working condition, and routinely inspected?", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 19.7", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_fireWarning = Question::create(array("section_id" => $sec_sec12->id, "name" => "Operational fire warning system", "title" => "", "description" => "12.13.3 Is an operational fire warning system in place in laboratory with periodic fire drills?", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 19.3", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_safetyInspec = Question::create(array("section_id" => $sec_sec12->id, "name" => "Safety inspections conducted regularly", "title" => "", "description" => "12.14 Are safety inspections or audits conducted regularly and documented?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_stdSafetyEquip = Question::create(array("section_id" => $sec_sec12->id, "name" => "Standard safety equipment available", "title" => "", "description" => "12.15 Is standard safety equipment available and in use in the laboratory?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_bioSafetyCabinets = Question::create(array("section_id" => $sec_sec12->id, "name" => "Biosafety cabinet", "title" => "", "description" => "12.15.1 Biosafety cabinet(s)", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 16", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_centrifuge = Question::create(array("section_id" => $sec_sec12->id, "name" => "Covers on centrifuge", "title" => "", "description" => "12.15.2 Covers on centrifuge(s)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_handwash = Question::create(array("section_id" => $sec_sec12->id, "name" => "Hand-washing station", "title" => "", "description" => "12.15.3 Hand-washing station", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 12.7", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_eyewash = Question::create(array("section_id" => $sec_sec12->id, "name" => "Eyewash station/bottle", "title" => "", "description" => "12.15.4 Eyewash station/bottle(s) and showers where applicable", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 12.10", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_spillKit = Question::create(array("section_id" => $sec_sec12->id, "name" => "Spill kit", "title" => "", "description" => "12.15.5 Spill kit(s)", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_firstAid = Question::create(array("section_id" => $sec_sec12->id, "name" => "First aid kit", "title" => "", "description" => "12.15.6 First aid kit(s)", "question_type" => "0", "required" => "1", "info" => "ISO 15190: 12.9", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $question_ppe = Question::create(array("section_id" => $sec_sec12->id, "name" => "Personal protective equipment", "title" => "", "description" => "12.16 Is personal protective equipment (PPE) easily accessible at the workstation and utilized appropriately and consistently?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "1", "user_id" => "1"));
+        $question_labPersVacc = Question::create(array("section_id" => $sec_sec12->id, "name" => "Vaccination/preventive measures", "title" => "", "description" => "12.17 Are laboratory personnel offered appropriate vaccination/preventive measures?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_prophyPoSops = Question::create(array("section_id" => $sec_sec12->id, "name" => "Post-exposure prophylaxis policies and procedures", "title" => "", "description" => "12.18 Are post-exposure prophylaxis policies and procedures posted and implemented after possible and known exposures?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_injuriesLog = Question::create(array("section_id" => $sec_sec12->id, "name" => "Occupational injuries Log", "title" => "", "description" => "12.19 Are occupational injuries, medical screening or illnesses documented in the safety occurrence log?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_workerBioTrained = Question::create(array("section_id" => $sec_sec12->id, "name" => "Laboratory workers trained in Biosafety", "title" => "", "description" => "12.10 Are drivers/couriers and cleaners working with the laboratory trained in Biosafety practices relevant to their job tasks?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        $question_safetyOfficer = Question::create(array("section_id" => $sec_sec12->id, "name" => "Trained safety officer designated to implement and monitor the safety program ", "title" => "", "description" => "12.21 Is a trained safety officer designated to implement and monitor the safety program in the laboratory, including the training of other staff?", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "2", "one_star" => "", "user_id" => "1"));
+        //  Criteria 1
+        $criteria1_controlValMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Control values quantitative tests", "title" => "2.1 Monitoring of Control values", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_controlValMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Control values semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_controlValMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Control values qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal standards quantitative tests", "title" => "2.2 Monitoring with internal standards", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal standards semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal standards qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_newBatchMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "New batch of kits quantitative tests", "title" => "2.3 Monitoring with internal standards", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_newBatchMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "New batch of kits semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_newBatchMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "New batch of kits qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsKitsValMonQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal controls and kits validation quantitative tests", "title" => "2.4 Documentation of internal controls and kits validation", "description" => "Quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsKitsValMonSQ = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal controls and kits validation semi-quantitative tests", "title" => "", "description" => "Semi-quantitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_stdsKitsValMonQual = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Internal controls and kits validation qualitative tests", "title" => "", "description" => "Qualitative tests", "question_type" => "0", "required" => "1", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria1_critCommRec = Question::create(array("section_id" => $sec_criteria1->id, "name" => "Criteria 1 comments and recommendations", "title" => "COMMENTS and RECOMMENDATIONS", "description" => "COMMENTS and RECOMMENDATIONS", "question_type" => "3", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        //  Criteria 2
+        $criteria2_hivSerology = Question::create(array("section_id" => $sec_criteria2->id, "name" => "HIV Serology", "title" => "HIV Serology", "description" => "HIV Serology", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV panel date", "title" => "3.1 Most recent HIV panel", "description" => "2.1 Most recent HIV panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV panel date", "title" => "3.2 Second most recent HIV panel", "description" => "2.2 Second most recent HIV panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivPanel2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR = Question::create(array("section_id" => $sec_criteria2->id, "name" => "HIV DNA PCR", "title" => "HIV DNA PCR", "description" => "HIV DNA PCR", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV DNA PCR panel date", "title" => "3.3 Most recent HIV DNA PCR panel", "description" => "2.3 Most recent HIV DNA PCR panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV DNA PCR panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent HIV DNA PCR panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV DNA PCR panel date", "title" => "3.4 Second most recent HIV DNA PCR panel", "description" => "2.4 Second most recent HIV DNA PCR panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV DNA PCR panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivDNAPCR2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent HIV DNA PCR panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hivViralLoad = Question::create(array("section_id" => $sec_criteria2->id, "name" => "HIV Viral Load", "title" => "HIV Viral Load", "description" => "HIV Viral Load", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Viral Load panel date", "title" => "3.5 Most recent Viral Load panel", "description" => "2.5 Most recent Viral Load panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Viral Load panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Viral Load panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Viral Load panel date", "title" => "3.6 Second most recent Viral Load panel", "description" => "2.6 Second most recent Viral Load panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Viral Load panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_viralLoad2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Viral Load panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD4 = Question::create(array("section_id" => $sec_criteria2->id, "name" => "CD4 Count", "title" => "CD4 Count", "description" => "CD4 Count", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD41date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent CD4 panel date", "title" => "3.7 Most recent CD4 panel", "description" => "2.7 Most recent CD4 panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD41res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent CD4 panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD41per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent CD4 panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD42date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent CD4 panel date", "title" => "3.8 Second most recent CD4 panel", "description" => "2.8 Second most recent CD4 panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD42res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent CD4 panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_CD42per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent CD4 panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Chemistry", "title" => "Chemistry", "description" => "Chemistry", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Chemistry panel date", "title" => "3.9 Most recent Chemistry panel", "description" => "2.9 Most recent Chemistry panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Chemistry panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Chemistry panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Chemistry panel date", "title" => "3.10 Second most recent Chemistry panel", "description" => "2.10 Second most recent Chemistry panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Chemistry panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_chemistry2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Chemistry panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Hematology", "title" => "Hematology", "description" => "Hematology", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Hematology panel date", "title" => "3.11 Most recent Hematology panel", "description" => "2.11 Most recent Hematology panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Hematology panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Hematology panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Hematology panel date", "title" => "3.12 Second most recent Hematology panel", "description" => "2.12 Second most recent Hematology panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Hematology panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_hematology2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Hematology panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Malaria", "title" => "Malaria", "description" => "Malaria", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Malaria panel date", "title" => "3.13 Most recent Malaria panel", "description" => "2.13 Most recent Malaria panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Malaria panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent Malaria panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Malaria panel date", "title" => "3.14 Second most recent Malaria panel", "description" => "2.14 Second most recent Malaria panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Malaria panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_malaria2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent Malaria panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tb = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Mycobacterium Tuberculosis", "title" => "Mycobacterium Tuberculosis", "description" => "Mycobacterium Tuberculosis", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB smear panel date", "title" => "3.15 Most recent TB smear panel", "description" => "2.15 Most recent TB smear panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB smear panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB smear panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB smear panel date", "title" => "3.16 Second most recent TB smear panel", "description" => "2.16 Second most recent TB smear panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB smear panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbSmear2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB smear panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB culture panel date", "title" => "3.17 Most recent TB culture panel", "description" => "2.17 Most recent TB culture panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB culture panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent TB culture panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB culture panel date", "title" => "3.18 Second most recent TB culture panel", "description" => "2.18 Second most recent TB culture panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB culture panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbCulture2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent TB culture panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug1date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent drug susceptibility panel date", "title" => "3.19 Most recent drug susceptibility panel", "description" => "2.19 Most recent drug susceptibility panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug1res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent drug susceptibility panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug1per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent drug susceptibility panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug2date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent drug susceptibility panel date", "title" => "3.20 Second most recent drug susceptibility panel", "description" => "2.20 Second most recent drug susceptibility panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug2res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent drug susceptibility panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_tbDrug2per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent drug susceptibility panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Other disease of significance", "title" => "Other disease of public health significance (please specify)", "description" => "Malaria", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other11date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent PT panel date", "title" => "3.21 Most recent PT panel", "description" => "2.21 Most recent PT panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other11res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent PT panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other11per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Most recent PT panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other12date = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent PT panel date", "title" => "3.22 Second most recent PT panel", "description" => "2.22 Second most recent PT panel", "question_type" => "1", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other12res = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent PT panel results", "title" => "", "description" => "", "question_type" => "0", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        $criteria2_other12per = Question::create(array("section_id" => $sec_criteria2->id, "name" => "Second most recent PT panel percent", "title" => "", "description" => "", "question_type" => "2", "required" => "0", "info" => "", "comment" => "", "score" => "0", "one_star" => "", "user_id" => "1"));
+        
+        $this->command->info('Questions table seeded');
+
+         /* Question-Notes */
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_labQManual->id, "note_id" => $note_labQM->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_docInfoCon->id, "note_id" => $note_docInfoControl->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_docRecords->id, "note_id" => $note_docRec->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_poSops->id, "note_id" => $note_poSops->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_poSopsA->id, "note_id" => $note_poSopsAcc->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_poSopsComm->id, "note_id" => $note_poSopsComm->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_docConLog->id, "note_id" => $note_docContLog->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_discPoSops->id, "note_id" => $note_discPoSops->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_dataFiles->id, "note_id" => $note_dataFiles->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_arcResA->id, "note_id" => $note_arcRes->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_workBudget->id, "note_id" => $note_workBudget->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_quaTechRecRev->id, "note_id" => $note_quaTecRec->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_annualQMSrev->id, "note_id" => $note_annualQMS->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_QMSImpMe->id, "note_id" => $note_qmsImp->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_commSysLabOper->id, "note_id" => $note_commSys->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_workSchCo->id, "note_id" => $note_workSchCo->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_duRoDaRo->id, "note_id" => $note_duRoDa->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_orgChart->id, "note_id" => $note_orgChart->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_qmsOversight->id, "note_id" => $note_qmsOversight->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_perFilSys->id, "note_id" => $note_perFiSys->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_staffCompAudit->id, "note_id" => $note_staffCompetency->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_labStaffTra->id, "note_id" => $note_labStaffTra->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_staffMeet->id, "note_id" => $note_staffMeet->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_advTraQS->id, "note_id" => $note_adviceTra->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_labHandbook->id, "note_id" => $note_labHandbook->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_commPoOnDelays->id, "note_id" => $note_commOnDelays->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_evalTool->id, "note_id" => $note_evalTool->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_properEquiPro->id, "note_id" => $note_properEquip->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_equipMethVal->id, "note_id" => $note_equipMethVal->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_equipRecMan->id, "note_id" => $note_equipRecMain->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_equipManRec->id, "note_id" => $note_equipManRec->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_obsoEquipPro->id, "note_id" => $note_obsoEquiPro->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_equipCalibPro->id, "note_id" => $note_equipCalibPro->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_equipPrevMan->id, "note_id" => $note_equipPreMain->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_equipSerMan->id, "note_id" => $note_equipSerMain->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_equipPartsRe->id, "note_id" => $note_equipPartsRep->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_equipMalf->id, "note_id" => $note_equipMalf->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_equipRepMon->id, "note_id" => $note_equipRepair->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_equipFailPlan->id, "note_id" => $note_equipFailure->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_manManual->id, "note_id" => $note_manOpManual->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_effOfQMS->id, "note_id" => $note_commEff->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_internalAudits->id, "note_id" => $note_internalAudits->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_invBudget->id, "note_id" => $note_invBudgetSys->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_serSuppPerfRev->id, "note_id" => $note_suppPerfRev->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_manSuppList->id, "note_id" => $note_manSuppList->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_budgetaryPro->id, "note_id" => $note_budgetaryPro->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_orderTrack->id, "note_id" => $note_orderTrack->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_invConSys->id, "note_id" => $note_invControlSys->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_labInvSys->id, "note_id" => $note_labInvSys->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_usageRateTrack->id, "note_id" => $note_usageRateTrack->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_invStockCount->id, "note_id" => $note_invStockCounts->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_storageArea->id, "note_id" => $note_storageArea->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_wastageMin->id, "note_id" => $note_invOrg->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_dispExProd->id, "note_id" => $note_disExPro->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_prodExpiration->id, "note_id" => $note_proEx->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_labTestServices->id, "note_id" => $note_labTestServ->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_patIdGuide->id, "note_id" => $note_speColl->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_sampRecPro->id, "note_id" => $note_sampleRecPro->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_specStoredApp->id, "note_id" => $note_specStorage->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_specPackage->id, "note_id" => $note_specPackage->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_referredSpecLog->id, "note_id" => $note_referredSpecTrack->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_procManual->id, "note_id" => $note_completeProcMan->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_reagentLogbook->id, "note_id" => $note_reagentLogbook->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_consumeVer->id, "note_id" => $note_reagentLogbook->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_inQualCo->id, "note_id" => $note_internalQC->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_qcResMon->id, "note_id" => $note_qcResMon->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_envConditons->id, "note_id" => $note_envConCheck->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_accRanges->id, "note_id" => $note_accRanges->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_externalPT->id, "note_id" => $note_extPT->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_testReqResCheck->id, "note_id" => $note_testReqCheck->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_testResRepSys->id, "note_id" => $note_testResRep->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_testPersonnel->id, "note_id" => $note_testPersonnel->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_testResRec->id, "note_id" => $note_testResRec->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_analyticSys->id, "note_id" => $note_analyticSys->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_resXCheckSys->id, "note_id" => $note_resXCheckSys->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_arcDataLabel->id, "note_id" => $note_archivedData->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_backupSys->id, "note_id" => $note_infoDataBackup->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_rootCause->id, "note_id" => $note_labOccurenceRep->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_nonConfWork->id, "note_id" => $note_nonConfWork->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_nonConfAspQMS->id, "note_id" => $note_corrAction->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_discResTrack->id, "note_id" => $note_discordantResTrack->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_graphTools->id, "note_id" => $note_graphTools->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_effLabPerfImpro->id, "note_id" => $note_qIndicators->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_sizeOfLab->id, "note_id" => $note_sizeOfLab->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_patCareTest->id, "note_id" => $note_careNTesting->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_workstationMan->id, "note_id" => $note_workStaMain->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_phyWorkEnv->id, "note_id" => $note_phyWorkEnv->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_secUnauthorized->id, "note_id" => $note_labSecured->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_dedColdRoom->id, "note_id" => $note_labDedColdRoom->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_workAreaClean->id, "note_id" => $note_leakageSpills->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_bioSafetyCab->id, "note_id" => $note_certBiosafetyCab->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_labSafetyManual->id, "note_id" => $note_labSafetyManual->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_suffWasteDisp->id, "note_id" => $note_suffWasteDisposal->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_hazardMaterials->id, "note_id" => $note_hazardousChem->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_sharpsHandled->id, "note_id" => $note_sharpsDisposed->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_overallSafety->id, "note_id" => $note_fireSafety->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_safetyInspec->id, "note_id" => $note_inspAudReg->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_stdSafetyEquip->id, "note_id" => $note_stdSafetyEqui->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_ppe->id, "note_id" => $note_personalProEqui->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_labPersVacc->id, "note_id" => $note_vaccPrevMeasures->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_prophyPoSops->id, "note_id" => $note_postExProphy->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_injuriesLog->id, "note_id" => $note_occInjuries->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_workerBioTrained->id, "note_id" => $note_workersTraBiosafety->id));
+        DB::table('question_notes')->insert(
+            array("question_id" => $question_safetyOfficer->id, "note_id" => $note_trainedSafetyOfficer->id));
+        $this->command->info('Question-notes table seeded');
+
+         /* Question-Answers */
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labQStructure->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labQStructure->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labQPolicy->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labQPolicy->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labQMS->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labQMS->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labSProcedures->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labSProcedures->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labRoles->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labRoles->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labDocManReview->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labDocManReview->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docInfoCon->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docInfoCon->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docInfoCon->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docRecords->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docRecords->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docRecords->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_poSops->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_poSops->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_poSops->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docRecControl->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docRecControl->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_confOfInterest->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_confOfInterest->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_communication->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_communication->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfContracts->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfContracts->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_referralExam->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_referralExam->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_purInvCon->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_purInvCon->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_advisory->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_advisory->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_compFeedback->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_compFeedback->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nonConformities->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nonConformities->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_corrAction->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_corrAction->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prevAction->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prevAction->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_contImpro->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_contImpro->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_quaTechRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_quaTechRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inAudits->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inAudits->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manReview->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manReview->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_persFiles->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_persFiles->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_persTraining->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_persTraining->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_competencyAudit->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_competencyAudit->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_Auth->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_Auth->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_Accomo->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_Accomo->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_Equip->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_Equip->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_EquiCalib->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_EquiCalib->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_preExamPro->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_preExamPro->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_speStoRe->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_speStoRe->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_exSops->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_exSops->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equiVal->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equiVal->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_interSer->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_interSer->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_exVal->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_exVal->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_quaAssurance->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_quaAssurance->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_resRep->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_resRep->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_patConf->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_patConf->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labSafeMan->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labSafeMan->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_poSopsA->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_poSopsA->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_poSopsA->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_poSopsComm->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_poSopsComm->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_poSopsComm->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docConLog->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docConLog->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docConLog->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_discPoSops->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_discPoSops->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_discPoSops->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dataFiles->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dataFiles->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dataFiles->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_arcResA->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_arcResA->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_arcResA->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workBudget->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workBudget->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workBudget->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prevActItems->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prevActItems->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_corrActStatus->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_corrActStatus->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_repFromPersonnel->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_repFromPersonnel->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workVolChange->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workVolChange->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bioRefRangeChange->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bioRefRangeChange->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_cliHandbook->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_cliHandbook->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_envMonLog->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_envMonLog->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_speRejLog->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_speRejLog->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equiCalibManRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equiCalibManRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_iqcRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_iqcRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptIntLabCo->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptIntLabCo->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_tatMon->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_tatMon->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_qInd->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_qInd->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_recentIntAudRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_recentIntAudRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_extAudRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_extAudRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_custCompFeed->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_custCompFeed->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_occIncLogs->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_occIncLogs->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_impProRes->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_impProRes->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_operPro->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_operPro->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_refLabPerfEval->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_refLabPerfEval->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_suppPerfEval->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_suppPerfEval->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docReview->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docReview->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revActPlanDoc->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revActPlanDoc->id, "answer_id" => $answer_no->id));
+
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualPrevActItems->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualPrevActItems->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualCorrActStatus->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualCorrActStatus->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualRepFromPersonnel->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualRepFromPersonnel->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualWorkVolChange->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualWorkVolChange->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualBioRefRangeChange->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualBioRefRangeChange->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualCliHandbook->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualCliHandbook->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualEnvMonLog->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualEnvMonLog->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualSpeRejLog->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualSpeRejLog->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualEquiCalibManRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualEquiCalibManRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualIqcRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualIqcRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualPtIntLabCo->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualPtIntLabCo->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualTatMon->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualTatMon->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualQInd->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualQInd->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualRecentIntAudRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualRecentIntAudRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualExtAudRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualExtAudRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualCustCompFeed->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualCustCompFeed->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualOccIncLogs->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualOccIncLogs->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualImpProRes->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualImpProRes->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualOperPro->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualOperPro->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualRefLabPerfEval->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualRefLabPerfEval->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualSuppPerfEval->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualSuppPerfEval->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualDocReview->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualDocReview->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualRevActPlanDoc->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_annualRevActPlanDoc->id, "answer_id" => $answer_no->id));
+
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_QMSImpMe->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_QMSImpMe->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_QMSImpMe->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_commSysLabOper->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_commSysLabOper->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_commSysLabOper->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workSchCo->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workSchCo->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workSchCo->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_duRoDaRo->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_duRoDaRo->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_duRoDaRo->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_orgChart->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_orgChart->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_orgChart->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_qmsOversight->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_qmsOversight->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_qmsOversight->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_empOri->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_empOri->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_empOri->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_educTra->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_educTra->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_educTra->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prevExp->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prevExp->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prevExp->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_writtenJobDesc->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_writtenJobDesc->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_writtenJobDesc->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_letterOfEmp->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_letterOfEmp->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_letterOfEmp->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfJobSops->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfJobSops->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfJobSops->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docRevSafetyMan->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docRevSafetyMan->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docRevSafetyMan->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfProForEmp->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfProForEmp->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfProForEmp->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_regWithProf->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_regWithProf->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_regWithProf->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_traRecDoc->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_traRecDoc->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_traRecDoc->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_periodicPerfRev->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_periodicPerfRev->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_periodicPerfRev->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docEmpRecog->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docEmpRecog->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_docEmpRecog->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hrData->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hrData->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hrData->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_staffCompAudit->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_staffCompAudit->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_staffCompAudit->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labStaffTra->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labStaffTra->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labStaffTra->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prevStaffMeet->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prevStaffMeet->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prevStaffMeet->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_probCompDis->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_probCompDis->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_probCompDis->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfDoc->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfDoc->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_revOfDoc->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_commOnRevSops->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_commOnRevSops->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_commOnRevSops->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_systematicPro->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_systematicPro->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_systematicPro->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_priorCorrAct->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_priorCorrAct->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_priorCorrAct->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_discEvalOfImp->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_discEvalOfImp->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_discEvalOfImp->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_staffFeed->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_staffFeed->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_staffFeed->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_exempPerf->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_exempPerf->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_exempPerf->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_relayOfReports->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_relayOfReports->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_relayOfReports->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_recordMon->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_recordMon->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_recordMon->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_advTraQS->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_advTraQS->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_advTraQS->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labHandbook->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labHandbook->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labHandbook->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_commPoOnDelays->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_commPoOnDelays->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_commPoOnDelays->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_evalTool->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_evalTool->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_evalTool->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_properEquiPro->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_properEquiPro->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_properEquiPro->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipMethVal->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipMethVal->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipMethVal->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipRecMan->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipRecMan->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipRecMan->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipName->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipName->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipName->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manfCont->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manfCont->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manfCont->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_condReceived->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_condReceived->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_condReceived->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serialNo->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serialNo->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serialNo->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dateOfPur->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dateOfPur->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dateOfPur->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_outOfSer->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_outOfSer->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_outOfSer->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dateSerEntry->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dateSerEntry->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dateSerEntry->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serviceContInf->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serviceContInf->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serviceContInf->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serviceProCont->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serviceProCont->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serviceProCont->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_decontaRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_decontaRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_decontaRec->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_perfManRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_perfManRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_perfManRec->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_lastSerDate->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_lastSerDate->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_lastSerDate->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nextSerDate->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nextSerDate->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nextSerDate->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_currLoc->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_currLoc->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_currLoc->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_obsoEquipPro->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_obsoEquipPro->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_obsoEquipPro->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipCalibPro->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipCalibPro->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipCalibPro->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipPrevMan->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipPrevMan->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipPrevMan->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipSerMan->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipSerMan->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipSerMan->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipPartsRe->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipPartsRe->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipPartsRe->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipMalf->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipMalf->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipMalf->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipRepMon->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipRepMon->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipRepMon->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipFailPlan->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipFailPlan->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipFailPlan->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manManual->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manManual->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manManual->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_effOfQMS->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_effOfQMS->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_effOfQMS->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labTestSer->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labTestSer->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labTestSer->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inAuditCarriers->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inAuditCarriers->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inAuditConductor->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inAuditConductor->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_causeAnalysis->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_causeAnalysis->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inAuditFindings->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inAuditFindings->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_auditRecomm->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_auditRecomm->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_auditRecomm->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_invBudget->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_invBudget->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_invBudget->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serSuppPerfRev->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serSuppPerfRev->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_serSuppPerfRev->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manSuppList->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manSuppList->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manSuppList->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_budgetaryPro->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_budgetaryPro->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_budgetaryPro->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manRevSuppReq->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manRevSuppReq->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_manRevSuppReq->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_orderTrack->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_orderTrack->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_orderTrack->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_consumeAccRej->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_consumeAccRej->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_lotNumberRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_lotNumberRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_consumeStorage->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_consumeStorage->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labInvSys->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labInvSys->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labInvSys->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_usageRateTrack->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_usageRateTrack->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_usageRateTrack->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_invStockCount->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_invStockCount->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_invStockCount->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_storageWellOrg->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_storageWellOrg->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_storageWellOrg->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_desigPlaces->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_desigPlaces->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_desigPlaces->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardousChem->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardousChem->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardousChem->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_coldStorage->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_coldStorage->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_coldStorage->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_storageAreaMon->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_storageAreaMon->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_storageAreaMon->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ambientTemp->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ambientTemp->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ambientTemp->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_directSunlight->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_directSunlight->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_directSunlight->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_adequateVent->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_adequateVent->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_adequateVent->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_cleanDustPests->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_cleanDustPests->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_cleanDustPests->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_accessControl->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_accessControl->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_accessControl->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_wastageMin->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_wastageMin->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_wastageMin->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dispExProd->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dispExProd->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dispExProd->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prodExpiration->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prodExpiration->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prodExpiration->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labTestServices->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labTestServices->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labTestServices->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_patIdGuide->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_patIdGuide->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_patIdGuide->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specLabel->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specLabel->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specLabel->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_reqForm->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_reqForm->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_reqForm->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_afterHours->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_afterHours->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_afterHours->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_transSheet->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_transSheet->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_transSheet->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_accRejCrit->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_accRejCrit->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_accRejCrit->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specLogged->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specLogged->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specLogged->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_portions->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_portions->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_portions->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_2IdSys->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_2IdSys->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_2IdSys->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_urgentSpec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_urgentSpec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_urgentSpec->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_corrWorksta->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_corrWorksta->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_corrWorksta->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specDispSafe->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specDispSafe->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specPackage->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specStoredApp->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specStoredApp->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_referredSpecLog->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_referredSpecLog->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_referredSpecLog->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_procManual->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_procManual->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_procManual->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_reagentLogbook->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_reagentLogbook->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_reagentLogbook->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_consumeVer->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_consumeVer->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_consumeVer->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inQualCo->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inQualCo->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_inQualCo->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_qcResMon->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_qcResMon->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_qcResMon->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_roomTemp->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_roomTemp->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_roomTemp->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_freezers->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_freezers->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_freezers->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_refrigerator->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_refrigerator->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_refrigerator->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_incubators->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_incubators->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_incubators->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_waterBath->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_waterBath->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_waterBath->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_accRanges->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_accRanges->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_accRanges->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_sampDist->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_sampDist->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_sampDist->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptProvAccreditted->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptProvAccreditted->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptProvAccreditted->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptSpecHandledNormally->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptSpecHandledNormally->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptSpecHandledNormally->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptResCauseAnalysis->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptResCauseAnalysis->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptResCauseAnalysis->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptResCorrAct->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptResCorrAct->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ptResCorrAct->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testReqResCheck->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testReqResCheck->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testReqResCheck->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testResRepSys->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testResRepSys->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testResRepSys->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testPersonnel->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testPersonnel->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testPersonnel->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testResRec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testResRec->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testResRec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_analyticSys->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_analyticSys->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_analyticSys->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_resXCheckSys->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_resXCheckSys->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_resXCheckSys->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_arcDataLabel->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_arcDataLabel->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_arcDataLabel->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_backupSys->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_backupSys->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_backupSys->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_reportId->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_reportId->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_patDemography->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_patDemography->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testRequester->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testRequester->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specTestInc->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specTestInc->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specCollDate->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_specCollDate->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bioRefRange->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bioRefRange->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_siUnits->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_siUnits->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_resInterp->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_resInterp->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_authority->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_authority->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testResult->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testResult->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_testResult->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_rootCause->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_rootCause->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_rootCause->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nonConfWork->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nonConfWork->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nonConfWork->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nonConfAspQMS->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nonConfAspQMS->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_nonConfAspQMS->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_resWithheld->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_resWithheld->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_recCorrect->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_recCorrect->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_approvedAuthPer->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_approvedAuthPer->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_discResTrack->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_discResTrack->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_discResTrack->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_graphTools->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_graphTools->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_graphTools->id, "answer_id" => $answer_no->id));
+       DB::table('question_answers')->insert(
+            array("question_id" => $question_qIndTracked->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_qIndTracked->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_qIndTracked->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labPerfImprove->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labPerfImprove->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labPerfImprove->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_effLabPerfImpro->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_effLabPerfImpro->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_effLabPerfImpro->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_sizeOfLab->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_sizeOfLab->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_sizeOfLab->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_patCareTest->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_patCareTest->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_patCareTest->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipPlacement->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipPlacement->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_equipPlacement->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_neededSupplies->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_neededSupplies->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_neededSupplies->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_chairStool->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_chairStool->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_chairStool->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_refMaterial->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_refMaterial->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_refMaterial->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_freeOfClutter->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_freeOfClutter->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_freeOfClutter->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_adVent->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_adVent->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_adVent->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_excessMo->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_excessMo->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_excessMo->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_lit->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_lit->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_lit->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_climateCon->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_climateCon->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_climateCon->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_filtersChecked->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_filtersChecked->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_filtersChecked->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_wireCables->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_wireCables->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_wireCables->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_generator->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_generator->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_generator->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_criticalEquip->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_criticalEquip->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_criticalEquip->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_waterHazards->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_waterHazards->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_waterHazards->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prolongedPowerDis->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prolongedPowerDis->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prolongedPowerDis->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_deionizedWater->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_deionizedWater->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_deionizedWater->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_clericalWork->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_clericalWork->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_clericalWork->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_majSafetySignage->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_majSafetySignage->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_majSafetySignage->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_secUnauthorized->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_secUnauthorized->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_secUnauthorized->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dedColdRoom->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dedColdRoom->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_dedColdRoom->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workAreaClean->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workAreaClean->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workAreaClean->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bioSafetyCab->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bioSafetyCab->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bioSafetyCab->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bloboPre->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bloboPre->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bloboPre->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardWasteDisp->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardWasteDisp->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardWasteDisp->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChem->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChem->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChem->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_msds->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_msds->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_msds->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_persProEquip->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_persProEquip->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_persProEquip->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_vaccination->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_vaccination->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_vaccination->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prophylaxis->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prophylaxis->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prophylaxis->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_fireSafety->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_fireSafety->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_fireSafety->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_elecSafety->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_elecSafety->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_elecSafety->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_suffWasteDisp->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_suffWasteDisp->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_suffWasteDisp->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemLabeled->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemLabeled->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemLabeled->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemStored->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemStored->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemStored->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemUtilized->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemUtilized->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemUtilized->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemDisposed->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemDisposed->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_hazardChemDisposed->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_sharpsHandled->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_sharpsHandled->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_sharpsHandled->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_elecCords->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_elecCords->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_elecCords->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_extinguisher->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_extinguisher->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_extinguisher->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_fireWarning->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_fireWarning->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_fireWarning->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_safetyInspec->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_safetyInspec->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_safetyInspec->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bioSafetyCabinets->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bioSafetyCabinets->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_bioSafetyCabinets->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_centrifuge->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_centrifuge->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_centrifuge->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_handwash->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_handwash->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_handwash->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_eyewash->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_eyewash->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_eyewash->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_spillKit->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_spillKit->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_spillKit->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_firstAid->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_firstAid->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_firstAid->id, "answer_id" => $answer_na->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ppe->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ppe->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_ppe->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labPersVacc->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labPersVacc->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_labPersVacc->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prophyPoSops->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prophyPoSops->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_prophyPoSops->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_injuriesLog->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_injuriesLog->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_injuriesLog->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workerBioTrained->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workerBioTrained->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_workerBioTrained->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_safetyOfficer->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_safetyOfficer->id, "answer_id" => $answer_partial->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $question_safetyOfficer->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonSQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonSQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonSQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQual->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQual->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_controlValMonQual->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonSQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonSQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonSQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQual->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQual->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsMonQual->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonSQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonSQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonSQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQual->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQual->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_newBatchMonQual->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonSQ->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonSQ->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonSQ->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQual->id, "answer_id" => $answer_daily->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQual->id, "answer_id" => $answer_weekly->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQual->id, "answer_id" => $answer_everyRun->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivPanel1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivPanel1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivPanel2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivPanel2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivDNAPCR1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivDNAPCR1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivDNAPCR2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hivDNAPCR2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_viralLoad1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_viralLoad1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_viralLoad2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_viralLoad2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_CD41res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_CD41res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_CD42res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_CD42res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_chemistry1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_chemistry1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_chemistry2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_chemistry2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hematology1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hematology1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hematology2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_hematology2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_malaria1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_malaria1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_malaria2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_malaria2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbSmear1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbSmear1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbSmear2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbSmear2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbCulture1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbCulture1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbCulture2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbCulture2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbDrug1res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbDrug1res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbDrug2res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_tbDrug2res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_other11res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_other11res->id, "answer_id" => $answer_no->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_other12res->id, "answer_id" => $answer_yes->id));
+        DB::table('question_answers')->insert(
+            array("question_id" => $criteria2_other12res->id, "answer_id" => $answer_no->id));
+        
+        $this->command->info('Question-answers table seeded');
+
+        /* Question parent-child */
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_labQStructure->id, "parent_id" => $question_labQManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_labQPolicy->id, "parent_id" => $question_labQManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_labQMS->id, "parent_id" => $question_labQManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_labSProcedures->id, "parent_id" => $question_labQManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_labRoles->id, "parent_id" => $question_labQManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_labDocManReview->id, "parent_id" => $question_labQManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_docRecControl->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_confOfInterest->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_communication->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_revOfContracts->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_referralExam->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_purInvCon->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_advisory->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_compFeedback->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_nonConformities->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_corrAction->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_prevAction->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_contImpro->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_quaTechRec->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_inAudits->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_manReview->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_persFiles->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_persTraining->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_competencyAudit->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_Auth->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_Accomo->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_Equip->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_EquiCalib->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_preExamPro->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_speStoRe->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_exSops->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_equiVal->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_interSer->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_exVal->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_quaAssurance->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_resRep->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_patConf->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_labSafeMan->id, "parent_id" => $question_poSops->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_prevActItems->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_corrActStatus->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_repFromPersonnel->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_workVolChange->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_bioRefRangeChange->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_cliHandbook->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_envMonLog->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_speRejLog->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_equiCalibManRec->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_iqcRec->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_ptIntLabCo->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_tatMon->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_qInd->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_recentIntAudRec->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_extAudRec->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_custCompFeed->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_occIncLogs->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_impProRes->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_operPro->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_refLabPerfEval->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_suppPerfEval->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_docReview->id, "parent_id" => $question_quaTechRecRev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_revActPlanDoc->id, "parent_id" => $question_quaTechRecRev->id));
+
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualPrevActItems->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualCorrActStatus->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualRepFromPersonnel->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualWorkVolChange->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualBioRefRangeChange->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualCliHandbook->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualEnvMonLog->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualSpeRejLog->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualEquiCalibManRec->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualIqcRec->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualPtIntLabCo->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualTatMon->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualQInd->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualRecentIntAudRec->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualExtAudRec->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualCustCompFeed->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualOccIncLogs->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualImpProRes->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualOperPro->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualRefLabPerfEval->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualSuppPerfEval->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualDocReview->id, "parent_id" => $question_annualQMSrev->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_annualRevActPlanDoc->id, "parent_id" => $question_annualQMSrev->id));
+
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_empOri->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_educTra->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_prevExp->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_writtenJobDesc->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_letterOfEmp->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_revOfJobSops->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_docRevSafetyMan->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_revOfProForEmp->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_regWithProf->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_traRecDoc->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_periodicPerfRev->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_docEmpRecog->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_hrData->id, "parent_id" => $question_perFilSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_prevStaffMeet->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_probCompDis->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_revOfDoc->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_commOnRevSops->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_systematicPro->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_priorCorrAct->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_discEvalOfImp->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_staffFeed->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_exempPerf->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_relayOfReports->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_recordMon->id, "parent_id" => $question_staffMeet->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_equipName->id, "parent_id" => $question_equipRecMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_manfCont->id, "parent_id" => $question_equipRecMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_condReceived->id, "parent_id" => $question_equipRecMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_serialNo->id, "parent_id" => $question_equipRecMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_dateOfPur->id, "parent_id" => $question_equipRecMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_outOfSer->id, "parent_id" => $question_equipRecMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_dateSerEntry->id, "parent_id" => $question_equipRecMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_serviceContInf->id, "parent_id" => $question_equipManRec->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_serviceProCont->id, "parent_id" => $question_equipManRec->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_decontaRec->id, "parent_id" => $question_equipManRec->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_perfManRec->id, "parent_id" => $question_equipManRec->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_lastSerDate->id, "parent_id" => $question_equipManRec->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_nextSerDate->id, "parent_id" => $question_equipManRec->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_currLoc->id, "parent_id" => $question_equipManRec->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_inAuditCarriers->id, "parent_id" => $question_internalAudits->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_inAuditConductor->id, "parent_id" => $question_internalAudits->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_causeAnalysis->id, "parent_id" => $question_internalAudits->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_inAuditFindings->id, "parent_id" => $question_internalAudits->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_consumeAccRej->id, "parent_id" => $question_invConSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_lotNumberRec->id, "parent_id" => $question_invConSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_consumeStorage->id, "parent_id" => $question_invConSys->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_storageWellOrg->id, "parent_id" => $question_storageArea->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_desigPlaces->id, "parent_id" => $question_storageArea->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_hazardousChem->id, "parent_id" => $question_storageArea->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_coldStorage->id, "parent_id" => $question_storageArea->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_storageAreaMon->id, "parent_id" => $question_storageArea->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_ambientTemp->id, "parent_id" => $question_storageArea->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_directSunlight->id, "parent_id" => $question_storageArea->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_adequateVent->id, "parent_id" => $question_storageArea->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_cleanDustPests->id, "parent_id" => $question_storageArea->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_accessControl->id, "parent_id" => $question_storageArea->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_specLabel->id, "parent_id" => $question_sampRecPro->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_reqForm->id, "parent_id" => $question_sampRecPro->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_afterHours->id, "parent_id" => $question_sampRecPro->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_transSheet->id, "parent_id" => $question_sampRecPro->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_accRejCrit->id, "parent_id" => $question_sampRecPro->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_specLogged->id, "parent_id" => $question_sampRecPro->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_portions->id, "parent_id" => $question_sampRecPro->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_2IdSys->id, "parent_id" => $question_sampRecPro->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_urgentSpec->id, "parent_id" => $question_sampRecPro->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_corrWorksta->id, "parent_id" => $question_sampRecPro->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_specDispSafe->id, "parent_id" => $question_specStoredApp->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_roomTemp->id, "parent_id" => $question_envConditons->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_freezers->id, "parent_id" => $question_envConditons->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_refrigerator->id, "parent_id" => $question_envConditons->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_incubators->id, "parent_id" => $question_envConditons->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_waterBath->id, "parent_id" => $question_envConditons->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_sampDist->id, "parent_id" => $question_externalPT->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_ptProvAccreditted->id, "parent_id" => $question_externalPT->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_ptSpecHandledNormally->id, "parent_id" => $question_externalPT->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_ptResCauseAnalysis->id, "parent_id" => $question_externalPT->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_ptResCorrAct->id, "parent_id" => $question_externalPT->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_reportId->id, "parent_id" => $question_testResReport->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_patDemography->id, "parent_id" => $question_testResReport->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_testRequester->id, "parent_id" => $question_testResReport->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_specTestInc->id, "parent_id" => $question_testResReport->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_specCollDate->id, "parent_id" => $question_testResReport->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_bioRefRange->id, "parent_id" => $question_testResReport->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_siUnits->id, "parent_id" => $question_testResReport->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_resInterp->id, "parent_id" => $question_testResReport->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_authority->id, "parent_id" => $question_testResReport->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_resWithheld->id, "parent_id" => $question_nonConfAspQMS->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_recCorrect->id, "parent_id" => $question_nonConfAspQMS->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_approvedAuthPer->id, "parent_id" => $question_nonConfAspQMS->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_equipPlacement->id, "parent_id" => $question_workstationMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_neededSupplies->id, "parent_id" => $question_workstationMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_chairStool->id, "parent_id" => $question_workstationMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_refMaterial->id, "parent_id" => $question_workstationMan->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_freeOfClutter->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_adVent->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_excessMo->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_lit->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_climateCon->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_filtersChecked->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_wireCables->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_generator->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_criticalEquip->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_waterHazards->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_prolongedPowerDis->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_deionizedWater->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_clericalWork->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_majSafetySignage->id, "parent_id" => $question_phyWorkEnv->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_bloboPre->id, "parent_id" => $question_labSafetyManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_hazardWasteDisp->id, "parent_id" => $question_labSafetyManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_hazardChem->id, "parent_id" => $question_labSafetyManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_msds->id, "parent_id" => $question_labSafetyManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_persProEquip->id, "parent_id" => $question_labSafetyManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_vaccination->id, "parent_id" => $question_labSafetyManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_prophylaxis->id, "parent_id" => $question_labSafetyManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_fireSafety->id, "parent_id" => $question_labSafetyManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_elecSafety->id, "parent_id" => $question_labSafetyManual->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_hazardChemLabeled->id, "parent_id" => $question_hazardMaterials->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_hazardChemStored->id, "parent_id" => $question_hazardMaterials->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_hazardChemUtilized->id, "parent_id" => $question_hazardMaterials->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_hazardChemDisposed->id, "parent_id" => $question_hazardMaterials->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_elecCords->id, "parent_id" => $question_overallSafety->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_extinguisher->id, "parent_id" => $question_overallSafety->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_fireWarning->id, "parent_id" => $question_overallSafety->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_bioSafetyCabinets->id, "parent_id" => $question_stdSafetyEquip->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_centrifuge->id, "parent_id" => $question_stdSafetyEquip->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_handwash->id, "parent_id" => $question_stdSafetyEquip->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_eyewash->id, "parent_id" => $question_stdSafetyEquip->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_spillKit->id, "parent_id" => $question_stdSafetyEquip->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $question_firstAid->id, "parent_id" => $question_stdSafetyEquip->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_controlValMonSQ->id, "parent_id" => $criteria1_controlValMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_controlValMonQual->id, "parent_id" => $criteria1_controlValMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_stdsMonSQ->id, "parent_id" => $criteria1_stdsMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_stdsMonQual->id, "parent_id" => $criteria1_stdsMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_newBatchMonSQ->id, "parent_id" => $criteria1_newBatchMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_newBatchMonQual->id, "parent_id" => $criteria1_newBatchMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonSQ->id, "parent_id" => $criteria1_stdsKitsValMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria1_stdsKitsValMonQual->id, "parent_id" => $criteria1_stdsKitsValMonQ->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel1date->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel1res->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel1per->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel2date->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel2res->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivPanel2per->id, "parent_id" => $criteria2_hivSerology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR1date->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR1res->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR1per->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR2date->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR2res->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hivDNAPCR2per->id, "parent_id" => $criteria2_hivDNAPCR->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad1date->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad1res->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad1per->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad2date->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad2res->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_viralLoad2per->id, "parent_id" => $criteria2_hivViralLoad->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD41date->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD41res->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD41per->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD42date->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD42res->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_CD42per->id, "parent_id" => $criteria2_CD4->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry1date->id, "parent_id" => $criteria2_chemistry->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry1res->id, "parent_id" => $criteria2_chemistry->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry1per->id, "parent_id" => $criteria2_chemistry->id));
+         DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry2date->id, "parent_id" => $criteria2_chemistry->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry2res->id, "parent_id" => $criteria2_chemistry->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_chemistry2per->id, "parent_id" => $criteria2_chemistry->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology1date->id, "parent_id" => $criteria2_hematology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology1res->id, "parent_id" => $criteria2_hematology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology1per->id, "parent_id" => $criteria2_hematology->id));
+         DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology2date->id, "parent_id" => $criteria2_hematology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology2res->id, "parent_id" => $criteria2_hematology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_hematology2per->id, "parent_id" => $criteria2_hematology->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria1date->id, "parent_id" => $criteria2_malaria->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria1res->id, "parent_id" => $criteria2_malaria->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria1per->id, "parent_id" => $criteria2_malaria->id));
+         DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria2date->id, "parent_id" => $criteria2_malaria->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria2res->id, "parent_id" => $criteria2_malaria->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_malaria2per->id, "parent_id" => $criteria2_malaria->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear1date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear1res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear1per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear2date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear2res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbSmear2per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture1date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture1res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture1per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture2date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture2res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbCulture2per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug1date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug1res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug1per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug2date->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug2res->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_tbDrug2per->id, "parent_id" => $criteria2_tb->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other11date->id, "parent_id" => $criteria2_other->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other11res->id, "parent_id" => $criteria2_other->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other11per->id, "parent_id" => $criteria2_other->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other12date->id, "parent_id" => $criteria2_other->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other12res->id, "parent_id" => $criteria2_other->id));
+        DB::table('question_parent_child')->insert(
+            array("question_id" => $criteria2_other12per->id, "parent_id" => $criteria2_other->id));
+        
+        $this->command->info('Question parent-child table seeded');
     }
 }

@@ -57,39 +57,9 @@
             <!-- Audit, Lab - Depending on permissions -->
             <ul class="nav navbar-top-links navbar-left">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                        <span class="fa fa-clipboard"></span> {{ Lang::choice('messages.audit', 1) }}  <span class="caret"></span>
+                    <a href="{{ route('review.index') }}" role="button" aria-expanded="false">
+                        <span class="fa fa-clipboard"></span> {{ Lang::choice('messages.audit', 2) }}
                     </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{{ route('lab.index') }}"><span class="fa fa-clipboard"></span> {{ Lang::choice('messages.new-audit', 1) }}</a>
-                        </li>
-                        <li><a href="#"><span class="fa fa-search"></span> {{ Lang::choice('messages.search-audit', 1) }}</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#" class="text-success"> {{ Lang::choice('messages.with-selected-audit', 1) }}</a>
-                        </li>
-                        <li><a href="#"><span class="fa fa-smile-o"></span> {{ Lang::choice('messages.show-owners', 1) }}</a>
-                        </li>
-                        <li><a href="#"><span class="fa fa-book"></span> {{ Lang::choice('messages.view-audit', 1) }}</a>
-                        </li>
-                        <li><a href="#"><span class="fa fa-pencil"></span> {{ Lang::choice('messages.edit-audit', 1) }}</a>
-                        </li>
-                        <li><a href="#"><span class="fa fa-external-link"></span> {{ Lang::choice('messages.export-audit', 1) }}</a>
-                        </li>
-                        <li><a href="#"><span class="fa fa-trash-o"></span> {{ Lang::choice('messages.delete-audit', 1) }}</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#"> {{ Lang::choice('messages.change-audit-state', 1) }}</a>
-                        </li>
-                        <li><a href="#"><span class="fa fa-check-square-o"></span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#"><span class="fa fa-bar-chart-o"></span> {{ Lang::choice('messages.run-reports', 1) }}</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="#"><span class="fa fa-download"></span> {{ Lang::choice('messages.import-audit', 1) }}</a>
-                        </li>
-                    </ul>
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
@@ -115,6 +85,11 @@
                         </li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="{{ route('review.index') }}" role="button" aria-expanded="false">
+                        <span class="fa fa-bar-chart"></span> {{ Lang::choice('messages.report', 2) }}
+                    </a>
+                </li>
             </ul>
             <!-- End Audit, Lab -->
             <ul class="nav navbar-top-links navbar-right">
@@ -139,6 +114,45 @@
    @include("sidebar")
 </div>
 
+<<<<<<< HEAD
+=======
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-sliders"></i> Audit Configuration<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a href="{{ URL::to('auditType')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-type', 2) }}</a></li>
+                                <li><a href="{{ URL::to('assessment')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.assessment', 2) }} </a></li>
+                                <li><a href="{{ URL::to('section')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.section', 2) }} </a></li>
+                                <li><a href="{{ URL::to('note')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.note', 2) }} </a></li>
+                                <li><a href="{{ URL::to('answer')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.answer', 2) }} </a></li>
+                                <li><a href="{{ URL::to('question')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.question', 2) }} </a></li>
+                                
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ URL::to('user')}}"><i class="fa fa-users"></i> {{ Lang::choice('messages.user', 2) }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ URL::to('review')}}"><i class="fa fa-book"></i> {{ Lang::choice('messages.audit', 2) }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ URL::to('audit')}}"><i class="fa fa-bar-chart-o"></i> Reports</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-database"></i> Access Controls<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li><a href="{{ URL::to('permission')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.permission', 2) }}</a></li>
+                                <li><a href="{{ URL::to('role')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.role', 2) }}</a></li>
+                                <li><a href="{{ URL::to('privilege')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.privilege', 2) }}</a></li>
+                                <li><a href="{{ URL::to('authorization')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.authorization', 2) }}</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+>>>>>>> master
             <!-- /.navbar-static-side -->
         </nav>
         <div id="page-wrapper">

@@ -11,6 +11,7 @@
     </div>
 </div>
 <div class="panel panel-primary">
+<<<<<<< HEAD
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit', 2) }}
         <span class="panel-btn">
          <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
@@ -21,46 +22,43 @@
 
         </span>
     </div>
+=======
+    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit', 2) }}</div>
+>>>>>>> master
     <div class="panel-body">
-        <div class="row">
-            <div class="col-sm-12">
-                <table class="table table-striped table-bordered table-hover search-table">
-                    <thead>
-                        <tr>
-                            <th>{{ Lang::choice('messages.response-no', 1) }}</th>
-                            <th>{{ Lang::choice('messages.assessor', 1) }}</th>
-                            <th>{{ Lang::choice('messages.lab', 1) }}</th>
-                            <th>{{ Lang::choice('messages.audit', 1) }}</th>
-                            <th>{{ Lang::choice('messages.date', 1) }}</th>
-                            <th>{{ Lang::choice('messages.status', 1) }}</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($responses as $response)
-                        <tr>
-                            <td>{{ $response->id }}</td>
-                            <td>{{ $response->user->name }}</td>
-                            <td>{{ $response->lab->facility->name }}</td>
-                            <td>{{ $response->auditType->name }}</td>
-                            <td>{{ $response->created_at }}</td>
-                            <td>{{ $response->status==App\Models\AuditResponse::COMPLETE?Lang::choice('messages.audit-status', 1):Lang::choice('messages.audit-status', 2) }}</td>
-                            <td>
-                              <a href="{{ URL::to("response/" . $response->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {{ Lang::choice('messages.view', 1) }}</span></a>
-                              <a href="{{ URL::to("response/" . $response->id . "/edit") }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit', 1) }}</span></a>
-                              <a href="{{ URL::to("response/" . $response->id . "/edit") }}" class="btn btn-danger btn-sm"><i class="fa fa-check-square-o"></i><span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</span></a>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                          <td colspan="3">{{ Lang::choice('messages.no-records-found', 1) }}</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        <div class="panel-group" id="accordion">
+            @forelse($audits as $audit)
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{$audit->id}}" aria-expanded="false" class="collapsed"><h5><strong>{{ $audit->name }}</strong></h5></a>
+                    </h4>
+                </div>
+                <div id="collapse{{$audit->id}}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                    <div class="panel-body">
+                    <div class="col-lg-8">
+                        <table class="table table-striped table-bordered table-hover no-footer">
+                            <tbody>
+                                <tr>
+                                    <td>{{ Lang::choice('messages.no-of-labs', 1) }}</td><td>{!! $audit->reviews->groupBy('lab_id')->count() !!}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{ Lang::choice('messages.no-of-assessors', 1) }}</td><td>{!! $audit->reviews->groupBy('user_id')->count() !!}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>
+                            <a href="#" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i><span> {{ Lang::choice('messages.new-audit', 1) }}</span></a>
+                            <a href="{{ url('review/assessment/'.$audit->id) }}" class="btn btn-default"><i class="fa fa-book"></i><span> {{ Lang::choice('messages.view-audit-data', 1) }}</span></a>
+                            <a href="{{ url('review/summary/'.$audit->id) }}" class="btn btn-success"><i class="fa fa-database"></i><span> {{ Lang::choice('messages.view-summary', 1) }}</span></a>
+                        </p>
+                    </div>
+                    </div>
+                </div>
             </div>
-            {{ Session::put('SOURCE_URL', URL::full()) }}
+            @empty
+            @endforelse
         </div>
-      </div>
+    </div>
 </div>
 @stop

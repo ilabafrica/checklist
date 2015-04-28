@@ -22,7 +22,7 @@ class Section extends Model {
 	 */
 	public function notes()
 	{
-	 	return $this->belongsToMany('App\Models\Note', 'section_notes', 'note_id', 'section_id');
+	 	return $this->belongsToMany('App\Models\Note', 'section_notes', 'section_id', 'note_id');
 	}
 	/**
 	 * Audit field group relationship
@@ -101,5 +101,13 @@ class Section extends Model {
 	public function next()
 	{
 		return Section::where('order', $this->id)->get();
+	}
+	/**
+	* Get Subtotal score
+	*/
+	public function subtotal($review)
+	{
+		$questions = $this->questions->lists('id');
+		return DB::table('review_question_scores')->where('review_id', $review)->whereIn('question_id', $questions)->sum('audited_score');
 	}
 }

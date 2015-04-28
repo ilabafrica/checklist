@@ -171,7 +171,26 @@ Route::any("review/create/{assessment}/{section}", array(
     "as"   => "review.perform",
     "uses" => "ReviewController@create"
 ));
-
+//  View assessments done
+Route::any("review/assessment/{id}", array(
+    "as"   => "review.assessment",
+    "uses" => "ReviewController@assessments"
+));
+//  View assessments summaries
+Route::any("review/summary/{id}", array(
+    "as"   => "review.summary",
+    "uses" => "ReviewController@summary"
+));
+//  Proceed with amendment of the audit
+Route::any("review/{id}/edit/{section}", array(
+    "as"   => "review.amend",
+    "uses" => "ReviewController@amend"
+));
+//  Save action plan
+Route::any("/review/plan", array(
+    "as"   => "review.actionPlan",
+    "uses" => "ReviewController@plan"
+));
 //  Answers controller
 Route::resource('answer', 'AnswerController');
 
