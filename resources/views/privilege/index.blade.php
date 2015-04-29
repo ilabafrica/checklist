@@ -28,6 +28,7 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
+                 {!! Form::open(array('route' => 'privilege.store', 'id' => 'form-add-privilege', 'class' => 'form-horizontal')) !!}
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
@@ -77,7 +78,10 @@
                     <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                     </div>
                 </div>
+                   {!! Form::close() !!} 
+            <!-- End form -->
             </div>
+
         </div>
       </div>
 </div>

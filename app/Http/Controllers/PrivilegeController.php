@@ -55,7 +55,7 @@ class PrivilegeController extends Controller {
 			foreach ($roles as $roleKey => $role) {
 				//If checkbox is clicked attach the permission
 				if(!empty($arrayPermissionRoleMapping[$permissionkey][$roleKey]))
-				{
+				{   $role->detachPermission($permission);
 					$role->attachPermission($permission);
 				}
 				//If checkbox is NOT clicked detatch the permission
