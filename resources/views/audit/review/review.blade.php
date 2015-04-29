@@ -13,14 +13,18 @@
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit', 2) }}
         <span class="panel-btn">
+            @if(Auth::user()->can('create-audit'))
             <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 {{ Lang::choice('messages.create-audit', 1) }}
             </a>
+             @endif
+             @if(Auth::user()->can('import-data'))
             <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
                 <span class="fa fa-download"></span>
                 {{ Lang::choice('messages.import-audit', 1) }}
             </a>
+            @endif
         </span>
     </div>
     <div class="panel-body">

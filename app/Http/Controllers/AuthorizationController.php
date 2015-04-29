@@ -56,6 +56,7 @@ class AuthorizationController extends Controller {
 				//If checkbox is clicked attach the role
 				if(!empty($arrayUserRoleMapping[$userkey][$roleKey]))
 				{
+					$user->detachRole($role);
 					$user->attachRole($role);
 				}
 				//If checkbox is NOT clicked detatch the role

@@ -57,20 +57,26 @@
             <!-- Audit, Lab - Depending on permissions -->
             <ul class="nav navbar-top-links navbar-left">
                 <li class="dropdown">
+                    @if(Auth::user()->can('manage-audits'))
                     <a href="{{ route('review.index') }}" role="button" aria-expanded="false">
                         <span class="fa fa-clipboard"></span> {{ Lang::choice('messages.audit', 2) }}
                     </a>
+                    @endif
                 </li>
                 <li class="dropdown">
+                   
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                         <span class="fa fa-stack-exchange"></span> {{ Lang::choice('messages.lab', 1) }}  <span class="caret"></span>
                     </a>
+                   
                     <ul class="dropdown-menu">
+                         @if(Auth::user()->can('manage-labs'))
                         <li><a href="{{ route('lab.create') }}"><span class="fa fa-tag"></span> {{ Lang::choice('messages.new-lab', 1) }}</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{{ route('lab.index') }}"><span class="fa fa-send"></span> {{ Lang::choice('messages.select-lab', 1) }}</a>
                         </li>
+                         @endif
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -78,11 +84,13 @@
                         <span class="fa fa-user"></span> {{ Lang::choice('messages.user', 1) }}  <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
+                         @if(Auth::user()->can('manage-users'))
                         <li><a href="{{ route('user.create') }}"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.new-user', 1) }}</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{{ route('user.index') }}"><span class="fa fa-search"></span> {{ Lang::choice('messages.find-user', 1) }}</a>
                         </li>
+                        @endif
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -114,45 +122,6 @@
    @include("sidebar")
 </div>
 
-<<<<<<< HEAD
-=======
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-sliders"></i> Audit Configuration<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level collapse">
-                                <li><a href="{{ URL::to('auditType')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.audit-type', 2) }}</a></li>
-                                <li><a href="{{ URL::to('assessment')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.assessment', 2) }} </a></li>
-                                <li><a href="{{ URL::to('section')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.section', 2) }} </a></li>
-                                <li><a href="{{ URL::to('note')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.note', 2) }} </a></li>
-                                <li><a href="{{ URL::to('answer')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.answer', 2) }} </a></li>
-                                <li><a href="{{ URL::to('question')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.question', 2) }} </a></li>
-                                
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="{{ URL::to('user')}}"><i class="fa fa-users"></i> {{ Lang::choice('messages.user', 2) }}</a>
-                        </li>
-                        <li>
-                            <a href="{{ URL::to('review')}}"><i class="fa fa-book"></i> {{ Lang::choice('messages.audit', 2) }}</a>
-                        </li>
-                        <li>
-                            <a href="{{ URL::to('audit')}}"><i class="fa fa-bar-chart-o"></i> Reports</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-database"></i> Access Controls<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li><a href="{{ URL::to('permission')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.permission', 2) }}</a></li>
-                                <li><a href="{{ URL::to('role')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.role', 2) }}</a></li>
-                                <li><a href="{{ URL::to('privilege')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.privilege', 2) }}</a></li>
-                                <li><a href="{{ URL::to('authorization')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.authorization', 2) }}</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
->>>>>>> master
             <!-- /.navbar-static-side -->
         </nav>
         <div id="page-wrapper">

@@ -11,7 +11,7 @@
     </div>
 </div>
 <div class="panel panel-primary">
-<<<<<<< HEAD
+
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit-type', 1) }} <span class="panel-btn">
   @if(Auth::user()->can('edit-audit'))
   <a class="btn btn-sm btn-info" href="{{ URL::to("auditType/" . $auditType->id . "/edit") }}" >
@@ -32,7 +32,7 @@
         </h5>
       </div>
   </div>
-=======
+
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.response', 1) }} <span class="panel-btn">
     <a class="btn btn-sm btn-info" href="{{ URL::to('review/'.$review->id.'/edit') }}" >
         <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-audit', 1) }}</span>

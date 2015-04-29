@@ -11,20 +11,18 @@
     </div>
 </div>
 <div class="panel panel-primary">
-<<<<<<< HEAD
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit', 2) }}
         <span class="panel-btn">
+        @if(Auth::user()->can('create-audit'))
          <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 {{ Lang::choice('messages.create-audit', 1) }}
          </a>
-           
+        @endif  
 
         </span>
     </div>
-=======
-    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit', 2) }}</div>
->>>>>>> master
+
     <div class="panel-body">
         <div class="panel-group" id="accordion">
             @forelse($audits as $audit)
