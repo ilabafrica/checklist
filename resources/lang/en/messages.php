@@ -3,6 +3,11 @@
 return [
 	/*	General terms */
 	'dashboard'	=>	'Dashboard',
+	'mfl-catalog'	=>	'MFL Catalog',
+	'lab-catalog'	=>	'Lab Catalog',
+	'audit-config'	=>	'Audit Configuration',
+	'reports'	=>	'Reports',
+	'access-controls'	=>	'Access Controls',
 	'name'	=>	'Name|Names',
 	'description'	=>	'Description',
 	'save'	=>	'Save|Save Changes',

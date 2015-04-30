@@ -55,7 +55,13 @@ class SliptaSeeder extends Seeder
             array("name" => "export-data", "display_name" => "Can export audit data"),
             array("name" => "import-data", "display_name" => "Can import audit data"),
 
-            array("name" => "manage_users", "display_name" => "Can manage users"),
+            //managing permissions
+            array("name" => "manage-facilities", "display_name" => "Can manage facilities"),
+            array("name" => "manage-labs", "display_name" => "Can manage labs"),
+            array("name" => "manage-users", "display_name" => "Can manage users"),
+            array("name" => "manage-audit-config", "display_name" => "Can manage audit configuration"),
+            array("name" => "manage-audits", "display_name" => "Can manage audits"),
+            array("name" => "manage-access-controls", "display_name" => "Can manage access controls"),
             array("name" => "view-reports", "display_name" => "Can view reports")
         );
         foreach ($permissions as $permission) {

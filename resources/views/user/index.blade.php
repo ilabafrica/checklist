@@ -12,10 +12,12 @@
 </div>
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.user', 2) }} <span class="panel-btn">
+        @if(Auth::user()->can('create-user'))
       <a class="btn btn-sm btn-info" href="{{ URL::to("user/create") }}" >
         <span class="glyphicon glyphicon-plus-sign"></span>
             {{ trans('messages.create-user') }}
           </a>
+        @endif
         </span>
     </div>
     <div class="panel-body">
