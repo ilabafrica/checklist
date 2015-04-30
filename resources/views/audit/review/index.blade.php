@@ -35,7 +35,7 @@
                             </tbody>
                         </table>
                         <p>
-                            <a href="#" class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i><span> {{ Lang::choice('messages.new-audit', 1) }}</span></a>
+                            <a href="{{ URL::to('lab')}}"class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i><span> {{ Lang::choice('messages.new-audit', 1) }}</span></a>
                             <a href="{{ url('review/assessment/'.$audit->id) }}" class="btn btn-default"><i class="fa fa-book"></i><span> {{ Lang::choice('messages.view-audit-data', 1) }}</span></a>
                             <a href="{{ url('review/summary/'.$audit->id) }}" class="btn btn-success"><i class="fa fa-database"></i><span> {{ Lang::choice('messages.view-summary', 1) }}</span></a>
                         </p>

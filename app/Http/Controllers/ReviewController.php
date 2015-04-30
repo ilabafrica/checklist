@@ -565,13 +565,17 @@ class ReviewController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function assessments($id)
+	public function assessments($id=NULL)
 	{
-		if ($id==0)
+		if ($id==NULL){
 			//	Get all audits
 			$responses = Review::all();
-		else 
-			$responses = AuditType::find($id)->reviews;
+		}
+		else{
+			$audit = AuditType::find($id);
+			$responses = $audit->reviews;
+			$id=$audit->id;
+		}
 		return view('audit.review.review', compact('responses', 'id'));
 	}
 	/**

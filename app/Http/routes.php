@@ -259,7 +259,7 @@ Route::any('/review/{id}/complete', array(
     "as"    =>  "report.complete",
     "uses"  =>  "ReviewController@complete"
 ));
-Route::any("review/assessment/0", array(
+Route::any("report", array(
     "as"   => "review.report",
     "uses" => "ReviewController@assessments"
 ));
