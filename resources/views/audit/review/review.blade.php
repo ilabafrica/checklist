@@ -13,14 +13,13 @@
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit', 2) }}
         
-<?php
-if($id==0){} else{ ?>
+        @if($id!=NULL)
         <span class="panel-btn">
             <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 {{ Lang::choice('messages.create-audit', 1) }}
             </a>
-            <a class="btn btn-sm btn-info" href="{{ URL::to("import/".$audit->id) }}" >
+            <a class="btn btn-sm btn-info" href="{{ URL::to("import/".$id) }}" >
                 <span class="fa fa-download"></span>
                 {{ Lang::choice('messages.import-audit', 1) }}
             </a>
@@ -28,7 +27,8 @@ if($id==0){} else{ ?>
                 <i class="fa fa-reply"></i><span> {{ Lang::choice('messages.back', 1) }}</span>
             </a>
         </span>
-       <?php }  ?>
+        @endif
+       
     </div>
     <div class="panel-body">
         <div class="row">
@@ -47,7 +47,7 @@ if($id==0){} else{ ?>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($audit->reviews as $response)
+                        @forelse($responses as $response)
                         <tr>
                             <td>{{ $response->id }}</td>
                             <td>{{ $response->user->name }}</td>
