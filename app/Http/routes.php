@@ -176,6 +176,7 @@ Route::any("review/assessment/{id}", array(
     "as"   => "review.assessment",
     "uses" => "ReviewController@assessments"
 ));
+
 //  View assessments summaries
 Route::any("review/summary/{id}", array(
     "as"   => "review.summary",
@@ -227,6 +228,7 @@ Route::any('/report/{id}', array(
     "as"    =>  "report.index",
     "uses"  =>  "ReportController@index"
 ));
+
 //  Export to excel
 Route::any('/review/{id}/export', array(
     "as"    =>  "report.excel",
@@ -256,4 +258,8 @@ Route::any('/excel/import', array(
 Route::any('/review/{id}/complete', array(
     "as"    =>  "report.complete",
     "uses"  =>  "ReviewController@complete"
+));
+Route::any("review/assessment/0", array(
+    "as"   => "review.report",
+    "uses" => "ReviewController@assessments"
 ));

@@ -29,7 +29,7 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-striped table-bordered table-hover search-table">
+                    <table class="table table-striped table-bordered table-hover search-table">
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.response-no', 1) }}</th>
@@ -60,7 +60,7 @@
                         </tr>
                         @empty
                         <tr>
-                          <td colspan="3">{{ Lang::choice('messages.no-records-found', 1) }}</td>
+                          <td colspan="7">{{ Lang::choice('messages.no-records-found', 1) }}</td>
                         </tr>
                         @endforelse
                     </tbody>
