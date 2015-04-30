@@ -33,7 +33,8 @@ class HomeController extends Controller {
 	public function index()
 	{
 		$reviews = User::find(Auth::user()->id)->reviews;
-		return view('home', compact('reviews'));
+		$message = '';
+		return view('home', compact('reviews', 'message'));
 	}
 
 }

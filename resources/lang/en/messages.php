@@ -40,6 +40,11 @@ return [
 	'partial'	=>	'Partial|PARTIAL',
 	'insufficient-data'	=>	'Insufficient Data',
 	'save-and-continue'	=>	'Save and Continue',
+	'upload'	=>	'Upload',
+	'file-input'	=>	'File Input',
+	'excel'	=>	'excel|Excel',
+	'success-import'	=>	'The data was successfully uploaded.',
+	'failure-import'	=>	'An error was encountered during processing, kindly contact your administrator',
 	/* Roles */
 	'role'	=>	'Role|Roles',
 	'create-role'	=>	'Create Role',
@@ -209,7 +214,7 @@ return [
 	'order'	=>	'Order Section',
 	'select-order'	=>	'Select Order Section',
 	/* SLMTA Info */
-	'slmta-info'	=>	'SLMTA Info',
+	'slmta-info'	=>	'SLMTA Info|SLMTA Information',
 	'official-slmta'	=>	'Official SLMTA Audit?',
 	'audit-start-date'	=>	'Audit Start Date',
 	'audit-end-date'	=>	'Audit End Date',
@@ -237,7 +242,7 @@ return [
 	'four-stars'	=>	'4 Stars',
 	'five-stars'	=>	'5 Stars',
 	/* Lab Info */
-	'lab-info'	=>	'Lab Info',
+	'lab-info'	=>	'Lab Info|Laboratory Information',
 	'select-lead'	=>	'Select Lead Auditor',
 	'names-affiliations-of-auditors'	=>	'Name(s) and Affiliation(s) of Auditor(s)',
 	'lab-name'	=>	'Laboratory Name',
@@ -270,7 +275,7 @@ return [
 	'staff-note'	=>	'If the laboratory has IT specialists accountants or non-laboratory-trained management staff, this should be indicated in the description of the organizational structure on the following page.',
 	'sub-total'	=>	'Subtotal',
 	/* Organizational Structure */
-	'org-structure'	=>	'Org Structure',
+	'org-structure'	=>	'Org Structure|Organizational Structure',
 	'org-structure-note'	=>	'<strong>Does the laboratory have sufficient space, equipment, supplies, personnel, infrastructure, etc. to execute the correct and timely performance of each test and maintain the quality management system?</strong> If no, please elaborate in the summary and recommendations section at the end of the checklist.',
 	'sufficient-space'	=>	'Sufficient Space',
 	'equipment'	=>	'Equipment',

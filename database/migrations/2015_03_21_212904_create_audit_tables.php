@@ -289,7 +289,7 @@ class CreateAuditTables extends Migration {
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
 			$table->integer('question_id')->unsigned();
-			$table->string('answer');
+			$table->string('answer')->nullable();
 
 			$table->foreign('review_id')->references('id')->on('reviews');
             $table->foreign('question_id')->references('id')->on('questions');
@@ -304,8 +304,8 @@ class CreateAuditTables extends Migration {
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
 			$table->integer('question_id')->unsigned();
-			$table->text('note');
-			$table->string('non_compliance');
+			$table->text('note')->nullable();
+			$table->string('non_compliance')->nullable();
 
 			$table->foreign('review_id')->references('id')->on('reviews');
 			$table->foreign('question_id')->references('id')->on('questions');
@@ -318,9 +318,9 @@ class CreateAuditTables extends Migration {
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
-			$table->text('action');
-			$table->string('responsible_person');
-			$table->string('timeline');
+			$table->text('action')->nullable();
+			$table->string('responsible_person')->nullable();
+			$table->string('timeline')->nullable();
 
 			$table->foreign('review_id')->references('id')->on('reviews');
 

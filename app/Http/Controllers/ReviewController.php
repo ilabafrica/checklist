@@ -10,10 +10,15 @@ use App\Models\Lab;
 use App\Models\Section;
 use App\Models\Assessment;
 use App\Models\User;
+use App\Models\Answer;
+use App\Models\Question;
+use App\Http\Requests\UserListImport;
 use Auth;
 use Input;
 use Lang;
 use Request;
+use Excel;
+use App;
 
 class ReviewController extends Controller {
 
@@ -563,8 +568,8 @@ class ReviewController extends Controller {
 	public function assessments($id)
 	{
 		//	Get audits for the specific audit type
-		$responses = AuditType::find($id)->reviews;
-		return view('audit.review.review', compact('responses'));
+		$audit = AuditType::find($id);
+		return view('audit.review.review', compact('audit'));
 	}
 	/**
 	 * Saves the review's action plan submitted via ajax
@@ -610,6 +615,476 @@ class ReviewController extends Controller {
 		$reviews = $audit->reviews->groupBy('user_id');
 		//	Get all users
 		$users = User::all();
-		return view('audit.review.summary', compact('users'));
+		return view('audit.review.summary', compact('audit', 'users'));
 	}
+	/**
+	 * Mark audit as complete
+	 *
+	 */
+	public function complete($id){
+		//	Get review
+		$review = Review::find($id);
+		$categories = array();
+		$sections = $review->auditType->sections;
+		foreach($sections as $section){
+			if($section->total_points!=0)
+				array_push($categories, $section);
+			else
+				continue;
+		}
+		return view('audit.review.complete', compact('review', 'categories'));
+	}
+	/**
+	 * Display view for file input
+	 *
+	 */
+	public function import($id){
+		//	Get audit type
+		$audit = AuditType::find($id);
+		$message = '';
+		return view('audit.review.import', compact('audit', 'message'));
+	}
+	public function check($products, $field)
+	{
+	   foreach($products as $key => $product)
+	   {
+	      if ( $key )
+	         return $products[$product];
+	   }
+	   return false;
+	}
+	/**
+	 * Import the audit data
+	 *
+	 */
+	public function importUserList()
+    {
+    	//	Get the audit type
+    	$audit_type_id = AuditType::find(Input::get('audit_type_id'))->id;
+    	//	Declare variable to hold review_id
+    	$review_id = NULL;
+    	// 	Handle the import
+        // 	Get the results
+        // 	Import a user provided file
+        $file = Input::file('excel');
+        $ext = $file->getClientOriginalExtension();
+        $excel = uniqid().'.'.$ext;
+        $filename = $file->move('uploads/', $excel);
+        //	Convert file to csv
+        Excel::load('/public/uploads/'.$excel, function($reader) use($audit_type_id, $review_id){
+        	$laboratory_profile = $reader->get()[0];
+        	$staffing_summary = $reader->get()[1];
+        	$organizational_structure = $reader->get()[2];
+        	$slmta_information = $reader->get()[3];
+        	$assessment = $reader->get()[4];
+        	$scores = $reader->get()[5];
+        	$summary = $reader->get()[6];
+        	$action_plan = $reader->get()[7];
+        	//	Initialize variables
+        	$labName = $reader->first()[0]->value;
+	        $lab_id = Lab::labIdName($labName);
+	        $review = Review::where('lab_id', $lab_id)->where('audit_type_id', $audit_type_id)->first();
+	        //	Check if review exists
+			if(!$review){
+				//	Create new review
+				$review = new Review;
+				$review->lab_id = $lab_id;
+		        $review->audit_type_id = $audit_type_id;
+		        $review->status = Review::INCOMPLETE;
+		        $review->user_id = Auth::user()->id;
+		        $review->update_user_id = Auth::user()->id;
+		        try{
+					$review->save();
+					//$url = Session::get('SOURCE_URL');
+				}
+				catch(QueryException $e){
+					Log::error($e);
+				}
+			}
+			//	Get review id
+			$review_id = $review->id;
+
+        	$reader->each(function($sheet) use($review_id, $laboratory_profile, $staffing_summary, $organizational_structure, $slmta_information, $assessment, $scores, $summary, $action_plan){
+        		$sheetTitle = $sheet->getTitle();
+        		if($sheetTitle == Lang::choice('messages.lab-info', 2)){
+        			$counter = count($sheet);
+        			$head = NULL;
+					$head_personal_telephone = NULL;
+					$head_work_telephone = NULL;
+					for($i=0;$i<$counter;$i++){
+        				//	Save Laboratory Profile
+						$lab_profile = array('review_id' => $review_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s'));
+						$profile = DB::table('review_lab_profiles')->where('review_id', $review_id)->first();
+						if(!$profile){
+	    					$lab_profile = array('review_id' => $review_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s'));
+	    					$profile = DB::table('review_lab_profiles')->insert($lab_profile);
+	    				}
+						if($sheet[$i]->field == Lang::choice('messages.lab-head', 1)){
+							$head = $sheet[$i]->value;
+						}
+						if($sheet[$i]->field == Lang::choice('messages.lab-head-telephone-personal', 1)){
+							$head_personal_telephone = $sheet[$i]->value;
+						}
+						if($sheet[$i]->field == Lang::choice('messages.lab-head-telephone-work', 1)){
+							$head_work_telephone = $sheet[$i]->value;
+						}
+						if($head!=NULL){
+							if($profile){
+								DB::table('review_lab_profiles')->where('id', $profile->id)->update(['head' => $head, 'updated_at' => date('Y-m-d H:i:s')]);
+							}
+						}
+						if($head_personal_telephone!=NULL){
+							if($profile){
+								DB::table('review_lab_profiles')->where('id', $profile->id)->update(['head_personal_telephone' => $head_personal_telephone, 'updated_at' => date('Y-m-d H:i:s')]);
+							}
+						}
+						if($head_work_telephone!=NULL){
+							if($profile){
+								DB::table('review_lab_profiles')->where('review_id', $review_id)->update(['head_work_telephone' => $head_work_telephone, 'updated_at' => date('Y-m-d H:i:s')]);
+							}
+						}
+        			}
+        		}
+        		//	Staffing Summary
+        		else if($sheetTitle == Lang::choice('messages.staffing-summary', 1)){
+        			//	Initialize counter
+        			$counter = count($staffing_summary);
+        			//dd($counter);
+        			//	Variables
+        			$degree = NULL;
+    				$degree_adequate = NULL;
+    				$diploma = NULL;
+    				$diploma_adequate = NULL;
+    				$certificate = NULL;
+    				$certificate_adequate = NULL;
+    				$microscopist = NULL;
+    				$microscopist_adequate = NULL;
+    				$data_clerk = NULL;
+    				$data_clerk_adequate = NULL;
+    				$phlebotomist = NULL;
+    				$phlebotomist_adequate = NULL;
+    				$cleaner = NULL;
+    				$cleaner_adequate = NULL;
+    				$cleaner_dedicated = NULL;
+    				$cleaner_trained = NULL;
+    				$driver = NULL;
+    				$driver_adequate = NULL;
+    				$driver_dedicated = NULL;
+    				$driver_trained = NULL;
+    				$other_staff = NULL;
+    				$other_staff_adequate = NULL;
+    				//	Check lab profile
+    				$profile = DB::table('review_lab_profiles')->where('review_id', $review_id)->first();
+    				if(!$profile){
+    					$lab_profile = array('review_id' => $review_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s'));
+    					$profile = DB::table('review_lab_profiles')->insert($lab_profile);
+    				}
+					//	Begin saving
+        			for($i=0;$i<$counter;$i++){
+        				if($staffing_summary[$i]->profession == Lang::choice('messages.degree', 1)){
+							$degree = $staffing_summary[$i]->employees;
+							$degree_adequate = Answer::adequate($staffing_summary[$i]->adequate);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['degree_staff' => $degree, 'degree_staff_adequate' => $degree_adequate, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.diploma', 1)){
+							$diploma = $staffing_summary[$i]->employees;
+							$diploma_adequate = Answer::adequate($staffing_summary[$i]->adequate);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['diploma_staff' => $diploma, 'diploma_staff_adequate' => $diploma_adequate, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.certificate', 1)){
+							$certificate = $staffing_summary[$i]->employees;
+							$certificate_adequate = Answer::adequate($staffing_summary[$i]->adequate);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['certificate_staff' => $certificate, 'certificate_staff_adequate' => $certificate_adequate, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.microscopist', 1)){
+							$microscopist = $staffing_summary[$i]->employees;
+							$microscopist_adequate = Answer::adequate($staffing_summary[$i]->adequate);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['microscopist' => $microscopist, 'microscopist_adequate' => $microscopist_adequate, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.data-clerk', 1)){
+							$data_clerk = $staffing_summary[$i]->employees;
+							$data_clerk_adequate = Answer::adequate($staffing_summary[$i]->adequate);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['data_clerk' => $data_clerk, 'data_clerk_adequate' => $data_clerk_adequate, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.phlebotomist', 1)){
+							$phlebotomist = $staffing_summary[$i]->employees;
+							$phlebotomist_adequate = Answer::adequate($staffing_summary[$i]->adequate);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['phlebotomist' => $degree, 'phlebotomist_adequate' => $phlebotomist_adequate, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.cleaner', 1)){
+							$cleaner = $staffing_summary[$i]->employees;
+							$cleaner_adequate = Answer::adequate($staffing_summary[$i]->adequate);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['cleaner' => $degree, 'cleaner_adequate' => $cleaner_adequate, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.cleaner-dedicated', 1)){
+							$cleaner_dedicated = Answer::adequate($staffing_summary[$i]->employees);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['cleaner_dedicated' => $cleaner_dedicated, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.cleaner-trained', 1)){
+							$cleaner_trained = Answer::adequate($staffing_summary[$i]->employees);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['cleaner_trained' => $cleaner_trained, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.driver', 1)){
+							$driver = $staffing_summary[$i]->employees;
+							$driver_adequate = Answer::adequate($staffing_summary[$i]->adequate);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['driver' => $driver, 'driver_adequate' => $driver_adequate, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.driver-dedicated', 1)){
+							$driver_dedicated = Answer::adequate($staffing_summary[$i]->employees);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['driver_dedicated' => $driver_dedicated, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.driver-trained', 1)){
+							$driver_trained = Answer::adequate($staffing_summary[$i]->employees);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['driver_trained' => $driver_trained, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($staffing_summary[$i]->profession == Lang::choice('messages.other', 1)){
+							$other_staff = $staffing_summary[$i]->employees;
+							$other_staff_adequate = Answer::adequate($staffing_summary[$i]->adequate);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['other_staff' => $other_staff, 'other_staff_adequate' => $other_staff_adequate, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+        			}
+        		}
+        		//	Organizational structure
+        		else if($sheetTitle == Lang::choice('messages.org-structure', 2)){
+        			$counter = count($organizational_structure);
+        			//	Declare variables
+        			$sufficient_space = NULL;
+        			$equipment = NULL;
+        			$supplies = NULL;
+        			$personnel = NULL;
+        			$infrastructure = NULL;
+        			$other = NULL;
+        			$other_description = NULL;
+        			//	Check lab profile
+    				$profile = DB::table('review_lab_profiles')->where('review_id', $review_id)->first();
+    				if(!$profile){
+    					$lab_profile = array('review_id' => $review_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s'));
+    					$profile = DB::table('review_lab_profiles')->insert($lab_profile);
+    				}
+					//	Begin saving
+        			for($i=0;$i<$counter;$i++){
+        				if($organizational_structure[$i]->field == Lang::choice('messages.sufficient-space', 1)){
+							$sufficient_space = Answer::adequate($organizational_structure[$i]->value);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['sufficient_space' => $sufficient_space, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($organizational_structure[$i]->field == Lang::choice('messages.equipment', 1)){
+							$equipment = Answer::adequate($organizational_structure[$i]->value);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['equipment' => $equipment, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($organizational_structure[$i]->field == Lang::choice('messages.supplies', 1)){
+							$supplies = Answer::adequate($organizational_structure[$i]->value);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['supplies' => $supplies, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($organizational_structure[$i]->field == Lang::choice('messages.personnel', 1)){
+							$personnel = Answer::adequate($organizational_structure[$i]->value);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['personnel' => $personnel, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if($organizational_structure[$i]->field == Lang::choice('messages.infrastructure', 1)){
+							$infrastructure = Answer::adequate($organizational_structure[$i]->value);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['infrastructure' => $infrastructure, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+						if(strpos($organizational_structure[$i]->field, Lang::choice('messages.other-specify', 1)) !== FALSE){
+							$other = Answer::adequate($organizational_structure[$i]->value);
+							if(($pos = strpos($organizational_structure[$i]->field, ':')) !== FALSE)
+								$other_description = substr($organizational_structure[$i]->field, $pos+2);
+							$other_description = trim($other_description);
+							DB::table('review_lab_profiles')->where('id', $profile->id)->update(['other' => $other, 'other_description' => $other_description, 'updated_at' => date('Y-m-d H:i:s')]);
+						}
+        			}
+        		}
+        		//	SLMTA Information
+        		else if($sheetTitle == Lang::choice('messages.slmta-info', 2)){
+        			$counter = count($slmta_information);
+        			//	Variables declaration
+        			$official_slmta = NULL;
+        			$assessment_id = NULL;
+        			$tests_before_slmta = NULL;
+        			$tests_this_year = NULL;
+        			$cohort_id = NULL;
+        			$baseline_audit_date = NULL;
+        			$slmta_workshop_date = NULL;
+        			$exit_audit_date = NULL;
+        			$baseline_score = NULL;
+        			$baseline_stars_obtained = NULL;
+        			$exit_score = NULL;
+        			$exit_stars_obtained = NULL;
+        			$last_audit_date = NULL;
+        			$last_audit_score = NULL;
+        			$prior_audit_status = NULL;
+        			$audit_start_date = NULL;
+        			$audit_end_date = NULL;
+        			$array = array();
+        			$assessors = array();
+        			//	Check SLMTA Info
+    				$slmta = DB::table('review_slmta_info')->where('review_id', $review_id)->first();
+    				//	Begin saving
+					for($i=0;$i<$counter;$i++){
+						if($slmta_information[$i]->field == Lang::choice('messages.slmta-audit-type', 1)){
+							$assessment_id = Assessment::idByName($slmta_information[$i]->value);
+							$array = array_merge($array, ['assessment_id' => $assessment_id]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.official-slmta', 1)){
+		    				$official_slmta = Answer::adequate($slmta_information[$i]->value);
+		    				$array = array_merge($array, ['official_slmta' => $official_slmta]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.audit-start-date', 1)){
+		    				$audit_start_date = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['audit_start_date' => $audit_start_date]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.audit-end-date', 1)){
+		    				$audit_end_date = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['audit_end_date' => $audit_end_date]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.tests-before-slmta', 1)){
+		    				$tests_before_slmta = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['tests_before_slmta' => $tests_before_slmta]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.tests-this-year', 1)){
+		    				$tests_this_year = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['tests_this_year' => $tests_this_year]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.cohort-id', 1)){
+		    				$cohort_id = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['cohort_id' => $cohort_id]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.baseline-audit-date', 1)){
+		    				$baseline_audit_date = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['baseline_audit_date' => $baseline_audit_date]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.slmta-workshop-date', 1)){
+		    				$slmta_workshop_date = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['slmta_workshop_date' => $slmta_workshop_date]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.exit-audit-date', 1)){
+		    				$exit_audit_date = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['exit_audit_date' => $exit_audit_date]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.baseline-score', 1)){
+		    				$baseline_score = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['baseline_score' => $baseline_score]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.baseline-stars', 1)){
+		    				$baseline_stars = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['baseline_stars_obtained' => $baseline_stars]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.exit-score', 1)){
+		    				$exit_score = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['exit_score' => $exit_score]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.exit-stars', 1)){
+		    				$exit_stars = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['exit_stars_obtained' => $exit_stars]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.last-audit-date', 1)){
+		    				$last_audit_date = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['last_audit_date' => $last_audit_date]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.last-audit-score', 1)){
+		    				$last_audit_score = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['last_audit_score' => $last_audit_score]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.prior-audit-status', 1)){
+		    				$prior_audit_status = $slmta_information[$i]->value;
+		    				$array = array_merge($array, ['prior_audit_status' => $prior_audit_status]);
+		    			}
+		    			if($slmta_information[$i]->field == Lang::choice('messages.names-affiliations-of-auditors', 1)){
+		    				foreach(explode(',', $slmta_information[$i]->value) as $assessor){
+		    					$assessors = array_push($assessors, User::userIdName($assessor));
+		    				}
+		    			}
+					}
+					Review::find($review_id)->setAssessors([$assessors]);
+					$array = array_merge($array, ['review_id' => $review_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+					if(!$slmta){
+    					$slmta = DB::table('review_slmta_info')->insert($array);
+    				}
+    				else{
+    					$slmta = DB::table('review_slmta_info')->where('id', $slmta->id)->update($array);
+    				}
+        		}
+        		//	Summary of Audit Findings
+        		else if($sheetTitle == 'Summary of Assessment Findings'){
+        			$counter = count($summary);
+        			$commendations = NULL;
+        			$challenges = NULL;
+        			$recommendations = NULL;
+        			$array = array();
+        			//	Update review data
+        			for($i=0; $i<$counter; $i++){
+        				if($summary[$i]->field == Lang::choice('messages.commendations', 1)){
+        					$commendations = $summary[$i]->value;
+        					$array = array_merge($array, ['summary_commendations' => $commendations]);
+        				}
+        				if($summary[$i]->field == Lang::choice('messages.challenges', 1)){
+        					$challenges = $summary[$i]->value;
+        					$array = array_merge($array, ['summary_challenges' => $challenges]);
+        				}
+        				if($summary[$i]->field == Lang::choice('messages.recommendations', 1)){
+        					$recommendations = $summary[$i]->value;
+        					$array = array_merge($array, ['recommendations' => $recommendations]);
+        				}
+        			}
+        			$array = array_merge($array, ['updated_at' => date('Y-m-d H:i:s')]);
+        			Review::where('id', $review_id)->update($array);
+        		}
+        		//	Action Plan
+        		else if($sheetTitle == 'Action Plan'){
+        			$counter = count($summary);
+        			$array = array();
+        			if($counter>0){
+	        			for($i=0; $i<$counter; $i++){
+	        				$plans = DB::table('review_action_plans')->where('review_id', $review_id)->where('action', $summary[$i]->action)->where('responsible_person', $summary[$i]->incharge)->where('timeline', $summary[$i]->timeline)->first();
+		        			if(count($plans==0)){
+		        				if($summary[$i]->action!=NULL || $summary[$i]->incharge!=NULL || $summary[$i]->timeline!=NULL)
+		        					DB::table('review_action_plans')->insert(['review_id' => $review_id, 'action' => $summary[$i]->action, 'responsible_person' => $summary[$i]->incharge, 'timeline' => $summary[$i]->timeline, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+		        			}
+		        			else
+		        				DB::table('review_action_plans')->where('id', $plans->id)->update(['action' => $summary[$i]->action, 'responsible_person' => $summary[$i]->incharge, 'timeline' => $summary[$i]->timeline, 'updated_at' => date('Y-m-d H:i:s')]);
+		        		}
+	        		}
+        		}
+        		//	Assessment data
+        		else if($sheetTitle == 'Assessment Details'){
+        			$counter = count($assessment);
+        			if($counter>0){
+	        			for($i=0; $i<$counter; $i++){
+	        				$qa = DB::table('review_question_answers')->where('review_id', $review_id)->where('question_id', $assessment[$i]->question)->first();
+	        				$note = DB::table('review_question_answers')->where('review_id', $review_id)->where('question_id', $assessment[$i]->question)->first();
+		        			$question = Question::find((int)$assessment[$i]->question);
+		        			if(count($question->children)>0){
+		        				continue;
+		        			}
+		        			else{
+		        				if(count($qa==0))
+		        					DB::table('review_question_answers')->insert(['review_id' => $review_id, 'question_id' => $assessment[$i]->question, 'answer' => Answer::idByName($assessment[$i]->response), 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+		        				else
+		        					DB::table('review_question_answers')->where('id', $qa->id)->update(['answer' => Answer::idByName($assessment[$i]->response), 'updated_at' => date('Y-m-d H:i:s')]);
+		        			}
+		        			if(count($note)==0)
+		        				DB::table('review_notes')->insert(['review_id' => $review_id, 'question_id' => $assessment[$i]->question, 'note' => $assessment[$i]->notes, 'non_compliance' => Answer::adequate($assessment[$i]->compliance), 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+		        			else
+		        				DB::table('review_notes')->where('id', $note->id)->update(['note' => $assessment[$i]->notes, 'non_compliance' => Answer::adequate($assessment[$i]->compliance), 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+		        		}
+	        		}
+        		}
+        		//	Question Scores
+        		else if($sheetTitle == 'Scores'){
+        			$counter = count($scores);
+        			if($counter>0){
+        				for($i=0; $i<$counter; $i++){
+        					$score = DB::table('review_question_scores')->where('review_id', $review_id)->where('question_id', $scores[$i]->question)->first();
+        					if(count($score==0))
+        						DB::table('review_question_scores')->insert(['review_id' => $review_id, 'question_id' => $scores[$i]->question, 'audited_score' => $scores[$i]->points, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+        					else
+        						DB::table('review_question_scores')->where('id', $score->id)->update(['audited_score' => $scores[$i]->points, 'updated_at' => date('Y-m-d H:i:s')]);
+        				}
+        			}
+        		}
+        	});
+		});
+		return redirect('/home')->with('message', Lang::choice('messages.success-import', 1));/*
+		else
+			return redirect()->back()->with('message', Lang::choice('messages.failure-import', 1));;*/
+    }
 }
+$excel = App::make('excel');

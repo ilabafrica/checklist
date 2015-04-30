@@ -1,11 +1,13 @@
 <?php namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\Review;
 use App\Models\Section;
 use App\Models\Question;
 use App\Models\Answer;
+use App\Models\User;
 use Lang;
 use Excel;
 use App;
@@ -262,10 +264,11 @@ class ReportController extends Controller {
 	public function export($id){
 		$review = Review::find($id);
 		$lab_info = array(
+			array('Field', 'Value'),
 			array(Lang::choice('messages.lab-name', 1), $review->lab->facility->name),
 			array(Lang::choice('messages.lab-number', 1), $review->lab->id),
 			array(Lang::choice('messages.lab-address', 1), $review->lab->facility->address.'-'.$review->lab->facility->town->postal_code.', '.$review->lab->facility->town->name),
-			array(Lang::choice('messages.lab-phone', 1), $review->lab->facility->telephone),
+			array(Lang::choice('messages.lab-telephone', 1), $review->lab->facility->telephone),
 			array(Lang::choice('messages.lab-fax', 1), $review->lab->facility->fax),
 			array(Lang::choice('messages.lab-email', 1), $review->lab->facility->email),
 			array(Lang::choice('messages.lab-head', 1), $review->laboratory()->head),
@@ -275,7 +278,7 @@ class ReportController extends Controller {
 			array(Lang::choice('messages.lab-affiliation', 1), $review->lab->labAffiliation->name)
 			);
 		$staffing_summary = array(
-			array(Lang::choice('messages.profession', 1), Lang::choice('messages.fulltime-employees', 1), Lang::choice('messages.adequate', 1)),
+			array('Profession', 'Employees', 'Adequate'),
 			array(Lang::choice('messages.degree', 1), $review->laboratory()->degree_staff, $review->adequate($review->laboratory()->degree_staff_adequate)),
 			array(Lang::choice('messages.diploma', 1), $review->laboratory()->diploma_staff, $review->adequate($review->laboratory()->diploma_staff_adequate)),
 			array(Lang::choice('messages.certificate', 1), $review->laboratory()->certificate_staff, $review->adequate($review->laboratory()->certificate_staff_adequate)),
@@ -291,6 +294,7 @@ class ReportController extends Controller {
 			array(Lang::choice('messages.other', 1), $review->laboratory()->other_staff, $review->adequate($review->laboratory()->other_staff_adequate))
 		);
 		$slmta_info = array(
+			array('Field', 'Value'),
 			array(Lang::choice('messages.official-slmta', 1), $review->slmta()->official_slmta == Review::OFFICIAL?Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1)),
 			array(Lang::choice('messages.audit-start-date', 1), $review->slmta()->audit_start_date),
 			array(Lang::choice('messages.audit-end-date', 1), $review->slmta()->audit_end_date),
@@ -312,20 +316,22 @@ class ReportController extends Controller {
 			array(Lang::choice('messages.prior-audit-status', 1), $review->stars($review->slmta()->prior_audit_status))
 		);
 		$org_structure = array(
+			array('Field', 'Value'),
 			array(Lang::choice('messages.sufficient-space', 1), $review->adequate($review->laboratory()->sufficient_space)),
 			array(Lang::choice('messages.equipment', 1), $review->adequate($review->laboratory()->equipment)),
 			array(Lang::choice('messages.supplies', 1), $review->adequate($review->laboratory()->supplies)),
 			array(Lang::choice('messages.personnel', 1), $review->adequate($review->laboratory()->personnel)),
-			array(Lang::choice('messages.infrsatructure', 1), $review->adequate($review->laboratory()->infrastructure)),
+			array(Lang::choice('messages.infrastructure', 1), $review->adequate($review->laboratory()->infrastructure)),
 			array(Lang::choice('messages.other-specify', 1).': '.$review->laboratory()->other_description, $review->adequate($review->laboratory()->other))
 		);
 		$summary = array(
+			array('Field', 'Value'),
 			array(Lang::choice('messages.commendations', 1), $review->summary_commendations?$review->summary_commendations:''),
 			array(Lang::choice('messages.challenges', 1), $review->summary_challenges?$review->summary_challenges:''),
 			array(Lang::choice('messages.recommendations', 1), $review->recommendations?$review->recommendations:''),
 		);
 		$action_plan = array(
-			array(Lang::choice('messages.follow-up-actions', 1), Lang::choice('messages.responsible-persons', 1), Lang::choice('messages.timeline', 1)),
+			array('Action', 'Incharge', 'Timeline'),
 			$review->plans()
 		);
 		$categories = array();
@@ -350,41 +356,67 @@ class ReportController extends Controller {
 
 		    //	Create sheets
 		    /* Lab Info */
-		    $excel->sheet('Laboratory Information', function($sheet) use($lab_info, $staffing_summary, $org_structure){
-		    	$sheet->fromArray($lab_info);
-		    	$sheet->fromArray($staffing_summary);
-		    	$sheet->fromArray($org_structure);
+		    $excel->sheet('Laboratory Information', function($sheet) use($lab_info){
+		    	foreach ($lab_info as $value) {
+		    		$sheet->appendRow($value);
+		    	}
+		    });
+		    /* Staffing Summary */
+		    $excel->sheet('Staffing Summary', function($sheet) use($staffing_summary){
+		    	foreach ($staffing_summary as $value) {
+		    		$sheet->appendRow($value);
+		    	}
+		    });
+		    /* Organizational Structure */
+		    $excel->sheet('Organizational Structure', function($sheet) use($org_structure){
+		    	foreach ($org_structure as $value) {
+		    		$sheet->appendRow($value);
+		    	}
 		    });
 		    /* SLMTA Info */
 		    $excel->sheet('SLMTA Information', function($sheet) use($slmta_info){
-		    	$sheet->fromArray($slmta_info);
+		    	foreach ($slmta_info as $value) {
+		    		$sheet->appendRow($value);
+		    	}
 		    });
 		    /* Audit Details */
 		    $excel->sheet('Assessment Details', function($sheet) use($review, $categories){
+		    	$sheet->appendRow(array('Question', 'Description', 'Response', 'Notes', 'Compliance'));
 		    	foreach ($categories as $section) {
-					$sheet->appendRow(array($section->name));
 					//$sheet->appendRow(Lang::choice('messages.question', 1), Lang::choice('messages.response', 1), Lang::choice('messages.notes', 1));
 					foreach ($section->questions as $question) {
 						if(count($question->children)>0){
 							$sheet->appendRow(array($question->id, $question->title.''.$question->description));
 							foreach($question->children as $kid){
-								$sheet->appendRow(array($kid->id, $kid->title?$kid->title:''.$kid->description, $kid->qa($review->id)?Answer::find((int)$kid->qa($review->id)[0])->name:''));
+								$sheet->appendRow(array($kid->id, $kid->title?$kid->title:''.$kid->description, $kid->qa($review->id)?Answer::find((int)$kid->qa($review->id)[0])->name:'', $kid->note($review->id)->note, $kid->note($review->id)->non_compliance==Answer::NONCOMPLIANT?Lang::choice('messages.non-compliant', 1):''));
 							}
 						}
 						elseif($question->score != 0){
-							$sheet->appendRow(array($question->id, $question->title?$question->title:''.$question->description, $question->qa($review->id)?Answer::find((int)$question->qa($review->id)[0])->name:''));
+							$sheet->appendRow(array($question->id, $question->title?$question->title:''.$question->description, $question->qa($review->id)?Answer::find((int)$question->qa($review->id)[0])->name:'', $question->note($review->id)->note, $question->note($review->id)->non_compliance==Answer::NONCOMPLIANT?Lang::choice('messages.non-compliant', 1):''));
 						}
 					}
 
 				}
 		    });
+		    /* Question scores */
+		    $excel->sheet('Scores', function($sheet) use($review){
+		    	$scores = DB::table('review_question_scores')->where('review_id', $review->id)->get();
+		    	$sheet->appendRow(array('Question', 'Description', 'Points'));
+		    	foreach ($scores as $score) {
+		    		$sheet->appendRow(array($score->question_id, (Question::find((int)$score->question_id)->title?substr(Question::find((int)$score->question_id)->title, 0, 4):substr(Question::find((int)$score->question_id)->description, 0, 4)), $score->audited_score));
+		    	}
+		    });
 		    /* Audit Summary */
 		    $excel->sheet('Summary of Assessment Findings', function($sheet) use($summary){
-		    	$sheet->fromArray($summary);
+		    	foreach ($summary as $value) {
+		    		$sheet->appendRow($value);
+		    	}
 		    });
 		    /* Action plan - If any */
 		    $excel->sheet('Action Plan', function($sheet) use($action_plan){
-		    	$sheet->fromArray($action_plan);
+		    	foreach ($action_plan as $value) {
+		    		$sheet->appendRow($value);
+		    	}
 		    });
 
 		})->download('xlsx');
@@ -402,6 +434,19 @@ class ReportController extends Controller {
 		    });
 
 		})->export('xlsx');
+	}
+	public function download($id){
+		$review = Review::find($id);
+		Excel::create('Audits Summary Sheet - '.date('d-m-Y H:i:s'), function($excel) use($review){
+
+		    $excel->sheet('Audits per user', function($sheet) use($review){
+		    	$sheet->appendRow(array(Lang::choice('messages.user', 1), Lang::choice('messages.total-audits', 1)));
+		    	foreach (User::all() as $user) {
+		    		$sheet->appendRow(array($user->name, $user->reviews->count()));
+		    	}
+		    });
+
+		})->export('csv');
 	}
 }
 $excel = App::make('excel');

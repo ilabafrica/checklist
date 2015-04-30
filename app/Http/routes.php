@@ -237,3 +237,23 @@ Route::any('/review/{id}/non-compliance', array(
     "as"    =>  "report.noncompliance",
     "uses"  =>  "ReportController@noncompliance"
 ));
+//  Export summary
+Route::any('/review/summary/{id}/export', array(
+    "as"    =>  "report.summary.export",
+    "uses"  =>  "ReportController@download"
+));
+//  Import Audit Data
+Route::any('/import/{id}', array(
+    "as"    =>  "report.import",
+    "uses"  =>  "ReviewController@import"
+));
+//  Import Audit Data
+Route::any('/excel/import', array(
+    "as"    =>  "excel.import",
+    "uses"  =>  "ReviewController@importUserList"
+));
+//  Mark audit as complete
+Route::any('/review/{id}/complete', array(
+    "as"    =>  "report.complete",
+    "uses"  =>  "ReviewController@complete"
+));

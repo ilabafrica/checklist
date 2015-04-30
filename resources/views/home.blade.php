@@ -13,6 +13,12 @@
 <div class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-book"></i> {{ Lang::choice('messages.audits-owned', 2) }} </div>
     <div class="panel-body">
+        @if($message!='')
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">{{ Lang::choice('messages.close', '1') }}</span></button>
+                {!! HTML::ul($message, array('class'=>'list-unstyled')) !!}
+            </div>
+        @endif
     	<div class="panel-group" id="accordion">
             <div class="panel panel-info">
             	<div class="panel-heading"><a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false"><i class="fa fa-comments"></i> {{ Lang::choice('messages.help', 1) }} </a></div>

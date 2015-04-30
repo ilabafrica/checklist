@@ -17,7 +17,7 @@
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 {{ Lang::choice('messages.create-audit', 1) }}
             </a>
-            <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
+            <a class="btn btn-sm btn-info" href="{{ URL::to("import/".$audit->id) }}" >
                 <span class="fa fa-download"></span>
                 {{ Lang::choice('messages.import-audit', 1) }}
             </a>
@@ -42,7 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($responses as $response)
+                        @forelse($audit->reviews as $response)
                         <tr>
                             <td>{{ $response->id }}</td>
                             <td>{{ $response->user->name }}</td>

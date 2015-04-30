@@ -15,7 +15,7 @@
     <a class="btn btn-sm btn-info" href="" onclick="window.history.back();return false;">
         <i class="fa fa-reply"></i><span> {{ Lang::choice('messages.back', 1) }}</span>
     </a>
-    <a class="btn btn-sm btn-info" href="" >
+    <a class="btn btn-sm btn-info" href="{{ URL::to('review/summary/'.$audit->id.'/export') }}" >
         <i class="fa fa-hdd-o"></i><span> {{ Lang::choice('messages.download-summary', 1) }}</span>
     </a>
     </span></div>

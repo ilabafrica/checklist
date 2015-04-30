@@ -33,12 +33,28 @@ class Lab extends Model {
 		return $this->belongsTo('App\Models\LabAffiliation');
 	}
 
-
 	/**
 	* Relationship with labType
 	*/
 	public function labType()
 	{
 		return $this->belongsTo('App\Models\LabType');
+	}
+	/**
+	* Return Lab ID given the name
+	* @param $name the name of the laboratory
+	*/
+	public static function labIdName($name)
+	{
+		try 
+		{
+			$lab = Facility::where('name', $name)->orderBy('name', 'asc')->firstOrFail()->lab->first();
+			return $lab->id;
+		} catch (ModelNotFoundException $e) 
+		{
+			Log::error("The Laboratory ` $name ` does not exist:  ". $e->getMessage());
+			//TODO: send email?
+			return null;
+		}
 	}
 }
