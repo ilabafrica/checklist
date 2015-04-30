@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Hash;
+use Input;
 
 class UserController extends Controller {
 
@@ -39,13 +41,20 @@ class UserController extends Controller {
 	 */
 	public function store(UserRequest $request)
 	{
+		$user = new User;
 		$user->name = $request->name;
         $user->gender = $request->gender;
         $user->dob = $request->dob;
         $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->username = $request->username;
         $user->address = $request->address;
-        $user->image = $this->imageModifier($request, $request->all()['photo']);
+        if($request->default_password)
+        	$user->password = Hash::make(User::DEFAULT_PASSWORD);
+        else
+        	$user->password = $request->password;
+        if(Input::hasFile('photo'))
+        	$user->image = $this->imageModifier($request, $request->all()['photo']);
         $user->save();
 
         return redirect('user')->with('message', 'User created successfully.');
@@ -93,7 +102,13 @@ class UserController extends Controller {
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address = $request->address;
-        $user->image = $this->imageModifier($request, $request->all()['photo']);
+        $user->username = $request->username;
+        if($request->default_password)
+        	$user->password = Hash::make(User::DEFAULT_PASSWORD);
+        else
+        	$user->password = $request->password;
+        if(Input::hasFile('photo'))
+        	$user->image = $this->imageModifier($request, $request->all()['photo']);
         $user->save();
 
         return redirect('user')->with('message', 'User updated successfully.');

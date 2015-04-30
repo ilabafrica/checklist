@@ -15,6 +15,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	const MALE = 0;
 	const FEMALE = 1;
 
+	//	Default password
+	const DEFAULT_PASSWORD = '123456';
+
 	use Authenticatable, CanResetPassword;
 	use EntrustUserTrait;
 

@@ -27,7 +27,9 @@
     </div>
     <div class="panel-body">
         <div class="row">
+
             <div class="col-sm-12">
+                {!! Form::open(array('route' => 'authorization.store', 'id' => 'form-add-authorization', 'class' => 'form-horizontal')) !!}
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                         <tr>
@@ -46,7 +48,7 @@
                         </tr>
                         @forelse($users as $userKey=>$user)
                             <tr>
-                                <td>{{$user->username}}</td>
+                                <td>{{$user->name}}</td>
                                 @forelse($roles as $roleKey=>$role)
                                 <td>
                                     @if ($role == App\Models\Role::getAdminRole() && $user == App\Models\User::getAdminUser())
@@ -75,7 +77,10 @@
                     <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                     </div>
                 </div>
+                {!! Form::close() !!} 
+            <!-- End form -->
             </div>
+            
         </div>
       </div>
 </div>

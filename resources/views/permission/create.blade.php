@@ -56,16 +56,7 @@
             {!! Form::close() !!} 
             <!-- End form -->
         </div>
-        <div class="col-lg-6">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ Lang::choice('messages.help', 1) }}
-                </div>
-                <div class="panel-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum tincidunt est vitae ultrices accumsan. Aliquam ornare lacus adipiscing, posuere lectus et, fringilla augue.</p>
-                </div>
-            </div>
-        </div> 
+       
     </div>
 </div>
 @stop

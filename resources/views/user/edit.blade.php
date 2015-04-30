@@ -114,7 +114,7 @@
                 <div class="col-md-8 col-sm-offset-1">
                     <div class="form-group">
                         <label>{{ Lang::choice('messages.profile-photo', 1) }}</label>
-                        {!! Form::file(Lang::choice('messages.photo', 1), null, ['class' => 'form-control']) !!}
+                        {!! Form::file(Lang::choice('messages.photo', 1), NULL, ['class' => 'form-control']) !!}
                     </div>
                 </div>
             </div>

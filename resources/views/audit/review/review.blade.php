@@ -15,10 +15,14 @@
         
         @if($id!=NULL)
         <span class="panel-btn">
+            @if(Auth::user()->can('create-audit'))
             <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 {{ Lang::choice('messages.create-audit', 1) }}
             </a>
+            @endif
+
+            @if(Auth::user()->can('import-data'))
             <a class="btn btn-sm btn-info" href="{{ URL::to("import/".$id) }}" >
                 <span class="fa fa-download"></span>
                 {{ Lang::choice('messages.import-audit', 1) }}
@@ -26,6 +30,8 @@
             <a class="btn btn-sm btn-info" href="" onclick="window.history.back();return false;">
                 <i class="fa fa-reply"></i><span> {{ Lang::choice('messages.back', 1) }}</span>
             </a>
+            @endif
+
         </span>
         @endif
        
