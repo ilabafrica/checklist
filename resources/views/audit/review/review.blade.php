@@ -12,6 +12,9 @@
 </div>
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit', 2) }}
+        
+<?php
+if($id==0){} else{ ?>
         <span class="panel-btn">
             <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
                 <span class="glyphicon glyphicon-plus-sign"></span>
@@ -25,11 +28,13 @@
                 <i class="fa fa-reply"></i><span> {{ Lang::choice('messages.back', 1) }}</span>
             </a>
         </span>
+       <?php }  ?>
     </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
-                    <table class="table table-striped table-bordered table-hover search-table">
+
+                <table class="table table-striped table-bordered table-hover search-table">
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.response-no', 1) }}</th>
