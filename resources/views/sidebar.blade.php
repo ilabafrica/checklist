@@ -146,7 +146,7 @@
                         @endif
                         @if(Entrust::can('view-reports'))
                         <li>
-                            <a href="{{ URL::to('audit')}}"><i class="fa fa-bar-chart-o"></i> {{ Lang::choice('messages.reports', 1) }}</a>
+                            <a href="{{ route('review.report') }}"><i class="fa fa-bar-chart-o"></i> {{ Lang::choice('messages.reports', 1) }}</a>
                         </li>
                         @endif
                         @if(Entrust::can('manage-access-controls'))

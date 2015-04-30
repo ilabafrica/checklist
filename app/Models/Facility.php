@@ -27,4 +27,11 @@ class Facility extends Model {
 	{
 	 return $this->belongsTo('App\Models\Town');
 	}
+	/**
+	* Relationship with laboratories
+	*/
+	public function lab()
+	{
+	 return $this->hasMany('App\Models\Lab');
+	}
 }

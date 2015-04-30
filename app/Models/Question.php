@@ -150,4 +150,14 @@ class Question extends Model {
 			return Lang::choice('messages.partial', 2);
 
 	}
+	/**
+	* Comparison to check whether complete/incomplete
+	*/
+	public function complete($review)
+	{
+		$ids = Question::find($this->id)->children->lists('id');
+		$row = DB::table('review_question_answers')->where('review_id', $review)->whereIn('question_id', $ids)->lists('id');
+		if(count($row)>0)
+			return $row;
+	}
 }

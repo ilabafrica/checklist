@@ -176,6 +176,7 @@ Route::any("review/assessment/{id}", array(
     "as"   => "review.assessment",
     "uses" => "ReviewController@assessments"
 ));
+
 //  View assessments summaries
 Route::any("review/summary/{id}", array(
     "as"   => "review.summary",
@@ -221,4 +222,44 @@ Route::get("audit/{response}/create/{section}", "AuditController@assess");
 Route::get('/audit/select', array(
     "as"    =>  "audit.select",
     "uses"  =>  "AuditController@selected"
+));
+//  Reports
+Route::any('/report/{id}', array(
+    "as"    =>  "report.index",
+    "uses"  =>  "ReportController@index"
+));
+
+//  Export to excel
+Route::any('/review/{id}/export', array(
+    "as"    =>  "report.excel",
+    "uses"  =>  "ReportController@export"
+));
+//  Export non-compliance report to excel
+Route::any('/review/{id}/non-compliance', array(
+    "as"    =>  "report.noncompliance",
+    "uses"  =>  "ReportController@noncompliance"
+));
+//  Export summary
+Route::any('/review/summary/{id}/export', array(
+    "as"    =>  "report.summary.export",
+    "uses"  =>  "ReportController@download"
+));
+//  Import Audit Data
+Route::any('/import/{id}', array(
+    "as"    =>  "report.import",
+    "uses"  =>  "ReviewController@import"
+));
+//  Import Audit Data
+Route::any('/excel/import', array(
+    "as"    =>  "excel.import",
+    "uses"  =>  "ReviewController@importUserList"
+));
+//  Mark audit as complete
+Route::any('/review/{id}/complete', array(
+    "as"    =>  "report.complete",
+    "uses"  =>  "ReviewController@complete"
+));
+Route::any("report", array(
+    "as"   => "review.report",
+    "uses" => "ReviewController@assessments"
 ));

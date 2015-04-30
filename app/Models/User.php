@@ -58,5 +58,22 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	public function reviews()
 	{
 		return $this->hasMany('App\Models\Review');
+	}
+	/**
+	* Return User ID given the name
+	* @param $name the name of the user
+	*/
+	public static function userIdName($name)
+	{
+		try 
+		{
+			$user = User::where('name', $name)->orderBy('name', 'asc')->firstOrFail();
+			return $user->id;
+		} catch (ModelNotFoundException $e) 
+		{
+			Log::error("The User ` $name ` does not exist:  ". $e->getMessage());
+			//TODO: send email?
+			return null;
+		}
 	}	
 }

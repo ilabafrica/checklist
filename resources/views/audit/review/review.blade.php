@@ -12,24 +12,34 @@
 </div>
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit', 2) }}
+        
+        @if($id!=NULL)
         <span class="panel-btn">
             @if(Auth::user()->can('create-audit'))
             <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 {{ Lang::choice('messages.create-audit', 1) }}
             </a>
-             @endif
-             @if(Auth::user()->can('import-data'))
-            <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
+            @endif
+
+            @if(Auth::user()->can('import-data'))
+            <a class="btn btn-sm btn-info" href="{{ URL::to("import/".$id) }}" >
                 <span class="fa fa-download"></span>
                 {{ Lang::choice('messages.import-audit', 1) }}
             </a>
+            <a class="btn btn-sm btn-info" href="" onclick="window.history.back();return false;">
+                <i class="fa fa-reply"></i><span> {{ Lang::choice('messages.back', 1) }}</span>
+            </a>
             @endif
+
         </span>
+        @endif
+       
     </div>
     <div class="panel-body">
         <div class="row">
             <div class="col-sm-12">
+
                 <table class="table table-striped table-bordered table-hover search-table">
                     <thead>
                         <tr>
@@ -56,12 +66,12 @@
                               <a href="{{ URL::to("review/" . $response->id . "/edit") }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit', 1) }}</span></a>
                               <a href="{{ URL::to("review/" . $response->id . "/complete") }}" class="btn btn-danger btn-sm"><i class="fa fa-check-square-o"></i><span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</span></a>
                               <a href="{{ URL::to("review/" . $response->id . "/export") }}" class="btn btn-default btn-sm"><i class="fa fa-external-link"></i><span> {{ Lang::choice('messages.export-audit', 1) }}</span></a>
-                              <a href="{{ URL::to("review/" . $response->id . "/reports") }}" class="btn btn-info btn-sm"><i class="fa fa-bar-chart"></i><span> {{ Lang::choice('messages.run-reports', 1) }}</span></a>
+                              <a href="{{ URL::to("report/" . $response->id) }}" class="btn btn-info btn-sm"><i class="fa fa-bar-chart"></i><span> {{ Lang::choice('messages.run-reports', 1) }}</span></a>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                          <td colspan="3">{{ Lang::choice('messages.no-records-found', 1) }}</td>
+                          <td colspan="7">{{ Lang::choice('messages.no-records-found', 1) }}</td>
                         </tr>
                         @endforelse
                     </tbody>
