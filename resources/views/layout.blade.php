@@ -89,7 +89,7 @@
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="{{ route('review.index') }}" role="button" aria-expanded="false">
+                    <a href="{{ route('review.report') }}" role="button" aria-expanded="false">
                         <span class="fa fa-bar-chart"></span> {{ Lang::choice('messages.report', 2) }}
                     </a>
                 </li>
@@ -172,7 +172,7 @@
                             <a href="{{ URL::to('review')}}"><i class="fa fa-book"></i> {{ Lang::choice('messages.audit', 2) }}</a>
                         </li>
                         <li>
-                            <a href="{{ URL::to('audit')}}"><i class="fa fa-bar-chart-o"></i> Reports</a>
+                           <a href="{{ route('review.report') }}"><i class="fa fa-bar-chart-o"></i> Reports</a>
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-database"></i> Access Controls<span class="fa arrow"></span></a>

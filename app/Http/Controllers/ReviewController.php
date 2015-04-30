@@ -561,10 +561,13 @@ class ReviewController extends Controller {
 	 * @return Response
 	 */
 	public function assessments($id)
-	{
-		//	Get audits for the specific audit type
-		$responses = AuditType::find($id)->reviews;
-		return view('audit.review.review', compact('responses'));
+	{ 
+		if ($id==0)
+			//	Get all audits
+			$responses = Review::all();
+		else 
+			$responses = AuditType::find($id)->reviews;
+		return view('audit.review.review', compact('responses', 'id'));
 	}
 	/**
 	 * Saves the review's action plan submitted via ajax
