@@ -25,8 +25,14 @@ class LabRequest extends Request {
 	 */
 	public function rules()
 	{
+		
 		return [
+		'facility'=> 'required',
+		'lab_level'=> 'required',
+		'lab_affiliation' =>'required',
+		'lab_type' =>'required'
+		
         ];
 	}
-
+	
 }

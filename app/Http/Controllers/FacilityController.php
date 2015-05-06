@@ -56,8 +56,8 @@ class FacilityController extends Controller {
 		$town = new Facility;
 		$town->code = $request->code;
         $town->name = $request->name;
-        $town->facility_type_id = $request->facility_type_id;
-        $town->facility_owner_id = $request->facility_owner_id;
+        $town->facility_type_id = $request->facility_type;
+        $town->facility_owner_id = $request->facility_owner;
         $town->description = $request->description;
         $town->nearest_town = $request->nearest_town;
         $town->landline = $request->landline;
@@ -65,14 +65,17 @@ class FacilityController extends Controller {
         $town->mobile = $request->mobile;
         $town->email = $request->email;
         $town->address = $request->address;
-        $town->town_id = $request->town_id;
+        $town->town_id = $request->town;
         $town->in_charge = $request->in_charge;
-        $town->title_id = $request->title_id;
+        $town->title_id = $request->title;
         $town->operational_status = $request->operational_status;
         $town->user_id = Auth::user()->id;;
         $town->save();
 
         return redirect('facility')->with('message', 'Facility created successfully.');
+        
+
+        
 	}
 
 	/**
@@ -132,8 +135,8 @@ class FacilityController extends Controller {
 		$town = Facility::findOrFail($id);;
         $town->code = $request->code;
         $town->name = $request->name;
-        $town->facility_type_id = $request->facility_type_id;
-        $town->facility_owner_id = $request->facility_owner_id;
+        $town->facility_type_id = $request->facility_type;
+        $town->facility_owner_id = $request->facility_owner;
         $town->description = $request->description;
         $town->nearest_town = $request->nearest_town;
         $town->landline = $request->landline;
@@ -141,14 +144,15 @@ class FacilityController extends Controller {
         $town->mobile = $request->mobile;
         $town->email = $request->email;
         $town->address = $request->address;
-        $town->town_id = $request->town_id;
+        $town->town_id = $request->town;
         $town->in_charge = $request->in_charge;
-        $town->title_id = $request->title_id;
+        $town->title_id = $request->title;
         $town->operational_status = $request->operational_status;
         $town->user_id = Auth::user()->id;;
         $town->save();
 
         return redirect('facility')->with('message', 'Facility updated successfully.');
+       
 	}
 
 	/**

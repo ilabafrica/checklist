@@ -10,6 +10,9 @@
         </ol>
     </div>
 </div>
+@if(Session::has('message'))
+<div class="alert alert-info">{{Session::get('message')}}</div>
+@endif
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.lab-type', 2) }} <span class="panel-btn">
       <a class="btn btn-sm btn-info" href="{{ URL::to("labType/create") }}" >

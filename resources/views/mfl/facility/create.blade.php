@@ -40,15 +40,15 @@
                 <div class="form-group">
                     {!! Form::label('facility_type_id', Lang::choice('messages.facility-type', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('facility_type_id', array(''=>trans('messages.select-facility-type'))+$facilityTypes,'', 
-                            array('class' => 'form-control', 'id' => 'facility_type_id')) !!}
+                        {!! Form::select('facility_type', array(''=>trans('messages.select-facility-type'))+$facilityTypes,'', 
+                            array('class' => 'form-control', 'id' => 'facility_type')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('facility_owner_id', Lang::choice('messages.facility-owner', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('facility_owner_id', array(''=>trans('messages.select-facility-owner'))+$facilityOwners,'', 
-                            array('class' => 'form-control', 'id' => 'facility_owner_id')) !!}
+                        {!! Form::select('facility_owner', array(''=>trans('messages.select-facility-owner'))+$facilityOwners,'', 
+                            array('class' => 'form-control', 'id' => 'facility_owner')) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -98,8 +98,8 @@
                 <div class="form-group">
                     {!! Form::label('town_id', Lang::choice('messages.town', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('town_id', array(''=>trans('messages.select-town'))+$towns,'', 
-                            array('class' => 'form-control', 'id' => 'town_id')) !!}
+                        {!! Form::select('town', array(''=>trans('messages.select-town'))+$towns,'', 
+                            array('class' => 'form-control', 'id' => 'town')) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -111,8 +111,8 @@
                 <div class="form-group">
                     {!! Form::label('title_id', Lang::choice('messages.title', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('title_id', array(''=>trans('messages.select-job-title'))+$titles,'', 
-                            array('class' => 'form-control', 'id' => 'title_id')) !!}
+                        {!! Form::select('title', array(''=>trans('messages.select-job-title'))+$titles,'', 
+                            array('class' => 'form-control', 'id' => 'title')) !!}
                     </div>
                 </div>
                 <div class="form-group">

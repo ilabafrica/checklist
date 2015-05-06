@@ -10,6 +10,9 @@
         </ol>
     </div>
 </div>
+@if(Session::has('message'))
+<div class="alert alert-info">{{Session::get('message')}}</div>
+@endif
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.create-lab', '1') }}</div>
     <div class="panel-body">
@@ -29,33 +32,33 @@
                 <div class="form-group">
                     {!! Form::label('facility_id', Lang::choice('messages.facility', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('facility_id', array(''=>trans('messages.select-facility'))+$facilities,
+                        {!! Form::select('facility', array(''=>trans('messages.select-facility'))+$facilities,
                             old('facility') ? old('facility') : $facility, 
-                            array('class' => 'form-control', 'id' => 'facility_id')) !!}
+                            array('class' => 'form-control', 'id' => 'facility')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('lab_level_id', Lang::choice('messages.lab-level', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('lab_level_id', array(''=>trans('messages.select-lab-level'))+$labLevels,
+                        {!! Form::select('lab_level', array(''=>trans('messages.select-lab-level'))+$labLevels,
                             old('labLevel') ? old('labLevel') : $labLevel, 
-                            array('class' => 'form-control', 'id' => 'lab_level_id')) !!}
+                            array('class' => 'form-control', 'id' => 'lab_level')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('lab_affiliation_id', Lang::choice('messages.lab-affiliation', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('lab_affiliation_id', array(''=>trans('messages.select-lab-affiliation'))+$labAffiliations,
+                        {!! Form::select('lab_affiliation', array(''=>trans('messages.select-lab-affiliation'))+$labAffiliations,
                             old('labAffiliation') ? old('labAffiliation') : $labAffiliation, 
-                            array('class' => 'form-control', 'id' => 'lab_affiliation_id')) !!}
+                            array('class' => 'form-control', 'id' => 'lab_affiliation')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('lab_type_id', Lang::choice('messages.lab-type', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('lab_type_id', array(''=>trans('messages.select-lab-type'))+$labTypes,
+                        {!! Form::select('lab_type', array(''=>trans('messages.select-lab-type'))+$labTypes,
                             old('labType') ? old('labType') : $labType, 
-                            array('class' => 'form-control', 'id' => 'lab_type_id')) !!}
+                            array('class' => 'form-control', 'id' => 'lab_type')) !!}
                     </div>
                 </div>
                 <div class="form-group">
