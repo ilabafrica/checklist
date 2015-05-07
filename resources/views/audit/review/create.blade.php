@@ -11,19 +11,31 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-sm-12">
+        <div class="btn-group btn-breadcrumb">
+            <a href="#" class="btn btn-sm btn-default" style="margin-bottom:5px;"><i class="fa fa-home"></i> {!! $audit->name !!}</a>
+            @foreach($audit->sections as $section)
+                @if($section->order!=0)
+                    <a href="{{ URL::to('review/create/'.$review->id.'/'.$section->id) }}" class="btn btn-sm {{ Request::segment(4)==$section->id?'btn-danger':'btn-default' }} btn-default" style="margin-bottom:5px;"><div>{!! $section->name !!}</div></a>
+                @endif
+            @endforeach
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-lg-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <i class="fa fa-tags"></i> {{ Lang::choice('messages.new-audit', '1') }}
                 <span class="panel-btn">
-                    <button type="button" class="btn btn-sm btn-info"><span class="fa fa-stack-exchange"></span> {{ Lang::choice('messages.selected-lab', 1) }}{!! $lab->facility->name !!} </button>
+                    <button type="button" class="btn btn-sm btn-info"><span class="fa fa-stack-exchange"></span> {{ Lang::choice('messages.selected-lab', 1) }}{!! $lab->name !!} </button>
                     <button type="button" class="btn btn-sm btn-info"><span class="fa fa-clipboard"></span> {{ Lang::choice('messages.selected-audit', 1) }}{!! $audit->name !!} </button>
                 </span>
             </div>
             <div class="panel-body">
                 @if($errors->all())
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only"> {{ Lang::choice('messages.close', 1) }}</span></button>
                     {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
                 </div>
                 @endif
@@ -203,7 +215,7 @@
                             <div class="form-group">
                                 {!! Form::label('lab-name', Lang::choice('messages.lab-name', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->facility->name !!}</p>
+                                    <p class="text-primary inline">{!! $lab->name !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -215,26 +227,26 @@
                             <div class="form-group">
                                 {!! Form::label('lab-address', Lang::choice('messages.lab-address', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->facility->address !!} - {!! $lab->facility->town->postal_code !!}</p>
-                                    <p class="text-primary inline">{!! $lab->facility->town->name !!}</p>
+                                    <p class="text-primary inline">{!! $lab->address !!} - {!! $lab->postal_code !!}</p>
+                                    <p class="text-primary inline">{!! $lab->city !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('lab-telephone', Lang::choice('messages.lab-telephone', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->facility->mobile !!}</p>
+                                    <p class="text-primary inline">{!! $lab->phone !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('lab-fax', Lang::choice('messages.lab-fax', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->facility->fax !!}</p>
+                                    <p class="text-primary inline">{!! $lab->fax !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('lab-email', Lang::choice('messages.lab-email', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->facility->email !!}</p>
+                                    <p class="text-primary inline">{!! $lab->email !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">

@@ -32,7 +32,7 @@
                 {{ Lang::choice('messages.selected-lab', 1) }}
             </div>
             <div class="panel-body">
-                {!! $lab->facility->name !!}
+                {!! $lab->name !!}
             </div>
         </div>
     </div>

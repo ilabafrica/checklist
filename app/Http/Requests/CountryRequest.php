@@ -1,9 +1,9 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use App\Models\Title;
+use App\Models\Country;
 
-class TitleRequest extends Request {
+class CountryRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -24,16 +24,16 @@ class TitleRequest extends Request {
 	{
 		$id = $this->ingnoreId();
 		return [
-            'name'   => 'required|unique:titles,name,'.$id,
+            'name'   => 'required|unique:countries,name,'.$id,
         ];
 	}
 	/**
 	* @return \Illuminate\Routing\Route|null|string
 	*/
 	public function ingnoreId(){
-		$id = $this->route('title');
+		$id = $this->route('country');
 		$name = $this->input('name');
-		return Title::where(compact('id', 'name'))->exists() ? $id : '';
+		return Country::where(compact('id', 'name'))->exists() ? $id : '';
 	}
 
 }

@@ -11,10 +11,10 @@
     </div>
 </div>
 <div class="panel panel-primary">
-    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.lab-type', 2) }} <span class="panel-btn">
-      <a class="btn btn-sm btn-info" href="{{ URL::to("labType/create") }}" >
+    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.country', 2) }} <span class="panel-btn">
+      <a class="btn btn-sm btn-info" href="{{ URL::to("country/create") }}" >
         <span class="glyphicon glyphicon-plus-sign"></span>
-            {{ Lang::choice('messages.create-lab-type', 1) }}
+            {{ Lang::choice('messages.create-country', 1) }}
           </a>
         </span>
     </div>
@@ -31,23 +31,25 @@
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
-                            <th>{{ Lang::choice('messages.description', 1) }}</th>
+                            <th>{{ Lang::choice('messages.timezone', 1) }}</th>
+                            <th>{{ Lang::choice('messages.code', 1) }}</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($labTypes as $labType)
-                        <tr @if(session()->has('active_labType'))
-                                {!! (session('active_labType') == $labType->id)?"class='warning'":"" !!}
+                        @forelse($countries as $country)
+                        <tr @if(session()->has('active_country'))
+                                {!! (session('active_country') == $country->id)?"class='warning'":"" !!}
                             @endif
                             >
-                            <td>{{ $labType->name }}</td>
-                            <td>{{ $labType->description }}</td>
+                            <td>{{ $country->name }}</td>
+                            <td>{{ $country->timezone }}</td>
+                            <td>{{ $country->code }}</td>
                             <td>
-                              <a href="{{ URL::to("labType/" . $labType->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
-                              <a href="{{ URL::to("labType/" . $labType->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
-                              <a href="{{ URL::to("labType/" . $labType->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
-                              
+                              <a href="{{ URL::to("country/" . $country->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
+                              <a href="{{ URL::to("country/" . $country->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
+                              <a href="{{ URL::to("country/" . $country->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
+                             
                             </td>
                         </tr>
                         @empty

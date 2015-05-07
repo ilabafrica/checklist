@@ -7,11 +7,11 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\LabRequest;
 use App\Models\Lab;
-use App\Models\Facility;
 use App\Models\LabLevel;
 use App\Models\LabAffiliation;
 use App\Models\LabType;
 use App\Models\AuditType;
+use App\Models\Country;
 use Response;
 use Auth;
 
@@ -36,15 +36,15 @@ class LabController extends Controller {
 	 */
 	public function create()
 	{
-		//	Get all facilities
-		$facilities = Facility::lists('name', 'id');
+		//	Get all countries
+		$countries = Country::lists('name', 'id');
 		//	Get all lab levels
 		$labLevels = LabLevel::lists('name', 'id');
 		//	Get all lab affiliations
 		$labAffiliations = LabAffiliation::lists('name', 'id');
 		//	Get all lab types
 		$labTypes = LabType::lists('name', 'id');
-		return view('lab.lab.create', compact('facilities', 'labLevels', 'labAffiliations', 'labTypes'));
+		return view('lab.lab.create', compact('countries', 'labLevels', 'labAffiliations', 'labTypes'));
 	}
 
 	/**
@@ -55,11 +55,20 @@ class LabController extends Controller {
 	public function store(LabRequest $request)
 	{
 		$lab = new Lab;
-        $lab->facility_id = $request->facility_id;
-        $lab->lab_level_id = $request->lab_level_id;
-        $lab->lab_affiliation_id = $request->lab_affiliation_id;
-        $lab->lab_type_id = $request->lab_type_id;
-        $lab->user_id = Auth::user()->id;;
+		$lab->lab_type_id = $request->lab_type;
+        $lab->name = $request->name;
+		$lab->lab_number = $request->number;
+		$lab->address = $request->address;
+		$lab->postal_code = $request->postal_code;
+		$lab->city = $request->city;
+		$lab->state = $request->state;
+        $lab->country_id = $request->country;
+		$lab->fax = $request->fax;
+		$lab->telephone = $request->telephone;
+		$lab->email = $request->email;
+		$lab->lab_level_id = $request->lab_level;
+        $lab->lab_affiliation_id = $request->lab_affiliation;
+        $lab->user_id = Auth::user()->id;
         $lab->save();
 
         return redirect('lab')->with('message', 'Lab created successfully.');
@@ -89,10 +98,10 @@ class LabController extends Controller {
 	{
 		//	Get lab
 		$lab = Lab::find($id);
-		//	Get all facilities
-		$facilities = Facility::lists('name', 'id');
-		//	Get initially selected facility
-		$facility = $lab->facility_id;
+		//	Get all countries
+		$countries = Country::lists('name', 'id');
+		//	Get initially selected country
+		$country = $lab->country_id;
 		//	Get all lab levels
 		$labLevels = LabLevel::lists('name', 'id');
 		//	Get initially selected lab level
@@ -106,7 +115,7 @@ class LabController extends Controller {
 		//	Get initially selected lab type
 		$labType = $lab->lab_type_id;
 
-        return view('lab.lab.edit', compact('lab', 'facilities', 'labLevels', 'labAffiliations', 'labTypes', 'facility', 'labLevel', 'labAffiliation', 'labType'));
+        return view('lab.lab.edit', compact('lab', 'countries', 'labLevels', 'labAffiliations', 'labTypes', 'country', 'labLevel', 'labAffiliation', 'labType'));
 	}
 
 	/**
@@ -118,10 +127,19 @@ class LabController extends Controller {
 	public function update(LabRequest $request, $id)
 	{
 		$lab = Lab::findOrFail($id);;
-        $lab->facility_id = $request->facility_id;
-        $lab->lab_level_id = $request->lab_level_id;
-        $lab->lab_affiliation_id = $request->lab_affiliation_id;
-        $lab->lab_type_id = $request->lab_type_id;
+        $lab->lab_type_id = $request->lab_type;
+        $lab->name = $request->name;
+		$lab->lab_number = $request->number;
+		$lab->address = $request->address;
+		$lab->postal_code = $request->postal_code;
+		$lab->city = $request->city;
+		$lab->state = $request->state;
+        $lab->country_id = $request->country;
+		$lab->fax = $request->fax;
+		$lab->telephone = $request->telephone;
+		$lab->email = $request->email;
+		$lab->lab_level_id = $request->lab_level;
+        $lab->lab_affiliation_id = $request->lab_affiliation;
         $lab->user_id = Auth::user()->id;;
         $lab->save();
 

@@ -3,7 +3,6 @@
 return [
 	/*	General terms */
 	'dashboard'	=>	'Dashboard',
-	'mfl-catalog'	=>	'MFL Catalog',
 	'lab-catalog'	=>	'Lab Catalog',
 	'audit-config'	=>	'Audit Configuration',
 	'reports'	=>	'Reports',
@@ -73,33 +72,6 @@ return [
 	'profile-photo'	=>	'Profile Photo',
 	'no-photo-available'	=>	'No photo available',
 	'photo'	=>	'photo',
-	/* Facility Types */
-	'facility-type'	=>	'Facility Type|Facility Types',
-	'create-facility-type'	=>	'Create Facility Type',
-	'edit-facility-type'	=>	'Edit Facility Type',
-	/* Facility Owners */
-	'facility-owner'	=>	'Facility Owner|Facility Owners',
-	'create-facility-owner'	=>	'Create Facility Owner',
-	'edit-facility-owner'	=>	'Edit Facility Owner',
-	/* Counties */
-	'county'	=>	'County|Counties',
-	'create-county'	=>	'Create County',
-	'edit-county'	=>	'Edit County',
-	'hq'	=>	'Headquarters',
-	/* Constituencies */
-	'constituency'	=>	'Constituency|Constituencies',
-	'create-constituency'	=>	'Create Constituency',
-	'edit-constituency'	=>	'Edit Constituency',
-	'select-county'	=>	'Select County',
-	/* Towns */
-	'town'	=>	'Town|Towns',
-	'create-town'	=>	'Create Town',
-	'edit-town'	=>	'Edit Town',
-	'select-constituency'	=>	'Select Constituency',
-	/* Job Titles */
-	'title'	=>	'Job Title|Job Titles',
-	'create-title'	=>	'Create Job Title',
-	'edit-title'	=>	'Edit Job Title',
 	/* Lab Levels */
 	'lab-level'	=>	'Lab Level|Lab Levels',
 	'create-lab-level'	=>	'Create Lab Level',
@@ -113,23 +85,12 @@ return [
 	'create-lab-type'	=>	'Create Lab Type',
 	'edit-lab-type'	=>	'Edit Lab Type',
 
-	/* Facilities */
-	'facility'	=>	'Facility|Facilities',
-	'create-facility'	=>	'Create Facility',
-	'edit-facility'	=>	'Edit Facility',
+	/* Countries */
+	'country'	=>	'Country|Countries',
+	'create-country'	=>	'Create Country',
+	'edit-country'	=>	'Edit Country',
 	'code'	=>	'Code',
-	'landline'	=>	'Landline',
-	'fax'	=>	'Fax',
-	'mobile'	=>	'Mobile',
-	'in-charge'	=>	'In-Charge',
-	'nearest-town' =>	'Nearest Town',
-	'select-facility-type' =>	'Select Facility Type',
-	'select-facility-owner' =>	'Select Facility Owner',
-	'select-town' =>	'Select Town',
-	'select-job-title' =>	'Select Job Title',
-	'operational-status' =>	'Operational Status',
-	'select-facility' =>	'Select Facility',
-
+	'timezone'	=>	'Timezone',
 	
 	/* Laboratories */
 	'lab'	=>	'Laboratory|Laboratories',
@@ -138,6 +99,11 @@ return [
 	'select-lab-level' =>	'Select Lab Level',
 	'select-lab-affiliation' =>	'Select Lab Affiliation',
 	'select-lab-type' =>	'Select Lab Type',
+	'landline'	=>	'Landline',
+	'fax'	=>	'Fax',
+	'mobile'	=>	'Mobile',
+	'city'	=>	'City',
+	'state'	=>	'State/Province',
 
 	/* Audit Types */
 	'audit-type'	=>	'Audit Type|Audit Types',

@@ -5,37 +5,43 @@
     <div class="col-lg-12">
         <ol class="breadcrumb">
             <li class="active">
-                <i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}
+                <i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', '1') }}
             </li>
         </ol>
     </div>
 </div>
 <div class="panel panel-primary">
-    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.create-county', '1') }}</div>
+    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.edit-audit-type', '1') }}</div>
     <div class="panel-body">
         <div class="col-lg-6 main">
             <!-- Begin form --> 
             @if($errors->all())
             <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">{{ Lang::choice('messages.close', '1') }}</span></button>
                 {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
             </div>
             @endif
-            {!! Form::model($county, array('route' => array('county.update', $county->id), 
-        'method' => 'PUT', 'id' => 'form-edit-county', 'class' => 'form-horizontal')) !!}
+            {!! Form::model($country, array('route' => array('country.update', $country->id), 
+        'method' => 'PUT', 'id' => 'form-edit-audit-type', 'class' => 'form-horizontal')) !!}
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                 <!-- ./ csrf token -->
                 <div class="form-group">
                     {!! Form::label('name', Lang::choice('messages.name', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('name', Input::old('name'), array('class' => 'form-control')) !!}
+                        {!! Form::text('name', $country->name, array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('hq', Lang::choice('messages.hq', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    {!! Form::label('timezone', Lang::choice('messages.timezone', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::textarea('hq', Input::old('description'), 
+                        {!! Form::text('timezone', $country->timezone, array('class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('code', Lang::choice('messages.code', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    <div class="col-sm-8">
+                        {!! Form::textarea('code', $country->code, 
                             array('class' => 'form-control', 'rows' => '3')) !!}
                     </div>
                 </div>

@@ -11,24 +11,24 @@
     </div>
 </div>
 <div class="panel panel-primary">
-  <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.town', 1) }} <span class="panel-btn">
-  <a class="btn btn-sm btn-info" href="{{ URL::to("town/" . $town->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-town', 1) }}</span>
+  <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.country', 1) }} <span class="panel-btn">
+  <a class="btn btn-sm btn-info" href="{{ URL::to("country/" . $country->id . "/edit") }}" >
+    <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-country', 1) }}</span>
   </a>
   </span></div>
   <div class="panel-body">
     <div class="panel panel-default">
       <div class="panel-body">
         <h4 class="no-margn view">
-          <strong>{{ Lang::choice('messages.name', 1) }}:</strong> <span> {{ $town->name }}</span>
+          <strong>{{ Lang::choice('messages.name', 1) }}:</strong> <span> {{ $country->name }}</span>
         </h4>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.constituency', 1) }}:</strong> <span> {{ $town->constituency_id }}</span>
+          <strong>{{ Lang::choice('messages.timezone', 1) }}:</strong> <span> {{ $country->timezone }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.postal-code', 1) }}:</strong> <span> {{ $town->postal_code }}</span>
+          <strong>{{ Lang::choice('messages.zone', 1) }}:</strong> <span> {{ $country->zone }}</span>
         </h5>
       </div>
   </div>

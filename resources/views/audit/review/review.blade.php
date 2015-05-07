@@ -57,7 +57,7 @@
                         <tr>
                             <td>{{ $response->id }}</td>
                             <td>{{ $response->user->name }}</td>
-                            <td>{{ $response->lab->facility->name }}</td>
+                            <td>{{ $response->lab->name }}</td>
                             <td>{{ $response->auditType->name }}</td>
                             <td>{{ $response->created_at }}</td>
                             <td>{{ $response->status==App\Models\Review::COMPLETE?Lang::choice('messages.audit-status', 1):Lang::choice('messages.audit-status', 2) }}</td>
@@ -77,7 +77,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ Session::put('SOURCE_URL', URL::full()) }}
+            {{ session(['SOURCE_URL', URL::full()]) }}
         </div>
       </div>
 </div>

@@ -21,12 +21,19 @@
         </span>
     </div>
     <div class="panel-body">
+        @if(session()->has('message'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">{{ Lang::choice('messages.close', 1) }}</span></button>
+          {!! session('message') !!}
+        </div>
+        @endif
         <div class="row">
             <div class="col-sm-12">
                 <table class="table table-striped table-bordered table-hover search-table">
                     <thead>
                         <tr>
-                            <th>{{ Lang::choice('messages.facility', 1) }}</th>
+                            <th>{{ Lang::choice('messages.name', 1) }}</th>
+                            <th>{{ Lang::choice('messages.country', 1) }}</th>
                             <th>{{ Lang::choice('messages.lab-level', 1) }}</th>
                             <th>{{ Lang::choice('messages.lab-affiliation', 1) }}</th>
                             <th>{{ Lang::choice('messages.lab-type', 1) }}</th>
@@ -35,9 +42,13 @@
                     </thead>
                     <tbody>
                         @forelse($labs as $lab)
-                        <tr>
-                            <td>{{ $lab->facility->name }}</td>
-                            <td>{{ $lab->labLevel->name }}</td>
+                        <tr @if(session()->has('active_lab'))
+                                {!! (session('active_lab') == $lab->id)?"class='warning'":"" !!}
+                            @endif
+                            >
+                            <td>{{ $lab->name }}</td>
+                            <td>{{ $lab->country->name }}</td>
+                            <td>{{ $lab->labLevel->name}}</td>
                             <td>{{ $lab->labAffiliation->name }}</td>
                             <td>{{ $lab->labType->name}}</td>
                             <td>
@@ -55,7 +66,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ Session::put('SOURCE_URL', URL::full()) }}
+            {{ session(['SOURCE_URL', URL::full()]) }}
         </div>
       </div>
 </div>

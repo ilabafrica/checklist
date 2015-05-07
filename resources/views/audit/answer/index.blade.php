@@ -19,6 +19,12 @@
         </span>
     </div>
     <div class="panel-body">
+        @if(session()->has('message'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">{{ Lang::choice('messages.close', 1) }}</span></button>
+          {!! session('message') !!}
+        </div>
+        @endif
         <div class="row">
             <div class="col-sm-12">
                 <table class="table table-striped table-bordered table-hover search-table">
@@ -31,7 +37,10 @@
                     </thead>
                     <tbody>
                         @forelse($answers as $answer)
-                        <tr>
+                        <tr @if(session()->has('active_answer'))
+                                {!! (session('active_answer') == $answer->id)?"class='warning'":"" !!}
+                            @endif
+                            >
                             <td>{{ $answer->name }}</td>
                             <td>{{ $answer->description }}</td>
                             <td>
@@ -49,7 +58,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ Session::put('SOURCE_URL', URL::full()) }}
+            {{ session(['SOURCE_URL', URL::full()]) }}
         </div>
       </div>
 </div>

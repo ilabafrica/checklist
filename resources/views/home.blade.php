@@ -46,7 +46,7 @@
                         @forelse($reviews as $review)
                         <tr>
                             <td>{{ $review->id }}</td>
-                            <td>{{ $review->lab->facility->name }}</td>
+                            <td>{{ $review->lab->name }}</td>
                             <td>{{ $review->auditType->name }}</td>
                             <td>{{ $review->created_at }}</td>
                             <td>{!! $review->status==App\Models\Review::COMPLETE?'<span class="label label-success">'.Lang::choice('messages.audit-status', 1).'</span>':'<span class="label label-warning">'.Lang::choice('messages.audit-status', 2).'</span>' !!}</td>
