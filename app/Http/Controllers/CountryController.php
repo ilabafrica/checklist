@@ -50,7 +50,7 @@ class CountryController extends Controller {
         $country->save();
         $url = Session::get('SOURCE_URL');
 
-        return redirect()->to($url)->with('message', 'Country created successfully.')->with('active_country', $country ->id);
+        return redirect()->to($url)->with('message', 'Country created successfully.')->with('active_country', $country->id);
 	}
 
 	/**

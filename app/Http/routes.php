@@ -131,7 +131,7 @@ Route::any("review/{id}/edit/{section}", array(
     "uses" => "ReviewController@amend"
 ));
 //  Save action plan
-Route::any("/review/plan", array(
+Route::any("action/plan", array(
     "as"   => "review.actionPlan",
     "uses" => "ReviewController@plan"
 ));

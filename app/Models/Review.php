@@ -15,9 +15,10 @@ class Review extends Model {
 	/**
 	* Completion Status
 	*/
-	const COMPLETE = 1;
 	const INCOMPLETE = 0;
-
+	const COMPLETE = 1;
+	const FINALIZED = 2;
+	const REJECTED = 3;
 	/**
 	* Stars
 	*/

@@ -141,13 +141,15 @@ class Question extends Model {
 	*/
 	public function decode($review)
 	{
-		$score = $this->points($review)->audited_score;
+		$this->points($review)?$score = $this->points($review)->audited_score:$score="";
 		if($score == $this->score)
 			return Lang::choice('messages.yes', 2);
 		else if($score == 0)
 			return Lang::choice('messages.no', 2);
 		else if($score == 1)
 			return Lang::choice('messages.partial', 2);
+		else
+			return "";
 
 	}
 	/**

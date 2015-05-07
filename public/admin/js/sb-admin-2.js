@@ -117,10 +117,11 @@ function saveActionPlan(rid){
     follow_up_action =  $("#action_"+rid).val();
     responsible_person =  $("#person_"+rid).val();
     timeline =  $("#timeline_"+rid).val();
+    var URL_ROOT = 'http://127.0.0.1/e-slipta/public/';
     _token: JSON.stringify($('input[name=_token]').val());
     $.ajax({
         type: 'POST',
-        url:  '/review/plan',
+        url:  URL_ROOT+'action/plan',
         data: {review_id: rid, follow_up_action: follow_up_action, responsible_person: responsible_person, timeline: timeline, action: "add", '_token': $('input[name=_token]').val()},
         success: function(){
             drawActionPlan(rid);
@@ -134,12 +135,13 @@ function saveActionPlan(rid){
  * @return {void}          No return
  */
 function drawActionPlan(rid){
-    $.getJSON('/review/plan', { review_id: rid, action: "draw"}, 
+    var URL_ROOT = 'http://127.0.0.1/e-slipta/public/';
+    $.getJSON(URL_ROOT+'action/plan', { review_id: rid, action: "draw"}, 
         function(data){
             var tableBody ="";
             $.each(data, function(index, elem){
                 tableBody += "<tr>"
-                +" <td>"+elem.follow_up_action+" </td>"
+                +" <td>"+elem.action+" </td>"
                 +" <td>"+elem.responsible_person+"</td>"
                 +" <td>"+elem.timeline+"</td>"
                 +" <td> </td>"

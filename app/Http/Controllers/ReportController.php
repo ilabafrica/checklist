@@ -84,7 +84,7 @@ class ReportController extends Controller {
 	      	dataFormat: "json",
 	      	dataSource: {
 	       	"chart": {
-	          	"caption": "'.$review->lab->facility->name.'",
+	          	"caption": "'.$review->lab->name.'",
 	          	"subCaption": "% Score by Section",
 	          	"xAxisName": "'.Lang::choice('messages.section', 1).'",
 	          	"yAxisName": "Score in %",
@@ -110,7 +110,7 @@ class ReportController extends Controller {
 	      	dataFormat: "json",
 	      	dataSource: {
 	       	"chart": {
-	          	"caption": "'.$review->lab->facility->name.'",
+	          	"caption": "'.$review->lab->name.'",
 	          	"subCaption": "% Score by Section",
 	          	"xAxisName": "'.Lang::choice('messages.section', 1).'",
 	          	"yAxisName": "Score in %",
@@ -150,7 +150,7 @@ class ReportController extends Controller {
         },
 
         "title": {
-            "text": "'.$review->lab->facility->name.'",
+            "text": "'.$review->lab->name.'",
             "x": -80
         },
 
@@ -265,12 +265,12 @@ class ReportController extends Controller {
 		$review = Review::find($id);
 		$lab_info = array(
 			array('Field', 'Value'),
-			array(Lang::choice('messages.lab-name', 1), $review->lab->facility->name),
-			array(Lang::choice('messages.lab-number', 1), $review->lab->id),
-			array(Lang::choice('messages.lab-address', 1), $review->lab->facility->address.'-'.$review->lab->facility->town->postal_code.', '.$review->lab->facility->town->name),
-			array(Lang::choice('messages.lab-telephone', 1), $review->lab->facility->telephone),
-			array(Lang::choice('messages.lab-fax', 1), $review->lab->facility->fax),
-			array(Lang::choice('messages.lab-email', 1), $review->lab->facility->email),
+			array(Lang::choice('messages.lab-name', 1), $review->lab->name),
+			array(Lang::choice('messages.lab-number', 1), $review->lab->lab_number),
+			array(Lang::choice('messages.lab-address', 1), $review->lab->address.'-'.$review->lab->postal_code.', '.$review->lab->city),
+			array(Lang::choice('messages.lab-telephone', 1), $review->lab->telephone),
+			array(Lang::choice('messages.lab-fax', 1), $review->lab->fax),
+			array(Lang::choice('messages.lab-email', 1), $review->lab->email),
 			array(Lang::choice('messages.lab-head', 1), $review->laboratory()->head),
 			array(Lang::choice('messages.lab-head-telephone-personal', 1), $review->laboratory()->head_personal_telephone),
 			array(Lang::choice('messages.lab-head-telephone-work', 1), $review->laboratory()->head_work_telephone),
@@ -342,7 +342,7 @@ class ReportController extends Controller {
 			else
 				continue;
 		}
-		Excel::create($review->lab->facility->name, function($excel) use ($lab_info, $slmta_info, $staffing_summary, $org_structure, $summary, $action_plan, $review, $categories) {
+		Excel::create($review->lab->name, function($excel) use ($lab_info, $slmta_info, $staffing_summary, $org_structure, $summary, $action_plan, $review, $categories) {
 
 		    // Set the title
 		    $excel->setTitle('Complete audit data');
@@ -423,7 +423,7 @@ class ReportController extends Controller {
 	}
 	public function noncompliance($id){
 		$review = Review::find($id);
-		Excel::create('Non-conformities for '.$review->lab->facility->name.' '.$review->auditType->name.'_'.$review->id, function($excel) use($review){
+		Excel::create('Non-conformities for '.$review->lab->name.' '.$review->auditType->name.'_'.$review->id, function($excel) use($review){
 
 		    $excel->sheet('Non Conformity Table', function($sheet) use($review){
 		    	$sheet->appendRow(array(Lang::choice('messages.non-conformities', 1), Lang::choice('messages.recommendations', 1).'/'.Lang::choice('messages.comment', 2), Lang::choice('messages.checklist-question', 1), Lang::choice('messages.iso', 1), Lang::choice('messages.major-minor', 1)));

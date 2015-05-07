@@ -16,7 +16,7 @@
             <a href="#" class="btn btn-sm btn-default" style="margin-bottom:5px;"><i class="fa fa-home"></i> {!! $audit->name !!}</a>
             @foreach($audit->sections as $section)
                 @if($section->order!=0)
-                    <a href="{{ URL::to('review/create/'.$review->id.'/'.$section->id) }}" class="btn btn-sm {{ Request::segment(4)==$section->id?'btn-danger':'btn-default' }} btn-default" style="margin-bottom:5px;"><div>{!! $section->name !!}</div></a>
+                    <a href="{{ URL::to('review/'.$review->id.'/edit/'.$section->id) }}" class="btn btn-sm {{ Request::segment(4)==$section->id?'btn-danger':'btn-default' }} btn-default" style="margin-bottom:5px;"><div>{!! $section->name !!}</div></a>
                 @endif
             @endforeach
         </div>
@@ -695,7 +695,7 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    {!! Form::textarea('recommendations', $summary->recommendations, array('class' => 'form-control', 'rows' => '3')) !!}
+                                                    {!! Form::textarea('recommendations', $review->recommendations, array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -712,19 +712,29 @@
                                                 <table class="table table-striped table-bordered table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <td>{!! Lang::choice('messages.follow-up-actions', 1) !!}</td>
-                                                            <td>{!! Lang::choice('messages.responsible-persons', 1) !!}</td>
-                                                            <td>{!! Lang::choice('messages.timeline', 1) !!}</td>
+                                                            <td><strong>{!! Lang::choice('messages.follow-up-actions', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.responsible-persons', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.timeline', 1) !!}</strong></td>
                                                             <td></td>
                                                         </tr>
                                                     </thead>    
                                                     <tbody id="action_plan_{{$review->id}}">
+                                                        @if($review->plans())
+                                                            @foreach($review->plans() as $plan)
+                                                            <tr>
+                                                                <td>{!! $plan->action !!}</td>
+                                                                <td>{!! $plan->responsible_person !!}</td>
+                                                                <td>{!! $plan->timeline !!}</td>
+                                                                <td></td>
+                                                            </tr>
+                                                            @endforeach
+                                                        @endif
                                                         <tr>
                                                             <td>{!! Form::textarea('action_'.$review->id, '', array('class' => 'form-control', 'rows' => '3', 'id' => 'action_'.$review->id)) !!}</td>
-                                                            <td>{!! Form::textarea('person_'.$review->id, '', array('class' => 'form-control', 'rows' => '3', 'id' => 'persons_'.$review->id)) !!}</td>
+                                                            <td>{!! Form::textarea('person_'.$review->id, '', array('class' => 'form-control', 'rows' => '3', 'id' => 'person_'.$review->id)) !!}</td>
                                                             <td>{!! Form::textarea('timeline_'.$review->id, '', array('class' => 'form-control', 'rows' => '3', 'id' => 'timeline_'.$review->id)) !!}</td>
                                                             <td>
-                                                                <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="saveObservation()"><i class="fa fa-save"></i> {{ Lang::choice('messages.save', 1) }}</a>
+                                                                <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="saveActionPlan({{$review->id}})"><i class="fa fa-save"></i> {{ Lang::choice('messages.save', 1) }}</a>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -916,7 +926,7 @@
                                                         @if(count($question->children)>0)
                                                             <div class="row">
                                                                 <div class="col-sm-6">
-                                                                    {!! Form::text('answer_'.$question->id, $question->decode($review->id), array('class' => 'form-control', 'id' => 'answer_'.$question->id, 'readonly')) !!}
+                                                                    {!! Form::text('answer_'.$question->id, ($question->decode($review->id)?$question->decode($review->id):''), array('class' => 'form-control', 'id' => 'answer_'.$question->id, 'readonly')) !!}
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group input-group"><input type="text" name="points_{{$question->id}}" id="points_{{$question->id}}" value="{!!$question->points($review->id)?$question->points($review->id)->audited_score:''!!}" class="form-control page_{{$page->id}}" oninput="sub_total('page_{{$page->id}}')" readonly><span class="input-group-addon">/{!! $question->score !!}</span></div>
@@ -926,7 +936,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-8">
                                                                 @foreach($question->answers as $answer)
-                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, (in_array($answer->id, $question->qa($review->id))?true:false), ['class' => 'radio_'.$question->id, 'onclick' => "scoreMain('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
+                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, (($question->qa($review->id) && in_array($answer->id, $question->qa($review->id)))?true:false), ['class' => 'radio_'.$question->id, 'onclick' => "scoreMain('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
                                                                 @endforeach
                                                                 </div>
                                                                 <div class="col-sm-4">
@@ -934,14 +944,14 @@
                                                                 </div>
                                                             </div>
                                                         @endif
-                                                        <label class="checkbox-inline">{!! Form::checkbox('check_'.$question->id, 1, (in_array(App\Models\Answer::NONCOMPLIANT, array($question->note($review->id)->non_compliance))?"checked":""), ['onclick' => 'noteChange("radio_".$question->id)']) !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
+                                                        <label class="checkbox-inline">{!! Form::checkbox('check_'.$question->id, 1, (($question->note($review->id) && in_array(App\Models\Answer::NONCOMPLIANT, array($question->note($review->id)->non_compliance)))?"checked":""), ['onclick' => 'noteChange("radio_".$question->id)']) !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
-                                                            {!! Form::textarea('text_'.$question->id, $question->note($review->id)->note, array('class' => 'form-control', 'rows' => '3')) !!}
+                                                            {!! Form::textarea('text_'.$question->id, $question->note($review->id)?$question->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3')) !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -961,16 +971,16 @@
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
                                                                 @foreach($kid->answers as $answer)
-                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, (in_array($answer->id, $kid->qa($review->id))?true:false), ['class' => 'radio_'.$question->id, 'onclick' => "noteChange('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
+                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, (($kid->qa($review->id) && in_array($answer->id, $kid->qa($review->id)))?true:false), ['class' => 'radio_'.$question->id, 'onclick' => "noteChange('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
                                                                 @endforeach
-                                                                <label class="checkbox-inline">{!! Form::checkbox('check_'.$kid->id, 1, (in_array(App\Models\Answer::NONCOMPLIANT, array($kid->note($review->id)->non_compliance))?"checked":"")) !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
+                                                                <label class="checkbox-inline">{!! Form::checkbox('check_'.$kid->id, 1, (($kid->note($review->id) && in_array(App\Models\Answer::NONCOMPLIANT, array($kid->note($review->id)->non_compliance)))?"checked":"")) !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
-                                                                    {!! Form::textarea('text_'.$kid->id, $kid->note($review->id)->note, array('class' => 'form-control', 'rows' => '3')) !!}
+                                                                    {!! Form::textarea('text_'.$kid->id, $kid->note($review->id)?$kid->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3')) !!}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1013,7 +1023,11 @@
                     <div class="form-group">
                         <div class="col-sm-offset-6 col-sm-6">
                         @if(($page->order == 0 && $page->total_points == 0) || ($page->total_points == 0 && count($page->notes)>0))
-                        <a href="{{ url('review/'.$review->id.'/edit/'.$page->next()->first()->id) }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
+                            @if(!$page->next()->isEmpty())
+                                <a href="{{ url('review/'.$review->id.'/edit/'.$page->next()->first()->id) }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
+                            @else
+                                <a href="{{ url('home') }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
+                            @endif
                         @else
                         {!! Form::submit(Lang::choice('messages.save', 1), 
                               array('class' => 'btn btn-success', 'name' =>Lang::choice('messages.save', 1), 'onclick' => 'submit()')) !!}
