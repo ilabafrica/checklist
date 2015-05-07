@@ -22,19 +22,19 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <h4 class="no-margn view">
-          <strong>{{ Lang::choice('messages.facility', 1) }}:</strong> <span> {{ $lab->facility_id }}</span>
+          <strong>{{ Lang::choice('messages.facility', 1) }}:</strong> <span> {{ $lab->facility->name }}</span>
         </h4>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.lab-level', 1) }}:</strong> <span> {{ $lab->lab_level_id }}</span>
+          <strong>{{ Lang::choice('messages.lab-level', 1) }}:</strong> <span> {{ $lab->labLevel->name }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.lab-affiliation', 1) }}:</strong> <span> {{ $lab->lab_affiliation_id }}</span>
+          <strong>{{ Lang::choice('messages.lab-affiliation', 1) }}:</strong> <span> {{ $lab->labAffiliation->name }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.lab-type', 1) }}:</strong> <span> {{ $lab->lab_type_id }}</span>
+          <strong>{{ Lang::choice('messages.lab-type', 1) }}:</strong> <span> {{ $lab->labType->name }}</span>
         </h5>
       </div>
   </div>

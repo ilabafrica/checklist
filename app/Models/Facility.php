@@ -21,6 +21,13 @@ class Facility extends Model {
 	 return $this->belongsTo('App\Models\FacilityType');
 	}
 	/**
+	* Relationship with facilityOwner
+	*/
+	public function facilityOwner()
+	{
+	 return $this->belongsTo('App\Models\FacilityOwner');
+	}
+	/**
 	* Relationship with town
 	*/
 	public function town()
@@ -34,4 +41,12 @@ class Facility extends Model {
 	{
 	 return $this->hasMany('App\Models\Lab');
 	}
+	/**
+	* Relationship with job title
+	*/
+	public function title()
+	{
+	 return $this->belongsTo('App\Models\Title');
+	}
+	
 }

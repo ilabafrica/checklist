@@ -24,7 +24,7 @@
         </h4>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.constituency', 1) }}:</strong> <span> {{ $town->constituency_id }}</span>
+          <strong>{{ Lang::choice('messages.constituency', 1) }}:</strong> <span> {{ $town->constituency->name }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">
