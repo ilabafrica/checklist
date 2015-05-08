@@ -60,21 +60,13 @@
             </div>
         </nav>
       	<div class="container">
+          	<div class="header"></div>
       	<div id="slmta-tagline">
           	<p>{!! Lang::choice('messages.punch-line', 1) !!}</p>
       	</div>
       	<div class="row">
-          	<div class="col-md-3"></div>
-          	<div class="col-md-6">
-          		@if (count($errors) > 0)
-					<div class="alert alert-danger">
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
-					</div>
-				@endif
+          	<div class="col-md-4"></div>
+          	<div class="col-md-4">
               	<form class="form-horizontal" role="form" method="POST" action="/password/email">
 					<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
@@ -94,7 +86,7 @@
 					</div>
 				</form>
           	</div>
-          	<div class="col-md-3"></div>
+          	<div class="col-md-4"></div>
       	</div>
       	<footer class="footer"> 
 	        <div class="container"> 

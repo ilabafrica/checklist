@@ -38,73 +38,67 @@
           .navbar + .container{
               margin-top:3em;
           }
-      </style>
+      	</style>
     </head>
     <body>
     	<nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
               <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                  	<span class="sr-only">Toggle navigation</span>
-                  	<span class="icon-bar"></span>
-                  	<span class="icon-bar"></span>
-                  	<span class="icon-bar"></span>
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="#">{!! Lang::choice('messages.echecklist', 1) !!}</a>
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                  	<li><a href="#">{!! Lang::choice('messages.initiative', 1) !!}</a></li>
+                  <li><a href="#">{!! Lang::choice('messages.initiative', 1) !!}</a></li>
                 </ul>
               </div><!--/.nav-collapse -->
             </div>
         </nav>
       	<div class="container">
+          	<div class="header"></div>
       	<div id="slmta-tagline">
           	<p>{!! Lang::choice('messages.punch-line', 1) !!}</p>
       	</div>
       	<div class="row">
-          	<div class="col-md-3"></div>
-          	<div class="col-md-6">
+          	<div class="col-md-4"></div>
+          	<div class="col-md-4">
           		@if (count($errors) > 0)
-					<div class="alert alert-danger">
-						<ul>
-							@foreach ($errors->all() as $error)
-								<li>{{ $error }}</li>
-							@endforeach
-						</ul>
-					</div>
+				    <div class="alert alert-danger">
+				        <ul>
+				            @foreach ($errors->all() as $error)
+				                <li>{{ $error }}</li>
+				            @endforeach
+				        </ul>
+				    </div>
 				@endif
-              	<form class="form-horizontal" role="form" method="POST" action="/password/email">
-					<input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-					<div class="form-group">
-						<label class="col-md-4 control-label">{!! Lang::choice('messages.email', 1) !!}</label>
-						<div class="col-md-6">
-							<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-md-6 col-md-offset-4">
-							<button type="submit" class="btn btn-primary">
-								Send Password Reset Link
-							</button>
-						</div>
-					</div>
-				</form>
+              	<form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
+                  	<input type="hidden" name="_token" value="{{ csrf_token() }}">
+                  	<input type="text" class="form-control" autocomplete="off" autofocus="autofocus" name="username" placeholder="Username">
+                  	<br>
+                  	<input type="password" class="form-control" autocomplete="off" name="password" placeholder="Password">
+                  	<br>
+                  	<button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+                  	<br>
+                  	<p> Can't access your account? </p>
+                  	<a class="btn btn-info btn-lg btn-block" href="{{ url('/password/email') }}">Reset your password.</a>
+              	</form>
           	</div>
-          	<div class="col-md-3"></div>
+         	<div class="col-md-4"></div>
       	</div>
       	<footer class="footer"> 
-	        <div class="container"> 
-	          	<p>
-	              	<a href="http://www.ilabafrica.ac.ke">About @iLabAfrica</a> | 
-	              	&copy; {!! date('Y') !!} {!! Lang::choice('messages.compiled-by', 1) !!}
-	          	</p>  
-	        </div> 
+        	<div class="container"> 
+          		<p>
+              		<a href="http://www.ilabafrica.ac.ke">About @iLabAfrica</a> | 
+              		&copy; {!! date('Y') !!} {!! Lang::choice('messages.compiled-by', 1) !!}
+          		</p>  
+        	</div> 
       	</footer>
-    </div>
+    	</div>
       	<script src="{{ URL::asset('admin/js/bootstrap.min.js') }}"></script>
-  </body>
+  	</body>
 </html>
