@@ -25,6 +25,10 @@ class CountryRequest extends Request {
 		$id = $this->ingnoreId();
 		return [
             'name'   => 'required|unique:countries,name,'.$id,
+            'capital'   => 'required|unique:countries,capital,'.$id,
+            'code'   => 'required|unique:countries,code,'.$id,
+            'iso_3166_2'   => 'required|unique:countries,iso_3166_2,'.$id,
+            'iso_3166_3'   => 'required|unique:countries,iso_3166_3,'.$id,
         ];
 	}
 	/**

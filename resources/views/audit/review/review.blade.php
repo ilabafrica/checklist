@@ -46,7 +46,7 @@
         <div class="row">
             <div class="col-sm-12">
 
-                <table class="table table-striped table-bordered table-hover search-table">
+                <table class="table table-striped table-bordered table-hover {!! !$responses->isEmpty()?'search-table':'' !!}">
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.response-no', 1) }}</th>
@@ -86,7 +86,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ session(['SOURCE_URL', URL::full()]) }}
+            {!! session(['SOURCE_URL' => URL::full()]) !!}
         </div>
       </div>
 </div>

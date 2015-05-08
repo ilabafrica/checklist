@@ -11,6 +11,7 @@ use App\Models\Answer;
 use App\Models\Note;
 use Response;
 use Auth;
+use Session;
 
 class QuestionController extends Controller {
 
@@ -77,9 +78,9 @@ class QuestionController extends Controller {
 			if($request->notes){
 				$question->setNotes($request->notes);
 			}
-			//$url = Session::get('SOURCE_URL');
+			$url = session('SOURCE_URL');
         
-        	return redirect('question')->with('message', 'Question created successfully.');
+        	return redirect()->to($url)->with('message', 'Question created successfully.')->with('active_question', $question ->id);
 		}
 		catch(QueryException $e){
 			Log::error($e);
@@ -161,9 +162,9 @@ class QuestionController extends Controller {
 			if($request->notes){
 				$question->setNotes($request->notes);
 			}
-			//$url = Session::get('SOURCE_URL');
+			$url = session('SOURCE_URL');
         
-        	return redirect('question')->with('message', 'Question updated successfully.');
+        	return redirect()->to($url)->with('message', 'Question updated successfully.')->with('active_question', $question ->id);
 		}
 		catch(QueryException $e){
 			Log::error($e);

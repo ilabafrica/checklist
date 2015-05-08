@@ -11,6 +11,7 @@ use App\Models\Section;
 use App\Models\Note;
 use Response;
 use Auth;
+use Session;
 
 class SectionController extends Controller {
 
@@ -65,9 +66,9 @@ class SectionController extends Controller {
 			if($request->notes){
 				$section->setNotes($request->notes);
 			}
-			//$url = Session::get('SOURCE_URL');
+			$url = session('SOURCE_URL');
         
-        	return redirect('section')->with('message', 'Audit Section created successfully.');
+        	return redirect()->to($url)->with('message', 'Audit Section created successfully.')->with('active_section', $section ->id);
 		}
 		catch(QueryException $e){
 			Log::error($e);
@@ -138,9 +139,9 @@ class SectionController extends Controller {
 			if($request->notes){
 				$section->setNotes($request->notes);
 			}
-			//$url = Session::get('SOURCE_URL');
+			$url = session('SOURCE_URL');
         
-        	return redirect('section')->with('message', 'Audit Section updated successfully.');
+        	return redirect()->to($url)->with('message', 'Audit Section updated successfully.')->with('active_section', $section ->id);
 		}
 		catch(QueryException $e){
 			Log::error($e);

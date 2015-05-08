@@ -27,12 +27,14 @@
         @endif
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-striped table-bordered table-hover search-table">
+                <table class="table table-striped table-bordered table-hover {!! !$countries->isEmpty()?'search-table':'' !!}">
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
-                            <th>{{ Lang::choice('messages.timezone', 1) }}</th>
                             <th>{{ Lang::choice('messages.code', 1) }}</th>
+                            <th>{{ Lang::choice('messages.country-iso', 1) }}</th>
+                            <th>{{ Lang::choice('messages.country-iso', 2) }}</th>
+                            <th>{{ Lang::choice('messages.capital', 1) }}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -43,8 +45,10 @@
                             @endif
                             >
                             <td>{{ $country->name }}</td>
-                            <td>{{ $country->timezone }}</td>
                             <td>{{ $country->code }}</td>
+                            <td>{{ $country->iso_3166_2 }}</td>
+                            <td>{{ $country->iso_3166_3 }}</td>
+                            <td>{{ $country->capital }}</td>
                             <td>
                               <a href="{{ URL::to("country/" . $country->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
                               <a href="{{ URL::to("country/" . $country->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
@@ -60,7 +64,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ session(['SOURCE_URL', URL::full()]) }}
+            {!! session(['SOURCE_URL' => URL::full()]) !!}
         </div>
       </div>
 </div>

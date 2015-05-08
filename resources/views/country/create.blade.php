@@ -32,16 +32,28 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('timezone', Lang::choice('messages.timezone', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('timezone', Input::old('timezone'), array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
                     {!! Form::label('code', Lang::choice('messages.code', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
                         {!! Form::textarea('code', Input::old('code'), 
                             array('class' => 'form-control', 'rows' => '3')) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('iso-2', Lang::choice('messages.country-iso', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    <div class="col-sm-8">
+                        {!! Form::text('iso_3166_2', Input::old('iso_3166_2'), array('class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('iso-3', Lang::choice('messages.country-iso', 2), array('class' => 'col-sm-4 control-label')) !!}
+                    <div class="col-sm-8">
+                        {!! Form::text('iso_3166_3', Input::old('iso_3166_3'), array('class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('capital', Lang::choice('messages.capital', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    <div class="col-sm-8">
+                        {!! Form::text('capital', Input::old('capital'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">

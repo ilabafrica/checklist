@@ -94,8 +94,8 @@ return [
 	'create-country'	=>	'Create Country',
 	'edit-country'	=>	'Edit Country',
 	'code'	=>	'Code',
-	'timezone'	=>	'Timezone',
-	
+	'capital'	=>	'Capital',
+	'country-iso'	=>	'iso_3166_2|iso_3166_3',
 	/* Laboratories */
 	'lab'	=>	'Laboratory|Laboratories',
 	'create-lab'	=>	'Create Lab',

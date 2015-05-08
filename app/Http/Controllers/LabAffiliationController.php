@@ -9,6 +9,7 @@ use App\Http\Requests\LabAffiliationRequest;
 use App\Models\LabAffiliation;
 use Response;
 use Auth;
+use Session;
 
 class LabAffiliationController extends Controller {
 
@@ -46,8 +47,9 @@ class LabAffiliationController extends Controller {
         $labAffiliation->description = $request->description;
         $labAffiliation->user_id = Auth::user()->id;;
         $labAffiliation->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('labAffiliation')->with('message', 'Lab affiliation created successfully.');
+        return redirect()->to($url)->with('message', 'Lab affiliation created successfully.')->with('active_labAffiliation', $labAffiliation ->id);
 	}
 
 	/**
@@ -90,8 +92,9 @@ class LabAffiliationController extends Controller {
         $labAffiliation->description = $request->description;
         $labAffiliation->user_id = Auth::user()->id;;
         $labAffiliation->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('labAffiliation')->with('message', 'Lab affiliation updated successfully.');
+        return redirect()->to($url)->with('message', 'Lab affiliation updated successfully.')->with('active_labAffiliation', $labAffiliation ->id);
 	}
 
 	/**
@@ -104,7 +107,7 @@ class LabAffiliationController extends Controller {
 	{
 		$labAffiliation= LabAffiliation::find($id);
 		$labAffiliation->delete();
-		return redirect('labAffiliation')->with('message', 'LabAffiliation deleted successfully.');
+		return redirect('labAffiliation')->with('message', 'Lab Affiliation deleted successfully.');
 	}
 	public function destroy($id)
 	{

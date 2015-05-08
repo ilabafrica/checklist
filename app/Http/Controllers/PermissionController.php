@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PermissionRequest;
 use App\Models\Permission;
 use Response;
+use Session;
 
 class PermissionController extends Controller {
 

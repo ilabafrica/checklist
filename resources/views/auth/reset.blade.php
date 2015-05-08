@@ -115,7 +115,7 @@
         	<div class="container"> 
           		<p>
               		<a href="http://www.ilabafrica.ac.ke">About @iLabAfrica</a> | 
-              		&copy; {!! date('Y') !!} {!! Lang::choice('messages.compiled-by', 1) !!}
+              		{!! date('Y') !!} {!! Lang::choice('messages.compiled-by', 1) !!}
           		</p>  
         	</div> 
       	</footer>

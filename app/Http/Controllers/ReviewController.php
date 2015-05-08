@@ -19,6 +19,7 @@ use Lang;
 use Request;
 use Excel;
 use App;
+use Session;
 
 class ReviewController extends Controller {
 

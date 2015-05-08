@@ -17,8 +17,10 @@ class CreateLabTables extends Migration {
 		{
 			$table->increments('id')->unsigned();
 			$table->string('name');
-			$table->string('timezone', 100);
 			$table->string('code', 100);
+			$table->string('iso_3166_2', 100);
+			$table->string('iso_3166_3', 100);
+			$table->string('capital', 100);
 			$table->integer('user_id')->unsigned();
 
             $table->foreign('user_id')->references('id')->on('users');

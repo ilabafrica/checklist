@@ -8,6 +8,7 @@ use App\Http\Requests\AssessmentRequest;
 use App\Models\Assessment;
 use Response;
 use Auth;
+use Session;
 
 class AssessmentController extends Controller {
 
@@ -45,8 +46,9 @@ class AssessmentController extends Controller {
         $assessment->description = $request->description;
         $assessment->user_id = Auth::user()->id;
         $assessment->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('assessment')->with('message', 'Assessment created successfully.');
+        return redirect()->to($url)->with('message', 'Assessment created successfully.')->with('active_assessment', $assessment ->id);
 	}
 
 	/**
@@ -89,8 +91,9 @@ class AssessmentController extends Controller {
         $assessment->description = $request->description;
         $assessment->user_id = Auth::user()->id;
         $assessment->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('assessment')->with('message', 'Assessment updated successfully.');
+        return redirect()->to($url)->with('message', 'Assessment updated successfully.')->with('active_assessment', $assessment ->id);
 	}
 
 	/**

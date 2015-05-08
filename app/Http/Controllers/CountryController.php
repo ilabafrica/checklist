@@ -44,11 +44,13 @@ class CountryController extends Controller {
 	{
 		$country = new Country;
         $country->name = $request->name;
-        $country->timezone = $request->timezone;
         $country->code = $request->code;
-        $country->user_id = Auth::user()->id;;
+        $country->iso_3166_2 = $request->iso_3166_2;
+        $country->iso_3166_3 = $request->iso_3166_3;
+        $country->capital = $request->capital;
+        $country->user_id = Auth::user()->id;
         $country->save();
-        $url = Session::get('SOURCE_URL');
+        $url = session('SOURCE_URL');
 
         return redirect()->to($url)->with('message', 'Country created successfully.')->with('active_country', $country->id);
 	}
@@ -90,11 +92,13 @@ class CountryController extends Controller {
 	{
 		$country = Country::findOrFail($id);;
         $country->name = $request->name;
-        $country->timezone = $request->timezone;
         $country->code = $request->code;
-        $country->user_id = Auth::user()->id;;
+        $country->iso_3166_2 = $request->iso_3166_2;
+        $country->iso_3166_3 = $request->iso_3166_3;
+        $country->capital = $request->capital;
+        $country->user_id = Auth::user()->id;
         $country->save();
-        $url = Session::get('SOURCE_URL');
+        $url = session('SOURCE_URL');
 
         return redirect()->to($url)->with('message', 'Country updated successfully.')->with('active_country', $country ->id);
 	}

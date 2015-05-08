@@ -14,6 +14,7 @@ use App\Models\AuditType;
 use App\Models\Country;
 use Response;
 use Auth;
+use Session;
 
 class LabController extends Controller {
 
@@ -70,8 +71,9 @@ class LabController extends Controller {
         $lab->lab_affiliation_id = $request->lab_affiliation;
         $lab->user_id = Auth::user()->id;
         $lab->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('lab')->with('message', 'Lab created successfully.');
+        return redirect()->to($url)->with('message', 'Lab created successfully.')->with('active_lab', $lab ->id);
 	}
 
 	/**
@@ -142,8 +144,9 @@ class LabController extends Controller {
         $lab->lab_affiliation_id = $request->lab_affiliation;
         $lab->user_id = Auth::user()->id;;
         $lab->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('lab')->with('message', 'Lab updated successfully.');
+        return redirect()->to($url)->with('message', 'Lab updated successfully.')->with('active_lab', $lab ->id);
 	}
 
 	/**

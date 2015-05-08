@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest;
 use App\Models\User;
 use Hash;
 use Input;
+use Session;
 
 class UserController extends Controller {
 
@@ -56,8 +57,9 @@ class UserController extends Controller {
         if(Input::hasFile('photo'))
         	$user->image = $this->imageModifier($request, $request->all()['photo']);
         $user->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('user')->with('message', 'User created successfully.');
+        return redirect()->to($url)->with('message', 'User created successfully.')->with('active_user', $user ->id);
 	}
 
 	/**
@@ -110,8 +112,9 @@ class UserController extends Controller {
         if(Input::hasFile('photo'))
         	$user->image = $this->imageModifier($request, $request->all()['photo']);
         $user->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('user')->with('message', 'User updated successfully.');
+        return redirect()->to($url)->with('message', 'User updated successfully.')->with('active_user', $user ->id);
 	}
 
 	/**

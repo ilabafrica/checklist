@@ -30,7 +30,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover search-table">
+                            <table class="table table-striped table-bordered table-hover {!! !$questions->isEmpty()?'search-table':'' !!}">
                                 <thead>
                                     <tr>
                                         <th>{{ Lang::choice('messages.name', 1) }}</th>
@@ -71,7 +71,7 @@
                             </table>
                         </div>
                     </div>
-                    {{ session(['SOURCE_URL', URL::full()]) }}
+                    {!! session(['SOURCE_URL' => URL::full()]) !!}
                 </div>
             </div>
         </div>

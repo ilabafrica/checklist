@@ -13,6 +13,7 @@ use App\Models\Section;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Note;
+use App\Models\Country;
 use App\Models\Lab;
 class SliptaSeeder extends Seeder
 {
@@ -136,15 +137,31 @@ class SliptaSeeder extends Seeder
         }
         $this->command->info('Audit types table seeded');
 
+        /* Countries */
+        $countries = array(
+            array('name' => 'Afghanistan', 'code' => '93', 'iso_3166_2' => 'AF', 'iso_3166_3' => 'AFG', 'capital' => 'Kabul', 'user_id' => '1'),
+            array('name' => 'Albania', 'code' => '355', 'iso_3166_2' => 'AL', 'iso_3166_3' => 'ALB', 'capital' => 'Tirana', 'user_id' => '1'),
+            array('name' => 'Antartica', 'code' => '672', 'iso_3166_2' => 'AQ', 'iso_3166_3' => 'ATA', 'capital' => 'Antartica', 'user_id' => '1'),
+            array('name' => 'Algieria', 'code' => '213', 'iso_3166_2' => 'AZ', 'iso_3166_3' => 'AZA', 'capital' => 'Algiers', 'user_id' => '1'),
+            array('name' => 'American Samoa', 'code' => '1', 'iso_3166_2' => 'AS', 'iso_3166_3' => 'ASM', 'capital' => 'Pago Pago', 'user_id' => '1'),
+            array('name' => 'Andorra', 'code' => '376', 'iso_3166_2' => 'AD', 'iso_3166_3' => 'AND', 'capital' => 'Andorra la Vella', 'user_id' => '1'),
+            array('name' => 'Angola', 'code' => '244', 'iso_3166_2' => 'AO', 'iso_3166_3' => 'AGO', 'capital' => 'Luanda', 'user_id' => '1'),
+            array('name' => 'Kenya', 'code' => '254', 'iso_3166_2' => 'KE', 'iso_3166_3' => 'KEN', 'capital' => 'Nairobi', 'user_id' => '1')
+        );
+        foreach ($countries as $country) {
+            Country::create($country);
+        }
+        $this->command->info('Countries table seeded');
+
         /* Laboratories */
-        /*$labs = array(
-            array("facility_id" => "3", "lab_type_id" => "1", "lab_level_id" => "3", "lab_affiliation_id" => "1", "user_id" => "1")
+        $labs = array(
+            array('lab_type_id' => '2', 'name' => 'ASPE Medical Clinic', 'lab_number' => '0023', 'address' => 'P.O. Box 59857', 'postal_code' => '00100', 'city' => 'Nairobi', 'state' => 'Nairobi', 'country_id' => '8', 'fax' => '6007498', 'telephone' => '0703034000', 'email' => 'aspe@aspe.org', 'lab_level_id' => '1', 'lab_affiliation_id' => '1', 'user_id' => '1')
         );
         foreach ($labs as $lab) {
             Lab::create($lab);
         }
-        $this->command->info('Laboratories table seeded');*/
-
+        $this->command->info('Laboratories table seeded');
+        
         /* Assessments */
         $assessments = array(
             array("name" => "Baseline Audit", "description" => "", "user_id" => "1"),

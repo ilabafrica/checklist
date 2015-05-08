@@ -9,6 +9,7 @@ use App\Http\Requests\PrivilegeRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use Response;
+use Session;
 
 class PrivilegeController extends Controller {
 

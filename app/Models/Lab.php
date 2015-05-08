@@ -40,7 +40,7 @@ class Lab extends Model {
 	{
 		try 
 		{
-			$lab = Facility::where('name', $name)->orderBy('name', 'asc')->firstOrFail()->lab->first();
+			$lab = Lab::where('name', $name)->orderBy('name', 'asc')->firstOrFail();
 			return $lab->id;
 		} catch (ModelNotFoundException $e) 
 		{

@@ -24,11 +24,19 @@
         </h4>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.timezone', 1) }}:</strong> <span> {{ $country->timezone }}</span>
+          <strong>{{ Lang::choice('messages.code', 1) }}:</strong> <span> {{ $country->code }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.zone', 1) }}:</strong> <span> {{ $country->zone }}</span>
+          <strong>{{ Lang::choice('messages.country-iso', 1) }}:</strong> <span> {{ $country->iso_3166_2 }}</span>
+        </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.country-iso', 2) }}:</strong> <span> {{ $country->iso_3166_3 }}</span>
+        </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.capital', 1) }}:</strong> <span> {{ $country->capital }}</span>
         </h5>
       </div>
   </div>

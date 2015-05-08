@@ -9,6 +9,7 @@ use App\Models\Note;
 use App\Models\AuditType;
 use Response;
 use Auth;
+use Session;
 
 class NoteController extends Controller {
 
@@ -49,8 +50,9 @@ class NoteController extends Controller {
         $note->audit_type_id = $request->audit_type_id;
         $note->user_id = Auth::user()->id;
         $note->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('note')->with('message', 'Note created successfully.');
+        return redirect()->to($url)->with('message', 'Note created successfully.')->with('active_note', $note ->id);
 	}
 
 	/**
@@ -98,8 +100,9 @@ class NoteController extends Controller {
         $note->audit_type_id = $request->audit_type_id;
         $note->user_id = Auth::user()->id;
         $note->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('note')->with('message', 'Note updated successfully.');
+        return redirect()->to($url)->with('message', 'Note updated successfully.')->with('active_note', $note ->id);
 	}
 
 	/**

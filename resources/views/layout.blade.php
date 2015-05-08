@@ -129,7 +129,7 @@
         <div id="page-wrapper">
             @yield('content')
         <hr>
-        <p>Copyright &copy; {{ date('Y') }} | <a href="http://www.ilabafrica.ac.ke">@iLabAfrica</a></p>
+        <p>{!! date('Y') !!} {!! Lang::choice('messages.compiled-by', 1) !!}</p>
         </div>
     </div>
     <!-- /#wrapper -->

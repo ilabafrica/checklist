@@ -8,6 +8,7 @@ use App\Http\Requests\AnswerRequest;
 use App\Models\Answer;
 use Response;
 use Auth;
+use Session;
 
 class AnswerController extends Controller {
 
@@ -45,8 +46,9 @@ class AnswerController extends Controller {
         $answer->description = $request->description;
         $answer->user_id = Auth::user()->id;
         $answer->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('answer')->with('message', 'Answer created successfully.');
+        return redirect()->to($url)->with('message', 'Answer created successfully.')->with('active_answer', $answer ->id);
 	}
 
 	/**
@@ -89,8 +91,9 @@ class AnswerController extends Controller {
         $answer->description = $request->description;
         $answer->user_id = Auth::user()->id;
         $answer->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('answer')->with('message', 'Answer updated successfully.');
+        return redirect()->to($url)->with('message', 'Answer updated successfully.')->with('active_answer', $answer ->id);
 	}
 
 	/**
