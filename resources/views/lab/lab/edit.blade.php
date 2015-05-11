@@ -4,14 +4,18 @@
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
-            <li class="active">
-                <i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}
+            <li>
+                <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
             </li>
+            <li>
+                <a href="{{ url('lab') }}">{{ Lang::choice('messages.lab', 1) }}</a>
+            </li>
+            <li class="active">{{ Lang::choice('messages.edit-lab', 1) }}</li>
         </ol>
     </div>
 </div>
 <div class="panel panel-primary">
-    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.create-lab', '1') }}</div>
+    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.edit-lab', '1') }}</div>
     <div class="panel-body">
         <div class="col-lg-6 main">
             <!-- Begin form --> 
