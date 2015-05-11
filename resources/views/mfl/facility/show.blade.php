@@ -76,9 +76,10 @@
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.operational-status', 1) }}:</strong> <span> {{ $facility->operational_status }}</span>
+          <strong>{{ Lang::choice('messages.operational-status', 1) }}:</strong> <span> {{ $facility->operational_status== App\Models\Facility::OPERATIONAL? Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1) }}</span>
         </h5>
       </div>
   </div>
+</div>
 </div>
 @stop

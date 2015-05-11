@@ -176,6 +176,7 @@
             {!! Form::close() !!} 
             <!-- End form -->
         </div> 
+        
     </div>
 </div>
 @stop
