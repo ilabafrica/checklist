@@ -110,4 +110,11 @@ class Section extends Model {
 		$questions = $this->questions->lists('id');
 		return DB::table('review_question_scores')->where('review_id', $review)->whereIn('question_id', $questions)->sum('audited_score');
 	}
+	/**
+	 * Parent relationship
+	 */
+	public function parent()
+	{
+		return DB::table('section_parent_child')->where('section_id', $this->id)->first();
+	}
 }

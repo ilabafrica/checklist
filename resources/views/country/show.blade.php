@@ -13,7 +13,7 @@
 <div class="panel panel-primary">
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.country', 1) }} <span class="panel-btn">
   <a class="btn btn-sm btn-info" href="{{ URL::to("country/" . $country->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-country', 1) }}</span>
+    <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-country', 1) }}</span>
   </a>
   </span></div>
   <div class="panel-body">
@@ -39,6 +39,7 @@
           <strong>{{ Lang::choice('messages.capital', 1) }}:</strong> <span> {{ $country->capital }}</span>
         </h5>
       </div>
+    </div>
   </div>
 </div>
 @stop

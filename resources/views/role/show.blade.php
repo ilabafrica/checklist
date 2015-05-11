@@ -13,7 +13,7 @@
 <div class="panel panel-primary">
   <div class="panel-heading"><i class="fa fa-tags"></i> Roles <span class="panel-btn">
   <a class="btn btn-sm btn-info" href="{{ URL::to("role/" . $role->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span>{{ trans('messages.edit-role') }}</span>
+    <i class="fa fa-edit"></i><span> {{ trans('messages.edit-role') }}</span>
   </a>
   </span></div>
   <div class="panel-body">
@@ -27,6 +27,7 @@
           <strong>{{ Lang::choice('messages.description', 1) }}:</strong> <span> {{ $role->description }}</span>
         </h5>
       </div>
+    </div>
   </div>
 </div>
 @stop

@@ -29,47 +29,41 @@
                 @endif
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover {!! !$questions->isEmpty()?'search-table':'' !!}">
-                                <thead>
-                                    <tr>
-                                        <th>{{ Lang::choice('messages.name', 1) }}</th>
-                                        <th>{{ Lang::choice('messages.description', 1) }}</th>
-                                        <th>{{ Lang::choice('messages.section', 1) }}</th>
-                                        <th>{{ Lang::choice('messages.parent', 1) }}</th>
-                                        <th>{{ Lang::choice('messages.required', 1) }}</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($questions as $question)
-                                    <tr @if(session()->has('active_question'))
-                                            {!! (session('active_question') == $question->id)?"class='warning'":"" !!}
-                                        @endif
-                                        >
-                                        <td>{{ $question->name }}</td>
-                                        <td>{{ $question->description }}</td>
-                                        <td>{{ $question->description }}</td>
-                                        <td>{{ $question->description }}</td>
-                                        <td>{{ $question->required }}</td>
-                                        <td>
-                                          <a href="{{ URL::to("question/" . $question->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
-                                          <a href="{{ URL::to("question/" . $question->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
-                                          <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
-                                          <button class="btn btn-sm btn-danger delete-item-link"
-                                            data-toggle="modal" data-target=".confirm-delete-modal" 
-                                            data-id='{{ URL::to("question/" . $question->id . "/delete") }}'>
-                                            <span class="glyphicon glyphicon-trash"></span></button>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                      <td colspan="3">{{ Lang::choice('messages.no-records-found', 1) }}</td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
+                        <table class="table table-striped table-bordered table-hover {!! !$questions->isEmpty()?'search-table':'' !!}">
+                            <thead>
+                                <tr>
+                                    <th>{{ Lang::choice('messages.name', 1) }}</th>
+                                    <th>{{ Lang::choice('messages.label', 1) }}</th>
+                                    <th>{{ Lang::choice('messages.description', 1) }}</th>
+                                    <th>{{ Lang::choice('messages.section', 1) }}</th>
+                                    <th>{{ Lang::choice('messages.required', 1) }}</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($questions as $question)
+                                <tr @if(session()->has('active_question'))
+                                        {!! (session('active_question') == $question->id)?"class='warning'":"" !!}
+                                    @endif
+                                    >
+                                    <td>{{ $question->name }}</td>
+                                    <td>{{ $question->title }}</td>
+                                    <td>{{ $question->description }}</td>
+                                    <td>{{ $question->section->name }}</td>
+                                    <td>{{ $question->required==App\Models\Question::REQUIRED?Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1) }}</td>
+                                    <td>
+                                      <a href="{{ URL::to("question/" . $question->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {{ Lang::choice('messages.view', 1) }}</span></a>
+                                      <a href="{{ URL::to("question/" . $question->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit', 1) }}</span></a>
+                                      <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> {{ Lang::choice('messages.delete', 1) }}</span></a>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                  <td colspan="6">{{ Lang::choice('messages.no-records-found', 1) }}</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                     {!! session(['SOURCE_URL' => URL::full()]) !!}
                 </div>

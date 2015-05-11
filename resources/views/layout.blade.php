@@ -120,10 +120,10 @@
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
-<div class="navbar-default sidebar" role="navigation">
+        <div class="navbar-default sidebar" role="navigation">
 
-   @include("sidebar")
-</div>
+           @include("sidebar")
+        </div>
          <!-- /.navbar-static-side -->
         </nav>
         <div id="page-wrapper">

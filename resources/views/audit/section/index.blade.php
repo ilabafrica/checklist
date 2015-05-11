@@ -32,7 +32,7 @@
                         <tr>
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
                             <th>{{ Lang::choice('messages.description', 1) }}</th>
-                            <th>{{ Lang::choice('messages.parent', 1) }}</th>
+                            <th>{{ Lang::choice('messages.parent', 2) }}</th>
                             <th>{{ Lang::choice('messages.audit-type', 1) }}</th>
                             <th></th>
                         </tr>
@@ -45,7 +45,7 @@
                             >
                             <td>{{ $section->name }}</td>
                             <td>{{ $section->description }}</td>
-                            <td>{{ $section->parent_id }}</td>
+                            <td>{{ count($section->parent())>0?App\Models\Section::find($section->parent()->parent_id)->name:'' }}</td>
                             <td>{{ $section->auditType->name }}</td>
                             <td>
                               <a href="{{ URL::to("section/" . $section->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>

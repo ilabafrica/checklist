@@ -13,7 +13,7 @@
 <div class="panel panel-primary">
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.section', 1) }} <span class="panel-btn">
   <a class="btn btn-sm btn-info" href="{{ URL::to("section/" . $section->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-section', 1) }}</span>
+    <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-section', 1) }}</span>
   </a>
   </span></div>
   <div class="panel-body">
@@ -32,7 +32,7 @@
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.parent', 1) }}:</strong> <span> {{ $section->parent_id }}</span>
+          <strong>{{ Lang::choice('messages.parent', 2) }}:</strong> <span> {{ count($section->parent())>0?App\Models\Section::find($section->parent()->parent_id)->name:'' }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">
@@ -43,7 +43,7 @@
           <strong>{{ Lang::choice('messages.point', 2) }}:</strong> <span> {{ $section->total_points }}</span>
         </h5>
       </div>
+    </div>
   </div>
-</div>
 </div>
 @stop

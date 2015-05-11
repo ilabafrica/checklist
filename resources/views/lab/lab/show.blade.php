@@ -14,7 +14,7 @@
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.lab', 1) }} <span class="panel-btn">
   @if(Auth::user()->can('edit-lab'))
   <a class="btn btn-sm btn-info" href="{{ URL::to("lab/" . $lab->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-lab', 1) }}</span>
+    <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-lab', 1) }}</span>
   </a>
   @endif
   </span></div>
@@ -37,6 +37,7 @@
           <strong>{{ Lang::choice('messages.lab-type', 1) }}:</strong> <span> {{ $lab->lab_type_id }}</span>
         </h5>
       </div>
+    </div>
   </div>
 </div>
 @stop

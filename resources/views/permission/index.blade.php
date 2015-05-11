@@ -42,7 +42,7 @@
                             @endif
                             >
                             <td>{{ $permission->name }}</td>
-                            <td>{{ $permission->description }}</td>
+                            <td>{{ $permission->display_name }}</td>
                             <td>
                               <a href="{{ URL::to("permission/" . $permission->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
                               <a href="{{ URL::to("permission/" . $permission->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>

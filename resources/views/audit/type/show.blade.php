@@ -13,7 +13,7 @@
 <div class="panel panel-primary">
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit-type', 1) }} <span class="panel-btn">
   <a class="btn btn-sm btn-info" href="{{ URL::to("auditType/" . $auditType->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-audit-type', 1) }}</span>
+    <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-audit-type', 1) }}</span>
   </a>
   </span></div>
   <div class="panel-body">
@@ -27,6 +27,7 @@
           <strong>{{ Lang::choice('messages.description', 1) }}:</strong> <span> {{ $auditType->description }}</span>
         </h5>
       </div>
+    </div>
   </div>
 </div>
 @stop

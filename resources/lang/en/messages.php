@@ -30,7 +30,7 @@ return [
 	'no-records-found'	=>	'No records found.',
 	'postal-code'	=>	'Postal Code',
 	'dob'	=>	'Date of Birth',
-	'parent'	=>	'Parent Field',
+	'parent'	=>	'Parent Field|Parent Section',
 	'date'	=>	'Date',
 	'action'	=>	'Action|Actions',
 	'reset'	=>	'Reset',

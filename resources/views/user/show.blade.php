@@ -14,7 +14,7 @@
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.user', 1) }} <span class="panel-btn">
     @if(Auth::user()->can('edit-user'))
   <a class="btn btn-sm btn-info" href="{{ URL::to("user/" . $user->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-user', 1) }}</span>
+    <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-user', 1) }}</span>
   </a>
     @endif
   </span></div>
@@ -45,6 +45,7 @@
           <strong>{{ Lang::choice('messages.address', 1) }}:</strong> <span> {{ $user->address }}</span>
         </h5>
       </div>
+    </div>
   </div>
 </div>
 @stop

@@ -162,4 +162,33 @@ class Question extends Model {
 		if(count($row)>0)
 			return $row;
 	}
+	/**
+	 * Section relationship
+	 */
+	public function section()
+	{
+	  return $this->belongsTo('App\Models\Section');
+	}
+	/**
+	 * Audit field relationship
+	 */
+	public function parent()
+	{
+		return DB::table('question_parent_child')->where('question_id', $this->id)->first();
+	}
+	/**
+	* Decode question type
+	*/
+	public function q_type()
+	{
+		$type = $this->question_type;
+		if($type == Question::CHOICE)
+			return 'Choice';
+		else if($type == Question::DATE)
+			return 'Date';
+		else if($type == Question::FIELD)
+			return 'Field';
+		else if($type == Question::TEXTAREA)
+			return 'Free Text';
+	}
 }
