@@ -352,11 +352,42 @@ class ReviewController extends Controller {
 			$slmta_data = array_merge($slmta_data, ['assessment_id' => Input::get('assessment_id')]);
 		if(Input::get('tests_before_slmta'))
 			$slmta_data = array_merge($slmta_data, ['tests_before_slmta' => Input::get('tests_before_slmta')]);
+		if(Input::get('tests_this_year')) 
+			$slmta_data = array_merge($slmta_data, ['tests_this_year' => Input::get('tests_this_year')]);
+		if(Input::get('cohort_id')) 
+			$slmta_data = array_merge($slmta_data, ['cohort_id' => Input::get('cohort_id')]);
+		if(Input::get('baseline_audit_date')) 
+			$slmta_data = array_merge($slmta_data, ['baseline_audit_date' => Input::get('baseline_audit_date')]);
+		if(Input::get('slmta_workshop_date')) 
+			$slmta_data = array_merge($slmta_data, ['slmta_workshop_date' => Input::get('slmta_workshop_date')]);
+		if(Input::get('exit_audit_date')) 
+			$slmta_data = array_merge($slmta_data, ['exit_audit_date' => Input::get('exit_audit_date')]);
+		if(Input::get('baseline_score')) 
+			$slmta_data = array_merge($slmta_data, ['baseline_score' => Input::get('baseline_score')]);
+		if(Input::get('baseline_stars_obtained')) 
+			$slmta_data = array_merge($slmta_data, ['baseline_stars_obtained' => Input::get('baseline_stars_obtained')]);
+		if(Input::get('exit_score')) 
+			$slmta_data = array_merge($slmta_data, ['exit_score' => Input::get('exit_score')]);
+		if(Input::get('exit_stars_obtained')) 
+			$slmta_data = array_merge($slmta_data, ['exit_stars_obtained' => Input::get('exit_stars_obtained')]);
+		if(Input::get('last_audit_date')) 
+			$slmta_data = array_merge($slmta_data, ['last_audit_date' => Input::get('last_audit_date')]);
+		if(Input::get('last_audit_score')) 
+			$slmta_data = array_merge($slmta_data, ['last_audit_score' => Input::get('last_audit_score')]);
+		if(Input::get('prior_audit_status')) 
+			$slmta_data = array_merge($slmta_data, ['prior_audit_status' => Input::get('prior_audit_status')]);
+		if(Input::get('audit_start_date')) 
+			$slmta_data = array_merge($slmta_data, ['audit_start_date' => Input::get('audit_start_date')]);
+		if(Input::get('audit_end_date')) 
+			$slmta_data = array_merge($slmta_data, ['audit_end_date' => Input::get('audit_end_date')]);
 		$slmta_data = array_merge($slmta_data, ['updated_at' => date('Y-m-d H:i:s')]);
 		if(!Input::get('tests_before_slmta'))
 			return redirect()->back()->with('error', 'Type of SLMTA audit cannot be empty.');
 		if(count($slmta_data)>0){
-	    	DB::table('review_slmta_info')->where('id', $slmta->id)->update($slmta_data);
+			if(!$slmta)
+				DB::table('review_slmta_info')->insert($slmta_data);
+			else
+	    		DB::table('review_slmta_info')->where('id', $slmta->id)->update($slmta_data);
 		}
 		//	Lab Profile - Part 1
 		$profile = DB::table('review_lab_profiles')->where('review_id', $review->id)->first();
