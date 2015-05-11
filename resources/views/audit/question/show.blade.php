@@ -12,7 +12,7 @@
 </div>
 <div class="panel panel-primary">
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.question', 1) }} <span class="panel-btn">
-  <a class="btn btn-sm btn-info" href="{{ URL::to("section/" . $section->id . "/edit") }}" >
+  <a class="btn btn-sm btn-info" href="{{ URL::to("question/" . $question->id . "/edit") }}" >
     <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-question', 1) }}</span>
   </a>
   </span></div>
@@ -20,13 +20,15 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <h4 class="no-margn view">
-          <strong>{{ Lang::choice('messages.name', 1) }}:</strong> <span> {{ $section->name }}</span>
+          <strong>{{ Lang::choice('messages.name', 1) }}:</strong> <span> {{ $question->name }}</span>
         </h4>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.description', 1) }}:</strong> <span> {{ $section->description }}</span>
+          <strong>{{ Lang::choice('messages.description', 1) }}:</strong> <span> {{ $question->description }}</span>
         </h5>
+      </div>
       </div>
   </div>
 </div>
+<div>
 @stop

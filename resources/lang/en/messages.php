@@ -21,6 +21,8 @@ return [
 	'display-name'	=>	'Display Name',
 	'gender'	=>	'Gender',
 	'sex'	=>	'Male|Female',
+	'male' =>	'Male',
+	'female' =>	'Female',
 	'email'	=>	'Email',
 	'address'	=>	'Address',
 	'phone'	=>	'Phone',

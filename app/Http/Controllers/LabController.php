@@ -55,10 +55,10 @@ class LabController extends Controller {
 	public function store(LabRequest $request)
 	{
 		$lab = new Lab;
-        $lab->facility_id = $request->facility_id;
-        $lab->lab_level_id = $request->lab_level_id;
-        $lab->lab_affiliation_id = $request->lab_affiliation_id;
-        $lab->lab_type_id = $request->lab_type_id;
+        $lab->facility_id = $request->facility;
+        $lab->lab_level_id = $request->lab_level;
+        $lab->lab_affiliation_id = $request->lab_affiliation;
+        $lab->lab_type_id = $request->lab_type;
         $lab->user_id = Auth::user()->id;;
         $lab->save();
 
@@ -118,10 +118,10 @@ class LabController extends Controller {
 	public function update(LabRequest $request, $id)
 	{
 		$lab = Lab::findOrFail($id);;
-        $lab->facility_id = $request->facility_id;
-        $lab->lab_level_id = $request->lab_level_id;
-        $lab->lab_affiliation_id = $request->lab_affiliation_id;
-        $lab->lab_type_id = $request->lab_type_id;
+        $lab->facility_id = $request->facility;
+        $lab->lab_level_id = $request->lab_level;
+        $lab->lab_affiliation_id = $request->lab_affiliation;
+        $lab->lab_type_id = $request->lab_type;
         $lab->user_id = Auth::user()->id;;
         $lab->save();
 

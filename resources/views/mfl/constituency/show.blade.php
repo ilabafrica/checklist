@@ -24,9 +24,10 @@
         </h4>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.county', 1) }}:</strong> <span> {{ $constituency->county_id }}</span>
+          <strong>{{ Lang::choice('messages.county', 1) }}:</strong> <span> {{ $constituency->county->name }}</span>
         </h5>
       </div>
   </div>
+</div>
 </div>
 @stop

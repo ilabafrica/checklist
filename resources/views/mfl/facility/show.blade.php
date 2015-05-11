@@ -28,11 +28,11 @@
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.facility-type', 1) }}:</strong> <span> {{ $facility->facility_type_id }}</span>
+          <strong>{{ Lang::choice('messages.facility-type', 1) }}:</strong> <span> {{ $facility->facilityType->name}}</span>
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.facility-owner', 1) }}:</strong> <span> {{ $facility->facility_owner_id }}</span>
+          <strong>{{ Lang::choice('messages.facility-owner', 1) }}:</strong> <span> {{ $facility->facilityOwner->name }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">
@@ -64,7 +64,7 @@
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.town', 1) }}:</strong> <span> {{ $facility->town_id }}</span>
+          <strong>{{ Lang::choice('messages.town', 1) }}:</strong> <span> {{ $facility->town->name }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">
@@ -72,13 +72,14 @@
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.title', 1) }}:</strong> <span> {{ $facility->title_id }}</span>
+          <strong>{{ Lang::choice('messages.title', 1) }}:</strong> <span> {{ $facility->title->name }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.operational-status', 1) }}:</strong> <span> {{ $facility->operational_status }}</span>
+          <strong>{{ Lang::choice('messages.operational-status', 1) }}:</strong> <span> {{ $facility->operational_status== App\Models\Facility::OPERATIONAL? Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1) }}</span>
         </h5>
       </div>
   </div>
+</div>
 </div>
 @stop

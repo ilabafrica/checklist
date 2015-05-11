@@ -23,6 +23,12 @@ class QuestionRequest extends Request {
 	public function rules()
 	{
 		return [
+
+		'question_type'=> 'required',
+		'name'=> 'required',
+		'parent_id' =>'required',
+		'section_id' =>'required'
+		
         ];
 	}
 

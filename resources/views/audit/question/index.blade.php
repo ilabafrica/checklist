@@ -12,6 +12,10 @@
 </div>
 <div class="row">
     <div class="col-lg-12">
+
+    @if(Session::has('message'))
+    <div class="alert alert-info">{{Session::get('message')}}</div>
+    @endif
         <div class="panel panel-primary">
             <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.question', 2) }} <span class="panel-btn">
               <a class="btn btn-sm btn-info" href="{{ URL::to("question/create") }}" >
@@ -42,15 +46,12 @@
                                         <td>{{ $question->description }}</td>
                                         <td>{{ $question->description }}</td>
                                         <td>{{ $question->description }}</td>
-                                        <td>{{ $question->required }}</td>
+                                        <td>{{ $question->required== App\Models\Question::REQUIRED? Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1) }}</td>
                                         <td>
                                           <a href="{{ URL::to("question/" . $question->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
                                           <a href="{{ URL::to("question/" . $question->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
                                           <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
-                                          <button class="btn btn-sm btn-danger delete-item-link"
-                                            data-toggle="modal" data-target=".confirm-delete-modal" 
-                                            data-id='{{ URL::to("question/" . $question->id . "/delete") }}'>
-                                            <span class="glyphicon glyphicon-trash"></span></button>
+                                          
                                         </td>
                                     </tr>
                                     @empty

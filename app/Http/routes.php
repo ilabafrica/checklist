@@ -194,15 +194,31 @@ Route::any("/review/plan", array(
 ));
 //  Answers controller
 Route::resource('answer', 'AnswerController');
+Route::get("/answer/{id}/delete", array(
+    "as"   => "answer.delete",
+    "uses" => "AnswerController@delete"
+));
 
 //  Notes controller
 Route::resource('note', 'NoteController');
+Route::get("/note/{id}/delete", array(
+    "as"   => "note.delete",
+    "uses" => "NoteController@delete"
+));
 
 //  Assessments - Baseline, Mid-term, Exit etc
 Route::resource('assessment', 'AssessmentController');
+Route::get("/assessment/{id}/delete", array(
+    "as"   => "assessment.delete",
+    "uses" => "AssessmentController@delete"
+));
 
 //  Questions controller
 Route::resource('question', 'QuestionController');
+Route::get("/question/{id}/delete", array(
+    "as"   => "question.delete",
+    "uses" => "QuestionController@delete"
+));
 
 //	Audit data
 Route::any("/result", array(
