@@ -222,6 +222,7 @@ return [
 	'select-order'	=>	'Select Order Section',
 	/* SLMTA Info */
 	'slmta-info'	=>	'SLMTA Info|SLMTA Information',
+	'slmta-audit' =>	'SLMTA Audit',
 	'official-slmta'	=>	'Official SLMTA Audit?',
 	'audit-start-date'	=>	'Audit Start Date',
 	'audit-end-date'	=>	'Audit End Date',
