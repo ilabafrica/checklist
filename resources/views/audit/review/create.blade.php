@@ -37,10 +37,10 @@
                 </span>
             </div>
             <div class="panel-body">
-                @if($errors->all())
+                @if(session()->has('error'))
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only"> {{ Lang::choice('messages.close', 1) }}</span></button>
-                    {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
+                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">{{ Lang::choice('messages.close', 1) }}</span></button>
+                  {!! session('error') !!}
                 </div>
                 @endif
                 @if($page->id == App\Models\AuditType::find($audit->id)->sections->first()['id'])

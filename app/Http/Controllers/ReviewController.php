@@ -103,7 +103,10 @@ class ReviewController extends Controller {
 	    //dd(Input::all());
 	    if(!$slmta){
 	    	$slmta_data = array('review_id' => $review->id, 'official_slmta' => Input::get('official_slmta'), 'assessment_id' => Input::get('assessment_id'), 'tests_before_slmta' => Input::get('tests_before_slmta'), 'tests_this_year' => Input::get('tests_this_year'), 'cohort_id' => Input::get('cohort_id'), 'baseline_audit_date' => Input::get('baseline_audit_date'), 'slmta_workshop_date' => Input::get('slmta_workshop_date'), 'exit_audit_date' => Input::get('exit_audit_date'), 'baseline_score' => Input::get('baseline_score'), 'baseline_stars_obtained' => Input::get('baseline_stars'), 'exit_score' => Input::get('exit_score'), 'exit_stars_obtained' => Input::get('exit_stars'), 'last_audit_date' => Input::get('last_audit_date'), 'last_audit_score' => Input::get('last_audit_score'), 'prior_audit_status' => Input::get('prior_audit_status'), 'audit_start_date' => Input::get('audit_start_date'), 'audit_end_date' => Input::get('audit_end_date'), 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s'));
-	    	DB::table('review_slmta_info')->insert($slmta_data);
+	    	if(!Input::get('tests_before_slmta'))
+				return redirect()->back()->with('error', 'Type of SLMTA audit cannot be empty.');
+			else
+	    		DB::table('review_slmta_info')->insert($slmta_data);
 	    }
 	    if(count($slmta)>0){
 		    //	Check if Lab Info exists for the review
@@ -350,6 +353,8 @@ class ReviewController extends Controller {
 		if(Input::get('tests_before_slmta'))
 			$slmta_data = array_merge($slmta_data, ['tests_before_slmta' => Input::get('tests_before_slmta')]);
 		$slmta_data = array_merge($slmta_data, ['updated_at' => date('Y-m-d H:i:s')]);
+		if(!Input::get('tests_before_slmta'))
+			return redirect()->back()->with('error', 'Type of SLMTA audit cannot be empty.');
 		if(count($slmta_data)>0){
 	    	DB::table('review_slmta_info')->where('id', $slmta->id)->update($slmta_data);
 		}
