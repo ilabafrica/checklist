@@ -17,7 +17,7 @@
             <!-- Begin form --> 
             @if($errors->all())
             <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">{{ Lang::choice('messages.close', 1) }}</span></button>
                 {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
             </div>
             @endif
@@ -49,7 +49,7 @@
                     <div class="col-sm-offset-4 col-sm-8">
                     {!! Form::button("<i class='glyphicon glyphicon-ok-circle'></i> ".Lang::choice('messages.save', 1), 
                           array('class' => 'btn btn-success', 'onclick' => 'submit()')) !!}
-                          {!! Form::button("<i class='glyphicon glyphicon-remove-circle'></i> ".'Reset', 
+                          {!! Form::button("<i class='glyphicon glyphicon-remove-circle'></i> ".Lang::choice('messages.reset', 1), 
                           array('class' => 'btn btn-default', 'onclick' => 'reset()')) !!}
                     <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                     </div>
