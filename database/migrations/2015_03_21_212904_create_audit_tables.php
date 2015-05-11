@@ -202,7 +202,7 @@ class CreateAuditTables extends Migration {
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
-			$table->string('head');
+			$table->string('head')->nullable();
 			$table->string('head_work_telephone')->nullable();
 			$table->string('head_personal_telephone')->nullable();
 			$table->tinyInteger('degree_staff')->nullable();
@@ -245,11 +245,11 @@ class CreateAuditTables extends Migration {
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
-			$table->tinyInteger('official_slmta');
+			$table->tinyInteger('official_slmta')->nullable();
 			$table->integer('assessment_id')->unsigned();
-			$table->smallInteger('tests_before_slmta');
-			$table->smallInteger('tests_this_year');
-			$table->smallInteger('cohort_id');
+			$table->smallInteger('tests_before_slmta')->nullable();
+			$table->smallInteger('tests_this_year')->nullable();
+			$table->smallInteger('cohort_id')->nullable();
 			$table->date('baseline_audit_date')->nullable();
 			$table->date('slmta_workshop_date')->nullable();
 			$table->date('exit_audit_date')->nullable();
@@ -260,8 +260,8 @@ class CreateAuditTables extends Migration {
 			$table->date('last_audit_date')->nullable();
 			$table->smallInteger('last_audit_score')->nullable();
 			$table->tinyInteger('prior_audit_status');
-			$table->date('audit_start_date');
-			$table->date('audit_end_date');
+			$table->date('audit_start_date')->nullable();
+			$table->date('audit_end_date')->nullable();
 
 			$table->foreign('review_id')->references('id')->on('reviews');
 			$table->foreign('assessment_id')->references('id')->on('assessments');
