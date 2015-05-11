@@ -19,6 +19,7 @@ use Lang;
 use Request;
 use Excel;
 use App;
+use Session;
 
 class ReviewController extends Controller {
 
@@ -591,7 +592,7 @@ class ReviewController extends Controller {
 		$plan = array();
 		$id = Input::get('id');
 		if($action == 'add'){
-			DB::table('review_action_plans')->insert(['review_id', $review_id, 'action' => $follow_up_action, 'responsible_person' => $responsible_person, 'timeline' => $timeline, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+			DB::table('review_action_plans')->insert(['review_id' => $review_id, 'action' => $follow_up_action, 'responsible_person' => $responsible_person, 'timeline' => $timeline, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
 			return 0;
 		}
 		else if($action == 'update'){
@@ -632,6 +633,8 @@ class ReviewController extends Controller {
 		//	Get review
 		$review = Review::find($id);
 		$categories = array();
+		$questions = array();
+		$scored_questions = DB::table('review_question_scores')->where('review_id', $review->id)->lists('question_id');
 		$sections = $review->auditType->sections;
 		foreach($sections as $section){
 			if($section->total_points!=0)
@@ -639,7 +642,21 @@ class ReviewController extends Controller {
 			else
 				continue;
 		}
-		return view('audit.review.complete', compact('review', 'categories'));
+		foreach ($categories as $section) {
+			foreach($section->questions as $question){
+				if($question->score>0)
+					array_push($questions, $question);
+				else
+					continue;
+			}
+		}
+		if(count($questions) == count($scored_questions)){
+        	Review::where('id', $review->id)->update(['status' => Review::COMPLETE,'updated_at' => date('Y-m-d H:i:s')]);
+        	return redirect()->to('review/assessment/'.$review->audit_type_id)->with('message', 'Audit marked complete')->with('active_review', $review->id);
+		}
+		else{
+			return view('audit.review.complete', compact('review', 'categories'));
+		}
 	}
 	/**
 	 * Display view for file input

@@ -11,6 +11,18 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-sm-12">
+        <div class="btn-group btn-breadcrumb">
+            <a href="#" class="btn btn-sm btn-default" style="margin-bottom:5px;"><i class="fa fa-home"></i> {!! $audit->name !!}</a>
+            @foreach($audit->sections as $section)
+                @if($section->order!=0)
+                    <a href="{{ URL::to('review/'.$review->id.'/edit/'.$section->id) }}" class="btn btn-sm {{ Request::segment(4)==$section->id?'btn-danger':'btn-default' }} btn-default" style="margin-bottom:5px;"><div>{!! $section->name !!}</div></a>
+                @endif
+            @endforeach
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-lg-12">
         <div class="panel panel-primary">
             <div class="panel-heading">
@@ -23,7 +35,7 @@
             <div class="panel-body">
                 @if($errors->all())
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only"> {{ Lang::choice('messages.close', 1) }}</span></button>
                     {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
                 </div>
                 @endif
@@ -34,7 +46,7 @@
                 @endif
                 <!-- Begin form logic -->
                 {!! Form::model($review, array('route' => array('review.update', $review->id), 
-        'method' => 'PUT', 'id' => 'form-edit-review', 'class' => 'form-horizontal')) !!}
+                    'method' => 'PUT', 'id' => 'form-edit-review', 'class' => 'form-horizontal')) !!}
                     <!-- CSRF Token -->
                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                     <!-- ./ csrf token -->
@@ -57,20 +69,20 @@
                             <div class="form-group">
                                 {!! Form::label('official-slmta', Lang::choice('messages.official-slmta', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <label class="checkbox-inline">{!! Form::checkbox('official_slmta', 1, ($slmta->official_slmta==App\Models\Review::OFFICIAL)?true:false) !!}</label>
+                                    <label class="checkbox-inline">{!! Form::checkbox('official_slmta', 1, ($slmta && $slmta->official_slmta==App\Models\Review::OFFICIAL)?true:false) !!}</label>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('audit-start-date', Lang::choice('messages.audit-start-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                    {!! Form::text('audit_start_date', $slmta->audit_start_date, array('class' => 'form-control')) !!}
+                                    {!! Form::text('audit_start_date', $slmta?$slmta->audit_start_date:'', array('class' => 'form-control')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('audit-end-date', Lang::choice('messages.audit-end-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                    {!! Form::text('audit_end_date', $slmta->audit_end_date, array('class' => 'form-control')) !!}
+                                    {!! Form::text('audit_end_date', $slmta?$slmta->audit_end_date:'', array('class' => 'form-control')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -92,7 +104,7 @@
                                                 <div class="col-md-6">
                                                     <label  class="checkbox-inline">
                                                         <input type="checkbox" name="assessors[]" value="{{ $value->id}}"
-                                                        {{ in_array($value->id, $review->assessors->lists('id'))?"checked":"" }} />
+                                                        {{ in_array($value->id, $review->assessors?$review->assessors->lists('id'):[])?"checked":"" }} />
                                                         {{ $value->name }}
                                                     </label>
                                                 </div>
@@ -106,26 +118,26 @@
                             <div class="form-group">
                                 {!! Form::label('assessment_id', Lang::choice('messages.slmta-audit', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments,$slmta->assessment_id, 
+                                    {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments,$slmta?$slmta->assessment_id:'', 
                                         array('class' => 'form-control', 'id' => 'assessment_id')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('tests-before-slmta', Lang::choice('messages.tests-before-slmta', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-before-slmta')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('tests_before_slmta', $slmta->tests_before_slmta, array('class' => 'form-control', 'id' => 'tests_before_slmta')) !!}
+                                    {!! Form::text('tests_before_slmta', $slmta?$slmta->tests_before_slmta:'', array('class' => 'form-control', 'id' => 'tests_before_slmta')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('tests-this-year', Lang::choice('messages.tests-this-year', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-this-year')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('tests_this_year', $slmta->tests_this_year, array('class' => 'form-control', 'id' => 'tests_this_year')) !!}
+                                    {!! Form::text('tests_this_year', $slmta?$slmta->tests_this_year:'', array('class' => 'form-control', 'id' => 'tests_this_year')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('cohort-id', Lang::choice('messages.cohort-id', 1), array('class' => 'col-sm-4 control-label', 'id' => 'cohort-id')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('cohort_id', $slmta->cohort_id, array('class' => 'form-control', 'id' => 'cohort_id')) !!}
+                                    {!! Form::text('cohort_id', $slmta?$slmta->cohort_id:'', array('class' => 'form-control', 'id' => 'cohort_id')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -137,67 +149,67 @@
                             <div class="form-group">
                                 {!! Form::label('baseline-audit-date', Lang::choice('messages.baseline-audit-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                    {!! Form::text('baseline_audit_date', $slmta->baseline_audit_date, array('class' => 'form-control')) !!}
+                                    {!! Form::text('baseline_audit_date', $slmta?$slmta->baseline_audit_date:'', array('class' => 'form-control')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('slmta-workshop-date', Lang::choice('messages.slmta-workshop-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                    {!! Form::text('slmta_workshop_date', $slmta->slmta_workshop_date, array('class' => 'form-control')) !!}
+                                    {!! Form::text('slmta_workshop_date', $slmta?$slmta->slmta_workshop_date:'', array('class' => 'form-control')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('exit-audit-date', Lang::choice('messages.exit-audit-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                    {!! Form::text('exit_audit_date', $slmta->exit_audit_date, array('class' => 'form-control')) !!}
+                                    {!! Form::text('exit_audit_date', $slmta?$slmta->exit_audit_date:'', array('class' => 'form-control')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('baseline-score', Lang::choice('messages.baseline-score', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('baseline_score', $slmta->baseline_score, array('class' => 'form-control', 'id' => 'baseline_score')) !!}
+                                    {!! Form::text('baseline_score', $slmta?$slmta->baseline_score:'', array('class' => 'form-control', 'id' => 'baseline_score')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('baseline-stars', Lang::choice('messages.baseline-stars', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::select('baseline_stars', array(''=>trans('messages.select'))+$stars,$slmta->baseline_stars_obtained, 
+                                    {!! Form::select('baseline_stars', array(''=>trans('messages.select'))+$stars,$slmta?$slmta->baseline_stars_obtained:'', 
                                         array('class' => 'form-control', 'id' => 'baseline_stars')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('exit-score', Lang::choice('messages.exit-score', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('exit_score', $slmta->exit_score, array('class' => 'form-control', 'id' => 'exit_score')) !!}
+                                    {!! Form::text('exit_score', $slmta?$slmta->exit_score:'', array('class' => 'form-control', 'id' => 'exit_score')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('exit-stars', Lang::choice('messages.exit-stars', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::select('exit_stars', array(''=>trans('messages.select'))+$stars,$slmta->exit_stars_obtained, 
+                                    {!! Form::select('exit_stars', array(''=>trans('messages.select'))+$stars,$slmta?$slmta->exit_stars_obtained:'', 
                                         array('class' => 'form-control', 'id' => 'exit_stars')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('last-audit-date', Lang::choice('messages.last-audit-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                    {!! Form::text('last_audit_date', $slmta->last_audit_date, array('class' => 'form-control')) !!}
+                                    {!! Form::text('last_audit_date', $slmta?$slmta->last_audit_date:'', array('class' => 'form-control')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('last-audit-score', Lang::choice('messages.last-audit-score', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('last_audit_score', $slmta->last_audit_score, array('class' => 'form-control', 'id' => 'last_audit_score')) !!}
+                                    {!! Form::text('last_audit_score', $slmta?$slmta->last_audit_score:'', array('class' => 'form-control', 'id' => 'last_audit_score')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('prior-audit-status', Lang::choice('messages.prior-audit-status', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::select('prior_audit_status', array(''=>trans('messages.select'))+$stars,$slmta->prior_audit_status, 
+                                    {!! Form::select('prior_audit_status', array(''=>trans('messages.select'))+$stars,$slmta?$slmta->prior_audit_status:'', 
                                         array('class' => 'form-control', 'id' => 'prior_audit_status')) !!}
                                 </div>
                             </div>
@@ -212,20 +224,20 @@
                             <div class="form-group">
                                 {!! Form::label('lab-number', Lang::choice('messages.lab-number', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->lab_number !!}</p>
+                                    <p class="text-primary inline">{!! $lab->facility->code !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('lab-address', Lang::choice('messages.lab-address', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->facility->address !!} - {!! $lab->facility->town->postal_code !!}</p>
-                                    <p class="text-primary inline">{!! $lab->facility->town->name !!}</p>
+                                    <p class="text-primary inline">{!! $lab->facility->address !!} - {!! $lab->postal_code !!}</p>
+                                    <p class="text-primary inline">{!! $lab->facility->nearest_town !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('lab-telephone', Lang::choice('messages.lab-telephone', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->facility->mobile !!}</p>
+                                    <p class="text-primary inline">{!! $lab->facility->landline !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -243,19 +255,19 @@
                             <div class="form-group">
                                 {!! Form::label('lab-head', Lang::choice('messages.lab-head', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('head', $profile->head, array('class' => 'form-control', 'id' => 'head')) !!}
+                                    {!! Form::text('head', $profile?$profile->head:'', array('class' => 'form-control', 'id' => 'head')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('lab-head-telephone-personal', Lang::choice('messages.lab-head-telephone-personal', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('head_personal_telephone', $profile->head_personal_telephone, array('class' => 'form-control', 'id' => 'head_personal_telephone')) !!}
+                                    {!! Form::text('head_personal_telephone', $profile?$profile->head_personal_telephone:'', array('class' => 'form-control', 'id' => 'head_personal_telephone')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('lab-head-telephone-work', Lang::choice('messages.lab-head-telephone-work', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('head_work_telephone', $profile->head_work_telephone, array('class' => 'form-control', 'id' => 'head_work_telephone')) !!}
+                                    {!! Form::text('head_work_telephone', $profile?$profile->head_work_telephone:'', array('class' => 'form-control', 'id' => 'head_work_telephone')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -290,16 +302,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            {!! Form::text('degree_staff', $profile->degree_staff, array('class' => 'form-control')) !!}
+                                            {!! Form::text('degree_staff', $profile?$profile->degree_staff:'', array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::YES, ($profile->degree_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::NO, ($profile->degree_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile->degree_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::YES, ($profile && $profile->degree_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::NO, ($profile && $profile->degree_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->degree_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -311,16 +323,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            {!! Form::text('diploma_staff', $profile->diploma_staff, array('class' => 'form-control')) !!}
+                                            {!! Form::text('diploma_staff', $profile?$profile->diploma_staff:'', array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::YES, ($profile->diploma_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::NO, ($profile->diploma_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile->diploma_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::YES, ($profile && $profile->diploma_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::NO, ($profile && $profile->diploma_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->diploma_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -332,16 +344,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            {!! Form::text('certificate_staff', $profile->certificate_staff, array('class' => 'form-control')) !!}
+                                            {!! Form::text('certificate_staff', $profile?$profile->certificate_staff:'', array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::YES, ($profile->certificate_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::NO, ($profile->certificate_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile->certificate_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::YES, ($profile && $profile->certificate_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::NO, ($profile && $profile->certificate_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->certificate_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -353,16 +365,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            {!! Form::text('microscopist', $profile->microscopist, array('class' => 'form-control')) !!}
+                                            {!! Form::text('microscopist', $profile?$profile->microscopist:'', array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::YES, ($profile->microscopist_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::NO, ($profile->microscopist_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::INSUFFICIENT, ($profile->microscopist_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::YES, ($profile && $profile->microscopist_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::NO, ($profile && $profile->microscopist_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->microscopist_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -374,16 +386,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            {!! Form::text('data_clerk', $profile->data_clerk, array('class' => 'form-control')) !!}
+                                            {!! Form::text('data_clerk', $profile?$profile->data_clerk:'', array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::YES, ($profile->data_clerk_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::NO, ($profile->data_clerk_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::INSUFFICIENT, ($profile->data_clerk_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::YES, ($profile && $profile->data_clerk_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::NO, ($profile && $profile->data_clerk_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->data_clerk_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -395,16 +407,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            {!! Form::text('phlebotomist', $profile->phlebotomist, array('class' => 'form-control')) !!}
+                                            {!! Form::text('phlebotomist', $profile?$profile->phlebotomist:'', array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::YES, ($profile->phlebotomist_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::NO, ($profile->phlebotomist_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::INSUFFICIENT, ($profile->phlebotomist_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::YES, ($profile && $profile->phlebotomist_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::NO, ($profile && $profile->phlebotomist_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->phlebotomist_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -416,16 +428,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            {!! Form::text('cleaner', $profile->cleaner, array('class' => 'form-control')) !!}
+                                            {!! Form::text('cleaner', $profile?$profile->cleaner:'', array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::YES, ($profile->cleaner_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::NO, ($profile->cleaner_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::INSUFFICIENT, ($profile->cleaner_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::YES, ($profile && $profile->cleaner_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::NO, ($profile && $profile->cleaner_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->cleaner_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -439,8 +451,8 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    <label class="radio-inline">{!! Form::radio('cleaner_dedicated', App\Models\Answer::YES, ($profile->cleaner_dedicated==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                                    <label class="radio-inline">{!! Form::radio('cleaner_dedicated', App\Models\Answer::NO, ($profile->cleaner_dedicated==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('cleaner_dedicated', App\Models\Answer::YES, ($profile && $profile->cleaner_dedicated==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('cleaner_dedicated', App\Models\Answer::NO, ($profile && $profile->cleaner_dedicated==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -454,8 +466,8 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    <label class="radio-inline">{!! Form::radio('cleaner_trained', App\Models\Answer::YES, ($profile->cleaner_trained==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                                    <label class="radio-inline">{!! Form::radio('cleaner_trained', App\Models\Answer::NO, ($profile->cleaner_trained==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('cleaner_trained', App\Models\Answer::YES, ($profile && $profile->cleaner_trained==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('cleaner_trained', App\Models\Answer::NO, ($profile && $profile->cleaner_trained==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -469,16 +481,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            {!! Form::text('driver', $profile->driver, array('class' => 'form-control')) !!}
+                                            {!! Form::text('driver', $profile?$profile->driver:'', array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::YES, ($profile->driver_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::NO, ($profile->driver_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::INSUFFICIENT, ($profile->driver_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::YES, ($profile && $profile->driver_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::NO, ($profile && $profile->driver_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->driver_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -492,8 +504,8 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    <label class="radio-inline">{!! Form::radio('driver_dedicated', App\Models\Answer::YES, ($profile->driver_dedicated==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                                    <label class="radio-inline">{!! Form::radio('driver_dedicated', App\Models\Answer::NO, ($profile->driver_dedicated==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('driver_dedicated', App\Models\Answer::YES, ($profile && $profile->driver_dedicated==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('driver_dedicated', App\Models\Answer::NO, ($profile && $profile->driver_dedicated==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -507,8 +519,8 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    <label class="radio-inline">{!! Form::radio('driver_trained', App\Models\Answer::YES, ($profile->driver_trained==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                                    <label class="radio-inline">{!! Form::radio('driver_trained', App\Models\Answer::NO, ($profile->driver_trained==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('driver_trained', App\Models\Answer::YES, ($profile && $profile->driver_trained==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('driver_trained', App\Models\Answer::NO, ($profile && $profile->driver_trained==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -522,16 +534,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-6">
-                                            {!! Form::text('other_staff', $profile->other_staff, array('class' => 'form-control')) !!}
+                                            {!! Form::text('other_staff', $profile?$profile->other_staff:'', array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::YES, ($profile->other_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::NO, ($profile->other_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile->other_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::YES, ($profile && $profile->other_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::NO, ($profile && $profile->other_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->other_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -563,8 +575,8 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('sufficient_space', App\Models\Answer::YES, ($profile->sufficient_space==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('sufficient_space', App\Models\Answer::NO, ($profile->sufficient_space==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('sufficient_space', App\Models\Answer::YES, ($profile && $profile->sufficient_space==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('sufficient_space', App\Models\Answer::NO, ($profile && $profile->sufficient_space==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -576,8 +588,8 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('equipment', App\Models\Answer::YES, ($profile->equipment==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('equipment', App\Models\Answer::NO, ($profile->equipment==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('equipment', App\Models\Answer::YES, ($profile && $profile->equipment==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('equipment', App\Models\Answer::NO, ($profile && $profile->equipment==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -589,8 +601,8 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('supplies', App\Models\Answer::YES, ($profile->supplies==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('supplies', App\Models\Answer::NO, ($profile->supplies==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('supplies', App\Models\Answer::YES, ($profile && $profile->supplies==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('supplies', App\Models\Answer::NO, ($profile && $profile->supplies==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -602,8 +614,8 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('personnel', App\Models\Answer::YES, ($profile->personnel==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('personnel', App\Models\Answer::NO, ($profile->personnel==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('personnel', App\Models\Answer::YES, ($profile && $profile->personnel==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('personnel', App\Models\Answer::NO, ($profile && $profile->personnel==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -615,8 +627,8 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('infrastructure', App\Models\Answer::YES, ($profile->infrastructure==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('infrastructure', App\Models\Answer::NO, ($profile->infrastructure==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('infrastructure', App\Models\Answer::YES, ($profile && $profile->infrastructure==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('infrastructure', App\Models\Answer::NO, ($profile && $profile->infrastructure==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -630,7 +642,7 @@
                                         <div class="col-sm-6" >
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    {!! Form::textarea('other_description', $profile->other_description, array('class' => 'form-control', 'rows' => '3')) !!}
+                                                    {!! Form::textarea('other_description', $profile?$profile->other_description:'', array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -640,8 +652,8 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('other', App\Models\Answer::YES, ($profile->other==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('other', App\Models\Answer::NO, ($profile->other==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('other', App\Models\Answer::YES, ($profile && $profile->other==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('other', App\Models\Answer::NO, ($profile && $profile->other==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -655,7 +667,7 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    {!! Form::textarea('commendations', Input::old('pt_description'), array('class' => 'form-control', 'rows' => '3')) !!}
+                                                    {!! Form::textarea('commendations', $review->summary_commendations, array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -669,7 +681,7 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    {!! Form::textarea('challenges', Input::old('pt_description'), array('class' => 'form-control', 'rows' => '3')) !!}
+                                                    {!! Form::textarea('challenges', $review->summary_challenges, array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -683,7 +695,7 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    {!! Form::textarea('recommendations', Input::old('pt_description'), array('class' => 'form-control', 'rows' => '3')) !!}
+                                                    {!! Form::textarea('recommendations', $review->recommendations, array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -700,19 +712,29 @@
                                                 <table class="table table-striped table-bordered table-hover">
                                                     <thead>
                                                         <tr>
-                                                            <td>{!! Lang::choice('messages.follow-up-actions', 1) !!}</td>
-                                                            <td>{!! Lang::choice('messages.responsible-persons', 1) !!}</td>
-                                                            <td>{!! Lang::choice('messages.timeline', 1) !!}</td>
+                                                            <td><strong>{!! Lang::choice('messages.follow-up-actions', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.responsible-persons', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.timeline', 1) !!}</strong></td>
                                                             <td></td>
                                                         </tr>
                                                     </thead>    
                                                     <tbody id="action_plan_{{$review->id}}">
+                                                        @if($review->plans())
+                                                            @foreach($review->plans() as $plan)
+                                                            <tr>
+                                                                <td>{!! $plan->action !!}</td>
+                                                                <td>{!! $plan->responsible_person !!}</td>
+                                                                <td>{!! $plan->timeline !!}</td>
+                                                                <td></td>
+                                                            </tr>
+                                                            @endforeach
+                                                        @endif
                                                         <tr>
                                                             <td>{!! Form::textarea('action_'.$review->id, '', array('class' => 'form-control', 'rows' => '3', 'id' => 'action_'.$review->id)) !!}</td>
-                                                            <td>{!! Form::textarea('person_'.$review->id, '', array('class' => 'form-control', 'rows' => '3', 'id' => 'persons_'.$review->id)) !!}</td>
+                                                            <td>{!! Form::textarea('person_'.$review->id, '', array('class' => 'form-control', 'rows' => '3', 'id' => 'person_'.$review->id)) !!}</td>
                                                             <td>{!! Form::textarea('timeline_'.$review->id, '', array('class' => 'form-control', 'rows' => '3', 'id' => 'timeline_'.$review->id)) !!}</td>
                                                             <td>
-                                                                <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="saveObservation()"><i class="fa fa-save"></i> {{ Lang::choice('messages.save', 1) }}</a>
+                                                                <a class="btn btn-sm btn-danger" href="javascript:void(0)" onclick="saveActionPlan({{$review->id}})"><i class="fa fa-save"></i> {{ Lang::choice('messages.save', 1) }}</a>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -753,7 +775,7 @@
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
                                                         @foreach($question->answers as $answer)
-                                                            <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, '', array('class'=>'radio')) !!}{{ $answer->name }}</label>
+                                                            <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, ($question->qa($review->id) && in_array($answer->id, $question->qa($review->id))?true:false), array('class'=>'radio')) !!}{{ $answer->name }}</label>
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -767,7 +789,7 @@
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
                                                             @foreach($kid->answers as $answer)
-                                                                <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, '', array('class'=>'radio')) !!}{{ $answer->name }}</label>
+                                                                <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, ($kid->qa($review->id) && in_array($answer->id, $kid->qa($review->id))?true:false), array('class'=>'radio')) !!}{{ $answer->name }}</label>
                                                             @endforeach
                                                         </div>
                                                     </div>
@@ -784,7 +806,7 @@
                                                 <div class="col-sm-8">
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
-                                                            {!! Form::textarea('pt_'.$question->id, '', array('class' => 'form-control', 'rows' => '3')) !!}
+                                                            {!! Form::textarea('pt_'.$question->id, $question->qa($review->id)?$question->qa($review->id)[0]:'', array('class' => 'form-control', 'rows' => '3')) !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -827,7 +849,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="form-group">
                                                             <div class="col-sm-12">
-                                                                {!! Form::text('disease_'.$question->id, '', array('class' => 'form-control')) !!}
+                                                                {!! Form::text('disease_'.$question->id, $question->qa($review->id)?$question->qa($review->id)[0]:'', array('class' => 'form-control')) !!}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -844,7 +866,7 @@
                                                             <div class="col-sm-2">
                                                                 <div class="form-group">
                                                                     <div class="col-sm-12 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                                                        {!! Form::text('date_'.$kid->id, Input::old('audit_start_date'), array('class' => 'form-control')) !!}
+                                                                        {!! Form::text('date_'.$kid->id, $question->qa($review->id)?$question->qa($review->id)[0]:'', array('class' => 'form-control')) !!}
                                                                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                                                     </div>
                                                                 </div>    
@@ -853,7 +875,7 @@
                                                         <div class="col-sm-2">
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
-                                                                    {!! Form::text('percent_', Input::old('other_pt'), array('class' => 'form-control')) !!}
+                                                                    {!! Form::text('percent_', $question->qa($review->id)?$question->qa($review->id)[0]:'', array('class' => 'form-control')) !!}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -863,7 +885,7 @@
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
                                                                     @foreach($kid->answers as $answer)
-                                                                        <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, '', array('class'=>'radio')) !!}{{ $answer->name }}</label>
+                                                                        <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, ($kid->qa($review->id) && in_array($answer->id, $kid->qa($review->id))?true:false), array('class'=>'radio')) !!}{{ $answer->name }}</label>
                                                                     @endforeach
                                                                 </div>
                                                             </div>
@@ -904,7 +926,7 @@
                                                         @if(count($question->children)>0)
                                                             <div class="row">
                                                                 <div class="col-sm-6">
-                                                                    {!! Form::text('answer_'.$question->id, $question->decode($review->id), array('class' => 'form-control', 'id' => 'answer_'.$question->id, 'readonly')) !!}
+                                                                    {!! Form::text('answer_'.$question->id, ($question->decode($review->id)?$question->decode($review->id):''), array('class' => 'form-control', 'id' => 'answer_'.$question->id, 'readonly')) !!}
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group input-group"><input type="text" name="points_{{$question->id}}" id="points_{{$question->id}}" value="{!!$question->points($review->id)?$question->points($review->id)->audited_score:''!!}" class="form-control page_{{$page->id}}" oninput="sub_total('page_{{$page->id}}')" readonly><span class="input-group-addon">/{!! $question->score !!}</span></div>
@@ -914,7 +936,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-8">
                                                                 @foreach($question->answers as $answer)
-                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, (in_array($answer->id, $question->qa($review->id))?true:false), ['class' => 'radio_'.$question->id, 'onclick' => "scoreMain('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
+                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, (($question->qa($review->id) && in_array($answer->id, $question->qa($review->id)))?true:false), ['class' => 'radio_'.$question->id, 'onclick' => "scoreMain('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
                                                                 @endforeach
                                                                 </div>
                                                                 <div class="col-sm-4">
@@ -922,14 +944,14 @@
                                                                 </div>
                                                             </div>
                                                         @endif
-                                                        <label class="checkbox-inline">{!! Form::checkbox('check_'.$question->id, 1, (in_array(App\Models\Answer::NONCOMPLIANT, array($question->note($review->id)->non_compliance))?"checked":""), ['onclick' => 'noteChange("radio_".$question->id)']) !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
+                                                        <label class="checkbox-inline">{!! Form::checkbox('check_'.$question->id, 1, (($question->note($review->id) && in_array(App\Models\Answer::NONCOMPLIANT, array($question->note($review->id)->non_compliance)))?"checked":""), ['onclick' => 'noteChange("radio_".$question->id)']) !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
-                                                            {!! Form::textarea('text_'.$question->id, $question->note($review->id)->note, array('class' => 'form-control', 'rows' => '3')) !!}
+                                                            {!! Form::textarea('text_'.$question->id, $question->note($review->id)?$question->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3')) !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -949,16 +971,16 @@
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
                                                                 @foreach($kid->answers as $answer)
-                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, (in_array($answer->id, $kid->qa($review->id))?true:false), ['class' => 'radio_'.$question->id, 'onclick' => "noteChange('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
+                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, (($kid->qa($review->id) && in_array($answer->id, $kid->qa($review->id)))?true:false), ['class' => 'radio_'.$question->id, 'onclick' => "noteChange('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
                                                                 @endforeach
-                                                                <label class="checkbox-inline">{!! Form::checkbox('check_'.$kid->id, 1, (in_array(App\Models\Answer::NONCOMPLIANT, array($kid->note($review->id)->non_compliance))?"checked":"")) !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
+                                                                <label class="checkbox-inline">{!! Form::checkbox('check_'.$kid->id, 1, (($kid->note($review->id) && in_array(App\Models\Answer::NONCOMPLIANT, array($kid->note($review->id)->non_compliance)))?"checked":"")) !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
-                                                                    {!! Form::textarea('text_'.$kid->id, $kid->note($review->id)->note, array('class' => 'form-control', 'rows' => '3')) !!}
+                                                                    {!! Form::textarea('text_'.$kid->id, $kid->note($review->id)?$kid->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3')) !!}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1001,7 +1023,11 @@
                     <div class="form-group">
                         <div class="col-sm-offset-6 col-sm-6">
                         @if(($page->order == 0 && $page->total_points == 0) || ($page->total_points == 0 && count($page->notes)>0))
-                        <a href="{{ url('review/'.$review->id.'/edit/'.$page->next()->first()->id) }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
+                            @if(!$page->next()->isEmpty())
+                                <a href="{{ url('review/'.$review->id.'/edit/'.$page->next()->first()->id) }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
+                            @else
+                                <a href="{{ url('home') }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
+                            @endif
                         @else
                         {!! Form::submit(Lang::choice('messages.save', 1), 
                               array('class' => 'btn btn-success', 'name' =>Lang::choice('messages.save', 1), 'onclick' => 'submit()')) !!}
