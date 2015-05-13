@@ -380,8 +380,8 @@ class ReviewController extends Controller {
 			$slmta_data = array_merge($slmta_data, ['audit_start_date' => Input::get('audit_start_date')]);
 		if(Input::get('audit_end_date')) 
 			$slmta_data = array_merge($slmta_data, ['audit_end_date' => Input::get('audit_end_date')]);
-		$slmta_data = array_merge($slmta_data, ['updated_at' => date('Y-m-d H:i:s')]);
-		if(!Input::get('tests_before_slmta'))
+		$slmta_data = array_merge($slmta_data, ['review_id' => $review->id, 'updated_at' => date('Y-m-d H:i:s')]);
+		if(!Input::get('tests_before_slmta') &&  Input::get('section_id')==Section::idByName(Lang::choice('messages.slmta-info', 1)))
 			return redirect()->back()->with('error', 'Type of SLMTA audit cannot be empty.');
 		if(count($slmta_data)>0){
 			if(!$slmta)
@@ -398,9 +398,12 @@ class ReviewController extends Controller {
 			$lab_profile_1 = array_merge($lab_profile_1, ['head_work_telephone' => Input::get('head_work_telephone')]);
 		if(Input::get('head_personal_telephone'))
 			$lab_profile_1 = array_merge($lab_profile_1, ['head_personal_telephone' => Input::get('head_personal_telephone')]);
-		$lab_profile_1 = array_merge($lab_profile_1, ['updated_at' => date('Y-m-d H:i:s')]);
-		if(count($lab_profile_1)>0){
-			DB::table('review_lab_profiles')->where('id', $profile->id)->update($lab_profile_1);
+		$lab_profile_1 = array_merge($lab_profile_1, ['review_id' => $review->id, 'updated_at' => date('Y-m-d H:i:s')]);
+		if(count($lab_profile_1)>1){
+			if(!$profile)
+				DB::table('review_lab_profiles')->insert($lab_profile_1);
+			else
+				DB::table('review_lab_profiles')->where('id', $profile->id)->update($lab_profile_1);
 		}
 		//	Lab Profile - Part 2
 		$lab_profile_2 = array();
@@ -465,7 +468,7 @@ class ReviewController extends Controller {
     		$lab_profile_2 = array_merge($lab_profile_2, ['other_description' => Input::get('other_description')]);
     	$lab_profile_2 = array_merge($lab_profile_2, ['updated_at' => date('Y-m-d H:i:s')]);
     	//	Update the lab_profile
-    	if(count($lab_profile_2)>0)
+    	if(count($lab_profile_2)>1)
     		DB::table('review_lab_profiles')->where('id', $profile->id)->update($lab_profile_2);
     	//	Update the stored audit data
     	if(Input::get('assessment_data')){
@@ -534,7 +537,7 @@ class ReviewController extends Controller {
 		if(Input::get('recommendations'))
 			$summary = array_merge($summary, ['recommendations' => Input::get('recommendations')]);
 		$summary = array_merge($summary, ['updated_at' => date('Y-m-d H:i:s')]);
-		if(count($summary)>0)
+		if(count($summary)>1)
 			DB::table('reviews')->where('review_id', $review->id)->update($summary);
 		//	Get variables ready for processing of new audit
         $audit = AuditType::find($review->audit_type_id);
