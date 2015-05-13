@@ -4,9 +4,13 @@
 <div class="row">
     <div class="col-md-12">
         <ol class="breadcrumb">
-            <li class="active">
-                <a href="#"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
+            <li>
+                <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
             </li>
+            <li>
+                <a href="{{ url('review') }}">{{ Lang::choice('messages.audit', 1) }}</a>
+            </li>
+            <li class="active">{{ Lang::choice('messages.edit-audit', 1) }}</li>
         </ol>
     </div>
 </div>
@@ -33,10 +37,10 @@
                 </span>
             </div>
             <div class="panel-body">
-                @if($errors->all())
+                @if(session()->has('error'))
                 <div class="alert alert-danger alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only"> {{ Lang::choice('messages.close', 1) }}</span></button>
-                    {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
+                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">{{ Lang::choice('messages.close', 1) }}</span></button>
+                  {!! session('error') !!}
                 </div>
                 @endif
                 @if($page->id == App\Models\AuditType::find($audit->id)->sections->first()['id'])

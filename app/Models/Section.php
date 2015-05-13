@@ -110,4 +110,28 @@ class Section extends Model {
 		$questions = $this->questions->lists('id');
 		return DB::table('review_question_scores')->where('review_id', $review)->whereIn('question_id', $questions)->sum('audited_score');
 	}
+	/**
+	 * Parent relationship
+	 */
+	public function parent()
+	{
+		return DB::table('section_parent_child')->where('section_id', $this->id)->first();
+	}
+	/**
+	* Return Lab ID given the name
+	* @param $name the name of the section
+	*/
+	public static function idByName($name)
+	{
+		try 
+		{
+			$section = Section::where('name', $name)->orderBy('name', 'asc')->firstOrFail();
+			return $section->id;
+		} catch (ModelNotFoundException $e) 
+		{
+			Log::error("The section ` $name ` does not exist:  ". $e->getMessage());
+			//TODO: send email?
+			return null;
+		}
+	}
 }
