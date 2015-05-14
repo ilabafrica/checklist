@@ -179,11 +179,21 @@ function noteChange(name, points){
     var sum = 0;
     var questions = $('.radio_'+id).length;
     var answers = ['YES', 'PARTIAL', 'NO'];
-    $.each($('.radio_'+id), function(){
+    $.each($('.radio_'+id), function(key, item){
+        var txtId = 0;
         if( $(this).is(':checked')){
             sum+=parseInt($(this).val());
             count++;
-        }    
+            txtId = questionId($(this).attr('id'));
+            if(parseInt($(item).val()) == 2){
+                $('#text_'+txtId).addClass('form-control validate[required] text-input');
+                $('#text_'+txtId).validationEngine('showPrompt', '* This field is required.', 'red', 'topLeft', true);
+            }
+            else if(parseInt($(item).val()) == 1){
+                $('#text_'+txtId).validationEngine('hide');
+                $('#text_'+txtId).addClass('form-control');
+            }
+        }
     });
     if(sum==count){
         $('#points_'+id).val(points).trigger('input');
@@ -203,9 +213,18 @@ function scoreMain(name, points){
     var id = questionId(name);
     var count = 0;
     var answer = 0;
-    $.each($('.radio_'+id), function(){
+    $.each($('.radio_'+id), function(key, item){
         if( $(this).is(':checked')){
             answer+=parseInt($(this).val());
+            console.log(parseInt($(this).val()));
+            if(parseInt($(this).val()) == 2 || parseInt($(this).val()) == 3 || parseInt($(this).val()) == 4){
+                $('#text_'+id).addClass('form-control validate[required] text-input');
+                $('#text_'+id).validationEngine('showPrompt', '* This field is required.', 'red', 'topLeft', true);
+            }
+            else if(parseInt($(this).val()) == 1){
+                $('#text_'+id).validationEngine('hide');
+                $('#text_'+id).addClass('form-control');
+            }
         }    
     });
     if(answer == 1)
@@ -249,3 +268,23 @@ function set_total(id) {
    });
     var xx= 0;
 }
+/* Posabsolute validation */
+jQuery(document).ready( function() {
+        jQuery("#form-edit-review").validationEngine({promptPosition:"topLeft", scroll:true});
+        // binds form submission and fields to the validation engine
+        $('#save').click(function(e){
+            e.preventDefault();
+            if(!$("#form-edit-review").validationEngine('validate'))
+                return false;
+            else
+                $("#form-edit-review").submit();
+        });
+        $('#continue').click(function(e){
+            e.preventDefault();
+            if(!$("#form-edit-review").validationEngine('validate'))
+                return false;
+            else
+                $("#form-edit-review").submit();
+        });
+        //jQuery("#form-edit-review").validationEngine();
+    });

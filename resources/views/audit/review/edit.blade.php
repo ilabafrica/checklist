@@ -50,7 +50,7 @@
                 @endif
                 <!-- Begin form logic -->
                 {!! Form::model($review, array('route' => array('review.update', $review->id), 
-                    'method' => 'PUT', 'id' => 'form-edit-review', 'class' => 'form-horizontal')) !!}
+                    'method' => 'PUT', 'id' => 'form-edit-review', 'class' => 'form-horizontal formular')) !!}
                     <!-- CSRF Token -->
                     <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                     <!-- ./ csrf token -->
@@ -940,7 +940,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-8">
                                                                 @foreach($question->answers as $answer)
-                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, (($question->qa($review->id) && in_array($answer->id, $question->qa($review->id)))?true:false), ['class' => 'radio_'.$question->id, 'onclick' => "scoreMain('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
+                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, (($question->qa($review->id) && in_array($answer->id, $question->qa($review->id)))?true:false), ['class' => 'validate[required] radio radio_'.$question->id, 'onclick' => "scoreMain('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
                                                                 @endforeach
                                                                 </div>
                                                                 <div class="col-sm-4">
@@ -955,7 +955,7 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
-                                                            {!! Form::textarea('text_'.$question->id, $question->note($review->id)?$question->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3')) !!}
+                                                            {!! Form::textarea('text_'.$question->id, $question->note($review->id)?$question->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3', 'id' => 'text_'.$question->id)) !!}
                                                         </div>
                                                     </div>
                                                 </div>
@@ -975,7 +975,7 @@
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
                                                                 @foreach($kid->answers as $answer)
-                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, (($kid->qa($review->id) && in_array($answer->id, $kid->qa($review->id)))?true:false), ['class' => 'radio_'.$question->id, 'onclick' => "noteChange('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
+                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, (($kid->qa($review->id) && in_array($answer->id, $kid->qa($review->id)))?true:false), ['class' => 'validate[required] radio radio_'.$question->id, 'id' => 'radio_'.$kid->id, 'onclick' => "noteChange('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
                                                                 @endforeach
                                                                 <label class="checkbox-inline">{!! Form::checkbox('check_'.$kid->id, 1, (($kid->note($review->id) && in_array(App\Models\Answer::NONCOMPLIANT, array($kid->note($review->id)->non_compliance)))?"checked":"")) !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
                                                                 </div>
@@ -984,7 +984,7 @@
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
-                                                                    {!! Form::textarea('text_'.$kid->id, $kid->note($review->id)?$kid->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3')) !!}
+                                                                    {!! Form::textarea('text_'.$kid->id, $kid->note($review->id)?$kid->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3', 'id' => 'text_'.$kid->id)) !!}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1034,9 +1034,9 @@
                             @endif
                         @else
                         {!! Form::submit(Lang::choice('messages.save', 1), 
-                              array('class' => 'btn btn-success', 'name' =>Lang::choice('messages.save', 1), 'onclick' => 'submit()')) !!}
+                              array('class' => 'btn btn-success', 'id' => 'save', 'name' =>Lang::choice('messages.save', 1))) !!}
                         {!! Form::submit(Lang::choice('messages.save-and-continue', 1), 
-                              array('class' => 'btn btn-info', 'name' =>Lang::choice('messages.save-and-continue', 1), 'onclick' => 'submit()')) !!}
+                              array('class' => 'btn btn-info',  'id' => 'continue', 'name' =>Lang::choice('messages.save-and-continue', 1))) !!}
                         @endif
                         <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                         </div>

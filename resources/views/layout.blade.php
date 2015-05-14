@@ -37,6 +37,8 @@
     <!-- jQuery -->
     <script src="{{ URL::asset('admin/js/jquery.min.js') }}"></script>
 
+    <!-- Posabsolute jQuery Validation -->
+    <link href="{{ URL::asset('admin/css/validationEngine.jquery.css') }}" rel="stylesheet">
 
 </head>
 
@@ -146,6 +148,9 @@
     <script type="text/javascript" src="{{ URL::asset('admin/js/dataTables.bootstrap.js') }}"></script>
     <script src="{{ URL::asset('admin/js/moment.js') }}"></script>
     <script src="{{ URL::asset('admin/js/bootstrap-datepicker.js') }}"></script>
+    <!-- Posabsolute jQuery validation -->
+    <script src="{{ URL::asset('admin/js/jquery.validationEngine-en.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/jquery.validationEngine.js') }}"></script>
 </body>
 
 </html>
