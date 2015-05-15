@@ -1036,4 +1036,25 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    jQuery(document).ready( function() {
+        jQuery("#form-edit-review").validationEngine({promptPosition:"topLeft", scroll:true});
+        // binds form submission and fields to the validation engine
+        $('#save').click(function(e){
+            e.preventDefault();
+            if(!$("#form-add-review").validationEngine('validate'))
+                return false;
+            else
+                $("#form-add-review").submit();
+        });
+        $('#continue').click(function(e){
+            e.preventDefault();
+            if(!$("#form-add-review").validationEngine('validate'))
+                return false;
+            else
+                $("#form-add-review").submit();
+        });
+        //jQuery("#form-edit-review").validationEngine();
+    });
+</script>
 @stop

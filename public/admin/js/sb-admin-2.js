@@ -269,22 +269,3 @@ function set_total(id) {
     var xx= 0;
 }
 /* Posabsolute validation */
-jQuery(document).ready( function() {
-        jQuery("#form-edit-review").validationEngine({promptPosition:"topLeft", scroll:true});
-        // binds form submission and fields to the validation engine
-        $('#save').click(function(e){
-            e.preventDefault();
-            if(!$("#form-edit-review").validationEngine('validate'))
-                return false;
-            else
-                $("#form-edit-review").submit();
-        });
-        $('#continue').click(function(e){
-            e.preventDefault();
-            if(!$("#form-edit-review").validationEngine('validate'))
-                return false;
-            else
-                $("#form-edit-review").submit();
-        });
-        //jQuery("#form-edit-review").validationEngine();
-    });
