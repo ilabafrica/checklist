@@ -28,7 +28,7 @@
         </h4>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.description', 1) }}:</strong> <span> {{ $note->description }}</span>
+          <strong>{{ Lang::choice('messages.description', 1) }}:</strong> <span> {!! html_entity_decode($note->description) !!}</span>
         </h5>
         <hr>
         <h5 class="no-margn">

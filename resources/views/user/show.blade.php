@@ -30,7 +30,7 @@
         </h4>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.gender', 1) }}:</strong> <span> {{ $user->gender }}</span>
+          <strong>{{ Lang::choice('messages.gender', 1) }}:</strong> <span> {{ $user->gender== App\Models\User::MALE? Lang::choice('messages.sex', 1):Lang::choice('messages.sex', 2) }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">

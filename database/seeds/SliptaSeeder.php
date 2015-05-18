@@ -23,7 +23,11 @@ class SliptaSeeder extends Seeder
     	$usersData = array(
             array(
                 "username" => "admin", "password" => Hash::make("password"), "email" => "admin@slipta.org",
-                "name" => "Kitsao Emmanuel", "gender" => "0", "phone"=>"0722000000", "address" => "P.O. Box 59857-00200, Nairobi"
+                "name" => "Echecklist Admin", "gender" => "0", "phone"=>"0722000000", "address" => "P.O. Box 59857-00200, Nairobi"
+            ),
+            array(
+                "username" => "assessor", "password" => Hash::make("password"), "email" => "test@slipta.org",
+                "name" => "Echecklist Assessor", "gender" => "0", "phone"=>"0729333333", "address" => "P.O. Box 59857-00200, Nairobi"
             ),
         );
 

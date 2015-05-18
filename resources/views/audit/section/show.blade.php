@@ -40,7 +40,7 @@
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.audit-type', 1) }}:</strong> <span> {{ $section->audit_type_id }}</span>
+          <strong>{{ Lang::choice('messages.audit-type', 1) }}:</strong> <span> {{ $section->auditType->name }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">

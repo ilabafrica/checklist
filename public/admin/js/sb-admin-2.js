@@ -223,7 +223,7 @@ function scoreMain(name, points){
             }
             else if(parseInt($(this).val()) == 1){
                 $('#text_'+id).validationEngine('hide');
-                $('#text_'+id).addClass('form-control');
+                $('#text_'+id).removeClass('validate[required] text-input');
             }
         }    
     });
