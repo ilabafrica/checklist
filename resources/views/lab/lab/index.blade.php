@@ -30,7 +30,7 @@
         @endif
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-striped table-bordered table-hover {!! !$labs->isEmpty()?'search-table':'' !!}">
+                <table class="table table-striped table-bordered table-hover {!! (!$labs->isEmpty())?'search-table':'' !!}">
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
@@ -54,9 +54,15 @@
                             <td>{{ $lab->labType->name}}</td>
                             <td>
                               <a href="{{ URL::to("lab/" . $lab->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {{Lang::choice('messages.view', 1)}}</span></a>
+                              @if(Entrust::can('edit-lab'))
                               <a href="{{ URL::to("lab/" . $lab->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> {{Lang::choice('messages.edit', 1)}}</span></a>
+                              @endif
+                              @if(Entrust::can('manage-labs'))
                               <a href="{{ URL::to("lab/" . $lab->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> {{Lang::choice('messages.delete', 1)}}</span></a>
+                              @endif
+                              @if(Entrust::can('create-audit'))
                               <a href="{{ URL::to("lab/" . $lab->id ."/select") }}" class="btn btn-default btn-sm"><i class="fa fa-folder-open"></i><span> {{Lang::choice('messages.start-audit', 1)}}</span></a>
+                              @endif
                             </td>
                         </tr>
                         @empty
