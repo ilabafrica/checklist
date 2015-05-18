@@ -27,7 +27,7 @@ class SliptaSeeder extends Seeder
             ),
             array(
                 "username" => "assessor", "password" => Hash::make("password"), "email" => "test@slipta.org",
-                "name" => "Echecklist Assessor", "gender" => "0", "phone"=>"0729333333", "address" => "P.O. Box 59857-00200, Nairobi"
+                "name" => "Echecklist Assessor", "gender" => "0", "phone"=>"0729333333", "address" => "P.O. Box 1369-00100, Nairobi"
             ),
         );
 
@@ -97,6 +97,8 @@ class SliptaSeeder extends Seeder
         $role2->attachPermission(Permission::find(2));
         $role2->attachPermission(Permission::find(3));
         $role2->attachPermission(Permission::find(8));
+        //Assign role Assessor to second user
+        User::find(2)->attachRole($role2);
 
         //Assign roles to the other users
         /* Lab Levels */

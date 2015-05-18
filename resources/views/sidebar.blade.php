@@ -14,6 +14,7 @@
     <li>
         <a href="{{ url('home') }}"><i class="fa fa-dashboard fa-fw"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
     </li>
+    @if(Entrust::can('manage-labs'))
     <li>
         <a href="#"><i class="fa fa-stack-exchange"></i> {{ Lang::choice('messages.lab-catalog', 1) }}<span class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse">
@@ -24,6 +25,7 @@
             <li><a href="{{ URL::to('country')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.country', 2) }}</a></li>
         </ul>
     </li>
+    @endif
     @if(Entrust::can('manage-audit-config'))
     <li>
         <a href="#"><i class="fa fa-sliders"></i> {{ Lang::choice('messages.audit-config', 1) }}<span class="fa arrow"></span></a>

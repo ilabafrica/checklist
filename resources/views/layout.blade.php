@@ -75,29 +75,29 @@
                     </a>
                    
                     <ul class="dropdown-menu">
-                         @if(Auth::user()->can('manage-labs'))
+                        @if(Auth::user()->can('manage-labs'))
                         <li><a href="{{ route('lab.create') }}"><span class="fa fa-tag"></span> {{ Lang::choice('messages.new-lab', 1) }}</a>
                         </li>
+                        @endif
                         <li class="divider"></li>
                         <li><a href="{{ route('lab.index') }}"><span class="fa fa-send"></span> {{ Lang::choice('messages.select-lab', 1) }}</a>
                         </li>
-                         @endif
                     </ul>
                 </li>
+                @if(Auth::user()->can('manage-users'))
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
                         <span class="fa fa-user"></span> {{ Lang::choice('messages.user', 1) }}  <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                         @if(Auth::user()->can('manage-users'))
                         <li><a href="{{ route('user.create') }}"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.new-user', 1) }}</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{{ route('user.index') }}"><span class="fa fa-search"></span> {{ Lang::choice('messages.find-user', 1) }}</a>
                         </li>
-                        @endif
                     </ul>
                 </li>
+                @endif
                 <li class="dropdown">
                     <a href="{{ route('review.report') }}" role="button" aria-expanded="false">
                         <span class="fa fa-bar-chart"></span> {{ Lang::choice('messages.report', 2) }}
