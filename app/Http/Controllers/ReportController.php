@@ -27,6 +27,8 @@ class ReportController extends Controller {
 		$categories = array();
 		$labels = array();
 		$data = array();
+		$score = 0;
+		$points = 0;
 		$sections = $review->auditType->sections;
 		foreach($sections as $section){
 			if($section->total_points!=0)
@@ -36,6 +38,8 @@ class ReportController extends Controller {
 		}
 		foreach($categories as $section){
 			array_push($labels, $section->name);
+			$points+=(int)$section->total_points;
+			$score+=(int)$section->subtotal($review->id);
 		}
 		$chart = '{
         "chart": {
@@ -195,7 +199,7 @@ class ReportController extends Controller {
         }]
 
     }';
-		return view('report.index', compact('review', 'options', 'spider'));
+		return view('report.index', compact('review', 'options', 'spider', 'categories', 'score', 'points'));
 	}
 	/**
 	 * Show the form for creating a new resource.
