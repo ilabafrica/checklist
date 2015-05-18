@@ -239,33 +239,10 @@ function sub_total(name){
     var id = questionId(name);
     var sum = 0;
     $.each($('.page_'+id), function(){
-            sum+=parseInt($(this).val());
+        val = $(this).val();
+        val = parseInt(val);
+        val = (isNaN(val)) ? 0: val;
+        sum+=val;
     });
-    
     $('#subtotal_'+id).val(sum);
 }
-function set_total(id) {
-    var myid = id+ '_total';
-    var incid = id + '_secinc';
-    var total = 0;
-    var val, abc;
-   $('input[name$="_score"]').each( function(i) {
-       val = $(this).val();
-       val = parseInt(val);
-       val = (isNaN(val)) ? 0: val;
-       total = total + val;
-       $('#'+myid).val(total);
-       abc = 0;
-   });
-   total = 0;
-   $('input[name$="_inc"]').each( function(i) {
-       val = $(this).val();
-       val = parseInt(val);
-       val = (isNaN(val)) ? 0: val;
-       total = total + val;
-       $('#'+incid).val(total);
-       abc = 0;
-   });
-    var xx= 0;
-}
-/* Posabsolute validation */
