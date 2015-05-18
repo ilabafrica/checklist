@@ -4,7 +4,8 @@ return [
 	/*	General terms */
 	'dashboard'	=>	'Dashboard',
 	'lab-catalog'	=>	'Lab Catalog',
-	'audit-config'	=>	'Audit Configuration',
+	'audit-config' => 'Audit Configuration',
+	'audit-score'=>	'Audit Scores',
 	'reports'	=>	'Reports',
 	'access-controls'	=>	'Access Controls',
 	'name'	=>	'Name|Names',

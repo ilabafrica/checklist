@@ -39,6 +39,8 @@
                 </li>
                 <li class=""><a href="#spider" data-toggle="tab" aria-expanded="false">{!! Lang::choice('messages.spider-chart', 1) !!}</a>
                 </li>
+                <li class=""><a href="#" data-toggle="tab" aria-expanded="false">{!! Lang::choice('messages.audit-score', 1) !!}</a>
+                </li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade active in" id="spider" style="padding-top:20px;"></div>
