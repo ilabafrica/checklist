@@ -123,7 +123,19 @@
                 </div>
             {!! Form::close() !!} 
             <!-- End form -->
-        </div> 
+        </div>
+        <div class="col-sm-6">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false"><i class="fa fa-comments"></i> {{ Lang::choice('messages.help', 1) }} </a></div>
+                    <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">
+                        <div class="panel-body">
+                            {!! html_entity_decode(Lang::choice('messages.create-lab-help', 1)) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @stop

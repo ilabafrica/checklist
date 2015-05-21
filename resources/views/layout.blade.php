@@ -55,15 +55,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">{{ Config::get('slipta.name') }}</a>
-                <a class="navbar-brand" id="menu-toggle" href="#"><i class="fa fa-exchange"></i></a>
+                <a class="navbar-brand" href="{!! url('home') !!}">{{ Config::get('slipta.name') }}</a>
+                <a class="navbar-brand" id="menu-toggle" href="{!! url('home') !!}"><i class="fa fa-exchange"></i></a>
             </div>
             <!-- /.navbar-header -->
             <!-- Audit, Lab - Depending on permissions -->
             <ul class="nav navbar-top-links navbar-left">
                 <li class="dropdown">
                     @if(Auth::user()->can('manage-audits'))
-                    <a href="{{ route('review.index') }}" role="button" aria-expanded="false">
+                    <a href="{!! route('review.index') !!}" role="button" aria-expanded="false">
                         <span class="fa fa-clipboard"></span> {{ Lang::choice('messages.audit', 2) }}
                     </a>
                     @endif
@@ -76,11 +76,11 @@
                    
                     <ul class="dropdown-menu">
                         @if(Auth::user()->can('manage-labs'))
-                        <li><a href="{{ route('lab.create') }}"><span class="fa fa-tag"></span> {{ Lang::choice('messages.new-lab', 1) }}</a>
+                        <li><a href="{!! route('lab.create') !!}"><span class="fa fa-tag"></span> {{ Lang::choice('messages.new-lab', 1) }}</a>
                         </li>
                         @endif
                         <li class="divider"></li>
-                        <li><a href="{{ route('lab.index') }}"><span class="fa fa-send"></span> {{ Lang::choice('messages.select-lab', 1) }}</a>
+                        <li><a href="{!! route('lab.index') !!}"><span class="fa fa-send"></span> {{ Lang::choice('messages.select-lab', 1) }}</a>
                         </li>
                     </ul>
                 </li>
@@ -90,16 +90,16 @@
                         <span class="fa fa-user"></span> {{ Lang::choice('messages.user', 1) }}  <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ route('user.create') }}"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.new-user', 1) }}</a>
+                        <li><a href="{!! route('user.create') !!}"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.new-user', 1) }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="{{ route('user.index') }}"><span class="fa fa-search"></span> {{ Lang::choice('messages.find-user', 1) }}</a>
+                        <li><a href="{!! route('user.index') !!}"><span class="fa fa-search"></span> {{ Lang::choice('messages.find-user', 1) }}</a>
                         </li>
                     </ul>
                 </li>
                 @endif
                 <li class="dropdown">
-                    <a href="{{ route('review.report') }}" role="button" aria-expanded="false">
+                    <a href="{!! route('review.report') !!}" role="button" aria-expanded="false">
                         <span class="fa fa-bar-chart"></span> {{ Lang::choice('messages.report', 2) }}
                     </a>
                 </li>
@@ -111,10 +111,10 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{ Auth::user()->name }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{{ url('user/'.Auth::user()->id.'/edit') }}"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.user-profile', 1) }}</a>
+                        <li><a href="{!! url('user/'.Auth::user()->id.'/edit') !!}"><span class="glyphicon glyphicon-user"></span> {{ Lang::choice('messages.user-profile', 1) }}</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="{{ url('/auth/logout') }}"><span class="glyphicon glyphicon-log-out"></span> {{ Lang::choice('messages.sign-out', 1) }}</a>
+                        <li><a href="{!! url('/auth/logout') !!}"><span class="glyphicon glyphicon-log-out"></span> {{ Lang::choice('messages.sign-out', 1) }}</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->

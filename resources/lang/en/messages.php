@@ -301,4 +301,7 @@ return [
 	'checklist-question'	=>	'Checklist Question',
 	'iso'	=>	'ISO 15189 References',
 	'major-minor'	=>	'Major/Minor',
+	/* SLIPTA HELP MESSAGES */
+	'home-help'	=>	'<p>Here you will find audits you did, both COMPLETE and INCMPLETE.</p><p>Click:</p><p><strong>View</strong> - to see full audit.</p><p><strong>Edit</strong> - to edit.</p><p><strong>Export Audit Data</strong> - to export to data file.</p><p><strong>Run Reports</strong> - to audit summary.</p><p><strong>Mark Audit Complete</strong> - Change selected audit status to COMPLETE.</p>',
+	'create-lab-help'	=>	'Create a new Lab. Labs are identified by their lab numbers, which must be unique.',
 ];
