@@ -41,165 +41,96 @@ class ReportController extends Controller {
 			$points+=(int)$section->total_points;
 			$score+=(int)$section->subtotal($review->id);
 		}
-		$chart = '{
-        "chart": {
-            "type": "column"
-        },
-        "title": {
-            "text": "Monthly Average Rainfall"
-        },
-        "subtitle": {
-            "text": "Source: WorldClimate.com"
-        },
-        "xAxis": {
-            "type": "category",
-            "crosshair": true
-        },
-        "yAxis": {
-            "min": "0",
+		//	Column chart
+		$column = '{
+            chart: {
+                type: "column"
+            },
             "title": {
-                "text": "Rainfall (mm)"
-            }
-        },
-        "plotOptions": {
-            "column": {
-                "pointPadding": "0.2",
-                "borderWidth": "0"
-            }
-        },
-        "credits": {
-	        "enabled": false
-	    },
-        "series": [{
-            "data": [';
-            foreach($categories as $section){
-            	$chart.= $section->subtotal($review->id).',';
-            }
-            $chart.= ']
-        }]
-    });
-}';
-
-	$options = '{
-	      	type: "column2d",
-	      	renderAt: "chartContainer",
-	      	width: "100%",
-	      	height: "400",
-	      	dataFormat: "json",
-	      	dataSource: {
-	       	"chart": {
-	          	"caption": "'.$review->lab->name.'",
-	          	"subCaption": "% Score by Section",
-	          	"xAxisName": "'.Lang::choice('messages.section', 1).'",
-	          	"yAxisName": "Score in %",
-	          	"theme": "zune"
-	       	},
-	       	"data": [';
-	       	foreach ($categories as $section) {
-	       		$options.='{
-	       			"label": "'.$section->name.'",
-	       			"value": "'.round($section->subtotal($review->id)*100/$section->total_points, 2).'"
-	       		},';
-	       	}
-	       	$options.='
-	        	]
-	      	}
-	 
-	  	}';
-	  	$spider = '{
-	      	type: "radar",
-	      	renderAt: "chartContainer",
-	      	width: "100%",
-	      	height: "400",
-	      	dataFormat: "json",
-	      	dataSource: {
-	       	"chart": {
-	          	"caption": "'.$review->lab->name.'",
-	          	"subCaption": "% Score by Section",
-	          	"xAxisName": "'.Lang::choice('messages.section', 1).'",
-	          	"yAxisName": "Score in %",
-	          	"theme": "zune",
-	          	"radarFillColor": "#fffffff"
-	       	},
-	       	"categories":[{
-	       		"category": [';
-	       		foreach ($categories as $section) {
-	       			$spider.='{
-	       				"label": "'.$section->name.'"
-	       			},';
+	            "text": "'.$review->lab->name.'"
+	        },
+	        "subtitle": {
+	            "text": "% Score per section"
+	        },
+	        "xAxis": {
+	            categories: [';
+		        	foreach ($labels as $label) {
+		       			$column.="'".$label."',";
 	       			}
-	       		$spider.=']
-
-	       	}],
-	       	"dataset": [
-	       		{
-	       			"seriesName": "% Score per section",
-	       			"data": [';
-	       				foreach ($categories as $section) {
-	       					$spider.='{
-	       						"value": "'.round($section->subtotal($review->id)*100/$section->total_points, 2).'"
-	       					},';
-	       				}
-	       			$spider.=']
-	       		}
-	        	]
-	      	}
-	 
-	  	}';
-	  	$high = '{
-
-        "chart": {
-            "polar": true,
-            "type": "line"
-        },
-
-        "title": {
-            "text": "'.$review->lab->name.'",
-            "x": -80
-        },
-
-        "pane": {
-            "size": "80%"
-        },
-
-        "xAxis": {
-            "categories": [';
-            	$high.=implode(',', $categories);
-            $high.='],
-            "tickmarkPlacement": "on",
-            "lineWidth": "0"
-        },
-
-        "yAxis": {
-            "gridLineInterpolation": "polygon",
-            "lineWidth": "0",
-            "min": "0"
-        },
-
-        "tooltip": {
-            "shared": "true",
-            "pointFormat": "<span style=\"color:{series.color}\">{series.name}: <b>${point.y:,.0f}</b><br/>"
-        },
-
-        "legend": {
-            "align": "right",
-            "verticalAlign": "top",
-            "y": 70,
-            "layout": "vertical"
-        },
-
-        "series": [{
-            "name": "Score in %",
-            "data": [';
-            	foreach ($categories as $section) {
-   					$high.=round($section->subtotal($review->id)*100/$section->total_points, 2).',';
-   				}
-   				$high.='],
-            "pointPlacement": "on"
-        }]
-
-    }';
-		return view('report.index', compact('review', 'options', 'spider', 'categories', 'score', 'points'));
+	       		$column.='],
+	        },
+            "yAxis": {
+	            "min": "0",
+	            "title": {
+	                "text": "% Score"
+	            },
+	            crosshair: true
+	        },
+            "credits": {
+		        "enabled": false
+		    },
+            plotOptions: {
+                series: {
+                    colorByPoint: true
+                }
+            },
+            "series": [{
+            	"showInLegend": false,
+            	"name": "% Score",
+	            "data": [';
+	            foreach($categories as $section){
+	            	$column.= round($section->subtotal($review->id)*100/$section->total_points, 2).',';
+	            }
+	            $column.= ']
+	        }]          
+        }';
+        //	Spider chart
+	  	$spider = '{
+	        "chart": {
+	            "polar": true,
+	            "type": "line"
+	        },
+	        "title": {
+	            "text": "'.$review->lab->name.'",
+	            "x": -80
+	        },
+	        "pane": {
+	            "size": "80%"
+	        },
+	        "xAxis": {
+	            "categories": [';
+	        	foreach ($labels as $label) {
+		       			$spider.="'".$label."',";
+	       			}
+	       		$spider.='],
+	            "tickmarkPlacement": "on",
+	            "lineWidth": "0"
+	        },
+	        "yAxis": {
+	            "gridLineInterpolation": "polygon",
+	            "lineWidth": "0",
+	            "min": "0"
+	        },
+	        "credits": {
+		        "enabled": false
+		    },
+	        "legend": {
+	            "align": "right",
+	            "verticalAlign": "top",
+	            "y": 70,
+	            "layout": "vertical"
+	        },
+	        "series": [{
+	            "name": "% score",
+	            "data": [';
+	            	foreach ($categories as $section) {
+	   					$spider.=round($section->subtotal($review->id)*100/$section->total_points, 2).',';
+	   				}
+	   				$spider.='],
+	            "pointPlacement": "on"
+	        }]
+	    }';
+		return view('report.index', compact('review', 'spider', 'categories', 'score', 'points', 'column'));
 	}
 	/**
 	 * Show the form for creating a new resource.

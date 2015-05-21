@@ -37,14 +37,14 @@
             <ul class="nav nav-tabs default">
                 <li class="active"><a href="#scores" data-toggle="tab" aria-expanded="true">{!! Lang::choice('messages.audited-score', 1) !!}</a>
                 </li>
-                <li class=""><a href="#bar" data-toggle="tab" aria-expanded="false">{!! Lang::choice('messages.bar-chart', 1) !!}</a>
+                <li class=""><a href="#column" data-toggle="tab" aria-expanded="false">{!! Lang::choice('messages.bar-chart', 1) !!}</a>
                 </li>
                 <li class=""><a href="#spider" data-toggle="tab" aria-expanded="false">{!! Lang::choice('messages.spider-chart', 1) !!}</a>
                 </li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane" id="spider" style="padding-top:20px;"></div>
-                <div class="tab-pane" id="bar" style="padding-top:20px;"></div>
+                <div class="tab-pane" id="spider" style="padding-top:20px;width:70%;"></div>
+                <div class="tab-pane" id="column" style="padding-top:20px;width:70%;"></div>
                 <div class="tab-pane fade active in" id="scores" style="padding-top:20px;">
                     <table class="table table-striped table-bordered table-hover ">
                         <thead>
@@ -88,23 +88,14 @@
         </div>
     </div>
 </div>
-<!-- <script src="{{ URL::asset('admin/js/highcharts.js') }}"></script>
+<script src="{{ URL::asset('admin/js/highcharts.js') }}"></script>
 <script src="{{ URL::asset('admin/js/highcharts-more.js') }}"></script>
-<script src="{{ URL::asset('admin/js/exporting.js') }}"></script> -->
-
-<script src="{{ URL::asset('fusioncharts/fusioncharts.js') }}"></script>
-<script src="{{ URL::asset('fusioncharts/themes/fusioncharts.theme.ocean.js') }}"></script>
-
+<script src="{{ URL::asset('admin/js/exporting.js') }}"></script>
 <script type="text/javascript">
-/* Return bar chart */
-FusionCharts.ready(function(){
-    var revenueChart = new FusionCharts(<?php echo $options ?>);
-  revenueChart.render("bar");
-});
-/* Return spider chart */
-FusionCharts.ready(function(){
-    var revenueChart = new FusionCharts(<?php echo $spider ?>);
-  revenueChart.render("spider");
-});
+    $(function () {
+        $('#column').highcharts(<?php echo $column ?>); 
+        $('#spider').highcharts(<?php echo $spider ?>);  
+    });
 </script>
+
 @stop
