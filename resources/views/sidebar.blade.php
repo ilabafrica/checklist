@@ -23,7 +23,7 @@
                                 <li><a href="{{ URL::to('facilityOwner')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.facility-owner', 2) }} </a></li>
                                 <li><a href="{{ URL::to('county')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.county', 2) }} </a></li>
                                 <li><a href="{{ URL::to('constituency')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.constituency', 2) }} </a></li>
-                                <li><a href="{{ URL::to('town')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.town', 2) }} </a></li>
+                              <!--  <li><a href="{{ URL::to('town')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.town', 2) }} </a></li>-->
                                 <li><a href="{{ URL::to('title')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.title', 2) }} </a></li>
 
                             </ul>

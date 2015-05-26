@@ -110,9 +110,21 @@ class SliptaSeeder extends Seeder
         User::find(2)->attachRole($role2);
 
         //Assign roles to the other users
+         /* SLMTA Lab Types */
+        $labTypes = array(
+            array("name" => "National", "user_id" => "1"),
+            array("name" => "Non-Governmental Organization", "user_id" => "1"),
+            array("name" => "Faith-based", "user_id" => "1")
+        );
+        foreach ($labTypes as $labType) {
+            LabType::create($labType);
+        }
+        $this->command->info('SLMTA lab types table seeded');
+
         /* Lab Levels */
         $labLevels = array(
             array("name" => "National", "user_id" => "1"),
+            array("name" => "County Referral", "user_id" => "1"),
             array("name" => "Referral", "user_id" => "1"),
             array("name" => "Regional", "user_id" => "1"),
             array("name" => "Zonal", "user_id" => "1")
@@ -123,6 +135,7 @@ class SliptaSeeder extends Seeder
         $this->command->info('Lab levels table seeded');
         /* Lab Affiliations */
         $labAffiliations = array(
+            array("name" => "G.O.K.", "user_id" => "1"),
             array("name" => "Private", "user_id" => "1"),
             array("name" => "Research", "user_id" => "1")
         );
@@ -130,16 +143,9 @@ class SliptaSeeder extends Seeder
             LabAffiliation::create($labAffiliation);
         }
         $this->command->info('Lab affiliations table seeded');
-        /* SLMTA Lab Types */
-        $labTypes = array(
-            array("name" => "National", "user_id" => "1"),
-            array("name" => "Non-Governmental Organization", "user_id" => "1"),
-            array("name" => "Faith-based", "user_id" => "1")
-        );
-        foreach ($labTypes as $labType) {
-            LabType::create($labType);
-        }
-        $this->command->info('SLMTA lab types table seeded');
+       
+        
+        
 
         /* Audit Types */
         $auditTypes = array(
@@ -261,7 +267,7 @@ class SliptaSeeder extends Seeder
 
         /* Constituencies table */
         $constituencies = array(
-               array("name" =>"CHANGAMWE", "county_id" =>"28", "user_id" => "1"),
+array("name" =>"CHANGAMWE", "county_id" =>"28", "user_id" => "1"),
 array("name" =>"JOMVU", "county_id" =>"28", "user_id" => "1"),
 array("name" =>"KISAUNI", "county_id" =>"28", "user_id" => "1"),
 array("name" =>"NYALI", "county_id" =>"28", "user_id" => "1"),
@@ -591,59 +597,42 @@ array("name" =>"ELDORET EAST", "county_id" =>"44", "user_id" => "1")
         $this->command->info('Job titles table seeded');
 
          /* Facilities table */
-        $facilities = array(
-        array("code" => "11195", "name" => "Acode Medical Clinic Maungu", "facility_type_id" => "13", "facility_owner_id" => "3", "constituency_id" => "1", "description"=> " ","nearest_town" => "Maungu town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 18", "town" => "Maungu", "in_charge" => "Sr  Kameru", "title_id" => "1", "operational_status" => "1", "user_id" => "1"),
-        );
+       $facilities = array(
+
+ array("code" => '19224'  , "name" =>' CDF Kiriari Dispensary'    , "facility_type_id" => '3' , "facility_owner_id" => '3'    , "constituency_id" => '63' , "description"=> ''    ,"nearest_town" =>'Kiriari -market' ,"landline" => ''   ,"fax" =>'' , "mobile" => ''    , "email" => '' , "address" =>''    , "town" => '148'   , "in_charge" =>'Catherine Njoki Mugo'  , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '19310' , "name" =>' St Judes Huruma Community Health Services'   , "facility_type_id" => '1' , "facility_owner_id" => '12'   , "constituency_id" => '290'    , "description"=> 'Situated near Ndururumo Primary School (Juja Rd/OuterRd Junction)'   ,"nearest_town" =>'Kariobangi Market'   ,"landline" => '20237354'   ,"fax" =>'' , "mobile" => ''    , "email" => 'stjudes2008@yahoo.com'    , "address" =>''    , "town" => ''  , "in_charge" =>'Caroline Achieng'  , "title_id" =>'2'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '14180' , "name" =>'10 Engineer VCT'    , "facility_type_id" => '3' , "facility_owner_id" => '11'   , "constituency_id" => '164'    , "description"=> ''    ,"nearest_town" =>'Nanyuki' ,"landline" => ''   ,"fax" =>'' , "mobile" => ''    , "email" => '' , "address" =>''    , "town" => ''  , "in_charge" =>'Cpt Kiplagat ' , "title_id" =>'6'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '17486' , "name" =>'12 Engineers'   , "facility_type_id" => '3' , "facility_owner_id" => '3'    , "constituency_id" => '113'    , "description"=> ''    ,"nearest_town" =>''    ,"landline" => ''   ,"fax" =>'' , "mobile" => ''    , "email" => '' , "address" =>''    , "town" => ''  , "in_charge" =>''  , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '18393' , "name" =>'3Kl Maternity & Nursing Home'   , "facility_type_id" => '5' , "facility_owner_id" => '10'   , "constituency_id" => '183'    , "description"=> 'Gataka Road' ,"nearest_town" =>'Ongata Ronga'    ,"landline" => ''   ,"fax" =>'' , "mobile" => '733231565'   , "email" => 'kanyokanyokltd@gmail.com' , "address" =>'P.O Box 15356'   , "town" => 'Langata'   , "in_charge" =>'Jeffrey Mikombi Akide' , "title_id" =>'2'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '14181' , "name" =>'3KR Health Centre'  , "facility_type_id" => '7' , "facility_owner_id" => '11'   , "constituency_id" => '175'    , "description"=> 'within the 3KR barracks off nakuru ndudori road' ,"nearest_town" =>'Nakuru Town' ,"landline" => ''   ,"fax" =>'' , "mobile" => ''    , "email" => '' , "address" =>'P.O Box 301' , "town" => 'Nakuru'    , "in_charge" =>'Mr Lugonzo'    , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '11917' , "name" =>'78 Tank Battalion Dispensary'   , "facility_type_id" => '3' , "facility_owner_id" => '11'   , "constituency_id" => '49' , "description"=> ''    ,"nearest_town" =>'Isiolo'  ,"landline" => '064-52243'  ,"fax" =>'064-52160'    , "mobile" => '721436270'   , "email" => 'isiolohealth@yahoo.com'   , "address" =>'Please specify P.O. Box 66'  , "town" => 'Isiolo'    , "in_charge" =>'Major Onjolo'  , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '13043' , "name" =>'7Kr Mrs Health Centre'  , "facility_type_id" => '7' , "facility_owner_id" => '11'   , "constituency_id" => '277'    , "description"=> 'Next to Nairobi Opharnage,Off Langata rd.' ,"nearest_town" =>'Langata Shopping Center'   ,"landline" => ''   ,"fax" =>'' , "mobile" => ''    , "email" => '' , "address" =>'P.O Box 44008'   , "town" => 'Nairobi'   , "in_charge" =>'Captain Murunga'   , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '14182' , "name" =>'8Th Street Clinic'  , "facility_type_id" => '1' , "facility_owner_id" => '2'    , "constituency_id" => '183'    , "description"=> 'Isinya Township' ,"nearest_town" =>'Isinya'  ,"landline" => ''   ,"fax" =>'' , "mobile" => '0720-267629' , "email" => '' , "address" =>'P.O Box 8626'    , "town" => 'Nairobi'   , "in_charge" =>'Freshia Kairogu'   , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '18137' , "name" =>'A To Z Quality Health Family Health Services'   , "facility_type_id" => '1' , "facility_owner_id" => '5'    , "constituency_id" => '166'    , "description"=> ''    ,"nearest_town" =>'Njoro Centre'    ,"landline" => ''   ,"fax" =>'' , "mobile" => ''    , "email" => '' , "address" =>'P.O Box 12514'   , "town" => ''  , "in_charge" =>'Basiro Kariuki'    , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '20346' , "name" =>'AAR Adams Health Centre'    , "facility_type_id" => '1' , "facility_owner_id" => '6'    , "constituency_id" => '278'    , "description"=> 'Greenhouse Adams 1st Floor'  ,"nearest_town" =>'Adams'   ,"landline" => '202608570'  ,"fax" =>'' , "mobile" => '731191077'   , "email" => '' , "address" =>'P.O Box 41766'   , "town" => 'Nairobi'   , "in_charge" =>'Dr Mbuthia Wacera' , "title_id" =>'6'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '12861' , "name" =>'AAR City Centre Clinic' , "facility_type_id" => '1' , "facility_owner_id" => '2'    , "constituency_id" => '289'    , "description"=> 'Stiuated at ICEA Building along Kenyatta Avenue(6th Froor)'  ,"nearest_town" =>'Nairobi' ,"landline" => '2031893124' ,"fax" =>'' , "mobile" => ''    , "email" => 'emutugi@aar.co.ke'    , "address" =>'P.O Box 41766'   , "town" => 'Nairobi'   , "in_charge" =>'Dr. Alma Okudo'    , "title_id" =>'3'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '16796' , "name" =>'AAR Clinic Sarit Centre (Westlands)'    , "facility_type_id" => '1' , "facility_owner_id" => '2'    , "constituency_id" => '274'    , "description"=> 'In Sarit Centre westlands'   ,"nearest_town" =>'Nairobi' ,"landline" => ''   ,"fax" =>'' , "mobile" => ''    , "email" => '' , "address" =>''    , "town" => ''  , "in_charge" =>''  , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '18178' , "name" =>'AAR Eldoret'    , "facility_type_id" => '1' , "facility_owner_id" => '6'    , "constituency_id" => '299'    , "description"=> ''    ,"nearest_town" =>'Eldoret' ,"landline" => ''   ,"fax" =>'' , "mobile" => ''    , "email" => '' , "address" =>''    , "town" => 'Eldoret'   , "in_charge" =>''  , "title_id" =>'3'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '19958' , "name" =>'AAR Gwh Health Care Ltd'    , "facility_type_id" => '7' , "facility_owner_id" => '2'    , "constituency_id" => '275'    , "description"=> ''    ,"nearest_town" =>''    ,"landline" => ''   ,"fax" =>'' , "mobile" => '722778040'   , "email" => 'ciokudo@caricoike'    , "address" =>''    , "town" => 'Nairobi'   , "in_charge" =>'Dr. Alma Okudo'    , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '20405' , "name" =>'AAR Health Care'    , "facility_type_id" => '7' , "facility_owner_id" => '13'   , "constituency_id" => '285'    , "description"=> ''    ,"nearest_town" =>'Donholm' ,"landline" => '733888259'  ,"fax" =>'' , "mobile" => '73388259'    , "email" => 'dkamau@aar.co.ke' , "address" =>''    , "town" => 'Nairobi'   , "in_charge" =>'Dr Kamau David'    , "title_id" =>'4'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '18859' , "name" =>'AAR Healthcare Limited (Karen)' , "facility_type_id" => '1' , "facility_owner_id" => '2'    , "constituency_id" => '277'    , "description"=> 'Next to Nairobi Pentecostal Church Karen, Opposite Catholic University along Langata Road.'  ,"nearest_town" =>'Great Jubilee shopping  center'  ,"landline" => '202631852'  ,"fax" =>'' , "mobile" => '729876092'   , "email" => 'info@aar.co.ke'   , "address" =>'P.O Box 41766'   , "town" => 'Nairobi'   , "in_charge" =>'Eunice Kamau'  , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '12862' , "name" =>'AAR Kariobangi Clinic'  , "facility_type_id" => '1' , "facility_owner_id" => '2'    , "constituency_id" => '281'    , "description"=> ''    ,"nearest_town" =>'Nairobi' ,"landline" => ''   ,"fax" =>'' , "mobile" => ''    , "email" => '' , "address" =>''    , "town" => ''  , "in_charge" =>''  , "title_id" =>'1'  , "operational_status" =>'0'    , "user_id" => '1'),
+array("code" => '11194' , "name" =>'AAR Medical Services (Docks)'   , "facility_type_id" => '1' , "facility_owner_id" => '2'    , "constituency_id" => '6'  , "description"=> 'At Lulu House next to Railway Station'   ,"nearest_town" =>'Mombasa' ,"landline" => ''   ,"fax" =>'' , "mobile" => ''    , "email" => '' , "address" =>''    , "town" => ''  , "in_charge" =>'Peter Munira'  , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+array("code" => '20140' , "name" =>'AAR Mountain mall'  , "facility_type_id" => '1' , "facility_owner_id" => '5'    , "constituency_id" => '279'    , "description"=> 'In  the mountain mall Naivas mall building'  ,"nearest_town" =>'Rosters' ,"landline" => ''   ,"fax" =>'' , "mobile" => '733888258'   , "email" => 'smutunga@aar.co.ke'   , "address" =>'P.O Box 41766'   , "town" => 'Nairobi'   , "in_charge" =>'Stephanie Mutunga' , "title_id" =>'1'  , "operational_status" =>'1'    , "user_id" => '1'),
+ );
         foreach ($facilities as $facility) {
             Facility::create($facility);
         }
         $this->command->info('Facilities table seeded');
          
-        /* Lab Levels */
-        $labLevels = array(
-            array("name" => "National", "user_id" => "1"),
-            array("name" => "County Referral", "user_id" => "1"),
-            array("name" => "Referral", "user_id" => "1"),
-            array("name" => "Regional", "user_id" => "1"),
-            array("name" => "Zonal", "user_id" => "1")
-        );
-        foreach ($labLevels as $labLevel) {
-            LabLevel::create($labLevel);
-        }
-        $this->command->info('Lab levels table seeded');
-        /* Lab Affiliations */
-        $labAffiliations = array(
-            array("name" => "G.O.K.", "user_id" => "1"),
-            array("name" => "Private", "user_id" => "1"),
-            array("name" => "Research", "user_id" => "1")
-        );
-        foreach ($labAffiliations as $labAffiliation) {
-            LabAffiliation::create($labAffiliation);
-        }
-        $this->command->info('Lab affiliations table seeded');
-        /* SLMTA Lab Types */
-        $labTypes = array(
-            array("name" => "National", "user_id" => "1"),
-            array("name" => "Non-Governmental Organization", "user_id" => "1"),
-            array("name" => "Faith-based", "user_id" => "1")
-        );
-        foreach ($labTypes as $labType) {
-            LabType::create($labType);
-        }
-        $this->command->info('SLMTA lab types table seeded');
-
          /* Laboratories */
-        $labs = array(
-            array("facility_id" => "1", "lab_type_id" => "1", "lab_level_id" => "3", "lab_affiliation_id" => "1", "user_id" => "1")
+       /* $labs = array(
+           // array("facility_id" => "1", "lab_type_id" => "1", "lab_level_id" => "3", "lab_affiliation_id" => "1", "user_id" => "1")
         );
         foreach ($labs as $lab) {
             Lab::create($lab);
         }
-        $this->command->info('Laboratories table seeded');
-        foreach ($labs as $lab) {
-            Lab::create($lab);
-        }
-        $this->command->info('Laboratories table seeded');
+        $this->command->info('Laboratories table seeded');*/
         
         /* Assessments */
         $assessments = array(

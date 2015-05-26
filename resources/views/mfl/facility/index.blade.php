@@ -31,7 +31,7 @@
                         <tr>
                             <th>{{ Lang::choice('messages.code', 1) }}</th>
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
-                            <th>{{ Lang::choice('messages.county', 1) }}</th>
+                            <th>{{ Lang::choice('messages.constituency', 1) }}</th>
                             <th>{{ Lang::choice('messages.facility-type', 1) }}</th>
                             <!--<th>{{ Lang::choice('messages.facility-owner', 1) }}</th>
                             <th>{{ Lang::choice('messages.description', 1) }}</th>
@@ -51,7 +51,7 @@
                         <tr>
                             <td>{{ $facility->code }}</td>
                             <td>{{ $facility->name }}</td>
-                            <td>{{ $facility->name }}</td>
+                            <td>{{ $facility->constituency->name }}</td>
                             <td>{{ $facility->facilityType->name }}</td>
                             <!-- <td>{{ $facility->facility_owner_id }}</td>
                             <td>{{ $facility->description }}</td>
