@@ -12,22 +12,6 @@ class CreateLabTables extends Migration {
 	 */
 	public function up()
 	{
-		//	Countries
-		Schema::create('countries', function(Blueprint $table)
-		{
-			$table->increments('id')->unsigned();
-			$table->string('name');
-			$table->string('code', 100);
-			$table->string('iso_3166_2', 100);
-			$table->string('iso_3166_3', 100);
-			$table->string('capital', 100);
-			$table->integer('user_id')->unsigned();
-
-            $table->foreign('user_id')->references('id')->on('users');
-
-            $table->softDeletes();
-			$table->timestamps();
-		});
 		//	Lab Levels
 		Schema::create('lab_levels', function(Blueprint $table)
 		{
@@ -71,23 +55,20 @@ class CreateLabTables extends Migration {
 		Schema::create('labs', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
+			$table->integer('facility_id')->unsigned();
 			$table->integer('lab_type_id')->unsigned();
 			$table->string('name')->nullable();
-			$table->string('lab_number')->nullable();
 			$table->string('address', 100)->nullable();
-			$table->string('postal_code', 100)->nullable();
-			$table->string('city')->nullable();
-			$table->string('state')->nullable();
-			$table->integer('country_id')->unsigned();
 			$table->string('fax')->nullable();
 			$table->string('telephone')->nullable();
 			$table->string('email')->nullable();
+			$table->string('lab_number')->nullable();
 			$table->integer('lab_level_id')->unsigned();
 			$table->integer('lab_affiliation_id')->unsigned();
 			
 			$table->integer('user_id')->unsigned();
 
-			$table->foreign('country_id')->references('id')->on('countries');
+            $table->foreign('facility_id')->references('id')->on('facilities');
             $table->foreign('lab_level_id')->references('id')->on('lab_levels');
             $table->foreign('lab_affiliation_id')->references('id')->on('lab_affiliations');
             $table->foreign('lab_type_id')->references('id')->on('lab_types');
@@ -109,6 +90,6 @@ class CreateLabTables extends Migration {
 		Schema::dropIfExists('lab_levels');
 		Schema::dropIfExists('lab_affiliations');
 		Schema::dropIfExists('lab_types');
-		Schema::dropIfExists('countries');
 	}
+
 }

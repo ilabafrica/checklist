@@ -9,7 +9,6 @@ use App\Http\Requests\LabTypeRequest;
 use App\Models\LabType;
 use Response;
 use Auth;
-use Session;
 
 class LabTypeController extends Controller {
 
@@ -47,9 +46,8 @@ class LabTypeController extends Controller {
         $labType->description = $request->description;
         $labType->user_id = Auth::user()->id;;
         $labType->save();
-        $url = session('SOURCE_URL');
 
-        return redirect()->to($url)->with('message', 'Lab type created successfully.')->with('active_labType', $labType ->id);
+        return redirect('labType')->with('message', 'Lab type created successfully.');
 	}
 
 	/**
@@ -92,9 +90,8 @@ class LabTypeController extends Controller {
         $labType->description = $request->description;
         $labType->user_id = Auth::user()->id;;
         $labType->save();
-        $url = session('SOURCE_URL');
 
-        return redirect()->to($url)->with('message', 'Lab type updated successfully.')->with('active_labType', $labType ->id);
+        return redirect('labType')->with('message', 'Lab type updated successfully.');
 	}
 
 	/**

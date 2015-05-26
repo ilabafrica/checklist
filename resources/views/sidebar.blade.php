@@ -14,6 +14,21 @@
     <li>
         <a href="{!! url('home') !!}"><i class="fa fa-dashboard fa-fw"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
     </li>
+     @if(Entrust::can('manage-facilities'))
+                        <li>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> {{ Lang::choice('messages.mfl-catalog', 1) }}<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a href="{{ URL::to('facility')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.facility', 2) }}</a></li>
+                                <li><a href="{{ URL::to('facilityType')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.facility-type', 2) }} </a></li>
+                                <li><a href="{{ URL::to('facilityOwner')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.facility-owner', 2) }} </a></li>
+                                <li><a href="{{ URL::to('county')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.county', 2) }} </a></li>
+                                <li><a href="{{ URL::to('constituency')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.constituency', 2) }} </a></li>
+                                <li><a href="{{ URL::to('town')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.town', 2) }} </a></li>
+                                <li><a href="{{ URL::to('title')}}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.title', 2) }} </a></li>
+
+                            </ul>
+                        </li>
+                        @endif
     @if(Entrust::can('manage-labs'))
     <li>
         <a href="#"><i class="fa fa-stack-exchange"></i> {{ Lang::choice('messages.lab-catalog', 1) }}<span class="fa arrow"></span></a>
@@ -22,7 +37,7 @@
             <li><a href="{!! url('labLevel') !!}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.lab-level', 2) }} </a></li>
             <li><a href="{!! url('labAffiliation') !!}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.lab-affiliation', 2) }} </a></li>
             <li><a href="{!! url('labType') !!}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.lab-type', 2) }} </a></li>
-            <li><a href="{!! url('country') !!}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.country', 2) }}</a></li>
+            
         </ul>
     </li>
     @endif

@@ -10,7 +10,6 @@ use App\Models\LabLevel;
 use Response;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Auth;
-use Session;
 
 class LabLevelController extends Controller {
     use SoftDeletes;
@@ -49,9 +48,8 @@ class LabLevelController extends Controller {
         $labLevel->description = $request->description;
         $labLevel->user_id = Auth::user()->id;;
         $labLevel->save();
-        $url = session('SOURCE_URL');
 
-        return redirect()->to($url)->with('message', 'Lab level created successfully.')->with('active_labLevel', $labLevel ->id);
+        return redirect('labLevel')->with('message', 'Lab level created successfully.');
 	}
 
 	/**
@@ -94,9 +92,8 @@ class LabLevelController extends Controller {
         $labLevel->description = $request->description;
         $labLevel->user_id = Auth::user()->id;;
         $labLevel->save();
-        $url = session('SOURCE_URL');
 
-        return redirect()->to($url)->with('message', 'Lab level updated successfully.')->with('active_labLevel', $labLevel ->id);
+        return redirect('labLevel')->with('message', 'Lab level updated successfully.');
 	}
 
 	/**

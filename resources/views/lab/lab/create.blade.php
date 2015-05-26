@@ -4,13 +4,9 @@
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
-            <li>
-                <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
+            <li class="active">
+                <i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}
             </li>
-            <li>
-                <a href="{{ url('lab') }}">{{ Lang::choice('messages.lab', 1) }}</a>
-            </li>
-            <li class="active">{{ Lang::choice('messages.create-lab', 1) }}</li>
         </ol>
     </div>
 </div>
@@ -29,73 +25,11 @@
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                 <!-- ./ csrf token -->
-                
                 <div class="form-group">
-                    {!! Form::label('lab_type_id', Lang::choice('messages.lab-type', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    {!! Form::label('facility_id', Lang::choice('messages.facility', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('lab_type', array(''=>trans('messages.select-lab-type'))+$labTypes,'', 
-                            array('class' => 'form-control', 'id' => 'lab_type')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('name', Lang::choice('messages.lab-name', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('name', Input::old('name'), array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('number', Lang::choice('messages.lab-number', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('number', Input::old('number'), array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('address', Lang::choice('messages.address', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('address', Input::old('address'), array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('city', Lang::choice('messages.city', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('city', Input::old('city'), array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('postal-code', Lang::choice('messages.postal-code', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('postal_code', Input::old('postal_code'), array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('state', Lang::choice('messages.state', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('state', Input::old('state'), array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('country_id', Lang::choice('messages.country', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::select('country', array(''=>trans('messages.select'))+$countries,'', 
-                            array('class' => 'form-control', 'id' => 'country')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('telephone', Lang::choice('messages.phone', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('telephone', Input::old('telephone'), array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('fax', Lang::choice('messages.fax', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('fax', Input::old('fax'), array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('email', Lang::choice('messages.email', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('email', Input::old('email'), array('class' => 'form-control')) !!}
+                        {!! Form::select('facility', array(''=>trans('messages.select-facility'))+$facilities,'', 
+                            array('class' => 'form-control', 'id' => 'facility')) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -113,6 +47,13 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    {!! Form::label('lab_type_id', Lang::choice('messages.lab-type', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    <div class="col-sm-8">
+                        {!! Form::select('lab_type', array(''=>trans('messages.select-lab-type'))+$labTypes,'', 
+                            array('class' => 'form-control', 'id' => 'lab_type')) !!}
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                     {!! Form::button("<i class='glyphicon glyphicon-ok-circle'></i> ".Lang::choice('messages.save', 1), 
                           array('class' => 'btn btn-success', 'onclick' => 'submit()')) !!}
@@ -123,19 +64,7 @@
                 </div>
             {!! Form::close() !!} 
             <!-- End form -->
-        </div>
-        <div class="col-sm-6">
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-info">
-                    <div class="panel-heading"><a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false"><i class="fa fa-comments"></i> {{ Lang::choice('messages.help', 1) }} </a></div>
-                    <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">
-                        <div class="panel-body">
-                            {!! html_entity_decode(Lang::choice('messages.create-lab-help', 1)) !!}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </div> 
     </div>
 </div>
 @stop

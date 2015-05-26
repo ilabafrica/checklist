@@ -15,6 +15,15 @@ use App\Models\Answer;
 use App\Models\Note;
 use App\Models\Country;
 use App\Models\Lab;
+use App\Models\FacilityType;
+use App\Models\FacilityOwner;
+use App\Models\County;
+use App\Models\Constituency;
+use App\Models\Town;
+use App\Models\Title;
+use App\Models\Facility;
+
+
 class SliptaSeeder extends Seeder
 {
     public function run()
@@ -143,26 +152,494 @@ class SliptaSeeder extends Seeder
         }
         $this->command->info('Audit types table seeded');
 
-        /* Countries */
-        $countries = array(
-            array('name' => 'Afghanistan', 'code' => '93', 'iso_3166_2' => 'AF', 'iso_3166_3' => 'AFG', 'capital' => 'Kabul', 'user_id' => '1'),
-            array('name' => 'Albania', 'code' => '355', 'iso_3166_2' => 'AL', 'iso_3166_3' => 'ALB', 'capital' => 'Tirana', 'user_id' => '1'),
-            array('name' => 'Antartica', 'code' => '672', 'iso_3166_2' => 'AQ', 'iso_3166_3' => 'ATA', 'capital' => 'Antartica', 'user_id' => '1'),
-            array('name' => 'Algieria', 'code' => '213', 'iso_3166_2' => 'AZ', 'iso_3166_3' => 'AZA', 'capital' => 'Algiers', 'user_id' => '1'),
-            array('name' => 'American Samoa', 'code' => '1', 'iso_3166_2' => 'AS', 'iso_3166_3' => 'ASM', 'capital' => 'Pago Pago', 'user_id' => '1'),
-            array('name' => 'Andorra', 'code' => '376', 'iso_3166_2' => 'AD', 'iso_3166_3' => 'AND', 'capital' => 'Andorra la Vella', 'user_id' => '1'),
-            array('name' => 'Angola', 'code' => '244', 'iso_3166_2' => 'AO', 'iso_3166_3' => 'AGO', 'capital' => 'Luanda', 'user_id' => '1'),
-            array('name' => 'Kenya', 'code' => '254', 'iso_3166_2' => 'KE', 'iso_3166_3' => 'KEN', 'capital' => 'Nairobi', 'user_id' => '1')
+        /* MFL seeds */
+       
+        //  Facility Types
+        $facilityTypes = array(
+            array("name" => "Medical Clinic", "user_id" => "1"),
+            array("name" => "Training Institution in Health (Stand-alone)", "user_id" => "1"),
+            array("name" => "Dispensary", "user_id" => "1"),
+            array("name" => "VCT Centre (Stand-Alone)", "user_id" => "1"),
+            array("name" => "Nursing Home", "user_id" => "1"),
+            array("name" => "Sub-District Hospital", "user_id" => "1"),
+            array("name" => "Health Centre", "user_id" => "1"),
+            array("name" => "Dental Clinic", "user_id" => "1"),
+            array("name" => "Laboratory (Stand-alone)", "user_id" => "1"),
+            array("name" => "Eye Centre", "user_id" => "1"),
+            array("name" => "Maternity Home", "user_id" => "1"),
+            array("name" => "Radiology Unit", "user_id" => "1"),
+            array("name" => "District Hospital", "user_id" => "1"),
+            array("name" => "Provincial General Hospital", "user_id" => "1"),
+            array("name" => "Other Hospital", "user_id" => "1")
         );
-        foreach ($countries as $country) {
-            Country::create($country);
+        foreach ($facilityTypes as $facilityType) {
+            FacilityType::create($facilityType);
         }
-        $this->command->info('Countries table seeded');
+        $this->command->info('Facility Types table seeded');
 
-        /* Laboratories */
-        $labs = array(
-            array('lab_type_id' => '2', 'name' => 'ASPE Medical Clinic', 'lab_number' => '0023', 'address' => 'P.O. Box 59857', 'postal_code' => '00100', 'city' => 'Nairobi', 'state' => 'Nairobi', 'country_id' => '8', 'fax' => '6007498', 'telephone' => '0703034000', 'email' => 'aspe@aspe.org', 'lab_level_id' => '1', 'lab_affiliation_id' => '1', 'user_id' => '1')
+        //  Facility Owners
+        $facilityOwners = array(
+            array("name" => "Christian Health Association of Kenya", "user_id" => "1"),
+            array("name" => "Private Enterprise (Institution)", "user_id" => "1"),
+            array("name" => "Ministry of Health", "user_id" => "1"),
+            array("name" => "Non-Governmental Organizations", "user_id" => "1"),
+            array("name" => "Private Practice - Nurse / Midwife", "user_id" => "1"),
+            array("name" => "Private Practice - General Practitioner", "user_id" => "1"),
+            array("name" => "Kenya Episcopal Conference-Catholic Secretariat", "user_id" => "1"),
+            array("name" => "Company Medical Service", "user_id" => "1"),
+            array("name" => "Other Faith Based", "user_id" => "1"),
+            array("name" => "Private Practice - Clinical Officer", "user_id" => "1"),
+            array("name" => "Armed Forces", "user_id" => "1"),
+            array("name" => "Private Practice - Unspecified", "user_id" => "1"),
+            array("name" => "Private Practice - Medical Specialist", "user_id" => "1"),
+            array("name" => "Supreme Council for Kenya Muslims", "user_id" => "1"),
+            array("name" => "Community", "user_id" => "1"),
+            array("name" => "Parastatal", "user_id" => "1"),
+            array("name" => "Academic (if registered)", "user_id" => "1"),
+            array("name" => "Local Authority", "user_id" => "1"),
+            array("name" => "Local Authority T Fund", "user_id" => "1")
         );
+        foreach ($facilityOwners as $facilityOwner) {
+            FacilityOwner::create($facilityOwner);
+        }
+        $this->command->info('Facility Owners table seeded');
+        //  Counties
+        $counties = array(
+            array("name" => "Baringo", "hq" => "Kabarnet", "user_id" => "1"),
+            array("name" => "Bomet", "hq" => "Bomet", "user_id" => "1"),
+            array("name" => "Bungoma", "hq" => "Bungoma", "user_id" => "1"),
+            array("name" => "Busia", "hq" => "Busia", "user_id" => "1"),
+            array("name" => "Elgeyo Marakwet", "hq" => "Iten", "user_id" => "1"),
+            array("name" => "Embu", "hq" => "Embu", "user_id" => "1"),
+            array("name" => "Garissa", "hq" => "Garissa", "user_id" => "1"),
+            array("name" => "Homa Bay", "hq" => "Homa Bay", "user_id" => "1"),
+            array("name" => "Isiolo", "hq" => "Isiolo", "user_id" => "1"),
+            array("name" => "Kajiado", "hq" => "Kajiado", "user_id" => "1"),
+            array("name" => "Kakamega", "hq" => "Kakamega", "user_id" => "1"),
+            array("name" => "Kericho", "hq" => "Kericho", "user_id" => "1"),
+            array("name" => "Kiambu", "hq" => "Kiambu", "user_id" => "1"),
+            array("name" => "Kilifi", "hq" => "Kilifi", "user_id" => "1"),
+            array("name" => "Kirinyaga", "hq" => "Kerugoya", "user_id" => "1"),
+            array("name" => "Kisii", "hq" => "Kisii", "user_id" => "1"),
+            array("name" => "Kisumu", "hq" => "Kisumu", "user_id" => "1"),
+            array("name" => "Kitui", "hq" => "Kitui Town", "user_id" => "1"),
+            array("name" => "Kwale", "hq" => "Kwale", "user_id" => "1"),
+            array("name" => "Laikipia", "hq" => "Nanyuki", "user_id" => "1"),
+            array("name" => "Lamu", "hq" => "Lamu", "user_id" => "1"),
+            array("name" => "Machakos", "hq" => "Machakos", "user_id" => "1"),
+            array("name" => "Makueni", "hq" => "Wote", "user_id" => "1"),
+            array("name" => "Mandera", "hq" => "Mandera", "user_id" => "1"),
+            array("name" => "Marsabit", "hq" => "Marsabit", "user_id" => "1"),
+            array("name" => "Meru", "hq" => "Meru", "user_id" => "1"),
+            array("name" => "Migori", "hq" => "Migori", "user_id" => "1"),
+            array("name" => "Mombasa", "hq" => "Mombasa", "user_id" => "1"),
+            array("name" => "Murang\'a", "hq" => "Murang\'a", "user_id" => "1"),
+            array("name" => "Nairobi", "hq" => "Nairobi", "user_id" => "1"),
+            array("name" => "Nakuru", "hq" => "Nakuru", "user_id" => "1"),
+            array("name" => "Nandi", "hq" => "Kapsabet", "user_id" => "1"),
+            array("name" => "Narok", "hq" => "Narok", "user_id" => "1"),
+            array("name" => "Nyamira", "hq" => "Nyamira", "user_id" => "1"),
+            array("name" => "Nyandarua", "hq" => "Ol Kalou", "user_id" => "1"),
+            array("name" => "Nyeri", "hq" => "Nyeri", "user_id" => "1"),
+            array("name" => "Samburu", "hq" => "Maralal", "user_id" => "1"),
+            array("name" => "Siaya", "hq" => "Siaya", "user_id" => "1"),
+            array("name" => "Taita Taveta", "hq" => "Voi", "user_id" => "1"),
+            array("name" => "Tana River", "hq" => "Hola", "user_id" => "1"),
+            array("name" => "Tharaka Nithi", "hq" => "Chuka", "user_id" => "1"),
+            array("name" => "Trans Nzoia", "hq" => "Kitale", "user_id" => "1"),
+            array("name" => "Turkana", "hq" => "Lodwar", "user_id" => "1"),
+            array("name" => "Uasin Gishu", "hq" => "Eldoret", "user_id" => "1"),
+            array("name" => "Vihiga", "hq" => "Mbale", "user_id" => "1"),
+            array("name" => "Wajir", "hq" => "Wajir", "user_id" => "1"),
+            array("name" => "West Pokot", "hq" => "Kapenguria", "user_id" => "1")
+
+        );
+        foreach ($counties as $county) {
+            County::create($county);
+        }
+        $this->command->info('Counties table seeded');
+
+        /* Constituencies table */
+        $constituencies = array(
+               array("name" =>"CHANGAMWE", "county_id" =>"28", "user_id" => "1"),
+array("name" =>"JOMVU", "county_id" =>"28", "user_id" => "1"),
+array("name" =>"KISAUNI", "county_id" =>"28", "user_id" => "1"),
+array("name" =>"NYALI", "county_id" =>"28", "user_id" => "1"),
+array("name" =>"LIKONI", "county_id" =>"28", "user_id" => "1"),
+array("name" =>"MVITA", "county_id" =>"28", "user_id" => "1"),
+array("name" =>"MSAMBWENI", "county_id" =>"19", "user_id" => "1"),
+array("name" =>"LUNGA LUNGA", "county_id" =>"19", "user_id" => "1"),
+array("name" =>"MATUGA", "county_id" =>"19", "user_id" => "1"),
+array("name" =>"KINAGO", "county_id" =>"19", "user_id" => "1"),
+array("name" =>"KILIFI NORTH", "county_id" =>"14", "user_id" => "1"),
+array("name" =>"KILIFI SOUTH", "county_id" =>"14", "user_id" => "1"),
+array("name" =>"KALOLENI", "county_id" =>"14", "user_id" => "1"),
+array("name" =>"RABAI", "county_id" =>"14", "user_id" => "1"),
+array("name" =>"GANZE", "county_id" =>"14", "user_id" => "1"),
+array("name" =>"MALINDI", "county_id" =>"14", "user_id" => "1"),
+array("name" =>"MAGARINI", "county_id" =>"14", "user_id" => "1"),
+array("name" =>"GARSEN", "county_id" =>"40", "user_id" => "1"),
+array("name" =>"GALOLE", "county_id" =>"40", "user_id" => "1"),
+array("name" =>"BURA", "county_id" =>"40", "user_id" => "1"),
+array("name" =>"LAMU EAST", "county_id" =>"21", "user_id" => "1"),
+array("name" =>"LAMU WEST", "county_id" =>"21", "user_id" => "1"),
+array("name" =>"TAVETA", "county_id" =>"39", "user_id" => "1"),
+array("name" =>"WUNDANYI", "county_id" =>"39", "user_id" => "1"),
+array("name" =>"MWATATE", "county_id" =>"39", "user_id" => "1"),
+array("name" =>"VOI", "county_id" =>"39", "user_id" => "1"),
+array("name" =>"GARISSA TOWNSHIP", "county_id" =>"7", "user_id" => "1"),
+array("name" =>"BALAMBALA", "county_id" =>"7", "user_id" => "1"),
+array("name" =>"LAGDERA", "county_id" =>"7", "user_id" => "1"),
+array("name" =>"DADAAB", "county_id" =>"7", "user_id" => "1"),
+array("name" =>"FAFI", "county_id" =>"7", "user_id" => "1"),
+array("name" =>"IJARA", "county_id" =>"7", "user_id" => "1"),
+array("name" =>"WAJIR NORTH", "county_id" =>"46", "user_id" => "1"),
+array("name" =>"WAJIR EAST", "county_id" =>"46", "user_id" => "1"),
+array("name" =>"TARBAJ", "county_id" =>"46", "user_id" => "1"),
+array("name" =>"WAJIR WEST", "county_id" =>"46", "user_id" => "1"),
+array("name" =>"ELDAS", "county_id" =>"46", "user_id" => "1"),
+array("name" =>"WAJIR SOUTH", "county_id" =>"46", "user_id" => "1"),
+array("name" =>"MANDERA WEST", "county_id" =>"24", "user_id" => "1"),
+array("name" =>"BANISSA", "county_id" =>"24", "user_id" => "1"),
+array("name" =>"MANDERA NORTH", "county_id" =>"24", "user_id" => "1"),
+array("name" =>"MANDERA SOUTH", "county_id" =>"24", "user_id" => "1"),
+array("name" =>"MANDERA EAST", "county_id" =>"24", "user_id" => "1"),
+array("name" =>"LAFEY", "county_id" =>"24", "user_id" => "1"),
+array("name" =>"MOYALE", "county_id" =>"25", "user_id" => "1"),
+array("name" =>"NORTH HORR", "county_id" =>"25", "user_id" => "1"),
+array("name" =>"SAKU", "county_id" =>"25", "user_id" => "1"),
+array("name" =>"LAISAMIS", "county_id" =>"25", "user_id" => "1"),
+array("name" =>"ISIOLO NORTH", "county_id" =>"9", "user_id" => "1"),
+array("name" =>"ISIOLO SOUTH", "county_id" =>"9", "user_id" => "1"),
+array("name" =>"IGEMBE SOUTH", "county_id" =>"26", "user_id" => "1"),
+array("name" =>"IGEMBE CENTRAL", "county_id" =>"26", "user_id" => "1"),
+array("name" =>"IGEMBE NORTH", "county_id" =>"26", "user_id" => "1"),
+array("name" =>"TIGANIA WEST", "county_id" =>"26", "user_id" => "1"),
+array("name" =>"TIGANIA EAST", "county_id" =>"26", "user_id" => "1"),
+array("name" =>"NORTH IMENTI", "county_id" =>"26", "user_id" => "1"),
+array("name" =>"BUURI", "county_id" =>"26", "user_id" => "1"),
+array("name" =>"CENTRAL IMENTI", "county_id" =>"26", "user_id" => "1"),
+array("name" =>"SOUTH IMENTI", "county_id" =>"26", "user_id" => "1"),
+array("name" =>"MAARA", "county_id" =>"41", "user_id" => "1"),
+array("name" =>"CHUKA/IGAMBANG'OMBE", "county_id" =>"41", "user_id" => "1"),
+array("name" =>"THARAKA", "county_id" =>"41", "user_id" => "1"),
+array("name" =>"MANYATTA", "county_id" =>"6", "user_id" => "1"),
+array("name" =>"RUNYENJES", "county_id" =>"6", "user_id" => "1"),
+array("name" =>"MBEERE SOUTH", "county_id" =>"6", "user_id" => "1"),
+array("name" =>"MBEERE NORTH", "county_id" =>"6", "user_id" => "1"),
+array("name" =>"MWINGI NORTH", "county_id" =>"18", "user_id" => "1"),
+array("name" =>"MWINGI WEST", "county_id" =>"18", "user_id" => "1"),
+array("name" =>"MWINGI CENTRAL", "county_id" =>"18", "user_id" => "1"),
+array("name" =>"KITUI WEST", "county_id" =>"18", "user_id" => "1"),
+array("name" =>"KITUI RURAL", "county_id" =>"18", "user_id" => "1"),
+array("name" =>"KITUI CENTRAL", "county_id" =>"18", "user_id" => "1"),
+array("name" =>"KITUI EAST", "county_id" =>"18", "user_id" => "1"),
+array("name" =>"KITUI SOUTH", "county_id" =>"18", "user_id" => "1"),
+array("name" =>"MASINGA", "county_id" =>"22", "user_id" => "1"),
+array("name" =>"YATTA", "county_id" =>"22", "user_id" => "1"),
+array("name" =>"KANGUNDO", "county_id" =>"22", "user_id" => "1"),
+array("name" =>"MATUNGULU", "county_id" =>"22", "user_id" => "1"),
+array("name" =>"KATHIANI", "county_id" =>"22", "user_id" => "1"),
+array("name" =>"MAVOKO", "county_id" =>"22", "user_id" => "1"),
+array("name" =>"MACHAKOS TOWN", "county_id" =>"22", "user_id" => "1"),
+array("name" =>"MWALA", "county_id" =>"22", "user_id" => "1"),
+array("name" =>"MBOONI", "county_id" =>"23", "user_id" => "1"),
+array("name" =>"KILOME", "county_id" =>"23", "user_id" => "1"),
+array("name" =>"KAITI", "county_id" =>"23", "user_id" => "1"),
+array("name" =>"MAKUENI", "county_id" =>"23", "user_id" => "1"),
+array("name" =>"KIBWEZI WEST", "county_id" =>"23", "user_id" => "1"),
+array("name" =>"KIBWEZI EAST", "county_id" =>"23", "user_id" => "1"),
+array("name" =>"KINANGOP", "county_id" =>"35", "user_id" => "1"),
+array("name" =>"KIPIPIRI", "county_id" =>"35", "user_id" => "1"),
+array("name" =>"OL KALOU", "county_id" =>"35", "user_id" => "1"),
+array("name" =>"OL JORO OROK", "county_id" =>"35", "user_id" => "1"),
+array("name" =>"NDARAGWA", "county_id" =>"35", "user_id" => "1"),
+array("name" =>"TETU", "county_id" =>"36", "user_id" => "1"),
+array("name" =>"KIENI", "county_id" =>"36", "user_id" => "1"),
+array("name" =>"MATHIRA", "county_id" =>"36", "user_id" => "1"),
+array("name" =>"OTHAYA", "county_id" =>"36", "user_id" => "1"),
+array("name" =>"MUKURWENI", "county_id" =>"36", "user_id" => "1"),
+array("name" =>"NYERI TOWN", "county_id" =>"36", "user_id" => "1"),
+array("name" =>"MWEA", "county_id" =>"15", "user_id" => "1"),
+array("name" =>"GICHUGU", "county_id" =>"15", "user_id" => "1"),
+array("name" =>"NDIA", "county_id" =>"15", "user_id" => "1"),
+array("name" =>"KIRINYAGA CENTRAL", "county_id" =>"15", "user_id" => "1"),
+array("name" =>"KANGEMA", "county_id" =>"29", "user_id" => "1"),
+array("name" =>"MATHIOYA", "county_id" =>"29", "user_id" => "1"),
+array("name" =>"KIHARU", "county_id" =>"29", "user_id" => "1"),
+array("name" =>"KIGUMO", "county_id" =>"29", "user_id" => "1"),
+array("name" =>"MARAGWA", "county_id" =>"29", "user_id" => "1"),
+array("name" =>"KANDARA", "county_id" =>"29", "user_id" => "1"),
+array("name" =>"GATANGA", "county_id" =>"29", "user_id" => "1"),
+array("name" =>"GATUNDU SOUTH", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"GATUNDU NORTH", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"JUJA", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"THIKA TOWN", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"RUIRU", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"GITHUNGURI", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"KIAMBU", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"KIAMBAA", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"KABETE", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"KIKUYU", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"LIMURU", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"LARI", "county_id" =>"13", "user_id" => "1"),
+array("name" =>"TURKANA NORTH", "county_id" =>"43", "user_id" => "1"),
+array("name" =>"TURKANA WEST", "county_id" =>"43", "user_id" => "1"),
+array("name" =>"TURKANA CENTRAL", "county_id" =>"43", "user_id" => "1"),
+array("name" =>"LOIMA", "county_id" =>"43", "user_id" => "1"),
+array("name" =>"TURKANA SOUTH", "county_id" =>"43", "user_id" => "1"),
+array("name" =>"TURKANA EAST", "county_id" =>"43", "user_id" => "1"),
+array("name" =>"KAPENGURIA", "county_id" =>"47", "user_id" => "1"),
+array("name" =>"SIGOR", "county_id" =>"47", "user_id" => "1"),
+array("name" =>"KACHELIBA", "county_id" =>"47", "user_id" => "1"),
+array("name" =>"POKOT SOUTH", "county_id" =>"47", "user_id" => "1"),
+array("name" =>"SAMBURU WEST", "county_id" =>"37", "user_id" => "1"),
+array("name" =>"SAMBURU NORTH", "county_id" =>"37", "user_id" => "1"),
+array("name" =>"SAMBURU EAST", "county_id" =>"37", "user_id" => "1"),
+array("name" =>"KWANZA", "county_id" =>"42", "user_id" => "1"),
+array("name" =>"ENDEBESS", "county_id" =>"42", "user_id" => "1"),
+array("name" =>"SABOTI", "county_id" =>"42", "user_id" => "1"),
+array("name" =>"KIMININI", "county_id" =>"42", "user_id" => "1"),
+array("name" =>"CHERANGANY", "county_id" =>"42", "user_id" => "1"),
+array("name" =>"SOY", "county_id" =>"44", "user_id" => "1"),
+array("name" =>"TURBO", "county_id" =>"44", "user_id" => "1"),
+array("name" =>"MOIBEN", "county_id" =>"44", "user_id" => "1"),
+array("name" =>"AINABKOI", "county_id" =>"44", "user_id" => "1"),
+array("name" =>"KAPSERET", "county_id" =>"44", "user_id" => "1"),
+array("name" =>"KESSES", "county_id" =>"44", "user_id" => "1"),
+array("name" =>"MARAKWET EAST", "county_id" =>"5", "user_id" => "1"),
+array("name" =>"MARAKWET WEST", "county_id" =>"5", "user_id" => "1"),
+array("name" =>"KEIYO NORTH", "county_id" =>"5", "user_id" => "1"),
+array("name" =>"KEIYO SOUTH", "county_id" =>"5", "user_id" => "1"),
+array("name" =>"TINDERET", "county_id" =>"32", "user_id" => "1"),
+array("name" =>"ALDAI", "county_id" =>"32", "user_id" => "1"),
+array("name" =>"NANDI HILLS", "county_id" =>"32", "user_id" => "1"),
+array("name" =>"CHESUMEI", "county_id" =>"32", "user_id" => "1"),
+array("name" =>"EMGWEN", "county_id" =>"32", "user_id" => "1"),
+array("name" =>"MOSOP", "county_id" =>"32", "user_id" => "1"),
+array("name" =>"TIATY", "county_id" =>"1", "user_id" => "1"),
+array("name" =>"BARINGO NORTH", "county_id" =>"1", "user_id" => "1"),
+array("name" =>"BARINGO CENTRAL", "county_id" =>"1", "user_id" => "1"),
+array("name" =>"BARINGO SOUTH", "county_id" =>"1", "user_id" => "1"),
+array("name" =>"MOGOTIO", "county_id" =>"1", "user_id" => "1"),
+array("name" =>"ELDAMA RAVINE", "county_id" =>"1", "user_id" => "1"),
+array("name" =>"LAIKIPIA WEST", "county_id" =>"20", "user_id" => "1"),
+array("name" =>"LAIKIPIA EAST", "county_id" =>"20", "user_id" => "1"),
+array("name" =>"LAIKIPIA NORTH", "county_id" =>"20", "user_id" => "1"),
+array("name" =>"MOLO", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"NJORO", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"NAIVASHA", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"GILGIL", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"KURESOI SOUTH", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"KURESOI NORTH", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"SUBUKIA", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"RONGAI", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"BAHATI", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"NAKURU TOWN WEST", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"NAKURU TOWN EAST", "county_id" =>"31", "user_id" => "1"),
+array("name" =>"KILGORIS", "county_id" =>"33", "user_id" => "1"),
+array("name" =>"EMURUA DIKIRR", "county_id" =>"33", "user_id" => "1"),
+array("name" =>"NAROK NORTH", "county_id" =>"33", "user_id" => "1"),
+array("name" =>"NAROK EAST", "county_id" =>"33", "user_id" => "1"),
+array("name" =>"NAROK SOUTH", "county_id" =>"33", "user_id" => "1"),
+array("name" =>"NAROK WEST", "county_id" =>"33", "user_id" => "1"),
+array("name" =>"KAJIADO NORTH", "county_id" =>"10", "user_id" => "1"),
+array("name" =>"KAJIADO CENTRAL", "county_id" =>"10", "user_id" => "1"),
+array("name" =>"KAJIADO EAST", "county_id" =>"10", "user_id" => "1"),
+array("name" =>"KAJIADO WEST", "county_id" =>"10", "user_id" => "1"),
+array("name" =>"KAJIADO SOUTH", "county_id" =>"10", "user_id" => "1"),
+array("name" =>"KIPKELION EAST", "county_id" =>"12", "user_id" => "1"),
+array("name" =>"KIPKELION WEST", "county_id" =>"12", "user_id" => "1"),
+array("name" =>"AINAMOI", "county_id" =>"12", "user_id" => "1"),
+array("name" =>"BURETI", "county_id" =>"12", "user_id" => "1"),
+array("name" =>"BELGUT", "county_id" =>"12", "user_id" => "1"),
+array("name" =>"SIGOWET/SOIN", "county_id" =>"12", "user_id" => "1"),
+array("name" =>"SOTIK", "county_id" =>"2", "user_id" => "1"),
+array("name" =>"CHEPALUNGU", "county_id" =>"2", "user_id" => "1"),
+array("name" =>"BOMET EAST", "county_id" =>"2", "user_id" => "1"),
+array("name" =>"BOMET CENTRAL", "county_id" =>"2", "user_id" => "1"),
+array("name" =>"KONOIN", "county_id" =>"2", "user_id" => "1"),
+array("name" =>"LUGARI", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"LIKUYANI", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"MALAVA", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"LURAMBI", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"NAVAKHOLO", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"MUMIAS WEST", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"MUMIAS EAST", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"MATUNGU", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"BUTERE", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"KHWISERO", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"SHINYALU", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"IKOLOMANI", "county_id" =>"11", "user_id" => "1"),
+array("name" =>"VIHIGA", "county_id" =>"45", "user_id" => "1"),
+array("name" =>"SABATIA", "county_id" =>"45", "user_id" => "1"),
+array("name" =>"HAMISI", "county_id" =>"45", "user_id" => "1"),
+array("name" =>"LUANDA", "county_id" =>"45", "user_id" => "1"),
+array("name" =>"EMUHAYA", "county_id" =>"45", "user_id" => "1"),
+array("name" =>"MT. ELGON", "county_id" =>"3", "user_id" => "1"),
+array("name" =>"SIRISIA", "county_id" =>"3", "user_id" => "1"),
+array("name" =>"KABUCHAI", "county_id" =>"3", "user_id" => "1"),
+array("name" =>"BUMULA", "county_id" =>"3", "user_id" => "1"),
+array("name" =>"KANDUYI", "county_id" =>"3", "user_id" => "1"),
+array("name" =>"WEBUYE EAST", "county_id" =>"3", "user_id" => "1"),
+array("name" =>"WEBUYE WEST", "county_id" =>"3", "user_id" => "1"),
+array("name" =>"KIMILILI", "county_id" =>"3", "user_id" => "1"),
+array("name" =>"TONGAREN", "county_id" =>"3", "user_id" => "1"),
+array("name" =>"TESO NORTH", "county_id" =>"4", "user_id" => "1"),
+array("name" =>"TESO SOUTH", "county_id" =>"4", "user_id" => "1"),
+array("name" =>"NAMBALE", "county_id" =>"4", "user_id" => "1"),
+array("name" =>"MATAYOS", "county_id" =>"4", "user_id" => "1"),
+array("name" =>"BUTULA", "county_id" =>"4", "user_id" => "1"),
+array("name" =>"FUNYULA", "county_id" =>"4", "user_id" => "1"),
+array("name" =>"BUDALANGI", "county_id" =>"4", "user_id" => "1"),
+array("name" =>"UGENYA", "county_id" =>"38", "user_id" => "1"),
+array("name" =>"UGUNJA", "county_id" =>"38", "user_id" => "1"),
+array("name" =>"ALEGO USONGA", "county_id" =>"38", "user_id" => "1"),
+array("name" =>"GEM", "county_id" =>"38", "user_id" => "1"),
+array("name" =>"BONDO", "county_id" =>"38", "user_id" => "1"),
+array("name" =>"RARIEDA", "county_id" =>"38", "user_id" => "1"),
+array("name" =>"KISUMU EAST", "county_id" =>"17", "user_id" => "1"),
+array("name" =>"KISUMU WEST", "county_id" =>"17", "user_id" => "1"),
+array("name" =>"KISUMU CENTRAL", "county_id" =>"17", "user_id" => "1"),
+array("name" =>"SEME", "county_id" =>"17", "user_id" => "1"),
+array("name" =>"NYANDO", "county_id" =>"17", "user_id" => "1"),
+array("name" =>"MUHORONI", "county_id" =>"17", "user_id" => "1"),
+array("name" =>"NYAKACH", "county_id" =>"17", "user_id" => "1"),
+array("name" =>"KASIPUL", "county_id" =>"8", "user_id" => "1"),
+array("name" =>"KABONDO KASIPUL", "county_id" =>"8", "user_id" => "1"),
+array("name" =>"KARACHUONYO", "county_id" =>"8", "user_id" => "1"),
+array("name" =>"RANGWE", "county_id" =>"8", "user_id" => "1"),
+array("name" =>"HOMA BAY TOWN", "county_id" =>"8", "user_id" => "1"),
+array("name" =>"NDHIWA", "county_id" =>"8", "user_id" => "1"),
+array("name" =>"SUBA NORTH", "county_id" =>"8", "user_id" => "1"),
+array("name" =>"SUBA SOUTH", "county_id" =>"8", "user_id" => "1"),
+array("name" =>"RONGO", "county_id" =>"27", "user_id" => "1"),
+array("name" =>"AWENDO", "county_id" =>"27", "user_id" => "1"),
+array("name" =>"SUNA EAST", "county_id" =>"27", "user_id" => "1"),
+array("name" =>"SUNA WEST", "county_id" =>"27", "user_id" => "1"),
+array("name" =>"URIRI", "county_id" =>"27", "user_id" => "1"),
+array("name" =>"NYATIKE", "county_id" =>"27", "user_id" => "1"),
+array("name" =>"KURIA WEST", "county_id" =>"27", "user_id" => "1"),
+array("name" =>"KURIA EAST", "county_id" =>"27", "user_id" => "1"),
+array("name" =>"BONCHARI", "county_id" =>"16", "user_id" => "1"),
+array("name" =>"SOUTH MUGIRANGO", "county_id" =>"16", "user_id" => "1"),
+array("name" =>"BOMACHOGE BORABU", "county_id" =>"16", "user_id" => "1"),
+array("name" =>"BOBASI", "county_id" =>"16", "user_id" => "1"),
+array("name" =>"BOMACHOGE CHACHE", "county_id" =>"16", "user_id" => "1"),
+array("name" =>"NYARIBARI MASABA", "county_id" =>"16", "user_id" => "1"),
+array("name" =>"NYARIBARI CHACHE", "county_id" =>"16", "user_id" => "1"),
+array("name" =>"KITUTU CHACHE NORTH", "county_id" =>"16", "user_id" => "1"),
+array("name" =>"KITUTU CHACHE SOUTH", "county_id" =>"16", "user_id" => "1"),
+array("name" =>"KITUTU MASABA", "county_id" =>"34", "user_id" => "1"),
+array("name" =>"WEST MUGIRANGO", "county_id" =>"34", "user_id" => "1"),
+array("name" =>"NORTH MUGIRANGO", "county_id" =>"34", "user_id" => "1"),
+array("name" =>"BORABU", "county_id" =>"34", "user_id" => "1"),
+array("name" =>"WESTLANDS", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"DAGORETTI NORTH", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"DAGORETTI SOUTH", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"LANGATA", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"KIBRA", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"ROYSAMBU", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"KASARANI", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"RUARAKA", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"EMBAKASI SOUTH", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"EMBAKASI NORTH", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"EMBAKASI CENTRAL", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"EMBAKASI EAST", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"EMBAKASI WEST", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"MAKADARA", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"KAMUKUNJI", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"STAREHE", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"MATHARE", "county_id" =>"30", "user_id" => "1"),
+array("name" =>"SIAKAGO", "county_id" =>"6", "user_id" => "1"),
+array("name" =>"NTONYIRI", "county_id" =>"26", "user_id" => "1"),
+array("name" =>"MWINGI SOUTH", "county_id" =>"18", "user_id" => "1"),
+array("name" =>"MUTITO", "county_id" =>"18", "user_id" => "1"),
+array("name" =>"MIGORI", "county_id" =>"27", "user_id" => "1"),
+array("name" =>"MBITA", "county_id" =>"8", "user_id" => "1"),
+array("name" =>"ELDORET SOUTH", "county_id" =>"44", "user_id" => "1"),
+array("name" =>"ELDORET NORTH", "county_id" =>"44", "user_id" => "1"),
+array("name" =>"ELDORET EAST", "county_id" =>"44", "user_id" => "1")
+        );
+        foreach ($constituencies as $constituency) {
+            Constituency::create($constituency);
+        }
+        $this->command->info('Constituencies table seeded');
+        /* Towns table */
+        $towns = array(
+            array("name" => "Mombasa", "constituency_id" => "1", "postal_code" => "80100", "user_id" => "1"),
+            array("name" => "Kilifi", "constituency_id" => "1", "postal_code" => "80108", "user_id" => "1"),
+            array("name" => "Kaloleni", "constituency_id" => "1", "postal_code" => "80105", "user_id" => "1"),
+        );
+        foreach ($towns as $town) {
+            Town::create($town);
+        }
+        $this->command->info('Towns table seeded');
+
+        /* Titles table */
+        $titles = array(
+            array("name" => "Nursing Officer in Charge", "user_id" => "1"),
+            array("name" => "Clinical Officer", "user_id" => "1"),
+            array("name" => "Doctor In Charge", "user_id" => "1"),
+            array("name" => "Hospital Director", "user_id" => "1"),
+            array("name" => "Doctor In Charge", "user_id" => "1"),
+            array("name" => "Medical Superintendant", "user_id" => "1")
+        );
+        foreach ($titles as $title) {
+            Title::create($title);
+        }
+        $this->command->info('Job titles table seeded');
+
+         /* Facilities table */
+        $facilities = array(
+        array("code" => "11195", "name" => "Acode Medical Clinic Maungu", "facility_type_id" => "13", "facility_owner_id" => "3", "constituency_id" => "1", "description"=> " ","nearest_town" => "Maungu town","landline" => " ","fax" => " ", "mobile" => " ", "email" => "", "address" => "P.O Box 18", "town" => "Maungu", "in_charge" => "Sr  Kameru", "title_id" => "1", "operational_status" => "1", "user_id" => "1"),
+        );
+        foreach ($facilities as $facility) {
+            Facility::create($facility);
+        }
+        $this->command->info('Facilities table seeded');
+         
+        /* Lab Levels */
+        $labLevels = array(
+            array("name" => "National", "user_id" => "1"),
+            array("name" => "County Referral", "user_id" => "1"),
+            array("name" => "Referral", "user_id" => "1"),
+            array("name" => "Regional", "user_id" => "1"),
+            array("name" => "Zonal", "user_id" => "1")
+        );
+        foreach ($labLevels as $labLevel) {
+            LabLevel::create($labLevel);
+        }
+        $this->command->info('Lab levels table seeded');
+        /* Lab Affiliations */
+        $labAffiliations = array(
+            array("name" => "G.O.K.", "user_id" => "1"),
+            array("name" => "Private", "user_id" => "1"),
+            array("name" => "Research", "user_id" => "1")
+        );
+        foreach ($labAffiliations as $labAffiliation) {
+            LabAffiliation::create($labAffiliation);
+        }
+        $this->command->info('Lab affiliations table seeded');
+        /* SLMTA Lab Types */
+        $labTypes = array(
+            array("name" => "National", "user_id" => "1"),
+            array("name" => "Non-Governmental Organization", "user_id" => "1"),
+            array("name" => "Faith-based", "user_id" => "1")
+        );
+        foreach ($labTypes as $labType) {
+            LabType::create($labType);
+        }
+        $this->command->info('SLMTA lab types table seeded');
+
+         /* Laboratories */
+        $labs = array(
+            array("facility_id" => "1", "lab_type_id" => "1", "lab_level_id" => "3", "lab_affiliation_id" => "1", "user_id" => "1")
+        );
+        foreach ($labs as $lab) {
+            Lab::create($lab);
+        }
+        $this->command->info('Laboratories table seeded');
         foreach ($labs as $lab) {
             Lab::create($lab);
         }

@@ -10,6 +10,14 @@ class Lab extends Model {
 
 
 	/**
+	* Relationship with county
+	*/
+	public function facility()
+	{
+		return $this->belongsTo('App\Models\Facility');
+	}
+
+	/**
 	* Relationship with labLevel
 	*/
 	public function labLevel()
@@ -40,7 +48,7 @@ class Lab extends Model {
 	{
 		try 
 		{
-			$lab = Lab::where('name', $name)->orderBy('name', 'asc')->firstOrFail();
+			$lab = Facility::where('name', $name)->orderBy('name', 'asc')->firstOrFail()->lab->first();
 			return $lab->id;
 		} catch (ModelNotFoundException $e) 
 		{
@@ -48,12 +56,5 @@ class Lab extends Model {
 			//TODO: send email?
 			return null;
 		}
-	}
-	/**
-	* Relationship with country
-	*/
-	public function country()
-	{
-		return $this->belongsTo('App\Models\Country');
 	}
 }

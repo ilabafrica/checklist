@@ -44,7 +44,6 @@ class FacilityControllerTest extends Illuminate\Foundation\Testing\TestCase {
 			'mobile' => '0789657456',
 			'email' => 'bg@gmail.com',
 			'address' => '1234, Bungoma',
-			'town_id' => '3',
 			'in_charge' => 'Dr. Ann',
 			'title_id' => '1',
 			'operational_status' => '1',
