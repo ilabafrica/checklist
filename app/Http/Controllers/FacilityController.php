@@ -2,15 +2,14 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
-
 use App\Http\Requests\FacilityRequest;
 use App\Models\Facility;
 use App\Models\FacilityType;
 use App\Models\FacilityOwner;
 use App\Models\Town;
 use App\Models\Title;
+use App\Models\Constituency;
 use Response;
 use Auth;
 
@@ -40,10 +39,10 @@ class FacilityController extends Controller {
 		//	Get all facility owners
 		$facilityOwners = FacilityOwner::lists('name', 'id');
 		//	Get all towns
-		$towns = Town::lists('name', 'id');
+		$constituencies = Constituency::lists('name', 'id');
 		//	Get all titles
 		$titles = Title::lists('name', 'id');
-		return view('mfl.facility.create', compact('facilityTypes', 'facilityOwners', 'towns', 'titles'));
+		return view('mfl.facility.create', compact('facilityTypes', 'facilityOwners', 'constituencies', 'titles'));
 	}
 
 	/**
@@ -65,7 +64,7 @@ class FacilityController extends Controller {
         $town->mobile = $request->mobile;
         $town->email = $request->email;
         $town->address = $request->address;
-       // $town->town_id = $request->town;
+        $town->constituency_id = $request->constituency;
         $town->in_charge = $request->in_charge;
         $town->title_id = $request->title;
         $town->operational_status = $request->operational_status;
@@ -111,7 +110,7 @@ class FacilityController extends Controller {
 		//	Get initial facility owner
 		$facilityOwner = $facility->facility_owner_id;
 		//	Get all towns
-		$town = Town::lists('name', 'id');
+		$constituency = Constituency::lists('name', 'id');
 		//	Get initial town
 		//$town = $facility->town_id;
 		//	Get all titles
@@ -121,7 +120,7 @@ class FacilityController extends Controller {
 		//	Get operational status
 		$status = $facility->operational_status;
 
-        return view('mfl.facility.edit', compact('facility', 'facilityTypes', 'facilityOwners', 'town', 'titles', 'facilityType', 'facilityOwner', 'town', 'title', 'status'));
+        return view('mfl.facility.edit', compact('facility', 'facilityTypes', 'facilityOwners', 'constituency', 'titles', 'facilityType', 'facilityOwner', 'town', 'title', 'status'));
 	}
 
 	/**

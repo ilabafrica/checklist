@@ -33,7 +33,7 @@ class FacilityRequest extends Request {
 		'facility_owner' =>'required',
 		'operational_status'=>'required',
 		'title' =>'required',
-		'town' =>'required'
+		'constituency' =>'required'
 		
         ];
 	}

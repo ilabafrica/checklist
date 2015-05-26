@@ -2,9 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Http\Request;
-
 use App\Http\Requests\LabRequest;
 use App\Models\Lab;
 use App\Models\Facility;

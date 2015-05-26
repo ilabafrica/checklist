@@ -96,10 +96,10 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('town_id', Lang::choice('messages.town', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    {!! Form::label('constituency_id', Lang::choice('messages.constituency', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('town', array(''=>trans('messages.select-town'))+$towns,'', 
-                            array('class' => 'form-control', 'id' => 'town')) !!}
+                        {!! Form::select('constituency', array(''=>trans('messages.select-constituency'))+$constituencies,'', 
+                            array('class' => 'form-control', 'id' => 'constituency')) !!}
                     </div>
                 </div>
                 <div class="form-group">

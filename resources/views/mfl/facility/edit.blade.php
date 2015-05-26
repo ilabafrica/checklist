@@ -104,11 +104,11 @@
                     </div>
                 </div>
                <div class="form-group">
-                    {!! Form::label('town', Lang::choice('messages.town', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    {!! Form::label('constituency', Lang::choice('messages.constituency', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('town', array(''=>trans('messages.select-town'))+$town,
-                            old('town') ? old('town') : $town, 
-                            array('class' => 'form-control', 'id' => 'town')) !!}
+                        {!! Form::select('constituency', array(''=>trans('messages.select-constituency'))+$constituency,
+                            old('constituency') ? old('constituency') : $constituency, 
+                            array('class' => 'form-control', 'id' => 'constituency')) !!}
                     </div>
                 </div>
                 <div class="form-group">
