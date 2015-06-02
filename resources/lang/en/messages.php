@@ -169,7 +169,7 @@ return [
 	'find-user'	=>	'Find User',
 	'audits-owned'	=>	'Audits owned by you',
 	'start-audit'	=>	'Start Audit',
-	'new-audit-in-selected-lab'	=>	'New Audit in Seleted Lab',
+	'new-audit-in-selected-lab'	=>	'New Audit in Selected Lab',
 	'selected-lab'	=>	'Selected Lab: ',
 	'selected-audit'	=>	'Selected Audit: ',
 	'non-compliant'	=>	'Non-Compliant',
