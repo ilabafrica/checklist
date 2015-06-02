@@ -187,7 +187,7 @@ function noteChange(name, points){
             txtId = questionId($(this).attr('id'));
             if(parseInt($(item).val()) == 2){
                 $('#text_'+txtId).addClass('form-control validate[required] text-input');
-                $('#text_'+txtId).validationEngine('showPrompt', '* This field is required.', 'red', 'topLeft', true);
+                $('#text_'+txtId).validationEngine('showPrompt', '* Comment(s) required on this field.', 'red', 'topLeft', true);
             }
             else if(parseInt($(item).val()) == 1){
                 $('#text_'+txtId).validationEngine('hide');
@@ -219,7 +219,7 @@ function scoreMain(name, points){
             console.log(parseInt($(this).val()));
             if(parseInt($(this).val()) == 2 || parseInt($(this).val()) == 3 || parseInt($(this).val()) == 4){
                 $('#text_'+id).addClass('form-control validate[required] text-input');
-                $('#text_'+id).validationEngine('showPrompt', '* This field is required.', 'red', 'topLeft', true);
+                $('#text_'+id).validationEngine('showPrompt', '* Comment(s) required on this field.', 'red', 'topLeft', true);
             }
             else if(parseInt($(this).val()) == 1){
                 $('#text_'+id).validationEngine('hide');
