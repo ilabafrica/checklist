@@ -17,8 +17,8 @@ class CreateUsersTable extends Migration {
 			$table->increments('id')->unsigned();
 			$table->string('name');
 			$table->tinyInteger("gender")->default(0);
-			$table->dateTime('dob')->nullable();
-
+			$table->string('institution');
+			$table->string('profession');
 			$table->string('email')->unique();
 			$table->string('phone');
 			$table->string('address')->unique();

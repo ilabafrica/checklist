@@ -34,7 +34,11 @@
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.dob', 1) }}:</strong> <span> {{ $user->dob }}</span>
+          <strong>{{ Lang::choice('messages.institution', 1) }}:</strong> <span> {{ $user->institution }}</span>
+        </h5>
+        <hr>
+         <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.profession', 1) }}:</strong> <span> {{ $user->profession }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">

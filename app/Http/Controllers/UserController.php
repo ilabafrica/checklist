@@ -45,7 +45,8 @@ class UserController extends Controller {
 		$user = new User;
 		$user->name = $request->name;
         $user->gender = $request->gender;
-        $user->dob = $request->dob;
+        $user->institution = $request->institution;
+        $user->profession = $request->profession;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->username = $request->username;
@@ -100,7 +101,8 @@ class UserController extends Controller {
 		$user = User::find($id);
 		$user->name = $request->name;
         $user->gender = $request->gender;
-        $user->dob = $request->dob;
+        $user->institution = $request->institution;
+        $user->profession = $request->profession;                
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->address = $request->address;
