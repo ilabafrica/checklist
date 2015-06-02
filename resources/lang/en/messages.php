@@ -174,6 +174,7 @@ return [
 	'selected-audit'	=>	'Selected Audit: ',
 	'non-compliant'	=>	'Non-Compliant',
 	'audit-status'	=>	'Complete|Incomplete',
+
 	/* Notes */
 	'note'	=>	'Note|Notes',
 	'create-note'	=>	'Create Note',
@@ -197,6 +198,7 @@ return [
 	'official-slmta'	=>	'Official SLMTA Audit?',
 	'audit-start-date'	=>	'Audit Start Date',
 	'audit-end-date'	=>	'Audit End Date',
+	'slmta-audit' =>	'SLMTA Audit',
 	'slmta-audit-type'	=>	'Type of SLMTA Audit',
 	'select'	=>	'Select',
 	'tests-before-slmta'	=>	'Total # of tests before SLMTA',
