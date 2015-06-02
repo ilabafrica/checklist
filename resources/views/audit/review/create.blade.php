@@ -32,7 +32,7 @@
             <div class="panel-heading">
                 <i class="fa fa-tags"></i> {{ Lang::choice('messages.new-audit', '1') }}
                 <span class="panel-btn">
-                    <button type="button" class="btn btn-sm btn-info"><span class="fa fa-stack-exchange"></span> {{ Lang::choice('messages.selected-lab', 1) }}{!! $lab->name !!} </button>
+                    <button type="button" class="btn btn-sm btn-info"><span class="fa fa-stack-exchange"></span> {{ Lang::choice('messages.selected-lab', 1) }}{!! $lab->facility->name !!} </button>
                     <button type="button" class="btn btn-sm btn-info"><span class="fa fa-clipboard"></span> {{ Lang::choice('messages.selected-audit', 1) }}{!! $audit->name !!} </button>
                 </span>
             </div>
@@ -219,26 +219,25 @@
                             <div class="form-group">
                                 {!! Form::label('lab-name', Lang::choice('messages.lab-name', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->name !!}</p>
+                                    <p class="text-primary inline">{!! $lab->facility->name !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('lab-number', Lang::choice('messages.lab-number', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->lab_number !!}</p>
+                                    <p class="text-primary inline">{!! $lab->facility->code !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('lab-address', Lang::choice('messages.lab-address', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->address !!} - {!! $lab->postal_code !!}</p>
-                                    <p class="text-primary inline">{!! $lab->city !!}</p>
+                                    <p class="text-primary inline">{!! $lab->facility->address !!} </p>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('lab-telephone', Lang::choice('messages.lab-telephone', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->phone !!}</p>
+                                    <p class="text-primary inline">{!! $lab->facility->landline !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -250,7 +249,7 @@
                             <div class="form-group">
                                 {!! Form::label('lab-email', Lang::choice('messages.lab-email', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->email !!}</p>
+                                    <p class="text-primary inline">{!! $lab->facility->email !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">

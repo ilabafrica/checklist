@@ -36,6 +36,46 @@
         <h5 class="no-margn">
           <strong>{{ Lang::choice('messages.lab-type', 1) }}:</strong> <span> {{ $lab->labType->name }}</span>
         </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.facility-type', 1) }}:</strong> <span> {{ $lab->facility->facilityType->name}}</span>
+        </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.facility-owner', 1) }}:</strong> <span> {{ $lab->facility->facilityOwner->name }}</span>
+        </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.address', 1) }}:</strong> <span> {{ $lab->facility->address }}</span>
+        </h5>
+        <hr>
+         <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.nearest-town', 1) }}:</strong> <span> {{ $lab->facility->nearest_town }}</span>
+        </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.constituency', 1) }}:</strong> <span> {{ $lab->facility->constituency->name }}</span>
+        </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.landline', 1) }}:</strong> <span> {{ $lab->facility->landline }}</span>
+        </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.mobile', 1) }}:</strong> <span> {{ $lab->facility->mobile }}</span>
+        </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.email', 1) }}:</strong> <span> {{ $lab->facility->email }}</span>
+        </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.in-charge', 1) }}:</strong> <span> {{ $lab->facility->in_charge }}</span>
+        </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.operational-status', 1) }}:</strong> <span> {{ $lab->facility->operational_status== App\Models\Facility::OPERATIONAL? Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1) }}</span>
+        </h5>
       </div>
   </div>
 </div>
