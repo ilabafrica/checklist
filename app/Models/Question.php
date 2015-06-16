@@ -3,10 +3,12 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
+use Sofa\Revisionable\Revisionable; // interface
 use Lang;
 
 
-class Question extends Model {
+class Question extends Model implements Revisionable{
 	use SoftDeletes;
     protected $dates = ['deleted_at'];
 	protected $table = 'questions';
@@ -20,6 +22,24 @@ class Question extends Model {
 	const REQUIRED = 1;
 	//	Constants for whether field is to include tabular display
 	const ONESTAR = 1;
+	use RevisionableTrait;
+
+    /*
+     * Set revisionable whitelist - only changes to any
+     * of these fields will be tracked during updates.
+     */
+    protected $revisionable = [
+        'name',
+        'section_id',
+        'title',
+        'description',
+        'question_type',
+        'required',
+        'info',
+        'comment',
+        'score',
+        'one_star',
+    ];
 	/**
 	 * Audit field relationship
 	 */

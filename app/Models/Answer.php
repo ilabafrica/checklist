@@ -1,9 +1,11 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
+use Sofa\Revisionable\Revisionable; // interface
 use Lang;
 
-class Answer extends Model {
+class Answer extends Model implements Revisionable{
 
 	protected $table = 'answers';
 	/**
@@ -16,6 +18,16 @@ class Answer extends Model {
 	* Notes - Compliant(Comment) vs Non/compliant
 	*/
 	const NONCOMPLIANT = 1;
+	use RevisionableTrait;
+
+    /*
+     * Set revisionable whitelist - only changes to any
+     * of these fields will be tracked during updates.
+     */
+    protected $revisionable = [
+        'name',
+        'description',
+    ];
 	/**
 	* Return answer constant for the given choice
 	* @param $name the choice
