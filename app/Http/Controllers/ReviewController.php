@@ -856,7 +856,7 @@ class ReviewController extends Controller {
 		    		$lab_profile = $review->laboratory;
 		    		if(!count($lab_profile)){
 				    	$lab_profile = new ReviewLabProfile;
-				    	$lab_profile->review_id = $review_id
+				    	$lab_profile->review_id = $review_id;
 				    	$lab_profile->created_at = date('Y-m-d H:i:s');
 				    	$lab_profile->save();
 				    }
@@ -907,7 +907,7 @@ class ReviewController extends Controller {
     				$lab_profile = $review->laboratory;
 		    		if(!count($lab_profile)){
 				    	$lab_profile = new ReviewLabProfile;
-				    	$lab_profile->review_id = $review_id
+				    	$lab_profile->review_id = $review_id;
 				    	$lab_profile->created_at = date('Y-m-d H:i:s');
 				    	$lab_profile->save();
 				    }
@@ -980,7 +980,7 @@ class ReviewController extends Controller {
     				$lab_profile = $review->laboratory;
 		    		if(!count($lab_profile)){
 				    	$lab_profile = new ReviewLabProfile;
-				    	$lab_profile->review_id = $review_id
+				    	$lab_profile->review_id = $review_id;
 				    	$lab_profile->created_at = date('Y-m-d H:i:s');
 				    	$lab_profile->save();
 				    }
