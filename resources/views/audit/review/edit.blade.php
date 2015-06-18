@@ -904,6 +904,8 @@
                             </div>
                         </div>
                     @else
+                        <!-- Hidden field for audit data -->
+                        {!! Form::hidden('assessment_data', 1, array('id' => 'assessment_data')) !!}
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="panel panel-default">

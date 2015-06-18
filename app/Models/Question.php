@@ -138,7 +138,7 @@ class Question extends Model implements Revisionable{
 	*/
 	public function qa($review)
 	{
-		$row = DB::table('review_question_answers')->where('review_id', $review)->where('question_id', $this->id)->lists('answer');
+		$this->rq->where('review_id', $review)->first()?$row = $this->rq->where('review_id', $review)->first()->qa->lists('answer'):$row=NULL;
 		if(count($row)>0)
 			return $row;
 	}
@@ -146,15 +146,25 @@ class Question extends Model implements Revisionable{
 	* Audit notes
 	*/
 	public function note($review){
-		return DB::table('review_notes')->where('review_id', $review)->where('question_id', $this->id)->first();
+		$this->rq->where('review_id', $review)->first()?$notes = $this->rq->where('review_id', $review)->first()->qn:$notes=NULL;
+		if(count($notes)>0)
+			return $notes;
 	}
-
+	/**
+	* Review Question Relationship
+	*/
+	public function rq()
+	{
+		return $this->hasMany('App\Models\ReviewQuestion');
+	}
 	/**
 	* Audited scores
 	*/
 	public function points($review)
 	{
-		return DB::table('review_question_scores')->where('review_id', $review)->where('question_id', $this->id)->first();
+		$this->rq->where('review_id', $review)->first()?$points = $this->rq->where('review_id', $review)->first()->qs:$points=NULL;
+		if(count($points)>0)
+			return $points;
 	}
 	/**
 	* Decode audited scores

@@ -122,8 +122,13 @@ class Section extends Model implements Revisionable{
 	*/
 	public function subtotal($review)
 	{
-		$questions = $this->questions->lists('id');
-		return DB::table('review_question_scores')->where('review_id', $review)->whereIn('question_id', $questions)->sum('audited_score');
+		$sum = 0;
+		$rqs = Review::find($review)->rq;
+		foreach ($rqs as $rq) {
+			if(in_array($rq->question_id, $this->questions->lists('id')))
+				$sum+=(int)$rq->qs['audited_score'];
+		}
+		return $sum;
 	}
 	/**
 	 * Parent relationship
