@@ -94,7 +94,7 @@ class Review extends Model {
 	*/
 	public function slmta()
 	{
-		return DB::table('review_slmta_info')->where('review_id', $this->id)->first();
+		return $this->hasOne('App\Models\ReviewSlmtaInfo');
 	}
 	/**
 	* Stars - Not Audited, 0-5
@@ -121,7 +121,14 @@ class Review extends Model {
 	*/
 	public function laboratory()
 	{
-		return DB::table('review_lab_profiles')->where('review_id', $this->id)->first();
+		return $this->hasOne('App\Models\ReviewLabProfile');
+	}
+	/**
+	* Review Question Relationship
+	*/
+	public function rq()
+	{
+		return $this->hasMany('App\Models\ReviewQuestion');
 	}
 	/**
 	* Adequate
@@ -140,7 +147,7 @@ class Review extends Model {
 	*/
 	public function plans()
 	{
-		return DB::table('review_action_plans')->where('review_id', $this->id)->get();
+		return $this->hasMany('App\Models\ReviewActPlan');
 	}
 	/**
 	* Non-compliancies 

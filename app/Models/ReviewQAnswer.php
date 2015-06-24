@@ -5,10 +5,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
 use Sofa\Revisionable\Revisionable; // interface
 
-class LabAffiliation extends Model implements Revisionable{
+class ReviewQAnswer extends Model implements Revisionable{
 	use SoftDeletes;
     protected $dates = ['deleted_at'];
-	protected $table = 'lab_affiliations';
+	protected $table = 'review_question_answers';
 	use RevisionableTrait;
 
     /*
@@ -16,7 +16,14 @@ class LabAffiliation extends Model implements Revisionable{
      * of these fields will be tracked during updates.
      */
     protected $revisionable = [
-        'name',
-        'description',
+        'review_question_id',
+        'answer',
     ];
+    /**
+     * Review relationship
+     */
+    public function rq()
+    {
+       return $this->belongsTo('App\Models\ReviewQuestion');
+    }
 }
