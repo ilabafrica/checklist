@@ -202,37 +202,37 @@ class CreateAuditTables extends Migration {
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
-			$table->string('head');
+			$table->string('head')->nullable();
 			$table->string('head_work_telephone')->nullable();
 			$table->string('head_personal_telephone')->nullable();
 			$table->tinyInteger('degree_staff')->nullable();
-			$table->char('degree_staff_adequate', 1)->nullable();
+			$table->tinyInteger('degree_staff_adequate')->nullable();
 			$table->tinyInteger('diploma_staff')->nullable();
-			$table->char('diploma_staff_adequate', 1)->nullable();
+			$table->tinyInteger('diploma_staff_adequate')->nullable();
 			$table->tinyInteger('certificate_staff')->nullable();
-			$table->char('certificate_staff_adequate', 1)->nullable();
+			$table->tinyInteger('certificate_staff_adequate')->nullable();
 			$table->tinyInteger('microscopist')->nullable();
-			$table->char('microscopist_adequate', 1)->nullable();
+			$table->tinyInteger('microscopist_adequate')->nullable();
 			$table->tinyInteger('data_clerk')->nullable();
-			$table->char('data_clerk_adequate', 1)->nullable();
+			$table->tinyInteger('data_clerk_adequate')->nullable();
 			$table->tinyInteger('phlebotomist')->nullable();
-			$table->char('phlebotomist_adequate', 1)->nullable();
+			$table->tinyInteger('phlebotomist_adequate')->nullable();
 			$table->tinyInteger('cleaner')->nullable();
-			$table->char('cleaner_adequate', 1)->nullable();
-			$table->char('cleaner_dedicated', 1)->nullable();
-			$table->char('cleaner_trained', 1)->nullable();
+			$table->tinyInteger('cleaner_adequate')->nullable();
+			$table->tinyInteger('cleaner_dedicated')->nullable();
+			$table->tinyInteger('cleaner_trained')->nullable();
 			$table->tinyInteger('driver')->nullable();
-			$table->char('driver_adequate', 1)->nullable();
-			$table->char('driver_dedicated', 1)->nullable();
-			$table->char('driver_trained', 1)->nullable();
+			$table->tinyInteger('driver_adequate')->nullable();
+			$table->tinyInteger('driver_dedicated')->nullable();
+			$table->tinyInteger('driver_trained')->nullable();
 			$table->tinyInteger('other_staff')->nullable();
-			$table->char('other_staff_adequate', 1)->nullable();
-			$table->char('sufficient_space', 1)->nullable();
-			$table->char('equipment', 1)->nullable();
-			$table->char('supplies', 1)->nullable();
-			$table->char('personnel', 1)->nullable();
-			$table->char('infrastructure', 1)->nullable();
-			$table->char('other', 1)->nullable();
+			$table->tinyInteger('other_staff_adequate')->nullable();
+			$table->tinyInteger('sufficient_space')->nullable();
+			$table->tinyInteger('equipment')->nullable();
+			$table->tinyInteger('supplies')->nullable();
+			$table->tinyInteger('personnel')->nullable();
+			$table->tinyInteger('infrastructure')->nullable();
+			$table->tinyInteger('other')->nullable();
 			$table->string('other_description')->nullable();
 
 			$table->foreign('review_id')->references('id')->on('reviews');
@@ -245,11 +245,11 @@ class CreateAuditTables extends Migration {
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
-			$table->tinyInteger('official_slmta');
+			$table->tinyInteger('official_slmta')->nullable();
 			$table->integer('assessment_id')->unsigned();
-			$table->smallInteger('tests_before_slmta');
-			$table->smallInteger('tests_this_year');
-			$table->smallInteger('cohort_id');
+			$table->smallInteger('tests_before_slmta')->nullable();
+			$table->smallInteger('tests_this_year')->nullable();
+			$table->smallInteger('cohort_id')->nullable();
 			$table->date('baseline_audit_date')->nullable();
 			$table->date('slmta_workshop_date')->nullable();
 			$table->date('exit_audit_date')->nullable();
@@ -260,8 +260,8 @@ class CreateAuditTables extends Migration {
 			$table->date('last_audit_date')->nullable();
 			$table->smallInteger('last_audit_score')->nullable();
 			$table->tinyInteger('prior_audit_status');
-			$table->date('audit_start_date');
-			$table->date('audit_end_date');
+			$table->date('audit_start_date')->nullable();
+			$table->date('audit_end_date')->nullable();
 
 			$table->foreign('review_id')->references('id')->on('reviews');
 			$table->foreign('assessment_id')->references('id')->on('assessments');
@@ -269,27 +269,12 @@ class CreateAuditTables extends Migration {
             $table->softDeletes();
 			$table->timestamps();
 		});
-		//	Audit response sections
-		Schema::create('review_question_scores', function(Blueprint $table)
+		//	Questions done for review
+		Schema::create('review_questions', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
 			$table->integer('review_id')->unsigned();
 			$table->integer('question_id')->unsigned();
-			$table->smallInteger('audited_score');
-
-			$table->foreign('review_id')->references('id')->on('reviews');
-            $table->foreign('question_id')->references('id')->on('questions');
-
-            $table->softDeletes();
-			$table->timestamps();
-		});
-		//	Audit data
-		Schema::create('review_question_answers', function(Blueprint $table)
-		{
-			$table->increments('id')->unsigned();
-			$table->integer('review_id')->unsigned();
-			$table->integer('question_id')->unsigned();
-			$table->string('answer')->nullable();
 
 			$table->foreign('review_id')->references('id')->on('reviews');
             $table->foreign('question_id')->references('id')->on('questions');
@@ -298,18 +283,40 @@ class CreateAuditTables extends Migration {
             $table->softDeletes();
 			$table->timestamps();
 		});
+		//	Audit response sections
+		Schema::create('review_question_scores', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->integer('review_question_id')->unsigned();
+			$table->smallInteger('audited_score');
+
+			$table->foreign('review_question_id')->references('id')->on('review_questions');
+
+            $table->softDeletes();
+			$table->timestamps();
+		});
+		//	Audit data
+		Schema::create('review_question_answers', function(Blueprint $table)
+		{
+			$table->increments('id')->unsigned();
+			$table->integer('review_question_id')->unsigned();
+			$table->string('answer')->nullable();
+
+			$table->foreign('review_question_id')->references('id')->on('review_questions');
+            
+            $table->softDeletes();
+			$table->timestamps();
+		});
 		//	Audit Comment/Non-compliance
 		Schema::create('review_notes', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
-			$table->integer('review_id')->unsigned();
-			$table->integer('question_id')->unsigned();
+			$table->integer('review_question_id')->unsigned();
 			$table->text('note')->nullable();
 			$table->string('non_compliance')->nullable();
 
-			$table->foreign('review_id')->references('id')->on('reviews');
-			$table->foreign('question_id')->references('id')->on('questions');
-
+			$table->foreign('review_question_id')->references('id')->on('review_questions');
+            
             $table->softDeletes();
 			$table->timestamps();
 		});

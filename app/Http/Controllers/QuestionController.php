@@ -11,6 +11,7 @@ use App\Models\Answer;
 use App\Models\Note;
 use Response;
 use Auth;
+use Session;
 
 class QuestionController extends Controller {
 
@@ -42,7 +43,7 @@ class QuestionController extends Controller {
 		//	Get all notes
 		$notes = Note::orderBy('name')->get();
 		//	question types
-		$questionTypes = array(Question::CHOICE=>'Choice', Question::DATE=>'Date', Question::FIELD=>'Field');
+		$questionTypes = array(Question::CHOICE=>'Choice', Question::DATE=>'Date', Question::FIELD=>'Field', Question::TEXTAREA=>'Free Text');
 		return view('audit.question.create', compact('parents', 'sections', 'questionTypes', 'answers', 'notes'));
 	}
 
@@ -77,9 +78,9 @@ class QuestionController extends Controller {
 			if($request->notes){
 				$question->setNotes($request->notes);
 			}
-			//$url = Session::get('SOURCE_URL');
+			$url = session('SOURCE_URL');
         
-        	return redirect('question')->with('message', 'Question created successfully.');
+        	return redirect()->to($url)->with('message', 'Question created successfully.')->with('active_question', $question ->id);
 		}
 		catch(QueryException $e){
 			Log::error($e);
@@ -119,7 +120,7 @@ class QuestionController extends Controller {
 		//	Get audit question group
 		$section = $question->section_id;
 		//	question types
-		$questionTypes = array(Question::CHOICE=>'Choice', Question::DATE=>'Date', Question::FIELD=>'Field');
+		$questionTypes = array(Question::CHOICE=>'Choice', Question::DATE=>'Date', Question::FIELD=>'Field', Question::TEXTAREA=>'Free Text');
 		//	Get question type
 		$questionType = $question->question_type;
 		//	Get all answers
@@ -161,9 +162,9 @@ class QuestionController extends Controller {
 			if($request->notes){
 				$question->setNotes($request->notes);
 			}
-			//$url = Session::get('SOURCE_URL');
+			$url = session('SOURCE_URL');
         
-        	return redirect('question')->with('message', 'Question updated successfully.');
+        	return redirect()->to($url)->with('message', 'Question updated successfully.')->with('active_question', $question ->id);
 		}
 		catch(QueryException $e){
 			Log::error($e);

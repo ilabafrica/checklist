@@ -3,10 +3,12 @@
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
+use Sofa\Revisionable\Revisionable; // interface
 use Lang;
 
 
-class Question extends Model {
+class Question extends Model implements Revisionable{
 	use SoftDeletes;
     protected $dates = ['deleted_at'];
 	protected $table = 'questions';
@@ -20,6 +22,24 @@ class Question extends Model {
 	const REQUIRED = 1;
 	//	Constants for whether field is to include tabular display
 	const ONESTAR = 1;
+	use RevisionableTrait;
+
+    /*
+     * Set revisionable whitelist - only changes to any
+     * of these fields will be tracked during updates.
+     */
+    protected $revisionable = [
+        'name',
+        'section_id',
+        'title',
+        'description',
+        'question_type',
+        'required',
+        'info',
+        'comment',
+        'score',
+        'one_star',
+    ];
 	/**
 	 * Audit field relationship
 	 */
@@ -118,7 +138,7 @@ class Question extends Model {
 	*/
 	public function qa($review)
 	{
-		$row = DB::table('review_question_answers')->where('review_id', $review)->where('question_id', $this->id)->lists('answer');
+		$this->rq->where('review_id', $review)->first()?$row = $this->rq->where('review_id', $review)->first()->qa->lists('answer'):$row=NULL;
 		if(count($row)>0)
 			return $row;
 	}
@@ -126,15 +146,25 @@ class Question extends Model {
 	* Audit notes
 	*/
 	public function note($review){
-		return DB::table('review_notes')->where('review_id', $review)->where('question_id', $this->id)->first();
+		$this->rq->where('review_id', $review)->first()?$notes = $this->rq->where('review_id', $review)->first()->qn:$notes=NULL;
+		if(count($notes)>0)
+			return $notes;
 	}
-
+	/**
+	* Review Question Relationship
+	*/
+	public function rq()
+	{
+		return $this->hasMany('App\Models\ReviewQuestion');
+	}
 	/**
 	* Audited scores
 	*/
 	public function points($review)
 	{
-		return DB::table('review_question_scores')->where('review_id', $review)->where('question_id', $this->id)->first();
+		$this->rq->where('review_id', $review)->first()?$points = $this->rq->where('review_id', $review)->first()->qs:$points=NULL;
+		if(count($points)>0)
+			return $points;
 	}
 	/**
 	* Decode audited scores
@@ -161,5 +191,34 @@ class Question extends Model {
 		$row = DB::table('review_question_answers')->where('review_id', $review)->whereIn('question_id', $ids)->lists('id');
 		if(count($row)>0)
 			return $row;
+	}
+	/**
+	 * Section relationship
+	 */
+	public function section()
+	{
+	  return $this->belongsTo('App\Models\Section');
+	}
+	/**
+	 * Audit field relationship
+	 */
+	public function parent()
+	{
+		return DB::table('question_parent_child')->where('question_id', $this->id)->first();
+	}
+	/**
+	* Decode question type
+	*/
+	public function q_type()
+	{
+		$type = $this->question_type;
+		if($type == Question::CHOICE)
+			return 'Choice';
+		else if($type == Question::DATE)
+			return 'Date';
+		else if($type == Question::FIELD)
+			return 'Field';
+		else if($type == Question::TEXTAREA)
+			return 'Free Text';
 	}
 }

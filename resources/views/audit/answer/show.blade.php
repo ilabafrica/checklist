@@ -4,16 +4,20 @@
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
-            <li class="active">
-                <a href="#"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
+            <li>
+                <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
             </li>
+            <li>
+                <a href="{{ url('answer') }}">{{ Lang::choice('messages.answer', 1) }}</a>
+            </li>
+            <li class="active">{{ Lang::choice('messages.view', 1) }}</li>
         </ol>
     </div>
 </div>
 <div class="panel panel-primary">
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.answer', 1) }} <span class="panel-btn">
   <a class="btn btn-sm btn-info" href="{{ URL::to("answer/" . $answer->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-answer', 1) }}</span>
+    <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-answer', 1) }}</span>
   </a>
   </span></div>
   <div class="panel-body">
@@ -27,6 +31,7 @@
           <strong>{{ Lang::choice('messages.description', 1) }}:</strong> <span> {{ $answer->description }}</span>
         </h5>
       </div>
+    </div>
   </div>
 </div>
 </div>

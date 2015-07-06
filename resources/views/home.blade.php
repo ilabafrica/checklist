@@ -24,14 +24,14 @@
             	<div class="panel-heading"><a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed" aria-expanded="false"><i class="fa fa-comments"></i> {{ Lang::choice('messages.help', 1) }} </a></div>
                 <div id="collapseTwo" class="panel-collapse collapse" aria-expanded="false">
                     <div class="panel-body">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        {!! html_entity_decode(Lang::choice('messages.home-help', 1)) !!}
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-striped table-bordered table-hover search-table">
+                <table class="table table-striped table-bordered table-hover {!! !$reviews->isEmpty()?'search-table':'' !!}">
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.response-no', 1) }}</th>
@@ -46,7 +46,7 @@
                         @forelse($reviews as $review)
                         <tr>
                             <td>{{ $review->id }}</td>
-                            <td>{{ $review->lab->facility->name }}</td>
+                            <td>{{ $review->lab->name }}</td>
                             <td>{{ $review->auditType->name }}</td>
                             <td>{{ $review->created_at }}</td>
                             <td>{!! $review->status==App\Models\Review::COMPLETE?'<span class="label label-success">'.Lang::choice('messages.audit-status', 1).'</span>':'<span class="label label-warning">'.Lang::choice('messages.audit-status', 2).'</span>' !!}</td>
@@ -60,7 +60,7 @@
                         </tr>
                         @empty
                         <tr>
-                          <td colspan="3">{{ Lang::choice('messages.no-records-found', 1) }}</td>
+                          <td colspan="6">{{ Lang::choice('messages.no-records-found', 1) }}</td>
                         </tr>
                         @endforelse
                     </tbody>

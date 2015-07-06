@@ -1,10 +1,7 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use App\Models\LabLevel;
-use App\Models\LabAffiliation;
-use App\Models\LabType;
-use App\Models\Facility;
+use App\Models\Lab;
 
 class LabRequest extends Request {
 
@@ -25,14 +22,24 @@ class LabRequest extends Request {
 	 */
 	public function rules()
 	{
-		
+		$id = $this->ingnoreId();
 		return [
-		'facility'=> 'required',
-		'lab_level'=> 'required',
-		'lab_affiliation' =>'required',
-		'lab_type' =>'required'
-		
+            'name'   => 'required|unique:labs,name,'.$id,
+            'lab_type'   => 'required:labs,lab_type_id,'.$id,
+            'country'   => 'required:labs,country_id,'.$id,
+            'address'   => 'required:labs,address,'.$id,
+            'city'   => 'required:labs,city,'.$id,
+            'postal_code'   => 'required:labs,postal_code,'.$id,
+            'lab_level'   => 'required:labs,lab_level_id,'.$id,
+            'lab_affiliation'   => 'required:labs,lab_affiliation_id,'.$id,
         ];
 	}
-	
+	/**
+	* @return \Illuminate\Routing\Route|null|string
+	*/
+	public function ingnoreId(){
+		$id = $this->route('lab');
+		$name = $this->input('name');
+		return Lab::where(compact('id', 'name'))->exists() ? $id : '';
+	}
 }

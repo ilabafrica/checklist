@@ -4,8 +4,8 @@
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
-            <li class="active">
-                <a href="#"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
+            <li>
+                <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
             </li>
         </ol>
     </div>
@@ -32,7 +32,7 @@
                 {{ Lang::choice('messages.selected-lab', 1) }}
             </div>
             <div class="panel-body">
-                {!! $lab->facility->name !!}
+                {!! $lab->name !!}
             </div>
         </div>
     </div>

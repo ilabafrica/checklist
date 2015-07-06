@@ -2,21 +2,35 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
+use Sofa\Revisionable\Revisionable; // interface
 
-class Lab extends Model {
+class Lab extends Model implements Revisionable{
 	use SoftDeletes;
 	protected $dates = ['deleted_at'];
 	protected $table = 'labs';
 
+	use RevisionableTrait;
 
-	/**
-	* Relationship with county
-	*/
-	public function facility()
-	{
-		return $this->belongsTo('App\Models\Facility');
-	}
-
+    /*
+     * Set revisionable whitelist - only changes to any
+     * of these fields will be tracked during updates.
+     */
+    protected $revisionable = [
+        'name',
+        'lab_type_id',
+        'lab_number',
+        'address',
+        'postal_code',
+        'city',
+        'state',
+        'country_id',
+        'fax',
+        'telephone',
+        'email',
+        'lab_level_id',
+        'lab_affiliation_id',
+    ];
 	/**
 	* Relationship with labLevel
 	*/
@@ -48,7 +62,7 @@ class Lab extends Model {
 	{
 		try 
 		{
-			$lab = Facility::where('name', $name)->orderBy('name', 'asc')->firstOrFail()->lab->first();
+			$lab = Lab::where('name', $name)->orderBy('name', 'asc')->firstOrFail();
 			return $lab->id;
 		} catch (ModelNotFoundException $e) 
 		{
@@ -56,5 +70,12 @@ class Lab extends Model {
 			//TODO: send email?
 			return null;
 		}
+	}
+	/**
+	* Relationship with country
+	*/
+	public function country()
+	{
+		return $this->belongsTo('App\Models\Country');
 	}
 }

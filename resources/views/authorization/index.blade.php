@@ -29,6 +29,12 @@
         </span>
     </div>
     <div class="panel-body">
+        @if(session()->has('message'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">{{ Lang::choice('messages.close', 1) }}</span></button>
+          {!! session('message') !!}
+        </div>
+        @endif
         <div class="row">
 
             <div class="col-sm-12">

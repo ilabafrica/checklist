@@ -117,10 +117,11 @@ function saveActionPlan(rid){
     follow_up_action =  $("#action_"+rid).val();
     responsible_person =  $("#person_"+rid).val();
     timeline =  $("#timeline_"+rid).val();
+    var URL_ROOT = 'http://127.0.0.1/e-slipta/public/';
     _token: JSON.stringify($('input[name=_token]').val());
     $.ajax({
         type: 'POST',
-        url:  '/review/plan',
+        url:  URL_ROOT+'action/plan',
         data: {review_id: rid, follow_up_action: follow_up_action, responsible_person: responsible_person, timeline: timeline, action: "add", '_token': $('input[name=_token]').val()},
         success: function(){
             drawActionPlan(rid);
@@ -134,12 +135,13 @@ function saveActionPlan(rid){
  * @return {void}          No return
  */
 function drawActionPlan(rid){
-    $.getJSON('/review/plan', { review_id: rid, action: "draw"}, 
+    var URL_ROOT = 'http://127.0.0.1/e-slipta/public/';
+    $.getJSON(URL_ROOT+'action/plan', { review_id: rid, action: "draw"}, 
         function(data){
             var tableBody ="";
             $.each(data, function(index, elem){
                 tableBody += "<tr>"
-                +" <td>"+elem.follow_up_action+" </td>"
+                +" <td>"+elem.action+" </td>"
                 +" <td>"+elem.responsible_person+"</td>"
                 +" <td>"+elem.timeline+"</td>"
                 +" <td> </td>"
@@ -177,11 +179,21 @@ function noteChange(name, points){
     var sum = 0;
     var questions = $('.radio_'+id).length;
     var answers = ['YES', 'PARTIAL', 'NO'];
-    $.each($('.radio_'+id), function(){
+    $.each($('.radio_'+id), function(key, item){
+        var txtId = 0;
         if( $(this).is(':checked')){
             sum+=parseInt($(this).val());
             count++;
-        }    
+            txtId = questionId($(this).attr('id'));
+            if(parseInt($(item).val()) == 2){
+                $('#text_'+txtId).addClass('form-control validate[required] text-input');
+                $('#text_'+txtId).validationEngine('showPrompt', '* Comment(s) required on this field.', 'red', 'topLeft', true);
+            }
+            else if(parseInt($(item).val()) == 1){
+                $('#text_'+txtId).validationEngine('hide');
+                $('#text_'+txtId).addClass('form-control');
+            }
+        }
     });
     if(sum==count){
         $('#points_'+id).val(points).trigger('input');
@@ -201,9 +213,18 @@ function scoreMain(name, points){
     var id = questionId(name);
     var count = 0;
     var answer = 0;
-    $.each($('.radio_'+id), function(){
+    $.each($('.radio_'+id), function(key, item){
         if( $(this).is(':checked')){
             answer+=parseInt($(this).val());
+            console.log(parseInt($(this).val()));
+            if(parseInt($(this).val()) == 2 || parseInt($(this).val()) == 3 || parseInt($(this).val()) == 4){
+                $('#text_'+id).addClass('form-control validate[required] text-input');
+                $('#text_'+id).validationEngine('showPrompt', '* Comment(s) required on this field.', 'red', 'topLeft', true);
+            }
+            else if(parseInt($(this).val()) == 1){
+                $('#text_'+id).validationEngine('hide');
+                $('#text_'+id).removeClass('validate[required] text-input');
+            }
         }    
     });
     if(answer == 1)
@@ -218,32 +239,10 @@ function sub_total(name){
     var id = questionId(name);
     var sum = 0;
     $.each($('.page_'+id), function(){
-            sum+=parseInt($(this).val());
+        val = $(this).val();
+        val = parseInt(val);
+        val = (isNaN(val)) ? 0: val;
+        sum+=val;
     });
-    
     $('#subtotal_'+id).val(sum);
-}
-function set_total(id) {
-    var myid = id+ '_total';
-    var incid = id + '_secinc';
-    var total = 0;
-    var val, abc;
-   $('input[name$="_score"]').each( function(i) {
-       val = $(this).val();
-       val = parseInt(val);
-       val = (isNaN(val)) ? 0: val;
-       total = total + val;
-       $('#'+myid).val(total);
-       abc = 0;
-   });
-   total = 0;
-   $('input[name$="_inc"]').each( function(i) {
-       val = $(this).val();
-       val = parseInt(val);
-       val = (isNaN(val)) ? 0: val;
-       total = total + val;
-       $('#'+incid).val(total);
-       abc = 0;
-   });
-    var xx= 0;
 }

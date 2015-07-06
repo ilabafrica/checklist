@@ -4,9 +4,13 @@
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
-            <li class="active">
-                <a href="#"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
+            <li>
+                <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
             </li>
+            <li>
+                <a href="{{ url('role') }}">{{ Lang::choice('messages.role', 1) }}</a>
+            </li>
+            <li class="active">{{ Lang::choice('messages.edit-role', 1) }}</li>
         </ol>
     </div>
 </div>
@@ -20,7 +24,7 @@
             <!-- Begin form --> 
             @if($errors->all())
             <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">{{ Lang::choice('messages.close', 1) }}</span></button>
                 {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
             </div>
             @endif
@@ -52,7 +56,7 @@
                     <div class="col-sm-offset-4 col-sm-8">
                     {!! Form::button("<i class='glyphicon glyphicon-ok-circle'></i> ".Lang::choice('messages.save', 1), 
                           array('class' => 'btn btn-success', 'onclick' => 'submit()')) !!}
-                          {!! Form::button("<i class='glyphicon glyphicon-remove-circle'></i> ".'Reset', 
+                          {!! Form::button("<i class='glyphicon glyphicon-remove-circle'></i> ".Lang::choice('messages.reset', 1), 
                           array('class' => 'btn btn-default', 'onclick' => 'reset()')) !!}
                     <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                     </div>

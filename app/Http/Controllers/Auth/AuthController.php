@@ -52,7 +52,7 @@ class AuthController extends Controller {
 			return redirect('/');
 		}
 		return redirect('/auth/login')
-		->with('error', 'Invalid credentials')
+		->with('message', 'Invalid credentials.')
 		->withInput($request->only('username'));
 	}
 }

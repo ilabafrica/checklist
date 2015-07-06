@@ -4,9 +4,13 @@
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
-            <li class="active">
-                <a href="#"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
+            <li>
+                <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
             </li>
+            <li>
+                <a href="{{ url('user') }}">{{ Lang::choice('messages.user', 1) }}</a>
+            </li>
+            <li class="active">{{ Lang::choice('messages.view', 1) }}</li>
         </ol>
     </div>
 </div>
@@ -14,7 +18,7 @@
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.user', 1) }} <span class="panel-btn">
     @if(Auth::user()->can('edit-user'))
   <a class="btn btn-sm btn-info" href="{{ URL::to("user/" . $user->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-user', 1) }}</span>
+    <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-user', 1) }}</span>
   </a>
     @endif
   </span></div>
@@ -26,7 +30,11 @@
         </h4>
         <hr>
         <h5 class="no-margn">
+<<<<<<< HEAD
           <strong>{{ Lang::choice('messages.gender', 1) }}:</strong> <span> {{ $user->gender== App\Models\User::MALE? Lang::choice('messages.male', 1):Lang::choice('messages.female', 1) }}</span>
+=======
+          <strong>{{ Lang::choice('messages.gender', 1) }}:</strong> <span> {{ $user->gender== App\Models\User::MALE? Lang::choice('messages.sex', 1):Lang::choice('messages.sex', 2) }}</span>
+>>>>>>> global
         </h5>
         <hr>
         <h5 class="no-margn">
@@ -45,6 +53,7 @@
           <strong>{{ Lang::choice('messages.address', 1) }}:</strong> <span> {{ $user->address }}</span>
         </h5>
       </div>
+    </div>
   </div>
 </div>
 </div>

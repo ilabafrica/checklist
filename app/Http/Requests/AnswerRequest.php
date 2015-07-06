@@ -35,5 +35,4 @@ class AnswerRequest extends Request {
 		$name = $this->input('name');
 		return Answer::where(compact('id', 'name'))->exists() ? $id : '';
 	}
-
 }

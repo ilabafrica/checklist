@@ -4,16 +4,20 @@
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
-            <li class="active">
-                <a href="#"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
+            <li>
+                <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
             </li>
+            <li>
+                <a href="{{ url('role') }}">{{ Lang::choice('messages.role', 1) }}</a>
+            </li>
+            <li class="active">{{ Lang::choice('messages.view', 1) }}</li>
         </ol>
     </div>
 </div>
 <div class="panel panel-primary">
   <div class="panel-heading"><i class="fa fa-tags"></i> Roles <span class="panel-btn">
   <a class="btn btn-sm btn-info" href="{{ URL::to("role/" . $role->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span>{{ trans('messages.edit-role') }}</span>
+    <i class="fa fa-edit"></i><span> {{ trans('messages.edit-role') }}</span>
   </a>
   </span></div>
   <div class="panel-body">
@@ -27,6 +31,7 @@
           <strong>{{ Lang::choice('messages.description', 1) }}:</strong> <span> {{ $role->description }}</span>
         </h5>
       </div>
+    </div>
   </div>
 </div>
 </div>

@@ -3,9 +3,12 @@
 return [
 	/*	General terms */
 	'dashboard'	=>	'Dashboard',
-	'mfl-catalog'	=>	'MFL Catalog',
 	'lab-catalog'	=>	'Lab Catalog',
-	'audit-config'	=>	'Audit Configuration',
+	'audit-config' => 'Audit Configuration',
+	'audit-score-sheet'=>	'Audit Score Sheet',
+	'audited-score' => 'Audit Score',
+	'total-points' => 'Total Points',
+	'total-score' => 'TOTAL SCORE',
 	'reports'	=>	'Reports',
 	'access-controls'	=>	'Access Controls',
 	'name'	=>	'Name|Names',
@@ -21,9 +24,13 @@ return [
 	'display-name'	=>	'Display Name',
 	'gender'	=>	'Gender',
 	'sex'	=>	'Male|Female',
+<<<<<<< HEAD
 	'male' =>	'Male',
 	'female' =>	'Female',
 	'email'	=>	'Email',
+=======
+	'email'	=>	'E-Mail Address',
+>>>>>>> global
 	'address'	=>	'Address',
 	'phone'	=>	'Phone',
 	'username'	=>	'Username',
@@ -33,7 +40,7 @@ return [
 	'no-records-found'	=>	'No records found.',
 	'postal-code'	=>	'Postal Code',
 	'dob'	=>	'Date of Birth',
-	'parent'	=>	'Parent Field',
+	'parent'	=>	'Parent Field|Parent Section',
 	'date'	=>	'Date',
 	'action'	=>	'Action|Actions',
 	'reset'	=>	'Reset',
@@ -52,6 +59,10 @@ return [
 	'excel'	=>	'excel|Excel',
 	'success-import'	=>	'The data was successfully uploaded.',
 	'failure-import'	=>	'An error was encountered during processing, kindly contact your administrator',
+	'punch-line'	=>	'Use the web and mobile devices to quickly collect, analyze and share data securely. e-Checklist is an open-source system for laboratory audits and incorporates SLIPTA, BAT and TB.',
+	'echecklist'	=>	'eChecklist for APHL',
+	'initiative'	=>	'A joint initiative of APHL, the CDC and participating countries',
+	'compiled-by'	=>	'Compiled by @iLabAfrica - Strathmore University',
 	/* Roles */
 	'role'	=>	'Role|Roles',
 	'create-role'	=>	'Create Role',
@@ -75,33 +86,6 @@ return [
 	'profile-photo'	=>	'Profile Photo',
 	'no-photo-available'	=>	'No photo available',
 	'photo'	=>	'photo',
-	/* Facility Types */
-	'facility-type'	=>	'Facility Type|Facility Types',
-	'create-facility-type'	=>	'Create Facility Type',
-	'edit-facility-type'	=>	'Edit Facility Type',
-	/* Facility Owners */
-	'facility-owner'	=>	'Facility Owner|Facility Owners',
-	'create-facility-owner'	=>	'Create Facility Owner',
-	'edit-facility-owner'	=>	'Edit Facility Owner',
-	/* Counties */
-	'county'	=>	'County|Counties',
-	'create-county'	=>	'Create County',
-	'edit-county'	=>	'Edit County',
-	'hq'	=>	'Headquarters',
-	/* Constituencies */
-	'constituency'	=>	'Constituency|Constituencies',
-	'create-constituency'	=>	'Create Constituency',
-	'edit-constituency'	=>	'Edit Constituency',
-	'select-county'	=>	'Select County',
-	/* Towns */
-	'town'	=>	'Town|Towns',
-	'create-town'	=>	'Create Town',
-	'edit-town'	=>	'Edit Town',
-	'select-constituency'	=>	'Select Constituency',
-	/* Job Titles */
-	'title'	=>	'Job Title|Job Titles',
-	'create-title'	=>	'Create Job Title',
-	'edit-title'	=>	'Edit Job Title',
 	/* Lab Levels */
 	'lab-level'	=>	'Lab Level|Lab Levels',
 	'create-lab-level'	=>	'Create Lab Level',
@@ -115,24 +99,13 @@ return [
 	'create-lab-type'	=>	'Create Lab Type',
 	'edit-lab-type'	=>	'Edit Lab Type',
 
-	/* Facilities */
-	'facility'	=>	'Facility|Facilities',
-	'create-facility'	=>	'Create Facility',
-	'edit-facility'	=>	'Edit Facility',
+	/* Countries */
+	'country'	=>	'Country|Countries',
+	'create-country'	=>	'Create Country',
+	'edit-country'	=>	'Edit Country',
 	'code'	=>	'Code',
-	'landline'	=>	'Landline',
-	'fax'	=>	'Fax',
-	'mobile'	=>	'Mobile',
-	'in-charge'	=>	'In-Charge',
-	'nearest-town' =>	'Nearest Town',
-	'select-facility-type' =>	'Select Facility Type',
-	'select-facility-owner' =>	'Select Facility Owner',
-	'select-town' =>	'Select Town',
-	'select-job-title' =>	'Select Job Title',
-	'operational-status' =>	'Operational Status',
-	'select-facility' =>	'Select Facility',
-
-	
+	'capital'	=>	'Capital',
+	'country-iso'	=>	'iso_3166_2|iso_3166_3',
 	/* Laboratories */
 	'lab'	=>	'Laboratory|Laboratories',
 	'create-lab'	=>	'Create Lab',
@@ -140,6 +113,11 @@ return [
 	'select-lab-level' =>	'Select Lab Level',
 	'select-lab-affiliation' =>	'Select Lab Affiliation',
 	'select-lab-type' =>	'Select Lab Type',
+	'landline'	=>	'Landline',
+	'fax'	=>	'Fax',
+	'mobile'	=>	'Mobile',
+	'city'	=>	'City',
+	'state'	=>	'State/Province',
 
 	/* Audit Types */
 	'audit-type'	=>	'Audit Type|Audit Types',
@@ -197,11 +175,12 @@ return [
 	'find-user'	=>	'Find User',
 	'audits-owned'	=>	'Audits owned by you',
 	'start-audit'	=>	'Start Audit',
-	'new-audit-in-selected-lab'	=>	'New Audit in Seleted Lab',
+	'new-audit-in-selected-lab'	=>	'New Audit in Selected Lab',
 	'selected-lab'	=>	'Selected Lab: ',
 	'selected-audit'	=>	'Selected Audit: ',
 	'non-compliant'	=>	'Non-Compliant',
 	'audit-status'	=>	'Complete|Incomplete',
+
 	/* Notes */
 	'note'	=>	'Note|Notes',
 	'create-note'	=>	'Create Note',
@@ -226,6 +205,7 @@ return [
 	'official-slmta'	=>	'Official SLMTA Audit?',
 	'audit-start-date'	=>	'Audit Start Date',
 	'audit-end-date'	=>	'Audit End Date',
+	'slmta-audit' =>	'SLMTA Audit',
 	'slmta-audit-type'	=>	'Type of SLMTA Audit',
 	'select'	=>	'Select',
 	'tests-before-slmta'	=>	'Total # of tests before SLMTA',
@@ -330,4 +310,7 @@ return [
 	'checklist-question'	=>	'Checklist Question',
 	'iso'	=>	'ISO 15189 References',
 	'major-minor'	=>	'Major/Minor',
+	/* SLIPTA HELP MESSAGES */
+	'home-help'	=>	'<p>Here you will find audits you did, both COMPLETE and INCMPLETE.</p><p>Click:</p><p><strong>View</strong> - to see full audit.</p><p><strong>Edit</strong> - to edit.</p><p><strong>Export Audit Data</strong> - to export to data file.</p><p><strong>Run Reports</strong> - to audit summary.</p><p><strong>Mark Audit Complete</strong> - Change selected audit status to COMPLETE.</p>',
+	'create-lab-help'	=>	'Create a new Lab. Labs are identified by their lab numbers, which must be unique.',
 ];

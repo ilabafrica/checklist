@@ -7,8 +7,10 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Zizaco\Entrust\Traits\EntrustUserTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
+use Sofa\Revisionable\Revisionable; // interface
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract {
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract, Revisionable {
 	use SoftDeletes;
     protected $dates = ['deleted_at'];
 
@@ -50,6 +52,24 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{
 		return User::find(1);
 	}
+	use RevisionableTrait;
+
+    /*
+     * Set revisionable whitelist - only changes to any
+     * of these fields will be tracked during updates.
+     */
+    protected $revisionable = [
+        'name',
+        'gender',
+        'dob',
+        'email',
+        'phone',
+        'address',
+        'username',
+        'password',
+        'image',
+        'remember_token',
+    ];
 	/**
 	 * Relationship with reviews
 	 *

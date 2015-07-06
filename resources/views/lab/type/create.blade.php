@@ -4,9 +4,13 @@
 <div class="row">
     <div class="col-lg-12">
         <ol class="breadcrumb">
-            <li class="active">
-                <i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}
+            <li>
+                <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
             </li>
+            <li>
+                <a href="{{ url('labType') }}">{{ Lang::choice('messages.lab-type', 1) }}</a>
+            </li>
+            <li class="active">{{ Lang::choice('messages.create-lab-type', 1) }}</li>
         </ol>
     </div>
 </div>

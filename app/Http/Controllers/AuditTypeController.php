@@ -9,6 +9,7 @@ use App\Http\Requests\AuditTypeRequest;
 use App\Models\AuditType;
 use Response;
 use Auth;
+use Session;
 
 class AuditTypeController extends Controller {
 
@@ -46,8 +47,9 @@ class AuditTypeController extends Controller {
         $auditType->description = $request->description;
         $auditType->user_id = Auth::user()->id;;
         $auditType->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('auditType')->with('message', 'Audit type created successfully.');
+        return redirect()->to($url)->with('message', 'Audit type created successfully.')->with('active_auditType', $auditType ->id);
 	}
 
 	/**
@@ -90,8 +92,9 @@ class AuditTypeController extends Controller {
         $auditType->description = $request->description;
         $auditType->user_id = Auth::user()->id;;
         $auditType->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('auditType')->with('message', 'Audit type updated successfully.');
+        return redirect()->to($url)->with('message', 'Audit type updated successfully.')->with('active_auditType', $auditType ->id);
 	}
 
 	/**

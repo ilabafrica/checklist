@@ -8,6 +8,7 @@ use App\Http\Requests\RoleRequest;
 use App\Models\Role;
 use Response;
 use Auth;
+use Session;
 
 class RoleController extends Controller {
 
@@ -45,8 +46,9 @@ class RoleController extends Controller {
         $role->display_name = $request->display_name;
         $role->description = $request->description;
         $role->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('role')->with('message', 'Role created successfully.');
+        return redirect()->to($url)->with('message', 'Role created successfully.')->with('active_role', $role ->id);
 	}
 
 	/**
@@ -87,10 +89,10 @@ class RoleController extends Controller {
 		$role = Role::findOrFail($id);
 		$role->name = $request->name;
         $role->description = $request->description;
-
         $role->save();
+        $url = session('SOURCE_URL');
 
-        return redirect('role')->with('message', 'Role successfully updated.');
+        return redirect()->to($url)->with('message', 'Role successfully updated.')->with('active_role', $role ->id);
 	}
 
 	/**
