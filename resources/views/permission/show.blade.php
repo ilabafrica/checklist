@@ -33,9 +33,5 @@
       </div>
     </div>
   </div>
-<<<<<<< HEAD
-  </div>
-=======
 </div>
->>>>>>> global
 @stop

@@ -26,17 +26,6 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <h4 class="no-margn view">
-<<<<<<< HEAD
-          <strong>{{ Lang::choice('messages.facility', 1) }}:</strong> <span> {{ $lab->facility->name }}</span>
-        </h4>
-        <hr>
-        <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.lab-level', 1) }}:</strong> <span> {{ $lab->labLevel->name }}</span>
-        </h5>
-        <hr>
-        <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.lab-affiliation', 1) }}:</strong> <span> {{ $lab->labAffiliation->name }}</span>
-=======
           <strong>{{ Lang::choice('messages.lab-name', 1) }}:</strong> <span> {{ $lab->name }}</span>
         </h4>
         <hr>
@@ -46,18 +35,14 @@
         <hr>
         <h5 class="no-margn">
           <strong>{{ Lang::choice('messages.lab-affiliation', 1) }}:</strong> <span> {{ $lab->labAffiliation->name}}</span>
->>>>>>> global
         </h5>
         <hr>
         <h5 class="no-margn">
           <strong>{{ Lang::choice('messages.lab-type', 1) }}:</strong> <span> {{ $lab->labType->name }}</span>
-<<<<<<< HEAD
-=======
         </h5>
         <hr>
         <h5 class="no-margn">
           <strong>{{ Lang::choice('messages.country', 1) }}:</strong> <span> {{ $lab->country->name }}</span>
->>>>>>> global
         </h5>
       </div>
     </div>

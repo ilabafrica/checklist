@@ -24,13 +24,7 @@ return [
 	'display-name'	=>	'Display Name',
 	'gender'	=>	'Gender',
 	'sex'	=>	'Male|Female',
-<<<<<<< HEAD
-	'male' =>	'Male',
-	'female' =>	'Female',
-	'email'	=>	'Email',
-=======
 	'email'	=>	'E-Mail Address',
->>>>>>> global
 	'address'	=>	'Address',
 	'phone'	=>	'Phone',
 	'username'	=>	'Username',

@@ -33,35 +33,20 @@
                 <div class="form-group">
                     {!! Form::label('lab_type_id', Lang::choice('messages.lab-type', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-<<<<<<< HEAD
-                        {!! Form::select('facility', array(''=>trans('messages.select-facility'))+$facilities,'', 
-                            array('class' => 'form-control', 'id' => 'facility')) !!}
-=======
                         {!! Form::select('lab_type', array(''=>trans('messages.select-lab-type'))+$labTypes,'', 
                             array('class' => 'form-control', 'id' => 'lab_type')) !!}
->>>>>>> global
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('name', Lang::choice('messages.lab-name', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-<<<<<<< HEAD
-                        {!! Form::select('lab_level', array(''=>trans('messages.select-lab-level'))+$labLevels,'', 
-                            array('class' => 'form-control', 'id' => 'lab_level')) !!}
-=======
                         {!! Form::text('name', Input::old('name'), array('class' => 'form-control')) !!}
->>>>>>> global
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('number', Lang::choice('messages.lab-number', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-<<<<<<< HEAD
-                        {!! Form::select('lab_affiliation', array(''=>trans('messages.select-lab-affiliation'))+$labAffiliations,'', 
-                            array('class' => 'form-control', 'id' => 'lab_affiliation')) !!}
-=======
                         {!! Form::text('number', Input::old('number'), array('class' => 'form-control')) !!}
->>>>>>> global
                     </div>
                 </div>
                 <div class="form-group">
@@ -104,10 +89,6 @@
                 <div class="form-group">
                     {!! Form::label('fax', Lang::choice('messages.fax', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-<<<<<<< HEAD
-                        {!! Form::select('lab_type', array(''=>trans('messages.select-lab-type'))+$labTypes,'', 
-                            array('class' => 'form-control', 'id' => 'lab_type')) !!}
-=======
                         {!! Form::text('fax', Input::old('fax'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
@@ -129,7 +110,6 @@
                     <div class="col-sm-8">
                         {!! Form::select('lab_affiliation', array(''=>trans('messages.select-lab-affiliation'))+$labAffiliations,'', 
                             array('class' => 'form-control', 'id' => 'lab_affiliation')) !!}
->>>>>>> global
                     </div>
                 </div>
                 <div class="form-group">

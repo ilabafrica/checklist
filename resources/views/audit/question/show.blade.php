@@ -17,11 +17,7 @@
 <div class="panel panel-primary">
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.question', 1) }} <span class="panel-btn">
   <a class="btn btn-sm btn-info" href="{{ URL::to("question/" . $question->id . "/edit") }}" >
-<<<<<<< HEAD
-    <i class="fa fa-edit"></i><span>{{ Lang::choice('messages.edit-question', 1) }}</span>
-=======
     <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-question', 1) }}</span>
->>>>>>> global
   </a>
   </span></div>
   <div class="panel-body">
@@ -32,12 +28,6 @@
         </h4>
         <hr>
         <h5 class="no-margn">
-<<<<<<< HEAD
-          <strong>{{ Lang::choice('messages.description', 1) }}:</strong> <span> {{ $question->description }}</span>
-        </h5>
-      </div>
-      </div>
-=======
           <strong>{{ Lang::choice('messages.label', 1) }}:</strong> <span> {{ $question->title }}</span>
         </h5>
         <hr>
@@ -74,7 +64,6 @@
         </h5>
       </div>
     </div>
->>>>>>> global
   </div>
 </div>
 <div>
