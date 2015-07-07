@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\SectionRequest;
-use App\Models\AuditType;
 use App\Models\Section;
 use App\Models\Note;
 use Response;
@@ -36,11 +35,9 @@ class SectionController extends Controller {
 	{
 		//	Get all present sections
 		$parents = Section::lists('name', 'id');
-		//	Get all audit types
-		$auditTypes = AuditType::lists('name', 'id');
 		//	Get all notes
 		$notes = Note::orderBy('name')->get();
-		return view('audit.section.create', compact('parents', 'auditTypes', 'notes'));
+		return view('audit.section.create', compact('parents', 'notes'));
 	}
 
 	/**
@@ -54,9 +51,7 @@ class SectionController extends Controller {
         $section->name = $request->name;
         $section->label = $request->label;
         $section->description = $request->description;
-        $section->audit_type_id = $request->audit_type_id;
         $section->total_points = $request->total_points;
-        $section->order = $request->order;
         $section->user_id = Auth::user()->id;;
         try{
 			$section->save();
@@ -102,16 +97,10 @@ class SectionController extends Controller {
 		$parents = Section::lists('name', 'id');
 		//	Get initial parent id
 		$parent = $section->parent_id;
-		//	Get all audit types
-		$auditTypes = AuditType::lists('name', 'id');
-		//	Get initial audit type
-		$auditType = $section->audit_type_id;
 		//	Get all notes
 		$notes = Note::orderBy('name', 'ASC')->get();
-		//	Get initial order
-		$order = $section->order;
 
-        return view('audit.section.edit', compact('section', 'parents', 'parent', 'auditTypes', 'auditType', 'notes', 'order'));
+        return view('audit.section.edit', compact('section', 'parents', 'parent', 'notes'));
 	}
 
 	/**
@@ -126,9 +115,7 @@ class SectionController extends Controller {
         $section->name = $request->name;
         $section->label = $request->label;
         $section->description = $request->description;
-        $section->audit_type_id = $request->audit_type_id;
         $section->total_points = $request->total_points;
-        $section->order = $request->order;
         $section->user_id = Auth::user()->id;;
 
         try{
@@ -166,5 +153,4 @@ class SectionController extends Controller {
 	{
 		//
 	}
-
 }

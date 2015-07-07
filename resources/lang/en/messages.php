@@ -135,7 +135,7 @@ return [
 	'question-type'	=>	'Question Type|Question Types',
 	'select-question-type'	=>	'Select Question Type',
 	'select-parent'	=>	'Select Parent',
-	'select-section'	=>	'Select Section',
+	'select-section'	=>	'Select Section|Select Sections',
 	'comment'	=>	'Comment|Comments',
 	'score'	=>	'Score|Scores',
 	'one-star'	=>	'One Star',

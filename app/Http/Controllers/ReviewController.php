@@ -99,7 +99,7 @@ class ReviewController extends Controller {
 			}
 
 	        $audit = AuditType::find($review->audit_type_id);
-	        $page = $audit->sections->first()->get();
+	        $page = $audit->sections[0];
 	    }
 	    //	Save Auditors
 	    if(Input::get('assessors')){
@@ -352,7 +352,7 @@ class ReviewController extends Controller {
         //	Get variables ready for processing of new audit
         $audit = AuditType::find($response->audit_type_id);
         $lab = Lab::find($response->lab_id);
-        $page = $audit->sections->first();
+        $page = $audit->sections[0];
         //	Get saved review
         $review = Review::find($response->id);
 
@@ -644,7 +644,7 @@ class ReviewController extends Controller {
         //	Get variables ready for processing of new audit
         $audit = AuditType::find($response->audit_type_id);
         $lab = Lab::find($response->lab_id);
-        $page = $audit->sections->first();
+        $page = $audit->sections[0];
         //	Get saved review
         $review = Review::find($response->id);
 
