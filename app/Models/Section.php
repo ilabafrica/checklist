@@ -115,7 +115,7 @@ class Section extends Model implements Revisionable{
 	*/
 	public function next()
 	{
-		return DB::table('audit_type_sections')->where('order', $this->id)->get();
+		return Section::where('order', $this->id)->get();
 	}
 	/**
 	* Get Subtotal score
@@ -153,13 +153,5 @@ class Section extends Model implements Revisionable{
 			//TODO: send email?
 			return null;
 		}
-	}
-	/**
-	 * Order column
-	 * $id is the id of the audit type in question
-	 */
-	public function order($id)
-	{
-		return DB::table('audit_type_sections')->where('section_id', $this->id)->where('audit_type_id', $id)->get();
 	}
 }

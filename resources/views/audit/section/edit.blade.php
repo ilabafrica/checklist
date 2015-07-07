@@ -67,6 +67,14 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    {!! Form::label('order', Lang::choice('messages.order', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    <div class="col-sm-8">
+                        {!! Form::select('order', array(''=>trans('messages.select-order'))+$parents,
+                            old('order') ? old('order') : $order, 
+                            array('class' => 'form-control', 'id' => 'order')) !!}
+                    </div>
+                </div>
+                <div class="form-group">
                     {!! Form::label('note', Lang::choice('messages.select-note', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
                         <div class="panel panel-default">

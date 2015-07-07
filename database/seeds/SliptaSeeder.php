@@ -316,92 +316,92 @@ class SliptaSeeder extends Seeder
         $this->command->info('Notes table seeded');
 
         /* Sections */
-        $sec_mainPage = Section::create(array("name" => "Main Page", "label" => "1.0 INTRODUCTION", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_part1 = Section::create(array("name" => "Part I", "label" => "Part I", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_slmtaInfo = Section::create(array("name" => "SLMTA Info", "label" => "SLMTA Information", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_labProfile = Section::create(array("name" => "Lab Profile", "label" => "Laboratory Profile", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_labInfo = Section::create(array("name" => "Lab Info", "label" => "Lab Information", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_staffSummary = Section::create(array("name" => "Staffing Summary", "label" => "Laboratory Staffing Summary", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_orgStructure = Section::create(array("name" => "Org Structure", "label" => "Organizational Structure", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_part2 = Section::create(array("name" => "Part II", "label" => "Part II", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_prelude = Section::create(array("name" => "Prelude", "label" => "PART II: LABORATORY AUDITS", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_sec1 = Section::create(array("name" => "Section 1", "label" => "1.0 DOCUMENTS AND RECORDS", "description" => "", "total_points" => "25", "user_id" => "1"));
-        $sec_sec2 = Section::create(array("name" => "Section 2", "label" => "2.0 MANAGEMENT REVIEWS", "description" => "", "total_points" => "17", "user_id" => "1"));
-        $sec_sec3 = Section::create(array("name" => "Section 3", "label" => "3.0 ORGANIZATION & PERSONNEL", "description" => "", "total_points" => "20", "user_id" => "1"));
-        $sec_sec4 = Section::create(array("name" => "Section 4", "label" => "4.0 CLIENT MANAGEMENT & CUSTOMER SERVICE", "description" => "", "total_points" => "8", "user_id" => "1"));
-        $sec_sec5 = Section::create(array("name" => "Section 5", "label" => "5.0 EQUIPMENT", "description" => "", "total_points" => "30", "user_id" => "1"));
-        $sec_sec6 = Section::create(array("name" => "Section 6", "label" => "6.0 INTERNAL AUDIT", "description" => "", "total_points" => "10", "user_id" => "1"));
-        $sec_sec7 = Section::create(array("name" => "Section 7", "label" => "7.0 PURCHASING & INVENTORY", "description" => "", "total_points" => "30", "user_id" => "1"));
-        $sec_sec8 = Section::create(array("name" => "Section 8", "label" => "8.0 PROCESS CONTROL AND INTERNAL & EXTERNAL QUALITY AUDIT", "description" => "", "total_points" => "33", "user_id" => "1"));
-        $sec_sec9 = Section::create(array("name" => "Section 9", "label" => "9.0 INFORMATION MANAGEMENT", "description" => "", "total_points" => "18", "user_id" => "1"));
-        $sec_sec10 = Section::create(array("name" => "Section 10", "label" => "10.0 CORRECTIVE ACTION", "description" => "", "total_points" => "12", "user_id" => "1"));
-        $sec_sec11 = Section::create(array("name" => "Section 11", "label" => "11.0 OCCURRENCE / INCIDENT MANAGEMENT & PROCESS IMPROVEMENT", "description" => "", "total_points" => "12", "user_id" => "1"));
-        $sec_sec12 = Section::create(array("name" => "Section 12", "label" => "12.0 FACILITIES & SAFETY", "description" => "", "total_points" => "43", "user_id" => "1"));
-        $sec_ethicalP = Section::create(array("name" => "Ethical Principles", "label" => "ETHICAL PRINCIPLES IN LABORATORY MEDICINE", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_criteria1 = Section::create(array("name" => "Criteria 1", "label" => "Criteria 1", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_criteria2 = Section::create(array("name" => "Criteria 2", "label" => "Criteria 2", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_part3 = Section::create(array("name" => "Part III", "label" => "Part III", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_summary = Section::create(array("name" => "Summary", "label" => "PART III: SUMMARY OF AUDIT FINDINGS", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_actionP = Section::create(array("name" => "Action Plan", "label" => "ACTION PLAN (IF APPLICABLE)", "description" => "", "total_points" => "0", "user_id" => "1"));
-        $sec_sliptaCert = Section::create(array("name" => "SLIPTA Certification", "label" => "Criteria for SLIPTA 5 star certification and accreditation of international standards)", "description" => "", "total_points" => "0", "user_id" => "1"));
+        $sec_mainPage = Section::create(array("name" => "Main Page", "label" => "1.0 INTRODUCTION", "description" => "", "total_points" => "0", "order" => 0, "user_id" => "1"));
+        $sec_part1 = Section::create(array("name" => "Part I", "label" => "Part I", "description" => "", "total_points" => "0", "order" => 0, "user_id" => "1"));
+        $sec_slmtaInfo = Section::create(array("name" => "SLMTA Info", "label" => "SLMTA Information", "description" => "", "total_points" => "0", "order" => $sec_mainPage->id, "user_id" => "1"));
+        $sec_labProfile = Section::create(array("name" => "Lab Profile", "label" => "Laboratory Profile", "description" => "", "total_points" => "0", "order" => 0, "user_id" => "1"));
+        $sec_labInfo = Section::create(array("name" => "Lab Info", "label" => "Lab Information", "description" => "", "total_points" => "0", "order" => $sec_slmtaInfo->id, "user_id" => "1"));
+        $sec_staffSummary = Section::create(array("name" => "Staffing Summary", "label" => "Laboratory Staffing Summary", "description" => "", "total_points" => "0", "order" => $sec_labInfo->id, "user_id" => "1"));
+        $sec_orgStructure = Section::create(array("name" => "Org Structure", "label" => "Organizational Structure", "description" => "", "total_points" => "0", "order" => $sec_staffSummary->id, "user_id" => "1"));
+        $sec_part2 = Section::create(array("name" => "Part II", "label" => "Part II", "description" => "", "total_points" => "0", "order" => 0, "user_id" => "1"));
+        $sec_prelude = Section::create(array("name" => "Prelude", "label" => "PART II: LABORATORY AUDITS", "description" => "", "total_points" => "0", "order" => $sec_orgStructure->id, "user_id" => "1"));
+        $sec_sec1 = Section::create(array("name" => "Section 1", "label" => "1.0 DOCUMENTS AND RECORDS", "description" => "", "total_points" => "25", "order" => $sec_prelude->id, "user_id" => "1"));
+        $sec_sec2 = Section::create(array("name" => "Section 2", "label" => "2.0 MANAGEMENT REVIEWS", "description" => "", "total_points" => "17", "order" => $sec_sec1->id, "user_id" => "1"));
+        $sec_sec3 = Section::create(array("name" => "Section 3", "label" => "3.0 ORGANIZATION & PERSONNEL", "description" => "", "total_points" => "20", "order" => $sec_sec2->id, "user_id" => "1"));
+        $sec_sec4 = Section::create(array("name" => "Section 4", "label" => "4.0 CLIENT MANAGEMENT & CUSTOMER SERVICE", "description" => "", "total_points" => "8", "order" => $sec_sec3->id, "user_id" => "1"));
+        $sec_sec5 = Section::create(array("name" => "Section 5", "label" => "5.0 EQUIPMENT", "description" => "", "total_points" => "30", "order" => $sec_sec4->id, "user_id" => "1"));
+        $sec_sec6 = Section::create(array("name" => "Section 6", "label" => "6.0 INTERNAL AUDIT", "description" => "", "total_points" => "10", "order" => $sec_sec5->id, "user_id" => "1"));
+        $sec_sec7 = Section::create(array("name" => "Section 7", "label" => "7.0 PURCHASING & INVENTORY", "description" => "", "total_points" => "30", "order" => $sec_sec6->id, "user_id" => "1"));
+        $sec_sec8 = Section::create(array("name" => "Section 8", "label" => "8.0 PROCESS CONTROL AND INTERNAL & EXTERNAL QUALITY AUDIT", "description" => "", "total_points" => "33", "order" => $sec_sec7->id, "user_id" => "1"));
+        $sec_sec9 = Section::create(array("name" => "Section 9", "label" => "9.0 INFORMATION MANAGEMENT", "description" => "", "total_points" => "18", "order" => $sec_sec8->id, "user_id" => "1"));
+        $sec_sec10 = Section::create(array("name" => "Section 10", "label" => "10.0 CORRECTIVE ACTION", "description" => "", "total_points" => "12", "order" => $sec_sec9->id, "user_id" => "1"));
+        $sec_sec11 = Section::create(array("name" => "Section 11", "label" => "11.0 OCCURRENCE / INCIDENT MANAGEMENT & PROCESS IMPROVEMENT", "description" => "", "total_points" => "12", "order" => $sec_sec10->id, "user_id" => "1"));
+        $sec_sec12 = Section::create(array("name" => "Section 12", "label" => "12.0 FACILITIES & SAFETY", "description" => "", "total_points" => "43", "order" => $sec_sec11->id, "user_id" => "1"));
+        $sec_ethicalP = Section::create(array("name" => "Ethical Principles", "label" => "ETHICAL PRINCIPLES IN LABORATORY MEDICINE", "description" => "", "total_points" => "0", "order" => $sec_sec12->id, "user_id" => "1"));
+        $sec_criteria1 = Section::create(array("name" => "Criteria 1", "label" => "Criteria 1", "description" => "", "total_points" => "0", "order" => $sec_ethicalP->id, "user_id" => "1"));
+        $sec_criteria2 = Section::create(array("name" => "Criteria 2", "label" => "Criteria 2", "description" => "", "total_points" => "0", "order" => $sec_criteria1->id, "user_id" => "1"));
+        $sec_part3 = Section::create(array("name" => "Part III", "label" => "Part III", "description" => "", "total_points" => "0", "order" => 0, "user_id" => "1"));
+        $sec_summary = Section::create(array("name" => "Summary", "label" => "PART III: SUMMARY OF AUDIT FINDINGS", "description" => "", "total_points" => "0", "order" => $sec_criteria2->id, "user_id" => "1"));
+        $sec_actionP = Section::create(array("name" => "Action Plan", "label" => "ACTION PLAN (IF APPLICABLE)", "description" => "", "total_points" => "0", "order" => $sec_summary->id, "user_id" => "1"));
+        $sec_sliptaCert = Section::create(array("name" => "SLIPTA Certification", "label" => "Criteria for SLIPTA 5 star certification and accreditation of international standards)", "description" => "", "total_points" => "0", "order" => $sec_actionP->id, "user_id" => "1"));
         $this->command->info('Sections table seeded');
         /* audit-type-sections */
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_mainPage->id, "order" => "0"));
+            array("audit_type_id" => "1", "section_id" => $sec_mainPage->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_part1->id, "order" => "0"));
+            array("audit_type_id" => "1", "section_id" => $sec_part1->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_slmtaInfo->id, "order" => $sec_mainPage->id));
+            array("audit_type_id" => "1", "section_id" => $sec_slmtaInfo->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_labProfile->id, "order" => "0"));
+            array("audit_type_id" => "1", "section_id" => $sec_labProfile->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_labInfo->id, "order" => $sec_slmtaInfo->id));
+            array("audit_type_id" => "1", "section_id" => $sec_labInfo->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_staffSummary->id, "order" => $sec_labInfo->id));
+            array("audit_type_id" => "1", "section_id" => $sec_staffSummary->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_orgStructure->id, "order" => $sec_staffSummary->id));
+            array("audit_type_id" => "1", "section_id" => $sec_orgStructure->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_part2->id, "order" => "0"));
+            array("audit_type_id" => "1", "section_id" => $sec_part2->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_prelude->id, "order" => $sec_orgStructure->id));
+            array("audit_type_id" => "1", "section_id" => $sec_prelude->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec1->id, "order" => $sec_prelude->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec1->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec2->id, "order" => $sec_sec1->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec2->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec3->id, "order" => $sec_sec2->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec3->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec4->id, "order" => $sec_sec3->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec4->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec5->id, "order" => $sec_sec4->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec5->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec6->id, "order" => $sec_sec5->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec6->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec7->id, "order" => $sec_sec6->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec7->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec8->id, "order" => $sec_sec7->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec8->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec9->id, "order" => $sec_sec8->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec9->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec10->id, "order" => $sec_sec9->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec10->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec11->id, "order" => $sec_sec10->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec11->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sec12->id, "order" => $sec_sec11->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sec12->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_ethicalP->id, "order" => $sec_sec12->id));
+            array("audit_type_id" => "1", "section_id" => $sec_ethicalP->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_criteria1->id, "order" => $sec_ethicalP->id));
+            array("audit_type_id" => "1", "section_id" => $sec_criteria1->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_criteria2->id, "order" => $sec_criteria1->id));
+            array("audit_type_id" => "1", "section_id" => $sec_criteria2->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_part3->id, "order" => "0"));
+            array("audit_type_id" => "1", "section_id" => $sec_part3->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_summary->id, "order" => $sec_criteria2->id));
+            array("audit_type_id" => "1", "section_id" => $sec_summary->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_actionP->id, "order" => $sec_summary->id));
+            array("audit_type_id" => "1", "section_id" => $sec_actionP->id));
         DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_sliptaCert->id, "order" => $sec_actionP->id));
+            array("audit_type_id" => "1", "section_id" => $sec_sliptaCert->id));
         $this->command->info('Audit-type-sections table seeded');
         /* Section parent-child */
         DB::table('section_parent_child')->insert(

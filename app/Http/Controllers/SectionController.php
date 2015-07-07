@@ -52,6 +52,7 @@ class SectionController extends Controller {
         $section->label = $request->label;
         $section->description = $request->description;
         $section->total_points = $request->total_points;
+        $section->order = $request->order;
         $section->user_id = Auth::user()->id;;
         try{
 			$section->save();
@@ -99,8 +100,10 @@ class SectionController extends Controller {
 		$parent = $section->parent_id;
 		//	Get all notes
 		$notes = Note::orderBy('name', 'ASC')->get();
+		//	Get initial order
+		$order = $section->order;
 
-        return view('audit.section.edit', compact('section', 'parents', 'parent', 'notes'));
+        return view('audit.section.edit', compact('section', 'parents', 'parent', 'notes', 'order'));
 	}
 
 	/**
@@ -116,6 +119,7 @@ class SectionController extends Controller {
         $section->label = $request->label;
         $section->description = $request->description;
         $section->total_points = $request->total_points;
+        $section->order = $request->order;
         $section->user_id = Auth::user()->id;;
 
         try{

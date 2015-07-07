@@ -19,7 +19,7 @@
         <div class="btn-group btn-breadcrumb">
             <a href="#" class="btn btn-sm btn-default" style="margin-bottom:5px;"><i class="fa fa-home"></i> {!! $audit->name !!}</a>
             @foreach($audit->sections as $section)
-                @if($section->order($audit->id)[0]->order!=0)
+                @if($section->order!=0)
                     <a href="{{ URL::to('review/'.$review->id.'/edit/'.$section->id) }}" class="btn btn-sm {{ Request::segment(4)==$section->id?'btn-danger':'btn-default' }} btn-default" style="margin-bottom:5px;"><div>{!! $section->name !!}</div></a>
                 @endif
             @endforeach
@@ -1028,7 +1028,7 @@
                     @endif
                     <div class="form-group">
                         <div class="col-sm-offset-6 col-sm-6">
-                        @if(($section->order($audit->id)[0]->order == 0 && $page->total_points == 0) || ($page->total_points == 0 && count($page->notes)>0))
+                        @if(($section->order == 0 && $page->total_points == 0) || ($page->total_points == 0 && count($page->notes)>0))
                             @if(!$page->next()->isEmpty())
                                 <a href="{{ url('review/'.$review->id.'/edit/'.$page->next()[0]->id) }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
                             @else

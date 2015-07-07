@@ -61,6 +61,7 @@ class CreateAuditTables extends Migration {
 			$table->string('label')->nullable();
 			$table->string('description', 100);
 			$table->smallInteger('total_points')->nullable();
+            $table->smallInteger('order');
 			$table->integer('user_id')->unsigned();
 
             $table->foreign('user_id')->references('id')->on('users');
@@ -74,7 +75,6 @@ class CreateAuditTables extends Migration {
             $table->increments('id')->unsigned();
             $table->integer('audit_type_id')->unsigned();
             $table->integer('section_id')->unsigned();
-            $table->smallInteger('order');
 			$table->softDeletes();
             $table->timestamps();
 
