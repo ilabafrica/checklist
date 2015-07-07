@@ -20,7 +20,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.edit-audit-type', '1') }}</div>
     <div class="panel-body">
-        <div class="col-lg-6 main">
+        <div class="col-sm-12 main">
             <!-- Begin form --> 
             @if($errors->all())
             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -44,6 +44,35 @@
                     <div class="col-sm-8">
                         {!! Form::textarea('description', Input::old('description'), 
                             array('class' => 'form-control', 'rows' => '3')) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('note', Lang::choice('messages.select-section', 2), array('class' => 'col-sm-4 control-label')) !!}
+                    <div class="col-sm-8">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <?php 
+                                    $cnt = 0;
+                                    $zebra = "";
+                                ?>
+                                @foreach($sections as $key=>$value)
+                                    {!! ($cnt%4==0)?"<div class='row $zebra'>":"" !!}
+                                    <?php
+                                        $cnt++;
+                                        $zebra = (((int)$cnt/4)%2==1?"row-striped":"");
+                                    ?>
+                                    <div class="col-md-3">
+                                        <label  class="checkbox-inline">
+                                            <input type="checkbox" name="notes[]" value="{{ $value->id}}" 
+                                            {{ in_array($value->id, $auditType->sections->lists('id'))?"checked":"" }} />
+                                            {{$value->name }}
+                                        </label>
+                                    </div>
+                                    {!! ($cnt%4==0)?"</div>":"" !!}
+                                @endforeach
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

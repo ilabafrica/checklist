@@ -37,7 +37,6 @@
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
                             <th>{{ Lang::choice('messages.description', 1) }}</th>
                             <th>{{ Lang::choice('messages.parent', 2) }}</th>
-                            <th>{{ Lang::choice('messages.audit-type', 1) }}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -50,7 +49,6 @@
                             <td>{{ $section->name }}</td>
                             <td>{{ $section->description }}</td>
                             <td>{{ count($section->parent())>0?App\Models\Section::find($section->parent()->parent_id)->name:'' }}</td>
-                            <td>{{ $section->auditType->name }}</td>
                             <td>
                               <a href="{{ URL::to("section/" . $section->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
                               <a href="{{ URL::to("section/" . $section->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>

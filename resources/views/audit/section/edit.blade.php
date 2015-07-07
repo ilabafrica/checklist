@@ -61,14 +61,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('audit_type_id', Lang::choice('messages.section', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::select('audit_type_id', array(''=>trans('messages.select-section'))+$auditTypes,
-                            old('auditType') ? old('auditType') : $auditType, 
-                            array('class' => 'form-control', 'id' => 'audit_type_id')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
                     {!! Form::label('points', Lang::choice('messages.point', 2), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
                         {!! Form::text('total_points', Input::old('total_points'), array('class' => 'form-control')) !!}

@@ -108,7 +108,7 @@ class Section extends Model implements Revisionable{
 	*/
 	public function auditType()
 	{
-		return $this->belongsTo('App\Models\AuditType');
+		return $this->belongsTo('App\Models\AuditType', 'audit_type_sections', 'audit_type_id', 'section_id');
 	}
 	/**
 	* Next page relationship

@@ -60,17 +60,28 @@ class CreateAuditTables extends Migration {
 			$table->string('name');
 			$table->string('label')->nullable();
 			$table->string('description', 100);
-			$table->integer('audit_type_id')->unsigned();
 			$table->smallInteger('total_points')->nullable();
-			$table->smallInteger('order');
+            $table->smallInteger('order');
 			$table->integer('user_id')->unsigned();
 
-            $table->foreign('audit_type_id')->references('id')->on('audit_types');
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->softDeletes();
 			$table->timestamps();
 		});
+		//	Audit type sections - to break m-m relationship
+		Schema::create('audit_type_sections', function(Blueprint $table)
+        {
+            $table->increments('id')->unsigned();
+            $table->integer('audit_type_id')->unsigned();
+            $table->integer('section_id')->unsigned();
+			$table->softDeletes();
+            $table->timestamps();
+
+            $table->foreign('audit_type_id')->references('id')->on('audit_types');
+            $table->foreign('section_id')->references('id')->on('sections');
+            $table->unique(array('audit_type_id','section_id'));
+        });
 		//	Audit field groups parent-child relationship
 		Schema::create('section_parent_child', function(Blueprint $table)
         {

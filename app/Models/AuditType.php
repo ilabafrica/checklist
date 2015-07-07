@@ -26,13 +26,39 @@ class AuditType extends Model implements Revisionable{
 	 */
 	public function sections()
 	{
-	  return $this->hasMany('App\Models\Section');
+	 	return $this->belongsToMany('App\Models\Section', 'audit_type_sections', 'audit_type_id', 'section_id');
 	}
 	/**
 	 * Reviews relationship
 	 */
 	public function reviews()
 	{
-	  return $this->hasMany('App\Models\Review');
+		return $this->hasMany('App\Models\Review');
+	}
+	/**
+	 * Set applicable sections for the audit type
+	 */
+	public function setSections($field){
+
+		$fieldAdded = array();
+		$auditTypeId = 0;	
+
+		if(is_array($field)){
+			foreach ($field as $key => $value) {
+				$fieldAdded[] = array(
+					'audit_type_id' => (int)$this->id,
+					'section_id' => (int)$value,
+					'created_at' => date('Y-m-d H:i:s'),
+					'updated_at' => date('Y-m-d H:i:s')
+					);
+				$auditTypeId = (int)$this->id;
+			}
+
+		}
+		// Delete existing audit-type-sections mappings
+		DB::table('audit_type_sections')->where('audit_type_id', '=', $auditTypeId)->delete();
+
+		// Add the new mapping
+		DB::table('audit_type_sections')->insert($fieldAdded);
 	}
 }

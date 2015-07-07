@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\AuditTypeRequest;
 use App\Models\AuditType;
+use App\Models\Section;
 use Response;
 use Auth;
 use Session;
@@ -32,7 +33,9 @@ class AuditTypeController extends Controller {
 	 */
 	public function create()
 	{
-		return view('audit.type.create');
+		//	Get all sections
+		$sections = Section::all();
+		return view('audit.type.create', compact('sections'));
 	}
 
 	/**
@@ -45,11 +48,19 @@ class AuditTypeController extends Controller {
 		$auditType = new AuditType;
         $auditType->name = $request->name;
         $auditType->description = $request->description;
-        $auditType->user_id = Auth::user()->id;;
-        $auditType->save();
-        $url = session('SOURCE_URL');
+        $auditType->user_id = Auth::user()->id;
+        try{
+			$auditType->save();
+			if($request->sections){
+				$auditType->setSections($request->sections);
+			}
+			$url = session('SOURCE_URL');
 
-        return redirect()->to($url)->with('message', 'Audit type created successfully.')->with('active_auditType', $auditType ->id);
+        	return redirect()->to($url)->with('message', 'Audit type created successfully.')->with('active_auditType', $auditType ->id);
+		}
+		catch(QueryException $e){
+			Log::error($e);
+		}
 	}
 
 	/**
@@ -75,8 +86,10 @@ class AuditTypeController extends Controller {
 	public function edit($id)
 	{
 		$auditType = AuditType::find($id);
+		//	Get all sections
+		$sections = Section::all();
 
-        return view('audit.type.edit', compact('auditType'));
+        return view('audit.type.edit', compact('auditType', 'sections'));
 	}
 
 	/**
@@ -91,10 +104,18 @@ class AuditTypeController extends Controller {
         $auditType->name = $request->name;
         $auditType->description = $request->description;
         $auditType->user_id = Auth::user()->id;;
-        $auditType->save();
-        $url = session('SOURCE_URL');
+        try{
+			$auditType->save();
+			if($request->sections){
+				$auditType->setSections($request->sections);
+			}
+			$url = session('SOURCE_URL');
 
-        return redirect()->to($url)->with('message', 'Audit type updated successfully.')->with('active_auditType', $auditType ->id);
+        	return redirect()->to($url)->with('message', 'Audit type created successfully.')->with('active_auditType', $auditType ->id);
+		}
+		catch(QueryException $e){
+			Log::error($e);
+		}
 	}
 
 	/**

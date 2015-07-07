@@ -1019,7 +1019,7 @@
                             @if(count($page->next())==0)
                                 <a href="{{ url('review/assessment/'.$review->id) }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
                             @else
-                                <a href="{{ url('review/create/'.$review->id.'/'.$page->next()->first()->id) }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
+                                <a href="{{ url('review/create/'.$review->id.'/'.$page->next()[0]->id) }}" class="btn btn-s-md btn-default"><i class="fa fa-arrow-circle-o-right"></i> {{ Lang::choice('messages.next', 1) }}</a>
                             @endif
                         @else
                         {!! Form::submit(Lang::choice('messages.save', 1), 

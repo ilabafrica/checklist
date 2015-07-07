@@ -30,6 +30,10 @@
         <h5 class="no-margn">
           <strong>{{ Lang::choice('messages.description', 1) }}:</strong> <span> {{ $auditType->description }}</span>
         </h5>
+        <hr>
+        <h5 class="no-margn">
+          <strong>{{ Lang::choice('messages.section', 2) }}:</strong> <span> {{ implode(", ", $auditType->sections->lists('name')) }}</span>
+        </h5>
       </div>
     </div>
   </div>
