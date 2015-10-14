@@ -35,7 +35,7 @@ return array(
 	|
 	*/
 
-	'slipta' => 'Stepwise Laboratory Improvement Process Towards Accreditation (SLIPTA) Checklist',
+	'slipta' => 'Stepwise Laboratory Improvement Process Towards Accreditation (SLIPTA) Checklist Version 2:2015',
 
 	/*
 	|--------------------------------------------------------------------------
