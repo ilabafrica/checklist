@@ -846,6 +846,7 @@ class ReviewController extends Controller {
 			$review_id = $review->id;
 
         	$reader->each(function($sheet) use($review_id, $laboratory_profile, $staffing_summary, $organizational_structure, $slmta_information, $assessment, $scores, $summary, $action_plan){
+        		$review = Review::find(1);
         		$sheetTitle = $sheet->getTitle();
         		if($sheetTitle == Lang::choice('messages.lab-info', 2)){
         			$counter = count($sheet);
