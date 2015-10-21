@@ -118,11 +118,7 @@ class CreateAuditTables extends Migration {
 			$table->string('title')->nullable();
 			$table->text('description')->nullable();
 			$table->tinyInteger('question_type');
-			$table->integer('required')->nullable();
-			$table->string('info')->nullable();
-			$table->string('comment')->nullable();
 			$table->integer('score')->nullable();
-			$table->tinyInteger('one_star')->nullable();
 
 			$table->integer('user_id')->unsigned();
 
