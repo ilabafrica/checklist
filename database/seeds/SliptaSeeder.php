@@ -186,9 +186,6 @@ class SliptaSeeder extends Seeder
         $answer_no = Answer::create(array("name" => "No", "description" => "No(N)", "user_id" => "1"));
         $answer_na = Answer::create(array("name" => "Not Applicable", "description" => "N/A", "user_id" => "1"));
         $answer_partial = Answer::create(array("name" => "Partial", "description" => "Partial(P)", "user_id" => "1"));
-        $answer_daily = Answer::create(array("name" => "Daily", "description" => "", "user_id" => "1"));
-        $answer_weekly = Answer::create(array("name" => "Weekly", "description" => "", "user_id" => "1"));
-        $answer_everyRun = Answer::create(array("name" => "W/Every Run", "description" => "With Every Run", "user_id" => "1"));
         
         $this->command->info('Answers table seeded');
 
@@ -369,9 +366,8 @@ class SliptaSeeder extends Seeder
         $sec_labProfile = Section::create(array("name" => "Lab Profile", "label" => "Laboratory Profile", "description" => "", "total_points" => "0", "order" => 0, "user_id" => "1"));
         $sec_labInfo = Section::create(array("name" => "Lab Info", "label" => "Lab Information", "description" => "", "total_points" => "0", "order" => $sec_slmtaInfo->id, "user_id" => "1"));
         $sec_staffSummary = Section::create(array("name" => "Staffing Summary", "label" => "Laboratory Staffing Summary", "description" => "", "total_points" => "0", "order" => $sec_labInfo->id, "user_id" => "1"));
-        $sec_orgStructure = Section::create(array("name" => "Org Structure", "label" => "Organizational Structure", "description" => "", "total_points" => "0", "order" => $sec_staffSummary->id, "user_id" => "1"));
         $sec_part2 = Section::create(array("name" => "Part II", "label" => "Part II", "description" => "", "total_points" => "0", "order" => 0, "user_id" => "1"));
-        $sec_prelude = Section::create(array("name" => "Prelude", "label" => "PART II: LABORATORY AUDITS", "description" => "", "total_points" => "0", "order" => $sec_orgStructure->id, "user_id" => "1"));
+        $sec_prelude = Section::create(array("name" => "Prelude", "label" => "PART II: LABORATORY AUDITS", "description" => "", "total_points" => "0", "order" => $sec_staffSummary->id, "user_id" => "1"));
         $sec_sec1 = Section::create(array("name" => "Section 1", "label" => "1.0 DOCUMENTS AND RECORDS", "description" => "", "total_points" => "28", "order" => $sec_prelude->id, "user_id" => "1"));
         $sec_sec2 = Section::create(array("name" => "Section 2", "label" => "2.0 MANAGEMENT REVIEWS AND MANAGEMENT RESPONSIBILITIES", "description" => "", "total_points" => "14", "order" => $sec_sec1->id, "user_id" => "1"));
         $sec_sec3 = Section::create(array("name" => "Section 3", "label" => "3.0 ORGANIZATION AND PERSONNEL", "description" => "", "total_points" => "22", "order" => $sec_sec2->id, "user_id" => "1"));
@@ -402,8 +398,6 @@ class SliptaSeeder extends Seeder
             array("audit_type_id" => "1", "section_id" => $sec_labInfo->id));
         DB::table('audit_type_sections')->insert(
             array("audit_type_id" => "1", "section_id" => $sec_staffSummary->id));
-        DB::table('audit_type_sections')->insert(
-            array("audit_type_id" => "1", "section_id" => $sec_orgStructure->id));
         DB::table('audit_type_sections')->insert(
             array("audit_type_id" => "1", "section_id" => $sec_part2->id));
         DB::table('audit_type_sections')->insert(
@@ -450,8 +444,6 @@ class SliptaSeeder extends Seeder
             array("section_id" => $sec_labInfo->id, "parent_id" => $sec_labProfile->id));
         DB::table('section_parent_child')->insert(
             array("section_id" => $sec_staffSummary->id, "parent_id" => $sec_labProfile->id));
-        DB::table('section_parent_child')->insert(
-            array("section_id" => $sec_orgStructure->id, "parent_id" => $sec_labProfile->id));
         DB::table('section_parent_child')->insert(
             array("section_id" => $sec_prelude->id, "parent_id" => $sec_part2->id));
         DB::table('section_parent_child')->insert(

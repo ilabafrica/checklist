@@ -193,20 +193,6 @@ class ReviewController extends Controller {
 		    		$labProfile->other_staff = Input::get('other_staff');
 		    	if(Input::get('other_staff_adequate'))
 		    		$labProfile->other_staff_adequate = Input::get('other_staff_adequate');
-		    	if(Input::get('sufficient_space'))
-		    		$labProfile->sufficient_space = Input::get('sufficient_space');
-		    	if(Input::get('equipment'))
-		    		$labProfile->equipment = Input::get('equipment');
-		    	if(Input::get('supplies'))
-		    		$labProfile->supplies = Input::get('supplies');
-		    	if(Input::get('personnel'))
-		    		$labProfile->personnel = Input::get('personnel');
-		    	if(Input::get('infrastructure'))
-		    		$labProfile->infrastructure = Input::get('infrastructure');
-		    	if(Input::get('other'))
-		    		$labProfile->other = Input::get('other');
-		    	if(Input::get('other_description'))
-		    		$labProfile->other_description = Input::get('other_description');
 		    	//	Update the lab_profile
 		    	$labProfile->updated_at = date('Y-m-d H:i:s');
 				if(count($labProfile)>0)
@@ -488,20 +474,6 @@ class ReviewController extends Controller {
 		    		$labProfile->other_staff = Input::get('other_staff');
 		    	if(Input::get('other_staff_adequate'))
 		    		$labProfile->other_staff_adequate = Input::get('other_staff_adequate');
-		    	if(Input::get('sufficient_space'))
-		    		$labProfile->sufficient_space = Input::get('sufficient_space');
-		    	if(Input::get('equipment'))
-		    		$labProfile->equipment = Input::get('equipment');
-		    	if(Input::get('supplies'))
-		    		$labProfile->supplies = Input::get('supplies');
-		    	if(Input::get('personnel'))
-		    		$labProfile->personnel = Input::get('personnel');
-		    	if(Input::get('infrastructure'))
-		    		$labProfile->infrastructure = Input::get('infrastructure');
-		    	if(Input::get('other'))
-		    		$labProfile->other = Input::get('other');
-		    	if(Input::get('other_description'))
-		    		$labProfile->other_description = Input::get('other_description');
 		    	//	Update the lab_profile
 		    	$labProfile->updated_at = date('Y-m-d H:i:s');
 				if(count($labProfile)>0)
@@ -964,52 +936,6 @@ class ReviewController extends Controller {
         			}
         			$lab_profile->updated_at = date('Y-m-d H:i:s');
         			$lab_profile->save();
-        		}
-        		//	Organizational structure
-        		else if($sheetTitle == Lang::choice('messages.org-structure', 2)){
-        			$counter = count($organizational_structure);
-        			//	Declare variables
-        			$sufficient_space = NULL;
-        			$equipment = NULL;
-        			$supplies = NULL;
-        			$personnel = NULL;
-        			$infrastructure = NULL;
-        			$other = NULL;
-        			$other_description = NULL;
-        			//	Check lab profile
-    				$lab_profile = $review->laboratory;
-		    		if(!count($lab_profile)){
-				    	$lab_profile = new ReviewLabProfile;
-				    	$lab_profile->review_id = $review_id;
-				    	$lab_profile->created_at = date('Y-m-d H:i:s');
-				    	$lab_profile->save();
-				    }
-					//	Begin saving
-        			for($i=0;$i<$counter;$i++){
-        				if($organizational_structure[$i]->field == Lang::choice('messages.sufficient-space', 1)){
-							$lab_profile->sufficient_space = Answer::adequate($organizational_structure[$i]->value);
-						}
-						if($organizational_structure[$i]->field == Lang::choice('messages.equipment', 1)){
-							$lab_profile->equipment = Answer::adequate($organizational_structure[$i]->value);
-						}
-						if($organizational_structure[$i]->field == Lang::choice('messages.supplies', 1)){
-							$lab_profile->supplies = Answer::adequate($organizational_structure[$i]->value);
-						}
-						if($organizational_structure[$i]->field == Lang::choice('messages.personnel', 1)){
-							$lab_profile->personnel = Answer::adequate($organizational_structure[$i]->value);
-						}
-						if($organizational_structure[$i]->field == Lang::choice('messages.infrastructure', 1)){
-							$lab_profile->infrastructure = Answer::adequate($organizational_structure[$i]->value);
-						}
-						if(strpos($organizational_structure[$i]->field, Lang::choice('messages.other-specify', 1)) !== FALSE){
-							$lab_profile->other = Answer::adequate($organizational_structure[$i]->value);
-							if(($pos = strpos($organizational_structure[$i]->field, ':')) !== FALSE)
-								$other_description = substr($organizational_structure[$i]->field, $pos+2);
-							$lab_profile->other_description = trim($other_description);
-						}
-        			}
-        			$lab_profile->updated_at = date('Y-m-d H:i:s');
-				    $lab_profile->save();
         		}
         		//	SLMTA Information
         		else if($sheetTitle == Lang::choice('messages.slmta-info', 2)){
