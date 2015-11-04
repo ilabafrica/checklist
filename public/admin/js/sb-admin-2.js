@@ -185,27 +185,32 @@ function noteChange(name, points){
             sum+=parseInt($(this).val());
             count++;
             txtId = questionId($(this).attr('id'));
-            if(parseInt($(item).val()) == 2){
+            if(parseInt($(item).val()) == 2 || parseInt($(item).val()) == 3 || parseInt($(item).val()) == 4){
                 $('#text_'+txtId).addClass('form-control validate[required] text-input');
                 $('#text_'+txtId).validationEngine('showPrompt', '* Comment(s) required on this field.', 'red', 'topLeft', true);
             }
             else if(parseInt($(item).val()) == 1){
                 $('#text_'+txtId).validationEngine('hide');
                 $('#text_'+txtId).addClass('form-control');
+                $('#text_'+txtId).removeClass('validate[required] text-input');
             }
         }
     });
     if(sum==count){
         $('#points_'+id).val(points).trigger('input');
         $('#answer_'+id).val(answers[0]);
+        $('#text_'+id).validationEngine('hide');
+        $('#text_'+id).removeClass('validate[required] text-input');
     }
     else if(sum==count*2){
         $('#points_'+id).val(0).trigger('input');
         $('#answer_'+id).val(answers[2]);
+        $('#text_'+id).addClass('form-control validate[required] text-input');
     }
     else{
         $('#points_'+id).val(1).trigger('input');
-        $('#answer_'+id).val(answers[1]);
+        $('#answer_'+id).val(answers[1]);        
+        $('#text_'+id).addClass('form-control validate[required] text-input');
     }
 }
 //  Set score for main question

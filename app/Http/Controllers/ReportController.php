@@ -8,6 +8,13 @@ use App\Models\Section;
 use App\Models\Question;
 use App\Models\Answer;
 use App\Models\User;
+use App\Models\ReviewSlmtaInfo;
+use App\Models\ReviewLabProfile;
+use App\Models\ReviewQuestion;
+use App\Models\ReviewQAnswer;
+use App\Models\ReviewQScore;
+use App\Models\ReviewNote;
+use App\Models\ReviewActPlan;
 use Lang;
 use Excel;
 use App;
@@ -206,58 +213,58 @@ class ReportController extends Controller {
 			array(Lang::choice('messages.lab-telephone', 1), $review->lab->telephone),
 			array(Lang::choice('messages.lab-fax', 1), $review->lab->fax),
 			array(Lang::choice('messages.lab-email', 1), $review->lab->email),
-			array(Lang::choice('messages.lab-head', 1), $review->laboratory()->head),
-			array(Lang::choice('messages.lab-head-telephone-personal', 1), $review->laboratory()->head_personal_telephone),
-			array(Lang::choice('messages.lab-head-telephone-work', 1), $review->laboratory()->head_work_telephone),
+			array(Lang::choice('messages.lab-head', 1), $review->laboratory->head),
+			array(Lang::choice('messages.lab-head-telephone-personal', 1), $review->laboratory->head_personal_telephone),
+			array(Lang::choice('messages.lab-head-telephone-work', 1), $review->laboratory->head_work_telephone),
 			array(Lang::choice('messages.lab-level', 1), $review->lab->labLevel->name),
 			array(Lang::choice('messages.lab-affiliation', 1), $review->lab->labAffiliation->name)
 			);
 		$staffing_summary = array(
 			array('Profession', 'Employees', 'Adequate'),
-			array(Lang::choice('messages.degree', 1), $review->laboratory()->degree_staff, $review->adequate($review->laboratory()->degree_staff_adequate)),
-			array(Lang::choice('messages.diploma', 1), $review->laboratory()->diploma_staff, $review->adequate($review->laboratory()->diploma_staff_adequate)),
-			array(Lang::choice('messages.certificate', 1), $review->laboratory()->certificate_staff, $review->adequate($review->laboratory()->certificate_staff_adequate)),
-			array(Lang::choice('messages.microscopist', 1), $review->laboratory()->microscopist, $review->adequate($review->laboratory()->microscopist_adequate)),
-			array(Lang::choice('messages.data-clerk', 1), $review->laboratory()->data_clerk, $review->adequate($review->laboratory()->data_clerk_adequate)),
-			array(Lang::choice('messages.phlebotomist', 1), $review->laboratory()->phlebotomist, $review->adequate($review->laboratory()->phlebotomist_adequate)),
-			array(Lang::choice('messages.cleaner', 1), $review->laboratory()->cleaner, $review->adequate($review->laboratory()->cleaner_adequate)),
-			array(Lang::choice('messages.cleaner-dedicated', 1), $review->adequate($review->laboratory()->cleaner_dedicated), ''),
-			array(Lang::choice('messages.cleaner-trained', 1), $review->adequate($review->laboratory()->cleaner_trained), ''),
-			array(Lang::choice('messages.driver', 1), $review->laboratory()->driver, $review->adequate($review->laboratory()->driver_adequate)),
-			array(Lang::choice('messages.driver-dedicated', 1), $review->adequate($review->laboratory()->driver_dedicated), ''),
-			array(Lang::choice('messages.driver-trained', 1), $review->adequate($review->laboratory()->driver_trained), ''),
-			array(Lang::choice('messages.other', 1), $review->laboratory()->other_staff, $review->adequate($review->laboratory()->other_staff_adequate))
+			array(Lang::choice('messages.degree', 1), $review->laboratory->degree_staff, $review->adequate($review->laboratory->degree_staff_adequate)),
+			array(Lang::choice('messages.diploma', 1), $review->laboratory->diploma_staff, $review->adequate($review->laboratory->diploma_staff_adequate)),
+			array(Lang::choice('messages.certificate', 1), $review->laboratory->certificate_staff, $review->adequate($review->laboratory->certificate_staff_adequate)),
+			array(Lang::choice('messages.microscopist', 1), $review->laboratory->microscopist, $review->adequate($review->laboratory->microscopist_adequate)),
+			array(Lang::choice('messages.data-clerk', 1), $review->laboratory->data_clerk, $review->adequate($review->laboratory->data_clerk_adequate)),
+			array(Lang::choice('messages.phlebotomist', 1), $review->laboratory->phlebotomist, $review->adequate($review->laboratory->phlebotomist_adequate)),
+			array(Lang::choice('messages.cleaner', 1), $review->laboratory->cleaner, $review->adequate($review->laboratory->cleaner_adequate)),
+			array(Lang::choice('messages.cleaner-dedicated', 1), $review->adequate($review->laboratory->cleaner_dedicated), ''),
+			array(Lang::choice('messages.cleaner-trained', 1), $review->adequate($review->laboratory->cleaner_trained), ''),
+			array(Lang::choice('messages.driver', 1), $review->laboratory->driver, $review->adequate($review->laboratory->driver_adequate)),
+			array(Lang::choice('messages.driver-dedicated', 1), $review->adequate($review->laboratory->driver_dedicated), ''),
+			array(Lang::choice('messages.driver-trained', 1), $review->adequate($review->laboratory->driver_trained), ''),
+			array(Lang::choice('messages.other', 1), $review->laboratory->other_staff, $review->adequate($review->laboratory->other_staff_adequate))
 		);
 		$slmta_info = array(
 			array('Field', 'Value'),
-			array(Lang::choice('messages.official-slmta', 1), $review->slmta()->official_slmta == Review::OFFICIAL?Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1)),
-			array(Lang::choice('messages.audit-start-date', 1), $review->slmta()->audit_start_date),
-			array(Lang::choice('messages.audit-end-date', 1), $review->slmta()->audit_end_date),
+			array(Lang::choice('messages.official-slmta', 1), $review->slmta->official_slmta == Review::OFFICIAL?Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1)),
+			array(Lang::choice('messages.audit-start-date', 1), $review->slmta->audit_start_date),
+			array(Lang::choice('messages.audit-end-date', 1), $review->slmta->audit_end_date),
 			array(Lang::choice('messages.names-affiliations-of-auditors', 1), implode(", ", $review->assessors->lists('name'))),
-			array(Lang::choice('messages.slmta-audit-type', 1), $review->assessment($review->slmta()->assessment_id)->name),
-			array(Lang::choice('messages.tests-before-slmta', 1), $review->slmta()->tests_before_slmta),
-			array(Lang::choice('messages.tests-this-year', 1), $review->slmta()->tests_this_year),
-			array(Lang::choice('messages.cohort-id', 1), $review->slmta()->cohort_id),
+			array(Lang::choice('messages.slmta-audit-type', 1), $review->assessment($review->slmta->assessment_id)->name),
+			array(Lang::choice('messages.tests-before-slmta', 1), $review->slmta->tests_before_slmta),
+			array(Lang::choice('messages.tests-this-year', 1), $review->slmta->tests_this_year),
+			array(Lang::choice('messages.cohort-id', 1), $review->slmta->cohort_id),
 			array(Lang::choice('messages.slmta-lab-type', 1), $review->lab->labType->name),
-			array(Lang::choice('messages.baseline-audit-date', 1), $review->slmta()->baseline_audit_date),
-			array(Lang::choice('messages.slmta-workshop-date', 1), $review->slmta()->slmta_workshop_date),
-			array(Lang::choice('messages.exit-audit-date', 1), $review->slmta()->exit_audit_date),
-			array(Lang::choice('messages.baseline-score', 1), $review->slmta()->baseline_score),
-			array(Lang::choice('messages.baseline-stars', 1), $review->stars($review->slmta()->baseline_stars_obtained)),
-			array(Lang::choice('messages.exit-score', 1), $review->slmta()->exit_score),
-			array(Lang::choice('messages.exit-stars', 1), $review->stars($review->slmta()->exit_stars_obtained)),
-			array(Lang::choice('messages.last-audit-date', 1), $review->slmta()->last_audit_date),
-			array(Lang::choice('messages.last-audit-score', 1), $review->slmta()->last_audit_score),
-			array(Lang::choice('messages.prior-audit-status', 1), $review->stars($review->slmta()->prior_audit_status))
+			array(Lang::choice('messages.baseline-audit-date', 1), $review->slmta->baseline_audit_date),
+			array(Lang::choice('messages.slmta-workshop-date', 1), $review->slmta->slmta_workshop_date),
+			array(Lang::choice('messages.exit-audit-date', 1), $review->slmta->exit_audit_date),
+			array(Lang::choice('messages.baseline-score', 1), $review->slmta->baseline_score),
+			array(Lang::choice('messages.baseline-stars', 1), $review->stars($review->slmta->baseline_stars_obtained)),
+			array(Lang::choice('messages.exit-score', 1), $review->slmta->exit_score),
+			array(Lang::choice('messages.exit-stars', 1), $review->stars($review->slmta->exit_stars_obtained)),
+			array(Lang::choice('messages.last-audit-date', 1), $review->slmta->last_audit_date),
+			array(Lang::choice('messages.last-audit-score', 1), $review->slmta->last_audit_score),
+			array(Lang::choice('messages.prior-audit-status', 1), $review->stars($review->slmta->prior_audit_status))
 		);
 		$org_structure = array(
 			array('Field', 'Value'),
-			array(Lang::choice('messages.sufficient-space', 1), $review->adequate($review->laboratory()->sufficient_space)),
-			array(Lang::choice('messages.equipment', 1), $review->adequate($review->laboratory()->equipment)),
-			array(Lang::choice('messages.supplies', 1), $review->adequate($review->laboratory()->supplies)),
-			array(Lang::choice('messages.personnel', 1), $review->adequate($review->laboratory()->personnel)),
-			array(Lang::choice('messages.infrastructure', 1), $review->adequate($review->laboratory()->infrastructure)),
-			array(Lang::choice('messages.other-specify', 1).': '.$review->laboratory()->other_description, $review->adequate($review->laboratory()->other))
+			array(Lang::choice('messages.sufficient-space', 1), $review->adequate($review->laboratory->sufficient_space)),
+			array(Lang::choice('messages.equipment', 1), $review->adequate($review->laboratory->equipment)),
+			array(Lang::choice('messages.supplies', 1), $review->adequate($review->laboratory->supplies)),
+			array(Lang::choice('messages.personnel', 1), $review->adequate($review->laboratory->personnel)),
+			array(Lang::choice('messages.infrastructure', 1), $review->adequate($review->laboratory->infrastructure)),
+			array(Lang::choice('messages.other-specify', 1).': '.$review->laboratory->other_description, $review->adequate($review->laboratory->other))
 		);
 		$summary = array(
 			array('Field', 'Value'),
@@ -303,11 +310,11 @@ class ReportController extends Controller {
 		    	}
 		    });
 		    /* Organizational Structure */
-		    $excel->sheet('Organizational Structure', function($sheet) use($org_structure){
+		    /*$excel->sheet('Organizational Structure', function($sheet) use($org_structure){
 		    	foreach ($org_structure as $value) {
 		    		$sheet->appendRow($value);
 		    	}
-		    });
+		    });*/
 		    /* SLMTA Info */
 		    $excel->sheet('SLMTA Information', function($sheet) use($slmta_info){
 		    	foreach ($slmta_info as $value) {
@@ -316,18 +323,18 @@ class ReportController extends Controller {
 		    });
 		    /* Audit Details */
 		    $excel->sheet('Assessment Details', function($sheet) use($review, $categories){
-		    	$sheet->appendRow(array('Question', 'Description', 'Response', 'Notes', 'Compliance'));
+		    	$sheet->appendRow(array('Question', 'Description', 'Response', 'Notes'));
 		    	foreach ($categories as $section) {
 					//$sheet->appendRow(Lang::choice('messages.question', 1), Lang::choice('messages.response', 1), Lang::choice('messages.notes', 1));
 					foreach ($section->questions as $question) {
 						if(count($question->children)>0){
 							$sheet->appendRow(array($question->id, $question->title.''.$question->description));
 							foreach($question->children as $kid){
-								$sheet->appendRow(array($kid->id, $kid->title?$kid->title:''.$kid->description, $kid->qa($review->id)?Answer::find((int)$kid->qa($review->id)[0])->name:'', $kid->note($review->id)->note, $kid->note($review->id)->non_compliance==Answer::NONCOMPLIANT?Lang::choice('messages.non-compliant', 1):''));
+								$sheet->appendRow(array($kid->id, $kid->title?$kid->title:''.$kid->description, $kid->qa($review->id)?Answer::find((int)$kid->qa($review->id))->name:'', $kid->note($review->id)?$kid->note($review->id)->note:''));
 							}
 						}
 						elseif($question->score != 0){
-							$sheet->appendRow(array($question->id, $question->title?$question->title:''.$question->description, $question->qa($review->id)?Answer::find((int)$question->qa($review->id)[0])->name:'', $question->note($review->id)->note, $question->note($review->id)->non_compliance==Answer::NONCOMPLIANT?Lang::choice('messages.non-compliant', 1):''));
+							$sheet->appendRow(array($question->id, $question->title?$question->title:''.$question->description, $question->qa($review->id)?Answer::find((int)$question->qa($review->id))->name:'', $question->note($review->id)?$question->note($review->id)->note:''));
 						}
 					}
 
@@ -335,10 +342,15 @@ class ReportController extends Controller {
 		    });
 		    /* Question scores */
 		    $excel->sheet('Scores', function($sheet) use($review){
-		    	$scores = DB::table('review_question_scores')->where('review_id', $review->id)->get();
+		    	$rqs = $review->rq->lists('id');
+		    	$scores = ReviewQScore::whereIn('review_question_id', $rqs)->get();
 		    	$sheet->appendRow(array('Question', 'Description', 'Points'));
+		    	$counter = 0;
 		    	foreach ($scores as $score) {
-		    		$sheet->appendRow(array($score->question_id, (Question::find((int)$score->question_id)->title?substr(Question::find((int)$score->question_id)->title, 0, 4):substr(Question::find((int)$score->question_id)->description, 0, 4)), $score->audited_score));
+		    		$counter++;
+		    		$rq = ReviewQuestion::find($score->review_question_id);
+		    		$question = Question::find((int)$rq->question_id);
+		    		$sheet->appendRow(array($counter, ($question->title?substr($question->title, 0, 4):substr($question->description, 0, 4)), $score->audited_score));
 		    	}
 		    });
 		    /* Audit Summary */

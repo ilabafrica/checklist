@@ -228,7 +228,7 @@
                             <div class="form-group">
                                 {!! Form::label('lab-number', Lang::choice('messages.lab-number', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->facility->code !!}</p>
+                                    <p class="text-primary inline">{!! $lab->code !!}</p>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -687,7 +687,7 @@
                                                             <div class="row">
                                                                 <div class="col-sm-8">
                                                                 @foreach($question->answers as $answer)
-                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, (($question->qa($review->id) && in_array($answer->id, $question->qa($review->id)))?true:false), ['class' => 'validate[required] radio radio_'.$question->id, 'onclick' => "scoreMain('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
+                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, (($question->qa($review->id) && in_array($answer->id, [$question->qa($review->id)]))?true:false), ['class' => 'validate[required] radio radio_'.$question->id, 'onclick' => "scoreMain('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
                                                                 @endforeach
                                                                 </div>
                                                                 <div class="col-sm-4">
@@ -721,7 +721,7 @@
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
                                                                 @foreach($kid->answers as $answer)
-                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, (($kid->qa($review->id) && in_array($answer->id, $kid->qa($review->id)))?true:false), ['class' => 'validate[required] radio radio_'.$question->id, 'id' => 'radio_'.$kid->id, 'onclick' => "noteChange('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
+                                                                    <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, (($kid->qa($review->id) && in_array($answer->id, [$kid->qa($review->id)]))?true:false), ['class' => 'validate[required] radio radio_'.$question->id, 'id' => 'radio_'.$kid->id, 'onclick' => "noteChange('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
                                                                 @endforeach
                                                                 </div>
                                                             </div>

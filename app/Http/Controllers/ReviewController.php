@@ -1,5 +1,5 @@
 <?php namespace App\Http\Controllers;
-
+set_time_limit(0);
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -251,7 +251,7 @@ class ReviewController extends Controller {
 					}
 					else{
 						//	Update review-notes
-						$rn = ReviewNote::find($rqn->id);
+						$rn = ReviewNote::find($rn->id);
 						$rn->review_question_id = $rq->id;
 						$rn->note = $notes;
 						if(Input::get('check_'.$fieldId))
@@ -400,9 +400,9 @@ class ReviewController extends Controller {
 	    	$slmtaInfo->slmta_workshop_date  = Input::get('slmta_workshop_date');
 	    	$slmtaInfo->exit_audit_date  = Input::get('exit_audit_date');
 	    	$slmtaInfo->baseline_score  = Input::get('baseline_score');
-	    	$slmtaInfo->baseline_stars_obtained  = Input::get('baseline_stars');
+	    	$slmtaInfo->baseline_stars_obtained  = Input::get('baseline_stars_obtained');
 	    	$slmtaInfo->exit_score  = Input::get('exit_score');
-	    	$slmtaInfo->exit_stars_obtained  = Input::get('exit_stars');
+	    	$slmtaInfo->exit_stars_obtained  = Input::get('exit_stars_obtained');
 	    	$slmtaInfo->last_audit_date  = Input::get('last_audit_date');
 	    	$slmtaInfo->last_audit_score  = Input::get('last_audit_score');
 	    	$slmtaInfo->prior_audit_status  = Input::get('prior_audit_status');
@@ -787,7 +787,6 @@ class ReviewController extends Controller {
         Excel::load('/public/uploads/'.$excel, function($reader) use($audit_type_id, $review_id){
         	$laboratory_profile = $reader->get()[0];
         	$staffing_summary = $reader->get()[1];
-        	$organizational_structure = $reader->get()[2];
         	$slmta_information = $reader->get()[3];
         	$assessment = $reader->get()[4];
         	$scores = $reader->get()[5];
@@ -817,7 +816,7 @@ class ReviewController extends Controller {
 			//	Get review id
 			$review_id = $review->id;
 
-        	$reader->each(function($sheet) use($review_id, $laboratory_profile, $staffing_summary, $organizational_structure, $slmta_information, $assessment, $scores, $summary, $action_plan){
+        	$reader->each(function($sheet) use($review_id, $review, $laboratory_profile, $staffing_summary, $slmta_information, $assessment, $scores, $summary, $action_plan){
         		$sheetTitle = $sheet->getTitle();
         		if($sheetTitle == Lang::choice('messages.lab-info', 2)){
         			$counter = count($sheet);
@@ -844,7 +843,7 @@ class ReviewController extends Controller {
 							$lab_profile->head_work_telephone = $sheet[$i]->value;
 						}
         			}
-        			$lab_profile->updated_at = date('Y-m-d H:is:s');
+        			$lab_profile->updated_at = date('Y-m-d H:i:s');
         			$lab_profile->save();
         		}
         		//	Staffing Summary
@@ -1001,13 +1000,13 @@ class ReviewController extends Controller {
 		    				$slmta->baseline_score = $slmta_information[$i]->value;
 		    			}
 		    			if($slmta_information[$i]->field == Lang::choice('messages.baseline-stars', 1)){
-		    				$slmta->baseline_stars = $slmta_information[$i]->value;
+		    				$slmta->baseline_stars_obtained = $slmta_information[$i]->value;
 		    			}
 		    			if($slmta_information[$i]->field == Lang::choice('messages.exit-score', 1)){
 		    				$slmta->exit_score = $slmta_information[$i]->value;
 		    			}
 		    			if($slmta_information[$i]->field == Lang::choice('messages.exit-stars', 1)){
-		    				$slmta->exit_stars = $slmta_information[$i]->value;
+		    				$slmta->exit_stars_obtained = $slmta_information[$i]->value;
 		    			}
 		    			if($slmta_information[$i]->field == Lang::choice('messages.last-audit-date', 1)){
 		    				$slmta->last_audit_date = $slmta_information[$i]->value;
@@ -1087,13 +1086,14 @@ class ReviewController extends Controller {
         		else if($sheetTitle == 'Assessment Details'){
         			$counter = count($assessment);
         			if($counter>0){
-	        			for($i=0; $i<$counter; $i++){
+	        			for($i=0; $i<$counter; $i++)
+	        			{
 	        				$rq = ReviewQuestion::where('review_id', $review_id)->where('question_id', $assessment[$i]->question)->first();
 							if(!$rq){
 								//	Create review-question
 								$rq = new ReviewQuestion;
 								$rq->review_id = $review_id;
-								$rq->question_id = $scores[$i]->question;
+								$rq->question_id = $assessment[$i]->question;
 								$rq->created_at = date('Y-m-d H:i:s');
 								$rq->updated_at = date('Y-m-d H:i:s');
 								$rq->save();
