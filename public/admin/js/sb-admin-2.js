@@ -178,11 +178,12 @@ function noteChange(name, points){
     var count = 0;
     var sum = 0;
     var questions = $('.radio_'+id).length;
-    var answers = ['YES', 'PARTIAL', 'NO'];
+    var answers = ['YES', 'PARTIAL', 'NO', 'NOT APPLICABLE'];
     $.each($('.radio_'+id), function(key, item){
         var txtId = 0;
         if( $(this).is(':checked')){
-            sum+=parseInt($(this).val());
+            if(parseInt($(item).val()) != 4)
+                sum+=parseInt($(this).val());
             count++;
             txtId = questionId($(this).attr('id'));
             if(parseInt($(item).val()) == 2 || parseInt($(item).val()) == 3 || parseInt($(item).val()) == 4){
@@ -207,6 +208,12 @@ function noteChange(name, points){
         $('#answer_'+id).val(answers[2]);
         $('#text_'+id).addClass('form-control validate[required] text-input');
     }
+    else if(sum==count*3)
+    {
+        $('#points_'+id).val(0);
+        $('#answer_'+id).val(answers[3]);
+        $('#text_'+id).addClass('form-control validate[required] text-input');
+    }
     else{
         $('#points_'+id).val(1).trigger('input');
         $('#answer_'+id).val(answers[1]);        
@@ -220,7 +227,8 @@ function scoreMain(name, points){
     var answer = 0;
     $.each($('.radio_'+id), function(key, item){
         if( $(this).is(':checked')){
-            answer+=parseInt($(this).val());
+            if(parseInt($(this).val()) != 4)
+                answer+=parseInt($(this).val());
             console.log(parseInt($(this).val()));
             if(parseInt($(this).val()) == 2 || parseInt($(this).val()) == 3 || parseInt($(this).val()) == 4){
                 $('#text_'+id).addClass('form-control validate[required] text-input');
@@ -236,6 +244,8 @@ function scoreMain(name, points){
         $('#points_'+id).val(points).trigger('input');
     else if(answer == 2)
         $('#points_'+id).val(0).trigger('input');
+    else if(answer == 0)
+        $('#points_'+id).val(0);
     else
         $('#points_'+id).val(1).trigger('input');
 }

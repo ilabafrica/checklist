@@ -28,7 +28,7 @@
                         <div class="row">
                         @foreach($section->questions as $question)
                             @if($question->score>0)
-                                @if($question->qa($review->id) && count($question->id) == count($question->qa($review->id)))
+                                @if($question->qas($review->id) && count($question->id) == count($question->qas($review->id)))
                                 <div class="col-sm-1" style="padding-top:5px;margin-right:5px;"><button type="button" class="btn btn-outline btn-xs btn-success">{!! ($question->title?substr($question->title, 0, 4):substr($question->description, 0, 4)).': '.substr(Lang::choice('messages.audit-status', 1), 0, 3) !!}</button></div>
                                 @elseif($question->complete($review->id) && count($question->children) == count($question->complete($review->id)))
                                 <div class="col-sm-1" style="padding-top:5px;margin-right:5px;"><button type="button" class="btn btn-outline btn-xs btn-success">{!! ($question->title?substr($question->title, 0, 4):substr($question->description, 0, 4)).': '.substr(Lang::choice('messages.audit-status', 1), 0, 3) !!}</button></div>
