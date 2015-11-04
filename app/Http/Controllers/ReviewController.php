@@ -103,7 +103,7 @@ class ReviewController extends Controller {
 	    }
 	    //	Save Auditors
 	    if(Input::get('assessors')){
-			$review->setAssessors(array(Input::get('assessors')));
+			$review->setAssessors(Input::get('assessors'));
 		}
 	    //	Check if SLMTA Info exists for the review
 	    $slmta = $review->slmta;
@@ -384,7 +384,7 @@ class ReviewController extends Controller {
 		$review = Review::find($id);
 		//	Save Auditors
 		if(Input::get('assessors')){
-			$review->setAssessors(array(Input::get('assessors')));
+			$review->setAssessors(Input::get('assessors'));
 		}
 		//	Check if SLMTA Info exists for the review
 	    $slmta = $review->slmta;
@@ -400,9 +400,9 @@ class ReviewController extends Controller {
 	    	$slmtaInfo->slmta_workshop_date  = Input::get('slmta_workshop_date');
 	    	$slmtaInfo->exit_audit_date  = Input::get('exit_audit_date');
 	    	$slmtaInfo->baseline_score  = Input::get('baseline_score');
-	    	$slmtaInfo->baseline_stars_obtained  = Input::get('baseline_stars_obtained');
+	    	$slmtaInfo->baseline_stars_obtained  = Input::get('baseline_stars');
 	    	$slmtaInfo->exit_score  = Input::get('exit_score');
-	    	$slmtaInfo->exit_stars_obtained  = Input::get('exit_stars_obtained');
+	    	$slmtaInfo->exit_stars_obtained  = Input::get('exit_stars');
 	    	$slmtaInfo->last_audit_date  = Input::get('last_audit_date');
 	    	$slmtaInfo->last_audit_score  = Input::get('last_audit_score');
 	    	$slmtaInfo->prior_audit_status  = Input::get('prior_audit_status');
