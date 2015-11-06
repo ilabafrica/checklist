@@ -22,7 +22,7 @@
                 <span class="fa fa-external-link"></span>
                 {{ Lang::choice('messages.export-audit', 1) }}
             </a>
-            <a class="btn btn-sm btn-info" href="{{ URL::to("review/".$review->id."/non-compliance") }}" >
+            <a class="btn btn-sm btn-info" href="{{ URL::to("review/".$review->id."/non-compliance") }}" style="display:none">
                 <span class="fa fa-puzzle-piece"></span>
                 {{ Lang::choice('messages.non-compliance-report', 1) }}
             </a>
@@ -59,26 +59,26 @@
                             <tr>
                                 <td>{{ $section->name }}</td>
                                 <td>{{ $section->label}}</td>
-                                <td>{{ $section->subtotal($review->id)}}</td>
+                                <td>{{ $section->subtotal($review->id, 1)}}</td>
                                 <td>{{ $section->total_points }}</td>
                             </tr>
                             @endforeach
                             <tr>
                                 <td colspan="2"><strong>{{ Lang::choice('messages.total-score', 1)  }}</strong></td>
-                                <td><strong>{{ $score }}</strong></td>
-                                <td><strong>{{ $points }}</strong></td>
+                                <td><strong>{{ $average }}</strong></td>
+                                <td><strong>{{ $overall }}</strong></td>
                             </tr>
                         </tbody>
                     </table>
                     <table class="table table-striped table-bordered table-hover">
                         <tbody>
                             <tr>
-                                <td class="{!! round($score*100/$points, 2)<55?'warning':'' !!}"><h4>No Stars</h4><p>(0 - 142 pts)</p><p><i>&lt; 55%</i></p></td>
-                                <td class="{!! (round($score*100/$points, 2)>=55 && round($score*100/$points, 2)<65)?'warning':'' !!}"><h4>1 Star</h4><p>(143 - 165 pts)</p><p><i>55 - 64%</i></p></td>
-                                <td class="{!! (round($score*100/$points, 2)>=65 && round($score*100/$points, 2)<75)?'warning':'' !!}"><h4>2 Stars</h4><p>(166 - 191 pts)</p><p><i>65 - 74%</i></p></td>
-                                <td class="{!! (round($score*100/$points, 2)>=75 && round($score*100/$points, 2)<85)?'warning':'' !!}"><h4>3 Stars</h4><p>(192 - 217 pts)</p><p><i>75 - 84%</i></p></td>
-                                <td class="{!! (round($score*100/$points, 2)>=85 && round($score*100/$points, 2)<95)?'warning':'' !!}"><h4>4 Stars</h4><p>(218 - 243 pts)</p><p><i>85 - 94%</i></p></td>
-                                <td class="{!! round($score*100/$points, 2)>=95?'warning':'' !!}"><h4>5 Stars</h4><p>(244 - 258 pts)</p><p><i>&ge; 95%</i></p></td>
+                                <td class="{!! $average<55?'warning':'' !!}"><h4>No Stars</h4><p>(0 - 142 pts)</p><p><i>&lt; 55%</i></p></td>
+                                <td class="{!! ($average>=55 && $average<65)?'warning':'' !!}"><h4>1 Star</h4><p>(143 - 165 pts)</p><p><i>55 - 64%</i></p></td>
+                                <td class="{!! ($average>=65 && $average<75)?'warning':'' !!}"><h4>2 Stars</h4><p>(166 - 191 pts)</p><p><i>65 - 74%</i></p></td>
+                                <td class="{!! ($average>=75 && $average<85)?'warning':'' !!}"><h4>3 Stars</h4><p>(192 - 217 pts)</p><p><i>75 - 84%</i></p></td>
+                                <td class="{!! ($average>=85 && $average<95)?'warning':'' !!}"><h4>4 Stars</h4><p>(218 - 243 pts)</p><p><i>85 - 94%</i></p></td>
+                                <td class="{!! $average>=95?'warning':'' !!}"><h4>5 Stars</h4><p>(244 - 258 pts)</p><p><i>&ge; 95%</i></p></td>
                             </tr>
                         </tbody>
                     </table>

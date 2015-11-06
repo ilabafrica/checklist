@@ -129,8 +129,6 @@ class ReviewController extends Controller {
 	    	$slmtaInfo->prior_audit_status  = Input::get('prior_audit_status');
 	    	$slmtaInfo->audit_start_date  = Input::get('audit_start_date');
 	    	$slmtaInfo->audit_end_date  = Input::get('audit_end_date');
-	    	$slmtaInfo->created_at = date('Y-m-d H:i:s');
-	    	$slmtaInfo->updated_at = date('Y-m-d H:i:s');
 	    	if(!Input::get('assessment_id'))
 				return redirect()->back()->with('error', 'Type of SLMTA audit cannot be empty.');
 			else
@@ -145,7 +143,6 @@ class ReviewController extends Controller {
 		    	$labProfile->head = Input::get('head');
 		    	$labProfile->head_work_telephone = Input::get('head_work_telephone');
 		    	$labProfile->head_personal_telephone = Input::get('head_personal_telephone');
-		    	$labProfile->created_at = date('Y-m-d H:i:s');
 		    	$labProfile->save();
 		    }
 		    else if(count($profile)>0){
@@ -196,7 +193,6 @@ class ReviewController extends Controller {
 		    	if(Input::get('other_staff_adequate'))
 		    		$labProfile->other_staff_adequate = Input::get('other_staff_adequate');
 		    	//	Update the lab_profile
-		    	$labProfile->updated_at = date('Y-m-d H:i:s');
 				if(count($labProfile)>0)
 		    		$labProfile->save();
 		    }
@@ -204,7 +200,7 @@ class ReviewController extends Controller {
 		//	Store Audit data
 		if(Input::get('assessment_data')){
 			foreach (Input::all() as $key => $value) {
-				if((stripos($key, 'token') !==FALSE) || (stripos($key, 'audit') !==FALSE) || (stripos($key, 'lab') !==FALSE) || (stripos($key, 'review') !==FALSE) || (stripos($key, 'section') !==FALSE) || (stripos($key, 'assessment') !==FALSE) || (stripos($key, 'answer') !==FALSE))
+				if((stripos($key, 'token') !==FALSE) || (stripos($key, 'audit') !==FALSE) || (stripos($key, 'lab') !==FALSE) || (stripos($key, 'review') !==FALSE) || (stripos($key, 'section') !==FALSE) || (stripos($key, 'assessment') !==FALSE))
 					continue;
 				$fieldId = $this->strip($key);
 				$rq = ReviewQuestion::where('review_id', $review->id)->where('question_id', $fieldId)->first();
@@ -213,8 +209,6 @@ class ReviewController extends Controller {
 					$rq = new ReviewQuestion;
 					$rq->review_id = $review->id;
 					$rq->question_id = $fieldId;
-					$rq->created_at = date('Y-m-d H:i:s');
-					$rq->updated_at = date('Y-m-d H:i:s');
 					$rq->save();
 				}
 				if((stripos($key, 'radio') !==FALSE) || (stripos($key, 'pt') !==FALSE) || (stripos($key, 'date') !==FALSE) || (stripos($key, 'percent') !==FALSE)){
@@ -224,8 +218,6 @@ class ReviewController extends Controller {
 						$rqa = new ReviewQAnswer;
 						$rqa->review_question_id = $rq->id;
 						$rqa->answer = $value;
-						$rqa->created_at = date('Y-m-d H:i:s');
-						$rqa->updated_at = date('Y-m-d H:i:s');
 						$rqa->save();
 					}
 					else{
@@ -233,8 +225,12 @@ class ReviewController extends Controller {
 						$rqa = ReviewQAnswer::find($rqa->id);
 						$rqa->review_question_id = $rq->id;
 						$rqa->answer = $value;
-						$rqa->updated_at = date('Y-m-d H:i:s');
 						$rqa->save();
+					}
+					if((int)$value == 3 && $rq->question->score != 0)
+					{
+						$rq->na = 1;
+						$rq->save();
 					}
 				}
 				else if(stripos($key, 'text') !==FALSE){
@@ -247,8 +243,6 @@ class ReviewController extends Controller {
 						$rn->note = $notes;
 						if(Input::get('check_'.$fieldId))
 							$rn->non_compliance = 1;
-						$rn->created_at = date('Y-m-d H:i:s');
-						$rn->updated_at = date('Y-m-d H:i:s');
 						$rn->save();
 					}
 					else{
@@ -258,8 +252,14 @@ class ReviewController extends Controller {
 						$rn->note = $notes;
 						if(Input::get('check_'.$fieldId))
 							$rn->non_compliance = 1;
-						$rn->updated_at = date('Y-m-d H:i:s');
 						$rn->save();
+					}
+				}
+				else if(stripos($key, 'answer') !==FALSE){
+					if($value === 'NOT APPLICABLE')
+					{
+						$rq->na = 1;
+						$rq->save();
 					}
 				}
 				else if(stripos($key, 'points') !==FALSE){
@@ -274,8 +274,6 @@ class ReviewController extends Controller {
 						$rqs = new ReviewQScore;
 						$rqs->review_question_id = $rq->id;
 						$rqs->audited_score = $score;
-						$rqs->created_at = date('Y-m-d H:i:s');
-						$rqs->updated_at = date('Y-m-d H:i:s');
 						$rqs->save();
 					}
 					else{
@@ -283,7 +281,6 @@ class ReviewController extends Controller {
 						$rqa = ReviewQScore::find($rqs->id);
 						$rqa->review_question_id = $rq->id;
 						$rqa->audited_score = $score;
-						$rqa->updated_at = date('Y-m-d H:i:s');
 						$rqa->save();
 					}
 				}
@@ -415,8 +412,6 @@ class ReviewController extends Controller {
 	    	$slmtaInfo->prior_audit_status  = Input::get('prior_audit_status');
 	    	$slmtaInfo->audit_start_date  = Input::get('audit_start_date');
 	    	$slmtaInfo->audit_end_date  = Input::get('audit_end_date');
-	    	$slmtaInfo->created_at = date('Y-m-d H:i:s');
-	    	$slmtaInfo->updated_at = date('Y-m-d H:i:s');
 	    	if(!Input::get('assessment_id'))
 				return redirect()->back()->with('error', 'Type of SLMTA audit cannot be empty.');
 			else
@@ -431,7 +426,6 @@ class ReviewController extends Controller {
 		    	$labProfile->head = Input::get('head');
 		    	$labProfile->head_work_telephone = Input::get('head_work_telephone');
 		    	$labProfile->head_personal_telephone = Input::get('head_personal_telephone');
-		    	$labProfile->created_at = date('Y-m-d H:i:s');
 		    	$labProfile->save();
 		    }
 		    else if(count($profile)>0){
@@ -482,7 +476,6 @@ class ReviewController extends Controller {
 		    	if(Input::get('other_staff_adequate'))
 		    		$labProfile->other_staff_adequate = Input::get('other_staff_adequate');
 		    	//	Update the lab_profile
-		    	$labProfile->updated_at = date('Y-m-d H:i:s');
 				if(count($labProfile)>0)
 		    		$labProfile->save();
 		    }
@@ -837,7 +830,6 @@ class ReviewController extends Controller {
 		    		if(!count($lab_profile)){
 				    	$lab_profile = new ReviewLabProfile;
 				    	$lab_profile->review_id = $review_id;
-				    	$lab_profile->created_at = date('Y-m-d H:i:s');
 				    	$lab_profile->save();
 				    }
 					for($i=0;$i<$counter;$i++){
@@ -852,7 +844,6 @@ class ReviewController extends Controller {
 							$lab_profile->head_work_telephone = $sheet[$i]->value;
 						}
         			}
-        			$lab_profile->updated_at = date('Y-m-d H:i:s');
         			$lab_profile->save();
         		}
         		//	Staffing Summary
@@ -888,7 +879,6 @@ class ReviewController extends Controller {
 		    		if(!count($lab_profile)){
 				    	$lab_profile = new ReviewLabProfile;
 				    	$lab_profile->review_id = $review_id;
-				    	$lab_profile->created_at = date('Y-m-d H:i:s');
 				    	$lab_profile->save();
 				    }
 					//	Begin saving
@@ -942,7 +932,6 @@ class ReviewController extends Controller {
 							$lab_profile->other_staff_adequate = Answer::adequate($staffing_summary[$i]->adequate);
 						}
         			}
-        			$lab_profile->updated_at = date('Y-m-d H:i:s');
         			$lab_profile->save();
         		}
         		//	SLMTA Information
@@ -1032,9 +1021,7 @@ class ReviewController extends Controller {
 		    				}
 		    			}
 					}
-					Review::find($review_id)->setAssessors([$assessors]);
-					$slmta->created_at = date('Y-m-d H:i:s');
-					$slmta->updated_at = date('Y-m-d H:i:s');
+					Review::find($review_id)->setAssessors($assessors);
 					$slmta->save();
         		}
         		//	Summary of Audit Findings
@@ -1057,7 +1044,6 @@ class ReviewController extends Controller {
         					$review->recommendations = $summary[$i]->value;
         				}
         			}
-        			$review->updated_at = date('Y-m-d H:i:s');
         			$review->save();
         		}
         		//	Action Plan
@@ -1074,8 +1060,6 @@ class ReviewController extends Controller {
 		        					$plan->action = $summary[$i]->action;
 		        					$plan->responsible_person = $summary[$i]->incharge;
 		        					$plan->timeline = $summary[$i]->timeline;
-		        					$plan->created_at = date('Y-m-d H:i:s');
-		        					$plan->updated_at = date('Y-m-d H:i:s');
 		        					$plan->save();
 		        				}
 		        			}
@@ -1085,7 +1069,6 @@ class ReviewController extends Controller {
 	        					$plan->action = $summary[$i]->action;
 	        					$plan->responsible_person = $summary[$i]->incharge;
 	        					$plan->timeline = $summary[$i]->timeline;
-	        					$plan->updated_at = date('Y-m-d H:i:s');
 	        					$plan->save();
 		        			}
 		        		}
@@ -1103,8 +1086,6 @@ class ReviewController extends Controller {
 								$rq = new ReviewQuestion;
 								$rq->review_id = $review_id;
 								$rq->question_id = $assessment[$i]->question;
-								$rq->created_at = date('Y-m-d H:i:s');
-								$rq->updated_at = date('Y-m-d H:i:s');
 								$rq->save();
 							}
 							$rqa = $rq->qa;
@@ -1119,8 +1100,6 @@ class ReviewController extends Controller {
 									$rqa = new ReviewQAnswer;
 									$rqa->review_question_id = $rq->id;
 									$rqa->answer = Answer::idByName($assessment[$i]->response);
-									$rqa->created_at = date('Y-m-d H:i:s');
-									$rqa->updated_at = date('Y-m-d H:i:s');
 									$rqa->save();
 								}
 								else{
@@ -1128,7 +1107,6 @@ class ReviewController extends Controller {
 									$rqa = ReviewQAnswer::find($rqa->id);
 									$rqa->review_question_id = $rq->id;
 									$rqa->answer = Answer::idByName($assessment[$i]->response);
-									$rqa->updated_at = date('Y-m-d H:i:s');
 									$rqa->save();
 								}
 							}
@@ -1138,8 +1116,6 @@ class ReviewController extends Controller {
 								$rn->review_question_id = $rq->id;
 								$rn->note = $assessment[$i]->notes;
 								$rn->non_compliance = Answer::adequate($assessment[$i]->compliance);
-								$rn->created_at = date('Y-m-d H:i:s');
-								$rn->updated_at = date('Y-m-d H:i:s');
 								$rn->save();
 							}
 							else{
@@ -1148,7 +1124,6 @@ class ReviewController extends Controller {
 								$rn->review_question_id = $rq->id;
 								$rn->note = $assessment[$i]->notes;
 								$rn->non_compliance = Answer::adequate($assessment[$i]->compliance);
-								$rn->updated_at = date('Y-m-d H:i:s');
 								$rn->save();
 							}
 						}
@@ -1165,8 +1140,6 @@ class ReviewController extends Controller {
 								$rq = new ReviewQuestion;
 								$rq->review_id = $review_id;
 								$rq->question_id = $scores[$i]->question;
-								$rq->created_at = date('Y-m-d H:i:s');
-								$rq->updated_at = date('Y-m-d H:i:s');
 								$rq->save();
 							}
         					$rqs = $rq->qs;
@@ -1175,8 +1148,6 @@ class ReviewController extends Controller {
 								$rqs = new ReviewQScore;
 								$rqs->review_question_id = $rq->id;
 								$rqs->audited_score = $scores[$i]->points;
-								$rqs->created_at = date('Y-m-d H:i:s');
-								$rqs->updated_at = date('Y-m-d H:i:s');
 								$rqs->save();
 							}
 							else{
@@ -1184,7 +1155,6 @@ class ReviewController extends Controller {
 								$rqs = ReviewQScore::find($rqs->id);
 								$rqs->review_question_id = $rq->id;
 								$rqs->audited_score = $scores[$i]->points;
-								$rqs->updated_at = date('Y-m-d H:i:s');
 								$rqs->save();
 							}
         				}

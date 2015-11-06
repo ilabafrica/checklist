@@ -34,7 +34,7 @@ class ReportController extends Controller {
 		$categories = array();
 		$labels = array();
 		$data = array();
-		$score = 0;
+		$overall = $review->auditType->sections->sum('total_points');
 		$points = 0;
 		$sections = $review->auditType->sections;
 		foreach($sections as $section){
@@ -43,11 +43,12 @@ class ReportController extends Controller {
 			else
 				continue;
 		}
+		$counter = count($categories);
 		foreach($categories as $section){
 			array_push($labels, $section->name);
-			$points+=(int)$section->total_points;
-			$score+=(int)$section->subtotal($review->id);
+			$points+=(int)$section->subtotal($review->id);
 		}
+		$average = $points/$counter;
 		//	Column chart
 		$column = '{
             chart: {
@@ -86,7 +87,7 @@ class ReportController extends Controller {
             	"name": "% Score",
 	            "data": [';
 	            foreach($categories as $section){
-	            	$column.= round($section->subtotal($review->id)*100/$section->total_points, 2).',';
+	            	$column.= $section->subtotal($review->id).',';
 	            }
 	            $column.= ']
 	        }]          
@@ -131,13 +132,13 @@ class ReportController extends Controller {
 	            "name": "% score",
 	            "data": [';
 	            	foreach ($categories as $section) {
-	   					$spider.=round($section->subtotal($review->id)*100/$section->total_points, 2).',';
+	   					$spider.= $section->subtotal($review->id).',';
 	   				}
 	   				$spider.='],
 	            "pointPlacement": "on"
 	        }]
 	    }';
-		return view('report.index', compact('review', 'spider', 'categories', 'score', 'points', 'column'));
+		return view('report.index', compact('review', 'spider', 'categories', 'overall', 'points', 'column', 'average'));
 	}
 	/**
 	 * Show the form for creating a new resource.
