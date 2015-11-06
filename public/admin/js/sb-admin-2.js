@@ -185,9 +185,6 @@ function noteChange(name, points){
         if( $(this).is(':checked')){
             if($(item).val() !== '3')
                 sum+=parseInt($(this).val());
-            else{
-                na++;
-            }
             count++;
             txtId = questionId($(this).attr('id'));
             if(parseInt($(item).val()) == 2 || parseInt($(item).val()) == 4){
@@ -203,22 +200,24 @@ function noteChange(name, points){
             }
             else if(parseInt($(item).val()) == 3)
             {
+                count--;
+                na++;
                 $('#text_'+txtId).prop('disabled', true);
             }
         }
     });
-    if(sum==count || (na>0 && sum==count)){
+    if(sum==count && count!=0){
         $('#points_'+id).val(points).trigger('input');
         $('#answer_'+id).val(answers[0]);
         $('#text_'+id).validationEngine('hide');
         $('#text_'+id).removeClass('validate[required] text-input');
     }
-    else if(sum==count*2 || (na>0 && sum==count*2)){
+    else if(sum==count*2  && count!=0){
         $('#points_'+id).val(0).trigger('input');
         $('#answer_'+id).val(answers[2]);
         $('#text_'+id).addClass('form-control validate[required] text-input');
     }
-    else if(na==count)
+    else if(count==0)
     {
         $('#points_'+id).val(0);
         $('#answer_'+id).val(answers[3]);
