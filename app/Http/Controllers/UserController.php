@@ -135,7 +135,7 @@ class UserController extends Controller {
 		//
 	}
 	/**
-     * Change the image name, move it to images/profile, and return its new name
+     * Change the image name, move it to img/profile, and return its new name
      *
      * @param $request
      * @param $data
@@ -148,7 +148,7 @@ class UserController extends Controller {
         }else{
             $ext = $request->file('photo')->getClientOriginalExtension();
             $filename = uniqid() . "." . $ext;
-            $request->file('photo')->move('images/profiles/', $filename);
+            $request->file('photo')->move('img/profiles/', $filename);
         }
         return $filename;
     }

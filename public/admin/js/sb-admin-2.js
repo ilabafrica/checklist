@@ -190,14 +190,20 @@ function noteChange(name, points){
             }
             count++;
             txtId = questionId($(this).attr('id'));
-            if(parseInt($(item).val()) == 2 || parseInt($(item).val()) == 3 || parseInt($(item).val()) == 4){
+            if(parseInt($(item).val()) == 2 || parseInt($(item).val()) == 4){
+                $('#text_'+txtId).prop('disabled', false);
                 $('#text_'+txtId).addClass('form-control validate[required] text-input');
                 $('#text_'+txtId).validationEngine('showPrompt', '* Comment(s) required on this field.', 'red', 'topLeft', true);
             }
             else if(parseInt($(item).val()) == 1){
+                $('#text_'+txtId).prop('disabled', false);
                 $('#text_'+txtId).validationEngine('hide');
                 $('#text_'+txtId).addClass('form-control');
                 $('#text_'+txtId).removeClass('validate[required] text-input');
+            }
+            else if(parseInt($(item).val()) == 3)
+            {
+                $('#text_'+txtId).prop('disabled', true);
             }
         }
     });
@@ -234,13 +240,19 @@ function scoreMain(name, points){
             if(parseInt($(this).val()) != 4)
                 answer+=parseInt($(this).val());
             console.log(parseInt($(this).val()));
-            if(parseInt($(this).val()) == 2 || parseInt($(this).val()) == 3 || parseInt($(this).val()) == 4){
+            if(parseInt($(this).val()) == 2 || parseInt($(this).val()) == 4){
+                $('#text_'+id).prop('disabled', false);
                 $('#text_'+id).addClass('form-control validate[required] text-input');
                 $('#text_'+id).validationEngine('showPrompt', '* Comment(s) required on this field.', 'red', 'topLeft', true);
             }
             else if(parseInt($(this).val()) == 1){
+                $('#text_'+id).prop('disabled', false);
                 $('#text_'+id).validationEngine('hide');
                 $('#text_'+id).removeClass('validate[required] text-input');
+            }
+            else if(parseInt($(this).val()) == 3)
+            {
+                $('#text_'+id).prop('disabled', true);
             }
         }    
     });
