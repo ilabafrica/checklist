@@ -701,7 +701,8 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <div class="col-sm-12">
-                                                            {!! Form::textarea('text_'.$question->id, $question->note($review->id)?$question->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3', 'id' => 'text_'.$question->id)) !!}
+                                                            <?php $disabled = ''; if($question->decode($review->id) && $question->decode($review->id)==="NOT APPLICABLE"){$disabled = 'readonly';} ?> 
+                                                            {!! Form::textarea('text_'.$question->id, $question->note($review->id)?$question->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3', 'id' => 'text_'.$question->id, $disabled)) !!}
                                                         </div>
                                                     </div>
                                                 </div>

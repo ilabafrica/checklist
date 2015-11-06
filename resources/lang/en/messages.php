@@ -46,6 +46,7 @@ return [
 	'yes'	=>	'Yes|YES',
 	'no'	=>	'No|NO',
 	'partial'	=>	'Partial|PARTIAL',
+	'na'	=>	'Not Applicable|NOT APPLICABLE',
 	'insufficient-data'	=>	'Insufficient Data',
 	'save-and-continue'	=>	'Save and Continue',
 	'upload'	=>	'Upload',

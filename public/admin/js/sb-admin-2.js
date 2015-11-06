@@ -219,9 +219,11 @@ function noteChange(name, points){
     }
     else if(count==0)
     {
-        $('#points_'+id).val(0);
+        $('#points_'+id).val(0).trigger('input');
         $('#answer_'+id).val(answers[3]);
-        $('#text_'+id).addClass('form-control validate[required] text-input');
+        $('#text_'+id).validationEngine('hide');
+        $('#text_'+id).removeClass('validate[required] text-input');
+        $('#text_'+id).prop('disabled', true);
     }
     else{
         $('#points_'+id).val(1).trigger('input');
@@ -259,8 +261,8 @@ function scoreMain(name, points){
         $('#points_'+id).val(points).trigger('input');
     else if(answer == 2)
         $('#points_'+id).val(0).trigger('input');
-    else if(answer == 0)
-        $('#points_'+id).val(0);
+    else if(answer == 3)
+        $('#points_'+id).val(0).trigger('input');
     else
         $('#points_'+id).val(1).trigger('input');
 }

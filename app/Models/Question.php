@@ -181,7 +181,12 @@ class Question extends Model implements Revisionable{
 		if($score == $this->score)
 			return Lang::choice('messages.yes', 2);
 		else if($score == 0)
-			return Lang::choice('messages.no', 2);
+		{
+			if($this->rq->where('review_id', $review)->first()->na == 1)
+				return Lang::choice('messages.na', 2);
+			else
+				return Lang::choice('messages.no', 2);
+		}
 		else if($score == 1)
 			return Lang::choice('messages.partial', 2);
 		else

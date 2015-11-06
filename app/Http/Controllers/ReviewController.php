@@ -265,6 +265,10 @@ class ReviewController extends Controller {
 				else if(stripos($key, 'points') !==FALSE){
 					$rqs = $rq->qs;
 					$score = $value;
+					$na = 'answer_'.$key;
+					$rna = 'radio_'.$key;
+					if(Input::get($na) == 'NOT APPLICABLE' || ($score == 0 && (int)Input::get($rna) == 3))
+						$score = -(int)Question::find($key)->score;
 					if(!$rqs){
 						//	Create review-question-score
 						$rqs = new ReviewQScore;
@@ -383,7 +387,7 @@ class ReviewController extends Controller {
 	 */
 	public function update($id)
 	{
-		//dd(Input::all());
+		// dd(Input::all());
 		$review = Review::find($id);
 		//	Save Auditors
 		if(Input::get('assessors')){
@@ -486,7 +490,7 @@ class ReviewController extends Controller {
 		//	Store Audit data
 		if(Input::get('assessment_data')){
 			foreach (Input::all() as $key => $value) {
-				if((stripos($key, 'token') !==FALSE) || (stripos($key, 'audit') !==FALSE) || (stripos($key, 'lab') !==FALSE) || (stripos($key, 'review') !==FALSE) || (stripos($key, 'section') !==FALSE) || (stripos($key, 'assessment') !==FALSE) || (stripos($key, 'answer') !==FALSE) || (stripos($key, 'method') !==FALSE))
+				if((stripos($key, 'token') !==FALSE) || (stripos($key, 'audit') !==FALSE) || (stripos($key, 'lab') !==FALSE) || (stripos($key, 'review') !==FALSE) || (stripos($key, 'section') !==FALSE) || (stripos($key, 'assessment') !==FALSE) || (stripos($key, 'method') !==FALSE))
 					continue;
 				$fieldId = $this->strip($key);
 				$rq = ReviewQuestion::where('review_id', $review->id)->where('question_id', $fieldId)->first();
@@ -495,8 +499,6 @@ class ReviewController extends Controller {
 					$rq = new ReviewQuestion;
 					$rq->review_id = $review->id;
 					$rq->question_id = $fieldId;
-					$rq->created_at = date('Y-m-d H:i:s');
-					$rq->updated_at = date('Y-m-d H:i:s');
 					$rq->save();
 				}
 				if((stripos($key, 'radio') !==FALSE) || (stripos($key, 'pt') !==FALSE) || (stripos($key, 'date') !==FALSE) || (stripos($key, 'percent') !==FALSE)){
@@ -506,8 +508,6 @@ class ReviewController extends Controller {
 						$rqa = new ReviewQAnswer;
 						$rqa->review_question_id = $rq->id;
 						$rqa->answer = $value;
-						$rqa->created_at = date('Y-m-d H:i:s');
-						$rqa->updated_at = date('Y-m-d H:i:s');
 						$rqa->save();
 					}
 					else{
@@ -515,8 +515,12 @@ class ReviewController extends Controller {
 						$rqa = ReviewQAnswer::find($rqa->id);
 						$rqa->review_question_id = $rq->id;
 						$rqa->answer = $value;
-						$rqa->updated_at = date('Y-m-d H:i:s');
 						$rqa->save();
+					}
+					if((int)$value == 3 && $rq->question->score != 0)
+					{
+						$rq->na = 1;
+						$rq->save();
 					}
 				}
 				else if(stripos($key, 'text') !==FALSE){
@@ -529,8 +533,6 @@ class ReviewController extends Controller {
 						$rn->note = $notes;
 						if(Input::get('check_'.$fieldId))
 							$rn->non_compliance = 1;
-						$rn->created_at = date('Y-m-d H:i:s');
-						$rn->updated_at = date('Y-m-d H:i:s');
 						$rn->save();
 					}
 					else{
@@ -544,6 +546,13 @@ class ReviewController extends Controller {
 						$rn->save();
 					}
 				}
+				else if(stripos($key, 'answer') !==FALSE){
+					if($value === 'NOT APPLICABLE')
+					{
+						$rq->na = 1;
+						$rq->save();
+					}
+				}
 				else if(stripos($key, 'points') !==FALSE){
 					$rqs = $rq->qs;
 					$score = $value;
@@ -552,8 +561,6 @@ class ReviewController extends Controller {
 						$rqs = new ReviewQScore;
 						$rqs->review_question_id = $rq->id;
 						$rqs->audited_score = $score;
-						$rqs->created_at = date('Y-m-d H:i:s');
-						$rqs->updated_at = date('Y-m-d H:i:s');
 						$rqs->save();
 					}
 					else{
@@ -561,7 +568,6 @@ class ReviewController extends Controller {
 						$rqs = ReviewQScore::find($rqs->id);
 						$rqs->review_question_id = $rq->id;
 						$rqs->audited_score = $score;
-						$rqs->updated_at = date('Y-m-d H:i:s');
 						$rqs->save();
 					}
 				}
