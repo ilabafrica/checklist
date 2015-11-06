@@ -567,7 +567,7 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    {!! Form::textarea('commendations', Input::old('pt_description'), array('class' => 'form-control', 'rows' => '3')) !!}
+                                                    {!! Form::textarea('commendations', $review->summary_commendations?$review->summary_commendations:implode(', ', $notes), array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>

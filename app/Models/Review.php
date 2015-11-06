@@ -152,8 +152,11 @@ class Review extends Model {
 	/**
 	* Non-compliancies 
 	*/
-	public function noncompliance()
+	public function notes()
 	{
-		return DB::table('review_notes')->where('review_id', $this->id)->where('non_compliance', Answer::NONCOMPLIANT)->orderBy('question_id')->get();
+		$notes = ReviewNote::whereHas('review_question', function($q){
+			$q->where('review_id', $this->id)->whereIn('question_id', Question::where('score', '!=', 0)->lists('id'))->orderBy('question_id', 'ASC');
+		})->where('note', '!=', '')->select('note')->get();
+		return $notes->lists('note');
 	}
 }

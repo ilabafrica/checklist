@@ -64,8 +64,10 @@ class ReviewController extends Controller {
         $stars = array(Review::NOTAUDITED => Lang::choice('messages.not-audited', 1), Review::ZEROSTARS => Lang::choice('messages.zero-stars', 1), Review::ONESTAR => Lang::choice('messages.one-star', 1), Review::TWOSTARS => Lang::choice('messages.two-stars', 1), Review::THREESTARS => Lang::choice('messages.three-stars', 1), Review::FOURSTARS => Lang::choice('messages.four-stars', 1), Review::FIVESTARS => Lang::choice('messages.five-stars', 1));
         //	Get users - to be updated to pick auditors alone
         $assessors = User::all();
+        //	Get notes for main questions only
+        $notes = $review->notes();
         
-		return view('audit.review.create', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors'));
+		return view('audit.review.create', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors', 'notes'));
 	}
 
 	/**
@@ -368,9 +370,10 @@ class ReviewController extends Controller {
         $slmta = $review->slmta;
         //	Get Lab profile
         $profile = $review->laboratory;
-        //	Get radios selected
+        //	Get notes for main questions only
+        $notes = $review->notes();
 
-		return view('audit.review.edit', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors', 'slmta', 'profile'));
+		return view('audit.review.edit', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors', 'slmta', 'profile', 'notes'));
 	}
 	/**
 	 * Update the specified resource in storage.

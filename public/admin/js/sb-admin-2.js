@@ -177,13 +177,17 @@ function noteChange(name, points){
     var id = questionId(name);
     var count = 0;
     var sum = 0;
+    var na = 0;
     var questions = $('.radio_'+id).length;
     var answers = ['YES', 'PARTIAL', 'NO', 'NOT APPLICABLE'];
     $.each($('.radio_'+id), function(key, item){
         var txtId = 0;
         if( $(this).is(':checked')){
-            if(parseInt($(item).val()) != 4)
+            if($(item).val() !== '3')
                 sum+=parseInt($(this).val());
+            else{
+                na++;
+            }
             count++;
             txtId = questionId($(this).attr('id'));
             if(parseInt($(item).val()) == 2 || parseInt($(item).val()) == 3 || parseInt($(item).val()) == 4){
@@ -197,18 +201,18 @@ function noteChange(name, points){
             }
         }
     });
-    if(sum==count){
+    if(sum==count || (na>0 && sum==count)){
         $('#points_'+id).val(points).trigger('input');
         $('#answer_'+id).val(answers[0]);
         $('#text_'+id).validationEngine('hide');
         $('#text_'+id).removeClass('validate[required] text-input');
     }
-    else if(sum==count*2){
+    else if(sum==count*2 || (na>0 && sum==count*2)){
         $('#points_'+id).val(0).trigger('input');
         $('#answer_'+id).val(answers[2]);
         $('#text_'+id).addClass('form-control validate[required] text-input');
     }
-    else if(sum==count*3)
+    else if(na==count)
     {
         $('#points_'+id).val(0);
         $('#answer_'+id).val(answers[3]);

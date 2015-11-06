@@ -27,4 +27,11 @@ class ReviewNote extends Model implements Revisionable{
     {
        return $this->belongsTo('App\Models\ReviewQuestion');
     }
+    /**
+     * Review relationship
+     */
+    public function review_question()
+    {
+       return $this->belongsTo('App\Models\ReviewQuestion');
+    }
 }
