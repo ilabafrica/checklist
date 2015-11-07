@@ -308,4 +308,16 @@ return [
 	/* SLIPTA HELP MESSAGES */
 	'home-help'	=>	'<p>Here you will find audits you did, both COMPLETE and INCMPLETE.</p><p>Click:</p><p><strong>View</strong> - to see full audit.</p><p><strong>Edit</strong> - to edit.</p><p><strong>Export Audit Data</strong> - to export to data file.</p><p><strong>Run Reports</strong> - to audit summary.</p><p><strong>Mark Audit Complete</strong> - Change selected audit status to COMPLETE.</p>',
 	'create-lab-help'	=>	'Create a new Lab. Labs are identified by their lab numbers, which must be unique.',
+	/* success messages */
+	'record-successfully-updated'	=>	'Record successfully updated.',
+    'record-successfully-saved'	=>	'Record successfully Saved.',
+    'record-successfully-deleted'	=>	'Record was successfully deleted.',
+    /* Partners */
+	'partner'	=>	'Partner|Partners',
+	'create-partner'	=>	'Create Partner',
+	'edit-partner'	=>	'Edit Partner',
+	'partner-config'	=>	'Partner Config',
+	'head'	=>	'Contact Person',
+	'select-country'	=>	'Select Country',
+	'select-partner'	=>	'Select Partner',
 ];

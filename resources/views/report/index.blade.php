@@ -33,69 +33,54 @@
     </div>
     <div class="panel-body">
         <div class="row">
-        <div class="col-sm-12">
-            <ul class="nav nav-tabs default">
-                <li class="active"><a href="#scores" data-toggle="tab" aria-expanded="true">{!! Lang::choice('messages.audited-score', 1) !!}</a>
-                </li>
-                <li class=""><a href="#column" data-toggle="tab" aria-expanded="false">{!! Lang::choice('messages.bar-chart', 1) !!}</a>
-                </li>
-                <li class=""><a href="#spider" data-toggle="tab" aria-expanded="false">{!! Lang::choice('messages.spider-chart', 1) !!}</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane" id="spider" style="padding-top:20px;width:70%;"></div>
-                <div class="tab-pane" id="column" style="padding-top:20px;width:70%;"></div>
-                <div class="tab-pane fade active in" id="scores" style="padding-top:20px;">
-                    <table class="table table-striped table-bordered table-hover ">
-                        <thead>
-                            <tr><th>{{ Lang::choice('messages.section', 1) }}</th>
-                                <th>{{ Lang::choice('messages.label', 1) }}</th>
-                                <th>{{ Lang::choice('messages.audited-score', 1) }}</th>
-                                <th>{{ Lang::choice('messages.total-points', 1) }}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($categories as $section)
-                            <tr>
-                                <td>{{ $section->name }}</td>
-                                <td>{{ $section->label}}</td>
-                                <td>{{ $section->subtotal($review->id, 1)}}</td>
-                                <td>{{ $section->total_points }}</td>
-                            </tr>
-                            @endforeach
-                            <tr>
-                                <td colspan="2"><strong>{{ Lang::choice('messages.total-score', 1)  }}</strong></td>
-                                <td><strong>{{ $average }}</strong></td>
-                                <td><strong>{{ $overall }}</strong></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-striped table-bordered table-hover">
-                        <tbody>
-                            <tr>
-                                <td class="{!! $average<55?'warning':'' !!}"><h4>No Stars</h4><p>(0 - 142 pts)</p><p><i>&lt; 55%</i></p></td>
-                                <td class="{!! ($average>=55 && $average<65)?'warning':'' !!}"><h4>1 Star</h4><p>(143 - 165 pts)</p><p><i>55 - 64%</i></p></td>
-                                <td class="{!! ($average>=65 && $average<75)?'warning':'' !!}"><h4>2 Stars</h4><p>(166 - 191 pts)</p><p><i>65 - 74%</i></p></td>
-                                <td class="{!! ($average>=75 && $average<85)?'warning':'' !!}"><h4>3 Stars</h4><p>(192 - 217 pts)</p><p><i>75 - 84%</i></p></td>
-                                <td class="{!! ($average>=85 && $average<95)?'warning':'' !!}"><h4>4 Stars</h4><p>(218 - 243 pts)</p><p><i>85 - 94%</i></p></td>
-                                <td class="{!! $average>=95?'warning':'' !!}"><h4>5 Stars</h4><p>(244 - 258 pts)</p><p><i>&ge; 95%</i></p></td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="col-sm-12">
+                <ul class="nav nav-tabs default">
+                    <li class="active"><a href="{!! url('/report/'.$review->id) !!}">{!! Lang::choice('messages.audited-score', 1) !!}</a></li>
+                    <li class=""><a href="{!! url('/bar/'.$review->id) !!}">{!! Lang::choice('messages.bar-chart', 1) !!}</a></li>
+                    <li class=""><a href="{!! url('/spider/'.$review->id) !!}">{!! Lang::choice('messages.spider-chart', 1) !!}</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" id="scores" style="padding-top:20px;">
+                        <table class="table table-striped table-bordered table-hover ">
+                            <thead>
+                                <tr><th>{{ Lang::choice('messages.section', 1) }}</th>
+                                    <th>{{ Lang::choice('messages.label', 1) }}</th>
+                                    <th>{{ Lang::choice('messages.audited-score', 1) }}</th>
+                                    <th>{{ Lang::choice('messages.total-points', 1) }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($categories as $section)
+                                <tr>
+                                    <td>{{ $section->name }}</td>
+                                    <td>{{ $section->label}}</td>
+                                    <td>{{ $section->subtotal($review->id, 1)}}</td>
+                                    <td>{{ $section->total_points }}</td>
+                                </tr>
+                                @endforeach
+                                <tr>
+                                    <td colspan="2"><strong>{{ Lang::choice('messages.total-score', 1)  }}</strong></td>
+                                    <td><strong>{{ $score }}</strong></td>
+                                    <td><strong>{{ $overall }}</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-striped table-bordered table-hover">
+                            <tbody>
+                                <tr>
+                                    <td class="{!! $average<55?'warning':'' !!}"><h4>No Stars</h4><p>(0 - 142 pts)</p><p><i>&lt; 55%</i></p></td>
+                                    <td class="{!! ($average>=55 && $average<65)?'warning':'' !!}"><h4>1 Star</h4><p>(143 - 165 pts)</p><p><i>55 - 64%</i></p></td>
+                                    <td class="{!! ($average>=65 && $average<75)?'warning':'' !!}"><h4>2 Stars</h4><p>(166 - 191 pts)</p><p><i>65 - 74%</i></p></td>
+                                    <td class="{!! ($average>=75 && $average<85)?'warning':'' !!}"><h4>3 Stars</h4><p>(192 - 217 pts)</p><p><i>75 - 84%</i></p></td>
+                                    <td class="{!! ($average>=85 && $average<95)?'warning':'' !!}"><h4>4 Stars</h4><p>(218 - 243 pts)</p><p><i>85 - 94%</i></p></td>
+                                    <td class="{!! $average>=95?'warning':'' !!}"><h4>5 Stars</h4><p>(244 - 258 pts)</p><p><i>&ge; 95%</i></p></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        </div>
     </div>
 </div>
-<script src="{{ URL::asset('admin/js/highcharts.js') }}"></script>
-<script src="{{ URL::asset('admin/js/highcharts-more.js') }}"></script>
-<script src="{{ URL::asset('admin/js/exporting.js') }}"></script>
-<script type="text/javascript">
-    $(function () {
-        $('#column').highcharts(<?php echo $column ?>); 
-        $('#spider').highcharts(<?php echo $spider ?>);  
-    });
-</script>
-
 @stop

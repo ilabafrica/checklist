@@ -8,14 +8,14 @@
                 <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
             </li>
             <li>
-                <a href="{{ url('country') }}">{{ Lang::choice('messages.country', 1) }}</a>
+                <a href="{{ url('partner') }}">{{ Lang::choice('messages.partner', 1) }}</a>
             </li>
-            <li class="active">{{ Lang::choice('messages.create-country', 1) }}</li>
+            <li class="active">{{ Lang::choice('messages.create-partner', 1) }}</li>
         </ol>
     </div>
 </div>
 <div class="panel panel-primary">
-    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.create-country', '1') }}</div>
+    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.create-partner', '1') }}</div>
     <div class="panel-body">
         <div class="col-lg-12 main">
             <!-- Begin form --> 
@@ -25,7 +25,7 @@
                 {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
             </div>
             @endif
-            {!! Form::open(array('route' => 'country.store', 'id' => 'form-add-country', 'class' => 'form-horizontal')) !!}
+            {!! Form::open(array('route' => 'partner.store', 'id' => 'form-add-partner', 'class' => 'form-horizontal')) !!}
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                 <!-- ./ csrf token -->
@@ -36,26 +36,27 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('code', Lang::choice('messages.code', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    {!! Form::label('head', Lang::choice('messages.head', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('code', old('code'), array('class' => 'form-control', 'rows' => '3')) !!}
+                        {!! Form::text('head', old('head'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('capital', Lang::choice('messages.capital', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    {!! Form::label('contacts', Lang::choice('messages.address', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('capital', old('capital'), array('class' => 'form-control')) !!}
+                        {!! Form::textarea('contact', old('contact'), 
+                            array('class' => 'form-control', 'rows' => '3')) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('partners', Lang::choice('messages.partner', 2)) !!}
+                    {!! Form::label('labs', Lang::choice('messages.lab', 2)) !!}
                     <div class="form-pane panel panel-default">
                         <div class="container-fluid">
                             <?php 
                                 $cnt = 0;
                                 $zebra = "";
                             ?>
-                            @foreach($partners as $key=>$value)
+                            @foreach($labs as $key=>$value)
                                 {!! ($cnt%4==0)?"<div class='row $zebra'>":"" !!}
                                 <?php
                                     $cnt++;
@@ -63,7 +64,7 @@
                                 ?>
                                 <div class="col-md-3">
                                     <label  class="checkbox-inline">
-                                        <input type="checkbox" name="partners[]" value="{{ $value->id}}" />{{$value->name}}
+                                        <input type="checkbox" name="labs[]" value="{{ $value->id}}" />{{$value->name}}
                                     </label>
                                 </div>
                                 {{ ($cnt%4==0)?"</div>":"" }}
@@ -76,7 +77,7 @@
                     <div class="col-sm-offset-4 col-sm-8">
                     {!! Form::button("<i class='glyphicon glyphicon-ok-circle'></i> ".Lang::choice('messages.save', 1), 
                         array('class' => 'btn btn-success', 'onclick' => 'submit()')) !!}
-                    {!! Form::button("<i class='glyphicon glyphicon-remove-circle'></i> ".'Reset', 
+                    {!! Form::button("<i class='glyphicon glyphicon-remove-circle'></i> ".Lang::choice('messages.reset', 1), 
                         array('class' => 'btn btn-default', 'onclick' => 'reset()')) !!}
                     <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                     </div>

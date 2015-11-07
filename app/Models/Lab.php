@@ -4,6 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
 use Sofa\Revisionable\Revisionable; // interface
+use Illuminate\Support\Facades\DB;
+use Lang;
 
 class Lab extends Model implements Revisionable{
 	use SoftDeletes;

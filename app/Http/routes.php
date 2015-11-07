@@ -45,6 +45,12 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('authorization', 'AuthorizationController');
     //  Country controller
     Route::resource('country', 'CountryController');
+    /* Partner */
+    Route::resource('partner', 'PartnerController');
+    Route::any('/partner/dropdown', array(
+        "as"    =>  "partner.dropdown",
+        "uses"  =>  "CountryController@dropdown"
+    ));
     //	User controller
     Route::resource('user', 'UserController');
     Route::get("/user/{id}/delete", array(
@@ -172,6 +178,14 @@ Route::group(['middleware' => 'auth'], function(){
     Route::any('/report/{id}', array(
         "as"    =>  "report.index",
         "uses"  =>  "ReportController@index"
+    ));
+    Route::any('/bar/{id}', array(
+        "as"    =>  "report.bar",
+        "uses"  =>  "ReportController@bar"
+    ));
+    Route::any('/spider/{id}', array(
+        "as"    =>  "report.spider",
+        "uses"  =>  "ReportController@spider"
     ));
 
     //  Export to excel

@@ -33,9 +33,9 @@ class ReportController extends Controller {
 		$review = Review::find($id);
 		$categories = array();
 		$labels = array();
-		$data = array();
 		$overall = $review->auditType->sections->sum('total_points');
 		$points = 0;
+		$score = 0;
 		$sections = $review->auditType->sections;
 		foreach($sections as $section){
 			if($section->total_points!=0)
@@ -47,8 +47,31 @@ class ReportController extends Controller {
 		foreach($categories as $section){
 			array_push($labels, $section->name);
 			$points+=(int)$section->subtotal($review->id);
+			$score+=(int)$section->subtotal($review->id, 1);
 		}
 		$average = $points/$counter;
+		return view('report.index', compact('review', 'categories', 'overall', 'score', 'average'));
+	}
+	/**
+	 * Show the bar chart
+	 *
+	 * @return Response
+	 */
+	public function bar($id)
+	{	
+		$review = Review::find($id);
+		$categories = array();
+		$labels = array();
+		$sections = $review->auditType->sections;
+		foreach($sections as $section){
+			if($section->total_points!=0)
+				array_push($categories, $section);
+			else
+				continue;
+		}
+		foreach($categories as $section){
+			array_push($labels, $section->name);
+		}
 		//	Column chart
 		$column = '{
             chart: {
@@ -92,6 +115,29 @@ class ReportController extends Controller {
 	            $column.= ']
 	        }]          
         }';
+		return view('report.bar', compact('review', 'column'));//
+	}
+
+	/**
+	 * Store the spider chart
+	 *
+	 * @return Response
+	 */
+	public function spider($id)
+	{
+		$review = Review::find($id);
+		$categories = array();
+		$labels = array();
+		$sections = $review->auditType->sections;
+		foreach($sections as $section){
+			if($section->total_points!=0)
+				array_push($categories, $section);
+			else
+				continue;
+		}
+		foreach($categories as $section){
+			array_push($labels, $section->name);
+		}
         //	Spider chart
 	  	$spider = '{
 	        "chart": {
@@ -138,70 +184,7 @@ class ReportController extends Controller {
 	            "pointPlacement": "on"
 	        }]
 	    }';
-		return view('report.index', compact('review', 'spider', 'categories', 'overall', 'points', 'column', 'average'));
-	}
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
-	public function store()
-	{
-		//
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
-	{
-		//
-	}
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function destroy($id)
-	{
-		//
+		return view('report.spider', compact('review', 'spider'));
 	}
 	/* Export audit data to excel */
 	public function export($id){

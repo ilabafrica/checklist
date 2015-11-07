@@ -1,9 +1,9 @@
 <?php namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
-use App\Models\Country;
+use App\Models\Partner;
 
-class CountryRequest extends Request {
+class PartnerRequest extends Request {
 
 	/**
 	 * Determine if the user is authorized to make this request.
@@ -24,18 +24,18 @@ class CountryRequest extends Request {
 	{
 		$id = $this->ingnoreId();
 		return [
-            'name'   => 'required|unique:countries,name,'.$id,
-            'capital'   => 'required|unique:countries,capital,'.$id,
-            'code'   => 'required|unique:countries,code,'.$id,
+            'name'   => 'required|unique:partners,name,'.$id,
+            'head'   => 'required|unique:partners,head,'.$id,
+            'contact'   => 'required|unique:partners,contact,'.$id,
         ];
 	}
 	/**
 	* @return \Illuminate\Routing\Route|null|string
 	*/
 	public function ingnoreId(){
-		$id = $this->route('country');
+		$id = $this->route('partner');
 		$name = $this->input('name');
-		return Country::where(compact('id', 'name'))->exists() ? $id : '';
+		return Partner::where(compact('id', 'name'))->exists() ? $id : '';
 	}
 
 }

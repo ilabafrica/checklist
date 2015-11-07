@@ -43,13 +43,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('dob', Lang::choice('messages.dob', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-offset-4 col-sm-7 input-group input-append date datepicker" id="date-of-birth" style="margin-left:170px;">
-                        {!! Form::text('dob', Input::old('dob'), array('class' => 'form-control')) !!}
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
-                </div>
-                <div class="form-group">
                     {!! Form::label('email', Lang::choice('messages.email', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
                         {!! Form::text('email', Input::old('email'), array('class' => 'form-control')) !!}

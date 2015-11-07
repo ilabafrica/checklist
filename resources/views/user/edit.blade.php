@@ -37,7 +37,7 @@
                 <div class="form-group">
                     {!! Form::label('name', Lang::choice('messages.name', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('name', Input::old('name'), array('class' => 'form-control')) !!}
+                        {!! Form::text('name', old('name'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
@@ -48,35 +48,28 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('dob', Lang::choice('messages.dob', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-offset-4 col-sm-7 input-group input-append date datepicker" id="date-of-birth" style="margin-left:170px;">
-                        {!! Form::text('dob', Input::old('dob'), array('class' => 'form-control')) !!}
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
-                </div>
-                <div class="form-group">
                     {!! Form::label('email', Lang::choice('messages.email', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('email', Input::old('email'), array('class' => 'form-control')) !!}
+                        {!! Form::text('email', old('email'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('phone', Lang::choice('messages.phone', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('phone', Input::old('phone'), array('class' => 'form-control')) !!}
+                        {!! Form::text('phone', old('phone'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('address', Lang::choice('messages.address', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::textarea('address', Input::old('description'), 
+                        {!! Form::textarea('address', old('description'), 
                             array('class' => 'form-control', 'rows' => '3')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('username', Lang::choice('messages.username', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('username', Input::old('username'), array('class' => 'form-control')) !!}
+                        {!! Form::text('username', old('username'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">

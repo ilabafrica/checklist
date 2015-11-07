@@ -278,3 +278,32 @@ function sub_total(name){
     });
     $('#subtotal_'+id).val(sum);
 }
+/*Toggle country/partner administrator*/
+function partner(id){
+    $('.partner'+id).toggle(this.checked);
+}
+function country(id){
+    $('.nchi'+id).toggle(this.checked);
+}
+/*Dynamic loading of select list options for country-partners*/
+function load(id){
+    cId = $('#country_'+id).val();
+    var URL_ROOT = 'http://127.0.0.1/checklist/public/';
+    _token: JSON.stringify($('input[name=_token]').val());
+    $.ajax({
+        dataType: 'json',
+        type: 'POST',
+        url:  URL_ROOT+'partner/dropdown',
+        data: {country_id: cId, '_token': $('input[name=_token]').val()},
+        success: function(data){
+            console.log(data);
+            var partner = $('#partner'+id);
+            partner.empty();
+            partner.append("<option value=''>Select Partner</option>");
+            $.each(data, function(index, element) {
+                partner.append("<option value='"+ element.id +"'>" + element.name + "</option>");
+            });
+        }
+    });
+}
+/*End dynamic select list options for country-partners*/

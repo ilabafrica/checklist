@@ -7,10 +7,10 @@ use Sofa\Revisionable\Revisionable; // interface
 use Illuminate\Support\Facades\DB;
 use Lang;
 
-class Country extends Model implements Revisionable{
+class Partner extends Model implements Revisionable{
 	use SoftDeletes;
     protected $dates = ['deleted_at'];
-	protected $table = 'countries';
+	protected $table = 'partners';
 	use RevisionableTrait;
 
     /*
@@ -19,47 +19,39 @@ class Country extends Model implements Revisionable{
      */
     protected $revisionable = [
         'name',
-        'code',
-        'iso_3166_2',
-        'iso_3166_3',
-        'capital',
+        'head',
+        'contact',
     ];
-	/**
-	 * Laboratories relationship
-	 */
-	public function labs()
-	{
-	  return $this->hasMany('App\Models\Lab');
-	}
+	
     /**
-     * Partners relationship
+     * Labs relationship
      */
-    public function partners()
+    public function labs()
     {
-        return $this->belongsToMany('App\Models\Partner', 'country_partners', 'country_id', 'partner_id');
+        return $this->belongsToMany('App\Models\Lab', 'partner_labs', 'partner_id', 'lab_id');
     }
-    //  Set partners for the country
-    public function setPartners($field){
+    //  Set labs for the partner
+    public function setLabs($field){
 
         $fieldAdded = array();
-        $countryId = 0;  
+        $partnerId = 0;  
 
         if(is_array($field)){
             foreach ($field as $key => $value) {
                 $fieldAdded[] = array(
-                    'country_id' => (int)$this->id,
-                    'partner_id' => (int)$value,
+                    'partner_id' => (int)$this->id,
+                    'lab_id' => (int)$value,
                     'created_at' => date('Y-m-d H:i:s'),
                     'updated_at' => date('Y-m-d H:i:s')
                     );
-                $countryId = (int)$this->id;
+                $partnerId = (int)$this->id;
             }
 
         }
         // Delete existing parent-child mappings
-        DB::table('country_partners')->where('country_id', '=', $countryId)->delete();
+        DB::table('partner_labs')->where('partner_id', '=', $partnerId)->delete();
 
         // Add the new mapping
-        DB::table('country_partners')->insert($fieldAdded);
+        DB::table('partner_labs')->insert($fieldAdded);
     }
 }

@@ -95,5 +95,26 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 			//TODO: send email?
 			return null;
 		}
+	}
+	/**
+	 * Relationship with user-tier
+	 *
+	 * @return RoleUserTier object
+	 */
+	public function tier()
+	{
+		return $this->hasOne('App\Models\RoleUserTier');
+	}
+	/**
+	 * Check if user is an admin
+	 *
+	 * @return boolean
+	 */
+	public function isAdmin()
+	{
+		if($this->hasRole('Superadmin'))
+			return true;
+		else
+			return false;
 	}	
 }

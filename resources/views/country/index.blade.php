@@ -12,11 +12,17 @@
     </div>
 </div>
 <div class="panel panel-primary">
-    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.country', 2) }} <span class="panel-btn">
-      <a class="btn btn-sm btn-info" href="{{ URL::to("country/create") }}" >
-        <span class="glyphicon glyphicon-plus-sign"></span>
-            {{ Lang::choice('messages.create-country', 1) }}
-          </a>
+    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.country', 2) }} 
+        <span class="panel-btn">
+            <a class="btn btn-sm btn-info" href="{{ url("country/create") }}" >
+                <span class="glyphicon glyphicon-plus-sign"></span>
+                {{ Lang::choice('messages.create-country', 1) }}
+            </a>
+        </span>
+        <span class="panel-btn">
+            <a class="btn btn-sm btn-info" href="{{ url("country/partners") }}" >
+                <i class="fa fa-camera-retro"></i><span> {!! Lang::choice('messages.partner', 2) !!}</span>
+            </a>
         </span>
     </div>
     <div class="panel-body">
@@ -33,8 +39,6 @@
                         <tr>
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
                             <th>{{ Lang::choice('messages.code', 1) }}</th>
-                            <th>{{ Lang::choice('messages.country-iso', 1) }}</th>
-                            <th>{{ Lang::choice('messages.country-iso', 2) }}</th>
                             <th>{{ Lang::choice('messages.capital', 1) }}</th>
                             <th></th>
                         </tr>
@@ -47,14 +51,11 @@
                             >
                             <td>{{ $country->name }}</td>
                             <td>{{ $country->code }}</td>
-                            <td>{{ $country->iso_3166_2 }}</td>
-                            <td>{{ $country->iso_3166_3 }}</td>
                             <td>{{ $country->capital }}</td>
                             <td>
-                              <a href="{{ URL::to("country/" . $country->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
-                              <a href="{{ URL::to("country/" . $country->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
-                              <a href="{{ URL::to("country/" . $country->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
-                             
+                                <a href="{{ url("country/" . $country->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {!! Lang::choice('messages.view', 1) !!}</span></a>
+                                <a href="{{ url("country/" . $country->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> {!! Lang::choice('messages.edit', 1) !!}</span></a>
+                                <a href="{{ url("country/" . $country->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> {!! Lang::choice('messages.delete', 1) !!}</span></a>
                             </td>
                         </tr>
                         @empty
