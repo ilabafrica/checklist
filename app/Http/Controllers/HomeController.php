@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Review;
 use Auth;
 
 class HomeController extends Controller {
@@ -32,9 +33,8 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		$reviews = User::find(Auth::user()->id)->reviews;
+		$reviews = Review::all();
 		$message = '';
 		return view('home', compact('reviews', 'message'));
 	}
-
 }
