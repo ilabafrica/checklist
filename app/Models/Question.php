@@ -138,9 +138,14 @@ class Question extends Model implements Revisionable{
 	*/
 	public function qa($review)
 	{
-		$this->rq->where('review_id', $review)->first()?$row = $this->rq->where('review_id', $review)->first()->qa->answer:$row=NULL;
-		if(count($row)>0)
-			return $row;
+		$row = null;
+		$qstn = ReviewQuestion::where('review_id', $review)->where('question_id', $this->id)->first();
+		if($qstn)
+		{
+			if($qstn->qa)
+				$row = $qstn->qa->answer;
+		}
+		return $row;
 	}
 	public function qas($review)
 	{

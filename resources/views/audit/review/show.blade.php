@@ -282,72 +282,6 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            @elseif($section->name == Lang::choice('messages.criteria-1', 1))
-                                <hr><h4>{!! $section->label !!}</h4><hr>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="2"><strong>{!! Lang::choice('messages.criteria-one', 1) !!}</strong></td>
-                                                <td><strong>{!! Lang::choice('messages.frequency', 1) !!}</strong></td>
-                                            </tr>
-                                            @foreach($section->questions as $question)
-                                                @if(count($question->children)>0)
-                                                    <tr>
-                                                        <td><strong>{!! $question->title !!}</strong></td>
-                                                        <td>{!! $question->description !!}</td>
-                                                        <td>{!! $question->qa($review->id)?App\Models\Answer::find($question->qa($review->id)[0])->name:'' !!}</td>
-                                                    </tr>
-                                                    @foreach($question->children as $kid)
-                                                        <tr>
-                                                            <td></td>
-                                                            <td>{!! $kid->description !!}</td>
-                                                            <td>{!! $kid->qa($review->id)?App\Models\Answer::find($kid->qa($review->id)[0])->name:'' !!}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                @elseif($question->question_type == App\Models\Question::TEXTAREA)
-                                                    <tr>
-                                                        <td><strong>{!! $question->title !!}</strong></td>
-                                                        <td colspan="2">{!! $question->qa($review->id)?$question->qa($review->id)[0]:'' !!}</td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @elseif($section->name == Lang::choice('messages.criteria-2', 1))
-                                <hr><h4>{!! $section->label !!}</h4><hr>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <tbody>
-                                            <tr>
-                                                <td><strong>{!! Lang::choice('messages.criteria-two', 1) !!}</strong></td>
-                                                <td><strong>{!! Lang::choice('messages.date-of-panel-receipt', 1) !!}</strong></td>
-                                                <td><strong>{!! Lang::choice('messages.within-days', 1) !!}</strong></td>
-                                                <td><strong>{!! Lang::choice('messages.percentage-correct', 1) !!}</strong></td>
-                                            </tr>
-                                            @foreach($section->questions as $question)
-                                              @if(count($question->children)>0)
-                                                  <tr>
-                                                      <td colspan="4"><strong>{!! $question->title !!}</strong></td>
-                                                  </tr>
-                                                @foreach($question->children as $kid)
-                                                    @if($kid->question_type == App\Models\Question::DATE)
-                                                        <tr>
-                                                            <td>{!! $kid->title !!}</td>
-                                                            <td>{!! $kid->qa($review->id)?$kid->qa($review->id):'' !!}</td>
-                                                    @elseif($kid->question_type == App\Models\Question::CHOICE)
-                                                        <td>{!! $kid->qa($review->id)?App\Models\Answer::find($kid->qa($review->id)[0])->name:'' !!}</td>
-                                                    @elseif($kid->question_type == App\Models\Question::FIELD)
-                                                        <td>{!! $kid->qa($review->id)?$kid->qa($review->id):'' !!}</td>
-                                                      </tr>
-                                                    @endif
-                                                @endforeach
-                                              @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
                             @elseif($section->name == Lang::choice('messages.summary', 1))
                                 <hr><h4>{!! $section->label !!}</h4><hr>
                                 <div class="table-responsive">
@@ -420,14 +354,14 @@
                                             <tr>
                                                 <td>{!! $kid->id !!}</td>
                                                 <td>{!! $kid->title?'<u><strong>'.$kid->title.'</strong></u><br />':''!!}{!! $kid->description !!}</td>
-                                                <td>{!! $kid->qa($review->id)?App\Models\Answer::find((int)$kid->qa($review->id)[0])->name:'' !!}</td>
+                                                <td>{!! $kid->qa($review->id)?App\Models\Answer::find((int)$kid->qa($review->id))->name:'' !!}</td>
                                             </tr>
                                         @endforeach
                                     @elseif($question->score != 0)
                                     <tr>
                                         <td>{!! $question->id !!}</td>
                                         <td>{!! $question->title?'<u><strong>'.$question->title.'</strong></u><br />':''!!}<strong>{!! $question->description !!}</strong></td>
-                                        <td>{!! $question->qa($review->id)?App\Models\Answer::find((int)$question->qa($review->id)[0])->name:'' !!}</td>
+                                        <td>{!! $question->qa($review->id)?App\Models\Answer::find((int)$question->qa($review->id))->name:'' !!}</td>
                                     </tr>
                                     @endif
                                 @endforeach

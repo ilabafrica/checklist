@@ -762,7 +762,7 @@
                                                 <strong>{{ $page->name }} : {{ $page->label }} {!! Lang::choice('messages.sub-total', 1) !!}</strong>
                                             </div>
                                             <div class="col-sm-3">
-                                                <div class="form-group input-group"><input type="text" name="subtotal_{{$page->id}}" id="subtotal_{{$page->id}}" value="{!! $page->subtotal($review->id) !!}" class="form-control" readonly><span class="input-group-addon">/{!! $page->total_points !!}</span></div>
+                                                <div class="form-group input-group"><input type="text" name="subtotal_{{$page->id}}" id="subtotal_{{$page->id}}" value="{!! $page->subtotal($review->id, 1) !!}" class="form-control" readonly><span class="input-group-addon">/{!! $page->total_points !!}</span></div>
                                             </div>
                                         </div>
                                     </div>
