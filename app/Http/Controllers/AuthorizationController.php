@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Role;
 use App\Models\Country;
 use App\Models\Partner;
+use App\Models\Lab;
 use App\Models\RoleUserTier;
 use App\Http\Requests\AuthorizationRequest;
 use Lang;
@@ -29,8 +30,10 @@ class AuthorizationController extends Controller {
 		$countries = Country::lists('name', 'id');
 		//	Get all partners
 		$partners = Partner::lists('name', 'id');
+		//	Get all labs
+		$labs = Lab::lists('name', 'id');
 		
-		return view('authorization.index', compact('users', 'roles', 'countries', 'partners'));
+		return view('authorization.index', compact('users', 'roles', 'countries', 'partners', 'labs'));
 	}
 
 	/**
@@ -65,12 +68,21 @@ class AuthorizationController extends Controller {
 
 		foreach ($users as $userkey => $user) {
 			foreach ($roles as $roleKey => $role) {
+				$country = Input::get('country'.$user->id);
+				$partner = Input::get('partner'.$user->id);
+				$lab = Input::get('lab'.$user->id);
 				//If checkbox is clicked attach the role
 				if(!empty($arrayUserRoleMapping[$userkey][$roleKey]))
 				{
 					$user->detachRole($role);
 					$user->attachRole($role);
-					if(($county || $sub_county) && $role != Role::getAdminRole()){
+					if(($country || $partner || $lab) && $role != Role::getAdminRole()){
+						if($country)
+							$tier_id = $country;
+						if($partner)
+							$tier_id = $partner;
+						if($lab)
+							$tier_id = $lab;
 						$county?$tier_id=$county:$tier_id=$sub_county;
 						$tier = RoleUserTier::where('user_id', $user->id)
 											->where('role_id', $role->id)

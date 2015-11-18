@@ -278,12 +278,16 @@ function sub_total(name){
     });
     $('#subtotal_'+id).val(sum);
 }
-/*Toggle country/partner administrator*/
+/*Toggle country/partner/lab-in-charge administrator*/
 function partner(id){
     $('.partner'+id).toggle(this.checked);
 }
 function country(id){
     $('.nchi'+id).toggle(this.checked);
+}
+
+function lab(id){
+    $('.laboratory'+id).toggle(this.checked);
 }
 /*Dynamic loading of select list options for country-partners*/
 function load(id){

@@ -52,9 +52,15 @@
                             </tbody>
                         </table>
                         <p>
+                        @if(Auth::user()->can('create-audit'))
                             <a href="{{ url('lab')}}"class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i><span> {{ Lang::choice('messages.new-audit', 1) }}</span></a>
+                        @endif
+                        @if(Auth::user()->can('view-audit-data'))
                             <a href="{{ url('review/assessment/'.$audit->id) }}" class="btn btn-default"><i class="fa fa-book"></i><span> {{ Lang::choice('messages.view-audit-data', 1) }}</span></a>
+                        @endif
+                        @if(Auth::user()->can('view-audit-summary'))
                             <a href="{{ url('review/summary/'.$audit->id) }}" class="btn btn-success"><i class="fa fa-database"></i><span> {{ Lang::choice('messages.view-summary', 1) }}</span></a>
+                        @endif
                         </p>
                     </div>
                 </div>

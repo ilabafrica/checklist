@@ -52,15 +52,20 @@ class SliptaSeeder extends Seeder
             array("name" => "export-audit", "display_name" => "Can export audit"),
             array("name" => "export-data", "display_name" => "Can export audit data"),
             array("name" => "import-data", "display_name" => "Can import audit data"),
+            array("name" => "view-audit-data", "display_name" => "Can view audit data"),
+            array("name" => "view-audit-summary", "display_name" => "Can view audit summary"),
 
-            //managing permissions
+            //  managing permissions
             array("name" => "manage-facilities", "display_name" => "Can manage facilities"),
             array("name" => "manage-labs", "display_name" => "Can manage labs"),
             array("name" => "manage-users", "display_name" => "Can manage users"),
             array("name" => "manage-audit-config", "display_name" => "Can manage audit configuration"),
             array("name" => "manage-audits", "display_name" => "Can manage audits"),
             array("name" => "manage-access-controls", "display_name" => "Can manage access controls"),
-            array("name" => "view-reports", "display_name" => "Can view reports")
+            array("name" => "view-reports", "display_name" => "Can view reports"),
+            array("name" => "view-country-reports", "display_name" => "Can view country reports"),
+            array("name" => "view-partner-reports", "display_name" => "Can view partner reports"),
+            array("name" => "view-lab-reports", "display_name" => "Can view lab reports")
         );
         foreach ($permissions as $permission) {
             Permission::create($permission);
@@ -70,12 +75,13 @@ class SliptaSeeder extends Seeder
         /* Roles table */
         $roles = array(
             array("name" => "Superadmin", "display_name" => "Overall Administrator"),
+            array("name" => "Focal Office", "display_name" => "SLIPTA Focal Office"),
             array("name" => "Country Admin", "display_name" => "Country Administrator"),
             array("name" => "Partner Admin", "display_name" => "Partner Administrator"),
             array("name" => "User", "display_name" => "General User"),
             array("name" => "Assessor", "display_name" => "Assessor"),
-            array("name" => "Auditor", "display_name" => "Auditor"),
-            array("name" => "Approver", "display_name" => "Approver")
+            array("name" => "Approver", "display_name" => "Approver"),
+            array("name" => "Lab In-charge", "display_name" => "Head of Laboratory")
         );
         foreach ($roles as $role) {
             Role::create($role);
@@ -507,7 +513,7 @@ class SliptaSeeder extends Seeder
         $question_referralExam = Question::create(array("section_id" => $sec_sec1->id, "name" => "Examination by Referral Laboratories", "title" => "Examination by Referral Laboratories and Consultants", "description" => "How the laboratory will: 1) select referral laboratories and consultants who provide opinions as well as interpretations; 2) evaluate and monitor the performance of referral laboratories and consultants who provide opinions as well as interpretations; 3) maintain a list of approved referral laboratories and consultants; 4) maintain a records of referred samples; 5) tracking of referred samples and their results; 6) report results from referral labs; 7) package and transport referred samples; 8) record communication of results from referral laboratories and consultants?", "question_type" => "0", "score" => "0", "user_id" => "1"));
         $question_extSerSupp = Question::create(array("section_id" => $sec_sec1->id, "name" => "External Services and Suppliers", "title" => "External Services and Suppliers", "description" => "How the laboratory will: 1) select external purchases and services; 2) establish its selection criteria, including acceptance and rejection criteria; 3) approve and maintain its approved suppliers list; 4) define the requirements of its purchase supplies and services; 5) review and monitor the performance of its approved suppliers; 6) establish frequency of reviews ?", "question_type" => "0", "score" => "0", "user_id" => "1"));
         $question_purInvCon = Question::create(array("section_id" => $sec_sec1->id, "name" => "Purchasing and Inventory Control", "title" => "Purchasing and Inventory Control", "description" => "How the laboratory will: 1) request, order and receive supplies; 2) establish acceptance/rejection criteria for purchased items; 3) store purchased supplies; 4) control their inventory; 5) monitor and handle expired consumables?", "question_type" => "0", "score" => "0", "user_id" => "1"));
-        $question_advisory = Question::create(array("section_id" => $sec_sec1->id, "name" => "Advisory Services", "title" => "Advisory Services", "description" => "How the laboratory will: 1) request, order and receive supplies; 2) establish acceptance/rejection criteria for purchased items; 3) store purchased supplies; 4) control their inventory; 5) monitor and handle expired consumables?", "question_type" => "0", "score" => "0", "user_id" => "1"));
+        $question_advisory = Question::create(array("section_id" => $sec_sec1->id, "name" => "Advisory Services", "title" => "Advisory Services", "description" => "How the laboratory will: 1) advise on the choice of examinations it offers; 2) communicate its advisory services to its users; 3) advise on clinical indications and limitations of examination procedures; 4) advise on the frequency of examination; 5 ) provide individual clinical case advice; 6) advise on interpretation of results; 7) promote the effective utilization of laboratory services; 8) provide consultation on scientific and logistic matters; 9) advise on the required type of sample and volume for testing?", "question_type" => "0", "score" => "0", "user_id" => "1"));
         $question_compFeedback = Question::create(array("section_id" => $sec_sec1->id, "name" => "Resolution of Complaints and Feedback", "title" => "Resolution of Complaints and Feedback", "description" => "How the laboratory will: 1) manage complaints received from clinicians, patients, laboratory staff or other parties; 2) collect, receive and handle feedback received from clinicians, patients, laboratory staff or other parties; 3) keep records of all complaints, the investigations and actions taken, 4) determine the timeframe for closure and feedback to the complainant; 5) monitor effectiveness of corrective and preventative actions taken on complaints and feedback?", "question_type" => "0", "score" => "0", "user_id" => "1"));
         $question_nonConformities = Question::create(array("section_id" => $sec_sec1->id, "name" => "Identification and Control of Nonconformities", "title" => "Identification and Control of Nonconformities", "description" => "How the laboratory will: 1) identify types of nonconformities in any aspect of the quality management system from pre, analytic and post analytic; 2) record NCs (how and where); 3) assign who is responsible for resolving the NC; 4) determine time frame for resolving NCs; 5) halt examinations (by an authorized person); 6) ensure  the recall of released results of nonconforming or potentially nonconforming examinations; 7) release results after corrective action has been taken?", "question_type" => "0", "score" => "0", "user_id" => "1"));
         $question_corrAction = Question::create(array("section_id" => $sec_sec1->id, "name" => "Corrective Action", "title" => "Corrective Action", "description" => "How the laboratory will: 1) determine the root cause; 2) evaluate the need for CA to ensure that NCs do not recur; 3) assign the person responsible for the CA; 4) determine and implement CA(including person responsible and timeframe); 4) record CA taken; 4) monitor and review the effectiveness of the CA taken?", "question_type" => "0", "score" => "0", "user_id" => "1"));
