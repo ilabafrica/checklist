@@ -320,4 +320,6 @@ return [
 	'head'	=>	'Contact Person',
 	'select-country'	=>	'Select Country',
 	'select-partner'	=>	'Select Partner',
+	/* Others */
+	'confirm-assessment'	=>	'Confirm Assessment',
 ];

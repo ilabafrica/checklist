@@ -737,6 +737,19 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            @if(count($kid->notes)>0)
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            @foreach($kid->notes as $note)
+                                                            {!! $note->description !!}
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
                                         @endforeach
                                     @endif
                                     @if(count($question->notes)>0)

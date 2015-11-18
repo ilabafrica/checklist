@@ -307,3 +307,33 @@ function load(id){
     });
 }
 /*End dynamic select list options for country-partners*/
+
+/** GLOBAL START   
+ *  Alert on start
+ */
+$('.start-data-item-link').click(function(){
+    var lab = $(this).data('lab');
+    $('#lab').text(lab);
+});
+$('.start-data-modal').on('show.bs.modal', function(e) {
+    $('#lab_id').val($(e.relatedTarget).data('id'));
+});
+/* 
+* Prevent start modal form submit until audit type is selected
+*/
+$('#audit_type').change(function(){
+    if($(this).val() !== '')
+        $('.btn-start').prop('disabled', false);
+    else
+        $('.btn-start').prop('disabled', true);
+});
+
+/*Sexy radio buttons*/
+$('#radioBtn a').on('click', function(){
+    var sel = $(this).data('title');
+    var tog = $(this).data('toggle');
+    $('#'+tog).prop('value', sel);
+    
+    $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
+    $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
+});

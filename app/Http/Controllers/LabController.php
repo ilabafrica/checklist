@@ -27,7 +27,11 @@ class LabController extends Controller {
 	{
 		//	Get all labs
 		$labs = Lab::all();
-		return view('lab.lab.index', compact('labs'));
+		//	Get audit types
+		$auditTypes = AuditType::all();
+		/*Default audit type*/
+		$auditType = AuditType::first();
+		return view('lab.lab.index', compact('labs', 'auditTypes', 'auditType'));
 	}
 
 	/**

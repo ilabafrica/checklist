@@ -609,7 +609,10 @@ class ReviewController extends Controller {
 		//	Get values for creation of audit response
 		$response = new Review;
         $response->lab_id = Input::get('lab_id');
-        $response->audit_type_id = Input::get('audit_type_id');
+        if(Input::get('checklist'))
+        	$response->audit_type_id = Input::get('checklist');
+        else
+        	$response->audit_type_id = 1;
         $response->status = Review::INCOMPLETE;
         $response->user_id = Auth::user()->id;
         $response->update_user_id = Auth::user()->id;
