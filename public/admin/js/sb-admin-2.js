@@ -178,6 +178,7 @@ function noteChange(name, points){
     var count = 0;
     var sum = 0;
     var na = 0;
+    var partial = 0;
     var questions = $('.radio_'+id).length;
     var answers = ['YES', 'PARTIAL', 'NO', 'NOT APPLICABLE'];
     $.each($('.radio_'+id), function(key, item){
@@ -188,6 +189,8 @@ function noteChange(name, points){
             count++;
             txtId = questionId($(this).attr('id'));
             if(parseInt($(item).val()) == 2 || parseInt($(item).val()) == 4){
+                if(parseInt($(item).val()) == 4)
+                    partial++;
                 $('#text_'+txtId).prop('disabled', false);
                 $('#text_'+txtId).addClass('form-control validate[required] text-input');
                 $('#text_'+txtId).validationEngine('showPrompt', '* Comment(s) required on this field.', 'red', 'topLeft', true);
@@ -206,13 +209,13 @@ function noteChange(name, points){
             }
         }
     });
-    if(sum==count && count!=0){
+    if(sum==count && count!=0 && partial == 0){
         $('#points_'+id).val(points).trigger('input');
         $('#answer_'+id).val(answers[0]);
         $('#text_'+id).validationEngine('hide');
         $('#text_'+id).removeClass('validate[required] text-input');
     }
-    else if(sum==count*2  && count!=0){
+    else if(sum==count*2  && count!=0 && partial == 0){
         $('#points_'+id).val(0).trigger('input');
         $('#answer_'+id).val(answers[2]);
         $('#text_'+id).addClass('form-control validate[required] text-input');
@@ -341,3 +344,19 @@ $('#radioBtn a').on('click', function(){
     $('a[data-toggle="'+tog+'"]').not('[data-title="'+sel+'"]').removeClass('active').addClass('notActive');
     $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
 });
+
+/* sub-question notes into main-question text area */
+function notes(name)
+{
+    var id = questionId(name);
+    var values = "";
+    // EASY WAY TO RUN THIS ONLY ON CHANGE AND IF QTY IS MORE THAN 0 ???
+        
+    $(".area_"+id).each(function(i) {
+        if(this.value.length > 1)
+            values += (i > 0 ? "\n" : "") + $(this).data('title') + ': ' + this.value;
+    });
+    $("#text_"+id).val(values);
+
+    // SO TEXAREA WOULD NOT COPY ANY EMPTY LINES??
+}

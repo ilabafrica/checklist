@@ -154,9 +154,15 @@ class Review extends Model {
 	*/
 	public function notes()
 	{
+		$summary = [];
 		$notes = ReviewNote::whereHas('review_question', function($q){
 			$q->where('review_id', $this->id)->whereIn('question_id', Question::where('score', '!=', 0)->lists('id'))->orderBy('question_id', 'ASC');
-		})->where('note', '!=', '')->select('note')->get();
-		return $notes->lists('note');
+		})->where('note', '!=', '')->select('review_question_id', 'note')->get();
+		foreach ($notes as $note)
+		{
+			$summary[] = Question::find(ReviewQuestion::find($note->review_question_id)->question_id)->title.' - '.$note->note;
+		}
+		return $summary;
+
 	}
 }

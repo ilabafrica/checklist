@@ -313,9 +313,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::YES, ($profile && $profile->degree_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::NO, ($profile && $profile->degree_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->degree_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::YES, ($profile && $profile->degree_staff_adequate===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::NO, ($profile && $profile->degree_staff_adequate===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('degree_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->degree_staff_adequate===App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -334,9 +334,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::YES, ($profile && $profile->diploma_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::NO, ($profile && $profile->diploma_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->diploma_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::YES, ($profile && $profile->diploma_staff_adequate===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::NO, ($profile && $profile->diploma_staff_adequate===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('diploma_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->diploma_staff_adequate===App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -355,9 +355,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::YES, ($profile && $profile->certificate_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::NO, ($profile && $profile->certificate_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->certificate_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::YES, ($profile && $profile->certificate_staff_adequate===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::NO, ($profile && $profile->certificate_staff_adequate===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('certificate_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->certificate_staff_adequate===App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -376,9 +376,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::YES, ($profile && $profile->microscopist_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::NO, ($profile && $profile->microscopist_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->microscopist_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::YES, ($profile && $profile->microscopist_adequate===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::NO, ($profile && $profile->microscopist_adequate===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('microscopist_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->microscopist_adequate===App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -397,9 +397,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::YES, ($profile && $profile->data_clerk_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::NO, ($profile && $profile->data_clerk_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->data_clerk_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::YES, ($profile && $profile->data_clerk_adequate===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::NO, ($profile && $profile->data_clerk_adequate===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('data_clerk_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->data_clerk_adequate===App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -418,9 +418,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::YES, ($profile && $profile->phlebotomist_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::NO, ($profile && $profile->phlebotomist_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->phlebotomist_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::YES, ($profile && $profile->phlebotomist_adequate===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::NO, ($profile && $profile->phlebotomist_adequate===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('phlebotomist_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->phlebotomist_adequate===App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -439,9 +439,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::YES, ($profile && $profile->cleaner_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::NO, ($profile && $profile->cleaner_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->cleaner_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::YES, ($profile && $profile->cleaner_adequate===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::NO, ($profile && $profile->cleaner_adequate===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('cleaner_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->cleaner_adequate===App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -455,8 +455,8 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    <label class="radio-inline">{!! Form::radio('cleaner_dedicated', App\Models\Answer::YES, ($profile && $profile->cleaner_dedicated==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                                    <label class="radio-inline">{!! Form::radio('cleaner_dedicated', App\Models\Answer::NO, ($profile && $profile->cleaner_dedicated==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('cleaner_dedicated', App\Models\Answer::YES, ($profile && $profile->cleaner_dedicated===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('cleaner_dedicated', App\Models\Answer::NO, ($profile && $profile->cleaner_dedicated===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -470,8 +470,8 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    <label class="radio-inline">{!! Form::radio('cleaner_trained', App\Models\Answer::YES, ($profile && $profile->cleaner_trained==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                                    <label class="radio-inline">{!! Form::radio('cleaner_trained', App\Models\Answer::NO, ($profile && $profile->cleaner_trained==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('cleaner_trained', App\Models\Answer::YES, ($profile && $profile->cleaner_trained===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('cleaner_trained', App\Models\Answer::NO, ($profile && $profile->cleaner_trained===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -492,9 +492,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::YES, ($profile && $profile->driver_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::NO, ($profile && $profile->driver_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->driver_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::YES, ($profile && $profile->driver_adequate===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::NO, ($profile && $profile->driver_adequate===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('driver_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->driver_adequate===App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -508,8 +508,8 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    <label class="radio-inline">{!! Form::radio('driver_dedicated', App\Models\Answer::YES, ($profile && $profile->driver_dedicated==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                                    <label class="radio-inline">{!! Form::radio('driver_dedicated', App\Models\Answer::NO, ($profile && $profile->driver_dedicated==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('driver_dedicated', App\Models\Answer::YES, ($profile && $profile->driver_dedicated===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('driver_dedicated', App\Models\Answer::NO, ($profile && $profile->driver_dedicated===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -523,8 +523,8 @@
                                         <div class="col-sm-4">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    <label class="radio-inline">{!! Form::radio('driver_trained', App\Models\Answer::YES, ($profile && $profile->driver_trained==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                                    <label class="radio-inline">{!! Form::radio('driver_trained', App\Models\Answer::NO, ($profile && $profile->driver_trained==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('driver_trained', App\Models\Answer::YES, ($profile && $profile->driver_trained===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                                    <label class="radio-inline">{!! Form::radio('driver_trained', App\Models\Answer::NO, ($profile && $profile->driver_trained===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -545,9 +545,9 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::YES, ($profile && $profile->other_staff_adequate==App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::NO, ($profile && $profile->other_staff_adequate==App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->other_staff_adequate==App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::YES, ($profile && $profile->other_staff_adequate===App\Models\Answer::YES)?true:false) !!}{{ Lang::choice('messages.yes', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::NO, ($profile && $profile->other_staff_adequate===App\Models\Answer::NO)?true:false) !!}{{ Lang::choice('messages.no', 1) }}</label>
+                                            <label class="radio-inline">{!! Form::radio('other_staff_adequate', App\Models\Answer::INSUFFICIENT, ($profile && $profile->other_staff_adequate===App\Models\Answer::INSUFFICIENT)?true:false) !!}{{ Lang::choice('messages.insufficient-data', 1) }}</label>
                                         </div>
                                     </div>
                                 </div>
@@ -730,7 +730,8 @@
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
-                                                                    {!! Form::textarea('text_'.$kid->id, $kid->note($review->id)?$kid->note($review->id)->note:'', array('class' => 'form-control', 'rows' => '3', 'id' => 'text_'.$kid->id)) !!}
+                                                                    {{--*/ $kid->title!=NULL?$title = $kid->title:$title = substr($kid->description, 0, 2) /*--}}
+                                                                    {!! Form::textarea('text_'.$kid->id, $kid->note($review->id)?$kid->note($review->id)->note:'', array('class' => 'form-control area_'.$question->id, 'onchange' => "notes('area_$question->id')", 'data-title' => $title, 'rows' => '3', 'id' => 'text_'.$kid->id)) !!}
                                                                 </div>
                                                             </div>
                                                         </div>

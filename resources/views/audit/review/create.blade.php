@@ -716,7 +716,8 @@
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
-                                                                    {!! Form::textarea('text_'.$kid->id, Input::old('text_'.$kid->id), array('class' => 'form-control', 'id' => 'text_'.$kid->id, 'rows' => '3')) !!}
+                                                                    {{--*/ $kid->title!=NULL?$title = $kid->title:$title = substr($kid->description, 0, 2) /*--}}
+                                                                    {!! Form::textarea('text_'.$kid->id, $kid->note($review->id)?$kid->note($review->id)->note:'', array('class' => 'form-control area_'.$question->id, 'onchange' => "notes('area_$question->id')", 'data-title' => $title, 'rows' => '3', 'id' => 'text_'.$kid->id)) !!}
                                                                 </div>
                                                             </div>
                                                         </div>
