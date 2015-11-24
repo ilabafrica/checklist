@@ -135,12 +135,14 @@ class Review extends Model {
 	*/
 	public function adequate($id)
 	{
-		if($id == Answer::INSUFFICIENT)
+		if($id === Answer::INSUFFICIENT)
 			return Lang::choice('messages.insufficient-data', 1);
-		else if($id == Answer::YES)
+		else if($id ===Answer::YES)
 			return Lang::choice('messages.yes', 1);
-		else if($id == Answer::NO)
+		else if($id === Answer::NO)
 			return Lang::choice('messages.no', 1);
+		else
+			return null;
 	}
 	/**
 	* Action plan 

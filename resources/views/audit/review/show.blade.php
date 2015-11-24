@@ -341,6 +341,7 @@
                                     <th>{!! Lang::choice('messages.count', 1) !!}</th>
                                     <th>{!! Lang::choice('messages.question', 1) !!}</th>
                                     <th>{!! Lang::choice('messages.response', 1) !!}</th>
+                                    <th>{!! Lang::choice('messages.comment', 1) !!}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -355,6 +356,7 @@
                                                 <td>{!! $kid->id !!}</td>
                                                 <td>{!! $kid->title?'<u><strong>'.$kid->title.'</strong></u><br />':''!!}{!! $kid->description !!}</td>
                                                 <td>{!! $kid->qa($review->id)?App\Models\Answer::find((int)$kid->qa($review->id))->name:'' !!}</td>
+                                                <td>{!! $kid->note($review->id)?$kid->note($review->id)->note:'' !!}</td>
                                             </tr>
                                         @endforeach
                                     @elseif($question->score != 0)
@@ -362,6 +364,7 @@
                                         <td>{!! $question->id !!}</td>
                                         <td>{!! $question->title?'<u><strong>'.$question->title.'</strong></u><br />':''!!}<strong>{!! $question->description !!}</strong></td>
                                         <td>{!! $question->qa($review->id)?App\Models\Answer::find((int)$question->qa($review->id))->name:'' !!}</td>
+                                        <td>{!! $question->note($review->id)?$question->note($review->id)->note:'' !!}</td>
                                     </tr>
                                     @endif
                                 @endforeach

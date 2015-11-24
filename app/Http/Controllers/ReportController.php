@@ -45,11 +45,12 @@ class ReportController extends Controller {
 		}
 		$counter = count($categories);
 		foreach($categories as $section){
+			// dd($section->id);
 			array_push($labels, $section->name);
 			$points+=(int)$section->subtotal($review->id);
 			$score+=(int)$section->subtotal($review->id, 1);
 		}
-		$average = $points/$counter;
+		$average = $score*100/$overall;
 		return view('report.index', compact('review', 'categories', 'overall', 'score', 'average'));
 	}
 	/**
