@@ -320,9 +320,15 @@ class ReviewController extends Controller {
 	public function show($id)
 	{
 		$review = Review::find($id);
+		//	Get notes for main questions, sanitize and post to view
+		$notes = $review->notes($id);
+		$questions = [];
+		foreach ($notes as $note) {
+			array_push($questions, ReviewQuestion::find($note->review_question_id)->question_id);
+		}
 		//	Get audit type
 		$audit = AuditType::find($review->audit_type_id);
-		return view('audit.review.show', compact('review', 'audit'));
+		return view('audit.review.show', compact('review', 'audit', 'notes', 'questions'));
 	}
 
 	/**

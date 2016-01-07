@@ -154,7 +154,7 @@ class Review extends Model {
 	/**
 	* Non-compliancies 
 	*/
-	public function notes()
+	public function notes($i=0)
 	{
 		$summary = [];
 		$notes = ReviewNote::whereHas('review_question', function($q){
@@ -164,7 +164,9 @@ class Review extends Model {
 		{
 			$summary[] = Question::find(ReviewQuestion::find($note->review_question_id)->question_id)->title.' - '.$note->note;
 		}
-		return $summary;
-
+		if($i!=0)
+			return $notes;
+		else
+			return $summary;
 	}
 }

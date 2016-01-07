@@ -289,7 +289,19 @@
                                         <tbody>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.commendations', 1) !!}</strong></td>
-                                                <td>{!! $review->summary_commendations?$review->summary_commendations:'' !!}</td>
+                                                <td>@foreach($audit->sections as $part)
+                                                        @if(count(array_intersect($questions, $part->questions->lists('id')))>0)
+                                                          <p>
+                                                            <strong>{!! $part->label !!}</strong>
+                                                            @foreach($notes as $note)
+                                                                @if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')))
+                                                                    <br>{!! $note->note !!}
+                                                                @endif
+                                                            @endforeach
+                                                          </p>
+                                                        @endif
+                                                    @endforeach
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.challenges', 1) !!}</strong></td>
