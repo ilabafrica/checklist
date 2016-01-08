@@ -567,7 +567,25 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    {!! Form::textarea('commendations', $review->summary_commendations?$review->summary_commendations:implode(', ', $notes), array('class' => 'form-control', 'rows' => '3')) !!}
+                                                    <?php
+                                                        $summary = '';
+                                                        foreach($audit->sections as $part)
+                                                        {
+                                                            if(count(array_intersect($questions, $part->questions->lists('id')))>0)
+                                                            {
+                                                                $summary.="\n".$part->label."\n";
+                                                                foreach($notes as $note)
+                                                                {
+                                                                    if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')))
+                                                                    {
+                                                                        $summary.="\n".$note->note;
+                                                                    }
+                                                                }
+                                                            $summary.="\n";
+                                                            }
+                                                        }
+                                                    ?>
+                                                    {!! Form::textarea('commendations', html_entity_decode($summary), array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>

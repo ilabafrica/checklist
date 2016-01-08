@@ -378,9 +378,12 @@ class ReviewController extends Controller {
         //	Get Lab profile
         $profile = $review->laboratory;
         //	Get notes for main questions only
-        $notes = $review->notes();
-
-		return view('audit.review.edit', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors', 'slmta', 'profile', 'notes'));
+        $notes = $review->notes($id);
+		$questions = [];
+		foreach ($notes as $note) {
+			array_push($questions, ReviewQuestion::find($note->review_question_id)->question_id);
+		}
+		return view('audit.review.edit', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors', 'slmta', 'profile', 'notes', 'questions'));
 	}
 	/**
 	 * Update the specified resource in storage.
