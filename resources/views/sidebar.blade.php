@@ -4,13 +4,13 @@
         <li>
             <a href="{!! url('home') !!}"><i class="fa fa-dashboard fa-fw"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
         </li>
-        <li>
+        <!--<li>
             <a href="#"><i class="fa fa-camera-retro"></i> {{ Lang::choice('messages.partner-config', 1) }}<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
                 <li><a href="{!! url('country') !!}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.country', 2) }}</a></li>
                 <li><a href="{!! url('partner') !!}"><i class="fa fa-tag"></i> {{ Lang::choice('messages.partner', 2) }}</a></li>
             </ul>
-        </li>
+        </li>-->
         @if(Entrust::can('manage-labs'))
         <li>
             <a href="#"><i class="fa fa-stack-exchange"></i> {{ Lang::choice('messages.lab-catalog', 1) }}<span class="fa arrow"></span></a>

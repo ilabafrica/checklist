@@ -55,6 +55,7 @@
                         @if(Auth::user()->can('create-audit'))
                             <a href="{{ url('lab')}}"class="btn btn-info"><i class="glyphicon glyphicon-pencil"></i><span> {{ Lang::choice('messages.new-audit', 1) }}</span></a>
                         @endif
+			<a class="btn btn-sm btn-info" href="{{ URL::to("import/".$audit->id) }}"><span class="fa fa-download"> Import Audit</span></a>
                         @if(Auth::user()->can('view-audit-data'))
                             <a href="{{ url('review/assessment/'.$audit->id) }}" class="btn btn-default"><i class="fa fa-book"></i><span> {{ Lang::choice('messages.view-audit-data', 1) }}</span></a>
                         @endif

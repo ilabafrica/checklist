@@ -12,7 +12,7 @@ use App\Models\Lab;
 use App\Models\RoleUserTier;
 use App\Http\Requests\AuthorizationRequest;
 use Lang;
-
+use Input;
 class AuthorizationController extends Controller {
 
 	/**

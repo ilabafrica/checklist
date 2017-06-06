@@ -53,7 +53,7 @@ return array(
 	|
 	*/
 
-	'slipta-logo' => '/checklist/public/img/who_africa.png',
+	'slipta-logo' => '/img/who_africa.png',
 	
 	/*
 	|--------------------------------------------------------------------------
