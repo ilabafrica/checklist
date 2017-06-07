@@ -37,7 +37,7 @@
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
-                            <th>{{ Lang::choice('messages.country', 1) }}</th>
+                            <th>{{ Lang::choice('messages.county', 1) }}</th>
                             <th>{{ Lang::choice('messages.lab-level', 1) }}</th>
                             <th>{{ Lang::choice('messages.lab-affiliation', 1) }}</th>
                             <th>{{ Lang::choice('messages.lab-type', 1) }}</th>
@@ -51,7 +51,12 @@
                             @endif
                             >
                             <td>{{ $lab->name }}</td>
-                            <td>{{ $lab->country->name }}</td>
+                            @if ($lab->county)
+                            <td>{{ $lab->county->name }}</td>
+                            @else
+                            <td> No County Selected</td>
+                            @endif
+
                             <td>{{ $lab->labLevel->name}}</td>
                             <td>{{ $lab->labAffiliation->name }}</td>
                             <td>{{ $lab->labType->name}}</td>
