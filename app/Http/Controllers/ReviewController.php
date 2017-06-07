@@ -615,7 +615,7 @@ class ReviewController extends Controller {
 	 */
 	public function start()
 	{
-		//	Get values for creation of audit response
+		//	Get values for creation of audit response		
 		$response = new Review;
         $response->lab_id = Input::get('lab_id');
         if(Input::get('checklist'))
@@ -633,6 +633,7 @@ class ReviewController extends Controller {
         $page = $audit->sections[0];
         //	Get saved review
         $review = Review::find($response->id);
+      
 
         return view('audit.review.create', compact('audit', 'lab', 'page', 'review'));
 	}

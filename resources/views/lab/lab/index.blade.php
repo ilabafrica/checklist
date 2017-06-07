@@ -104,7 +104,7 @@
                         <div class="input-group" align="center">
                         <div id="radioBtn" class="btn-group">
                             @foreach($auditTypes as $audit_type)
-                                <a class="btn btn-primary {{ $auditType->id == $audit_type->id?'active':'notActive'}}" data-toggle="checklist" data-title="{{{ $audit_type->id }}}" name="checklist">{!! $audit_type->name !!}</a>
+                                <a class="btn btn-primary {{ $auditType->id == $audit_type->id?'active':'notActive'}}" data-toggle="checklist" data-title="{{{ $audit_type->id }}}" name="checklist" {{$audit_type->id != 1?'disabled':''}}>{!! $audit_type->name !!} </a>
                             @endforeach
                         </div>
                         <input type="hidden" name="checklist" id="checklist">

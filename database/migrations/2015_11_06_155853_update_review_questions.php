@@ -16,11 +16,7 @@ class UpdateReviewQuestions extends Migration {
 		{
 		    $table->tinyInteger('na')->nullable()->after('question_id');
 		});
-		Schema::table('countries', function(Blueprint $table)
-		{
-			$table->dropColumn('iso_3166_2');
-			$table->dropColumn('iso_3166_3');
-		});
+		
 	}
 
 	/**
