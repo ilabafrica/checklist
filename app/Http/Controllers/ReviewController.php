@@ -802,11 +802,11 @@ class ReviewController extends Controller {
         Excel::load('/public/uploads/'.$excel, function($reader) use($audit_type_id, $review_id){
         	$laboratory_profile = $reader->get()[0];
         	$staffing_summary = $reader->get()[1];
-        	$slmta_information = $reader->get()[3];
-        	$assessment = $reader->get()[4];
-        	$scores = $reader->get()[5];
-        	$summary = $reader->get()[6];
-        	$action_plan = $reader->get()[7];
+        	$slmta_information = $reader->get()[2];
+        	$assessment = $reader->get()[3];
+        	$scores = $reader->get()[4];
+        	$summary = $reader->get()[5];
+        	$action_plan = $reader->get()[6];
         	//	Initialize variables
         	$labName = $reader->first()[0]->value;
 	        $lab_id = Lab::labIdName($labName);
@@ -1029,12 +1029,15 @@ class ReviewController extends Controller {
 		    				$slmta->prior_audit_status = $slmta_information[$i]->value;
 		    			}
 		    			if($slmta_information[$i]->field == Lang::choice('messages.names-affiliations-of-auditors', 1)){
-		    				foreach(explode(',', $slmta_information[$i]->value) as $assessor){
-		    					$assessors = array_push($assessors, User::userIdName($assessor));
+		    				foreach(explode(',', $slmta_information[$i]->value) as $assessor)
+		    				{
+		    					$assessor = trim($assessor);
+		    					array_push($assessors, User::userIdName($assessor));
 		    				}
 		    			}
 					}
 					Review::find($review_id)->setAssessors($assessors);
+					$slmta->review_id = $review_id;
 					$slmta->save();
         		}
         		//	Summary of Audit Findings
