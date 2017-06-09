@@ -69,23 +69,26 @@ class CreateLabTables extends Migration {
 		Schema::create('labs', function(Blueprint $table)
 		{
 			$table->increments('id')->unsigned();
-			$table->integer('lab_type_id')->unsigned();
 			$table->string('name')->nullable();
 			$table->string('lab_number')->nullable();
+			$table->integer('lab_type_id')->unsigned();
+			$table->integer('lab_level_id')->unsigned();
+			$table->integer('lab_affiliation_id')->unsigned();
 			$table->string('address', 100)->nullable();
 			$table->string('postal_code', 100)->nullable();
-			$table->string('city')->nullable();
+			$table->string('postal_address', 100)->nullable();
+			$table->integer('county_id')->unsigned();
+			$table->string('subcounty')->nullable();
 			$table->string('state')->nullable();
 			$table->integer('country_id')->unsigned();
 			$table->string('fax')->nullable();
 			$table->string('telephone')->nullable();
 			$table->string('email')->nullable();
-			$table->integer('lab_level_id')->unsigned();
-			$table->integer('lab_affiliation_id')->unsigned();
 			
 			$table->integer('user_id')->unsigned();
 
 			$table->foreign('country_id')->references('id')->on('countries');
+			$table->foreign('county_id')->references('id')->on('counties');
             $table->foreign('lab_level_id')->references('id')->on('lab_levels');
             $table->foreign('lab_affiliation_id')->references('id')->on('lab_affiliations');
             $table->foreign('lab_type_id')->references('id')->on('lab_types');

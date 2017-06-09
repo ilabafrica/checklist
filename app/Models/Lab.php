@@ -80,4 +80,15 @@ class Lab extends Model implements Revisionable{
 	{
 		return $this->belongsTo('App\Models\Country');
 	}
+	/* 
+	* Relationship with Review
+	*/
+	public function review(){
+		return $this->hasMany('App\Models\Review');
+	}
+
+public function county()
+	{
+		return $this->belongsTo('App\Models\County');
+	}
 }
