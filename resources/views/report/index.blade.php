@@ -68,12 +68,12 @@
                         <table class="table table-striped table-bordered table-hover">
                             <tbody>
                                 <tr>
-                                    <td class="{!! $average<55?'warning':'' !!}"><h4>No Stars</h4><p>(0 - 142 pts)</p><p><i>&lt; 55%</i></p></td>
-                                    <td class="{!! ($average>=55 && $average<65)?'warning':'' !!}"><h4>1 Star</h4><p>(143 - 165 pts)</p><p><i>55 - 64%</i></p></td>
-                                    <td class="{!! ($average>=65 && $average<75)?'warning':'' !!}"><h4>2 Stars</h4><p>(166 - 191 pts)</p><p><i>65 - 74%</i></p></td>
-                                    <td class="{!! ($average>=75 && $average<85)?'warning':'' !!}"><h4>3 Stars</h4><p>(192 - 217 pts)</p><p><i>75 - 84%</i></p></td>
-                                    <td class="{!! ($average>=85 && $average<95)?'warning':'' !!}"><h4>4 Stars</h4><p>(218 - 243 pts)</p><p><i>85 - 94%</i></p></td>
-                                    <td class="{!! $average>=95?'warning':'' !!}"><h4>5 Stars</h4><p>(244 - 258 pts)</p><p><i>&ge; 95%</i></p></td>
+                                    <td class="{!! $average<55?'warning':'' !!}"><h4>No Stars</h4><p>(0 - 150 pts)</p><p><i>&lt; 55%</i></p></td>
+                                    <td class="{!! ($average>=55 && $average<65)?'warning':'' !!}"><h4>1 Star</h4><p>(151 - 177 pts)</p><p><i>55 - 64%</i></p></td>
+                                    <td class="{!! ($average>=65 && $average<75)?'warning':'' !!}"><h4>2 Stars</h4><p>(178 - 205 pts)</p><p><i>65 - 74%</i></p></td>
+                                    <td class="{!! ($average>=75 && $average<85)?'warning':'' !!}"><h4>3 Stars</h4><p>(206 - 232 pts)</p><p><i>75 - 84%</i></p></td>
+                                    <td class="{!! ($average>=85 && $average<95)?'warning':'' !!}"><h4>4 Stars</h4><p>(233 - 260 pts)</p><p><i>85 - 94%</i></p></td>
+                                    <td class="{!! $average>=95?'warning':'' !!}"><h4>5 Stars</h4><p>(261 - 275 pts)</p><p><i>&ge; 95%</i></p></td>
                                 </tr>
                             </tbody>
                         </table>

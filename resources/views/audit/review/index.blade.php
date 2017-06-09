@@ -1,5 +1,12 @@
 @extends("layout")
 @section("content")
+<style type="text/css">
+
+    .disabled_toggle{
+       pointer-events: none;
+       cursor: default;
+    }
+</style>
 <br />
 <div class="row">
     <div class="col-lg-12">
@@ -36,7 +43,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h5 class="panel-title">
-                        <strong><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{$audit->id}}" aria-expanded="false" class="collapsed">{{ $audit->name }}</a></strong>
+                        <strong><a data-toggle="collapse" data-parent="#accordion" href="#collapse{{$audit->id}}" aria-expanded="false" class="collapsed {{$audit->id != 1?'disabled_toggle':''}} ">{{ $audit->name }}</a></strong>
                     </h5>
                 </div>
                 <div id="collapse{{$audit->id}}" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">

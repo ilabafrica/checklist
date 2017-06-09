@@ -63,6 +63,7 @@ class ReportController extends Controller {
 		$review = Review::find($id);
 		$categories = array();
 		$labels = array();
+		$full_labels=array();
 		$sections = $review->auditType->sections;
 		foreach($sections as $section){
 			if($section->total_points!=0)
@@ -72,6 +73,7 @@ class ReportController extends Controller {
 		}
 		foreach($categories as $section){
 			array_push($labels, $section->name);
+			array_push($full_labels, $section->name);
 		}
 		//	Column chart
 		$column = '{
@@ -94,7 +96,7 @@ class ReportController extends Controller {
             "yAxis": {
 	            "min": "0",
 	            "title": {
-	                "text": "% Score"
+	                "text":"% Score"
 	            },
 	            crosshair: true
 	        },
