@@ -14,6 +14,7 @@ use App\Models\Question;
 use App\Models\Answer;
 use App\Models\Note;
 use App\Models\Country;
+use App\Models\County;
 use App\Models\Lab;
 class SliptaSeeder extends Seeder
 {
@@ -162,10 +163,66 @@ class SliptaSeeder extends Seeder
             Country::create($country);
         }
         $this->command->info('Countries table seeded');
+        /* Counties table */
+        $counties = array(
+            array("name" => "Mombasa"),
+            array("name" => "Kwale"),
+            array("name" => "Kilifi"),
+            array("name" => "Tana River"),
+            array("name" => "Lamu"),
+            array("name" => "Taita Taveta"),
+            array("name" => "Garissa"),
+            array("name" => "Wajir"),
+            array("name" => "Mandera"),
+            array("name" => "Marsabit"),
+            array("name" => "Isiolo"),
+            array("name" => "Meru"),
+            array("name" => "Tharaka Nithi"),
+            array("name" => "Embu"),
+            array("name" => "Kitui"),
+            array("name" => "Machakos"),
+            array("name" => "Makueni"),
+            array("name" => "Nyandarua"),
+            array("name" => "Nyeri"),
+            array("name" => "Kirinyaga"),
+            array("name" => "Murang\'a"),
+            array("name" => "Kiambu"),
+            array("name" => "Turkana"),
+            array("name" => "West Pokot"),
+            array("name" => "Samburu"),
+            array("name" => "Trans Nzoia"),
+            array("name" => "Uasin Gishu"),
+            array("name" => "Elgeyo Marakwet"),
+            array("name" => "Nandi"),
+            array("name" => "Baringo"),
+            array("name" => "Laikipia"),
+            array("name" => "Nakuru"),
+            array("name" => "Narok"),
+            array("name" => "Kajiado"),
+            array("name" => "Kericho"),
+            array("name" => "Bomet"),
+            array("name" => "Kakamega"),
+            array("name" => "Vihiga"),
+            array("name" => "Bungoma"),
+            array("name" => "Busia"),
+            array("name" => "Siaya"),
+            array("name" => "Kisumu"),
+            array("name" => "Homa Bay"),
+            array("name" => "Migori"),
+            array("name" => "Kisii"),
+            array("name" => "Nyamira"),
+            array("name" => "Nairobi")
+        );
+        foreach ($counties as $county)
+        {
+            County::create($county);
+        }
+        $this->command->info('Counties table seeded');
+
 
         /* Laboratories */
         $labs = array(
-            array('lab_type_id' => '2', 'name' => 'ASPE Medical Clinic', 'lab_number' => '0023', 'address' => 'P.O. Box 59857', 'postal_code' => '00100', 'city' => 'Nairobi', 'state' => 'Nairobi', 'country_id' => '5', 'fax' => '6007498', 'telephone' => '0703034000', 'email' => 'aspe@aspe.org', 'lab_level_id' => '1', 'lab_affiliation_id' => '1', 'user_id' => '1')
+            array('lab_type_id' => '2', 'name' => 'ASPE Medical Clinic', 'lab_number' => '0023', 'address' => 'P.O. Box 59857', 'postal_code' => '00100','postal_address'=>'234 00200', 'county_id' => '1', 'subcounty'=>'Langata', 'state' => 'Nairobi', 'country_id' => '5', 'fax' => '6007498', 'telephone' => '0703034000', 'email' => 'aspe@aspe.org', 'lab_level_id' => '1', 'lab_affiliation_id' => '1', 'user_id' => '1')
         );
         foreach ($labs as $lab) {
             Lab::create($lab);

@@ -26,6 +26,16 @@ class CreateLabTables extends Migration {
             $table->softDeletes();
 			$table->timestamps();
 		});
+		//Counties
+		Schema::create('counties', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('name');		
+				
+            $table->softDeletes();
+			$table->timestamps();
+		});
+		
 		//	Lab Levels
 		Schema::create('lab_levels', function(Blueprint $table)
 		{
