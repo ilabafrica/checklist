@@ -33,7 +33,9 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		$reviews = Review::all();
+		$user_id = Auth::user()->id;
+
+		$reviews = Review::where('user_id', '=' ,$user_id)->get();
 		$message = '';
 		return view('home', compact('reviews', 'message'));
 	}

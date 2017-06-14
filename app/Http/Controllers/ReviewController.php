@@ -657,9 +657,10 @@ class ReviewController extends Controller {
 	 */
 	public function assessments($id=NULL)
 	{
+		$user_id = Auth::user()->id;
 		if ($id==NULL){
 			//	Get all audits
-			$responses = Review::all();
+			$responses = Review:: where('user_id', '=' ,$user_id)->get();
 		}
 		else{
 			$audit = AuditType::find($id);

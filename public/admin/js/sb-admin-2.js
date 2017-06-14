@@ -360,3 +360,17 @@ function notes(name)
 
     // SO TEXAREA WOULD NOT COPY ANY EMPTY LINES??
 }
+/*
+        Function to autoload items from the database
+    */
+    $(document).ready(function() {
+        $( "#name" ).autocomplete({
+              source: "search/autocomplete",
+              minLength: 3,
+              select: function(event, ui) {
+                console.log(ui);
+                $('#name').val(ui.item.value);
+                $('#lab_id').val(ui.item.id);
+              }
+        });
+        });

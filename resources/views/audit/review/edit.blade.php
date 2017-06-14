@@ -518,7 +518,7 @@
                                 <div class="col-sm-6">
                                     <div class="row">
                                         <div class="col-sm-8">
-                                            <p>{!! Lang::choice('messages.cleaner-trained', 1) !!}</p>
+                                            <p>{!! Lang::choice('messages.driver-trained', 1) !!}</p>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">

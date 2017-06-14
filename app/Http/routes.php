@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth'], function(){
         "as"   => "lab.select",
         "uses" => "LabController@select"
     ));
+    Route::get('search/autocomplete', 'LabController@autocomplete');
 
     //	Audit Types controller
     Route::resource('auditType', 'AuditTypeController');
