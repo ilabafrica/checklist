@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Models\Role;
 use Hash;
 use Input;
 use Session;
+use Carbon\Carbon;
 
 class UserController extends Controller {
 
@@ -59,6 +61,39 @@ class UserController extends Controller {
         $url = session('SOURCE_URL');
 
         return redirect()->to($url)->with('message', 'User created successfully.')->with('active_user', $user ->id);
+	}
+
+	//New user's self registration
+
+	public function registerSave(UserRequest $request)
+	{
+		$user = new User;
+		$user->name = $request->name;
+        $user->gender = $request->gender;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->username = $request->username;
+        $user->address = $request->address;
+        $user->deleted_at =Carbon::now(); // by default a newly registered user's is deactivated. The admin should accept the new user's role then activate it.
+
+        if($request->default_password)
+        	$user->password = Hash::make(User::DEFAULT_PASSWORD);
+        else
+        	$user->password = Hash::make($request->password);
+        if(Input::hasFile('photo'))
+        	$user->image = $this->imageModifier($request, $request->all()['photo']);
+
+        //users assigns themselves a role but the account is inactive until admin approves.
+        $role = Role::find($request->user_role);        
+        try
+        {
+	        $user->save();
+			$user->detachRole($role);
+			$user->attachRole($role);
+		}catch(Exception $e){
+			dd($e);
+		}
+        return redirect()->to('/')->with('message', 'Registration successful. Kindly contact the Admin to activate your account.')->with('active_user', $user ->id);
 	}
 
 	/**

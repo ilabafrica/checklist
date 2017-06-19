@@ -104,7 +104,7 @@ class AuthorizationController extends Controller {
 					}
 				}
 				//If checkbox is NOT clicked detatch the role
-				elseif (empty($arrayUserRoleMapping[$userkey][$roleKey])) {
+				else if (empty($arrayUserRoleMapping[$userkey][$roleKey])) {
 					$tier = RoleUserTier::where('user_id', $user->id)
 											->where('role_id', $role->id)
 											->first();

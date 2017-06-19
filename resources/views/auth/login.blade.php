@@ -96,9 +96,12 @@
 	                </div>
 	                <br>
                   	<button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
-                  	<br>
-                  	<p> Can't access your account? </p>
-                  	<a class="btn btn-info btn-lg btn-block" href="{{ url('/password/email') }}">Reset your password.</a>
+                  	<br>                    
+                    	<p> Can't access your account? </p>
+                    	<a class="btn btn-info btn-lg btn-block" href="{{ url('/password/email') }}">Reset your password.</a>
+                      <p> New User? </p>
+                      <a class="btn btn-success btn-lg btn-block" href="{{ url('/register') }}">Create Account.</a>
+                  
               	</form>
           	</div>
          	<div class="col-md-4"></div>

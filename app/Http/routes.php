@@ -26,12 +26,19 @@ Route::group(array("before" => "guest"), function()
 	    "as" => "auth.login",
 	    "uses" => "WelcomeController@index"
 	));
-
     Route::any('user/login', array(
-	    "as" => "user.login",
-	    "uses" => "Auth\AuthController@postLogin"
-	));
-    
+        "as" => "user.login",
+        "uses" => "Auth\AuthController@postLogin"
+
+    ));
+    Route::any('/register', array(
+        "as" => "user.register",
+        "uses" => "Auth\AuthController@register"
+    ));
+    Route::any('/registerSave', array(
+        "as" => "registerSave",
+        "uses" => "UserController@registerSave"
+    ));
 });
 /* Routes accessible before logging in */
 Route::group(['middleware' => 'auth'], function(){
@@ -57,6 +64,7 @@ Route::group(['middleware' => 'auth'], function(){
         "as"   => "user.delete",
         "uses" => "UserController@delete"
     ));
+   
     //	Lab Levels controller
     Route::resource('labLevel', 'LabLevelController');
     Route::get("/labLevel/{id}/delete", array(
