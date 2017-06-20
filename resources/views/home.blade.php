@@ -55,7 +55,10 @@
                               <a href="{{ URL::to("review/" . $review->id . "/edit") }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit', 1) }}</span></a>
                               <a href="{{ URL::to("review/" . $review->id . "/export") }}" class="btn btn-default btn-sm"><i class="fa fa-external-link"></i><span> {{ Lang::choice('messages.export-audit', 1) }}</span></a>
                               <a href="{{ URL::to("report/" . $review->id) }}" class="btn btn-info btn-sm"><i class="fa fa-bar-chart"></i><span> {{ Lang::choice('messages.run-reports', 1) }}</span></a>
+
+                              @if(Entrust::can('complete-audit'))
                               <a href="{{ URL::to("review/" . $review->id . "/complete") }}" class="btn btn-danger btn-sm"><i class="fa fa-check-square-o"></i><span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</span></a>
+                              @endif
                             </td>
                         </tr>
                         @empty

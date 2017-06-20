@@ -22,7 +22,7 @@ class UserController extends Controller {
 	public function index()
 	{
 		//	Get all users
-		$users = User::all();
+		$users = User::withTrashed()->get();
 		return view('user.index', compact('users'));
 	}
 
@@ -151,7 +151,7 @@ class UserController extends Controller {
 	}
 
 	/**
-	 * Remove the specified resource from storage.
+	 * Disable a user from using the system.
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -163,6 +163,25 @@ class UserController extends Controller {
 		$user->delete();
 		return redirect('user')->with('message', 'User deleted successfully.');
 	}
+
+	//Enable a user to use the system
+	public function enable($id)
+	{
+		$user= User::withTrashed()->find($id);
+		$user->deleted_at = null;
+		$user->save();
+		return redirect('user')->with('message', 'User enabled successfully.');
+	}
+
+	//Reset a user's password to default
+	public function reset_password($id)
+	{
+		$user= User::withTrashed()->find($id);
+        $user->password = Hash::make(User::DEFAULT_PASSWORD);
+		$user->save();
+		return redirect('user')->with('message', 'Password Reset successfully.');
+	}
+
 	public function destroy($id)
 	{
 		//

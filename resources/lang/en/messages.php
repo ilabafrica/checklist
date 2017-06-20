@@ -326,4 +326,13 @@ return [
 	'select-partner'	=>	'Select Partner',
 	/* Others */
 	'confirm-assessment'	=>	'Confirm Assessment',
+
+	 /** 
+     *   Generic phrases
+     */
+    'confirm-disable-title' => 'Confirm Disable',
+    'confirm-disable-message' => 'Do you wish to disable this user?',
+     'confirm-reset-title' => 'Confirm Reset Password',
+    'confirm-reset-message' => 'Do you wish to reset the password?',
+    'confirm-disable-irreversible' => 'This action is irreversible.',
 ];

@@ -64,6 +64,15 @@ Route::group(['middleware' => 'auth'], function(){
         "as"   => "user.delete",
         "uses" => "UserController@delete"
     ));
+     Route::get("/user/{id}/enable", array(
+        "as"   => "user.enable",
+        "uses" => "UserController@enable"
+    ));
+      Route::get("/user/{id}/reset_password", array(
+        "as"   => "user.reset_password",
+        "uses" => "UserController@reset_password"
+    ));
+    
    
     //	Lab Levels controller
     Route::resource('labLevel', 'LabLevelController');
