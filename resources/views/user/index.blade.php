@@ -37,8 +37,6 @@
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
-                        <!--<th>{{ Lang::choice('messages.gender', 1) }}</th>
-                            <th>{{ Lang::choice('messages.dob', 1) }}</th>-->
                             <th>{{ Lang::choice('messages.email', 1) }}</th>
                             <th>{{ Lang::choice('messages.phone', 1) }}</th>
                             <th>{{ Lang::choice('messages.address', 1) }}</th>
@@ -52,16 +50,24 @@
                             @endif
                             >
                             <td>{{ $user->name }}</td>
-                        <!--<td>{{ $user->gender }}</td>
-                            <td>{{ $user->dob }}</td>-->
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>
                             <td>{{ $user->address }}</td>
                             <td>
-                              <a href="{{ URL::to("user/" . $user->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> View</span></a>
-                              <a href="{{ URL::to("user/" . $user->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> Edit</span></a>
-                              <a href="{{ URL::to("user/" . $user->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> Delete</span></a>
-                              
+                              <a class="btn btn-success btn-sm {{($user->deleted_at == null) ? '': 'disabled'}}"  href="{{ URL::to("user/" . $user->id) }}"><i class="fa fa-eye"></i><span> View</span></a>
+
+                              <a class="btn btn-info btn-sm {{($user->deleted_at == null) ? '': 'disabled'}}" href="{{ URL::to("user/" . $user->id . "/edit") }}" ><i class="fa fa-edit"></i><span> Edit</span></a>
+
+                              @if($user->deleted_at == null)
+                              <button class="btn btn-danger btn-sm" data-toggle="modal" data-target=".confirm-delete-modal" 
+                              data-id='{{ URL::to("user/" . $user->id . "/delete") }}'><i class="fa fa-times"></i><span> Disable</span></button>
+
+                              @else
+                              <a class="btn btn-success btn-sm" href="{{ URL::to("user/" . $user->id . "/enable") }}" ><i class="fa fa-check"></i><span> Enable</span></a>
+                              @endif
+                              <button class="btn btn-warning btn-sm {{($user->deleted_at == null) ? '': 'disabled'}}" data-toggle="modal" data-target=".confirm-reset-password-modal" data-id='{{ URL::to("user/" . $user->id . "/reset_password") }}'><i class="fa fa-unlock"></i><span> Reset Password</span></button>
+
+                              <a class="btn btn-info btn-sm {{($user->deleted_at == null) ? '': 'disabled'}}" href="{{ URL::to("authorization") }}" ><i class="fa fa-user"></i><span> Change Role</span></a>
                             </td>
                         </tr>
                         @empty
@@ -76,4 +82,55 @@
         </div>
       </div>
 </div>
+<div class="modal fade confirm-delete-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;</button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <span class="glyphicon glyphicon-trash"></span> 
+                        {{ trans('messages.confirm-disable-title') }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{ trans('messages.confirm-disable-message') }}</p>
+                    <input type="hidden" id="delete-url" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-delete">
+                        Disable</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        {{ trans('messages.cancel') }}</button>
+                </div>
+            </div>
+        </div>
+</div>
+<div class="modal fade confirm-reset-password-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;</button>
+                    <h4 class="modal-title" id="myModalLabel">
+                        <span class="glyphicon glyphicon-trash"></span> 
+                        {{ trans('messages.confirm-reset-title') }}
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <p>{{ trans('messages.confirm-reset-message') }}</p>
+                    <p>{{ trans('messages.confirm-disable-irreversible') }}</p>
+                    <input type="hidden" id="reset-password-url" value="" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning btn-reset-password">
+                        Reset Password</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        {{ trans('messages.cancel') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop

@@ -143,7 +143,6 @@
     <script src="{{ URL::asset('admin/js/metisMenu.min.js') }}"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="{{ URL::asset('admin/js/sb-admin-2.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('admin/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('admin/js/dataTables.bootstrap.js') }}"></script>
     <script src="{{ URL::asset('admin/js/moment.js') }}"></script>
@@ -151,6 +150,7 @@
     <!-- Posabsolute jQuery validation -->
     <script src="{{ URL::asset('admin/js/jquery.validationEngine-en.js') }}"></script>
     <script src="{{ URL::asset('admin/js/jquery.validationEngine.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/sb-admin-2.js') }}"></script>
 </body>
 
 </html>
