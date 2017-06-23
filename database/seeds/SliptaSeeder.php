@@ -111,10 +111,10 @@ class SliptaSeeder extends Seeder
         //Assign roles to the other users
         /* Lab Levels */
         $labLevels = array(
-            array("name" => "National", "user_id" => "1"),
-            array("name" => "Referral", "user_id" => "1"),
-            array("name" => "Regional", "user_id" => "1"),
-            array("name" => "Zonal", "user_id" => "1")
+            array("name" => "National", "description" =>"National", "user_id" => "1"),
+            array("name" => "Referral", "description" => "Refferal", "user_id" => "1"),
+            array("name" => "Regional", "description" =>"Regional", "user_id" => "1"),
+            array("name" => "Zonal", "description" => "Zonal", "user_id" => "1")
         );
         foreach ($labLevels as $labLevel) {
             LabLevel::create($labLevel);
@@ -122,8 +122,8 @@ class SliptaSeeder extends Seeder
         $this->command->info('Lab levels table seeded');
         /* Lab Affiliations */
         $labAffiliations = array(
-            array("name" => "Private", "user_id" => "1"),
-            array("name" => "Research", "user_id" => "1")
+            array("name" => "Private", "description" => "Private", "user_id" => "1"),
+            array("name" => "Research", "description" => "Research" ,"user_id" => "1")
         );
         foreach ($labAffiliations as $labAffiliation) {
             LabAffiliation::create($labAffiliation);
@@ -131,9 +131,9 @@ class SliptaSeeder extends Seeder
         $this->command->info('Lab affiliations table seeded');
         /* SLMTA Lab Types */
         $labTypes = array(
-            array("name" => "National", "user_id" => "1"),
-            array("name" => "Non-Governmental Organization", "user_id" => "1"),
-            array("name" => "Faith-based", "user_id" => "1")
+            array("name" => "National", "description" =>"National", "user_id" => "1"),
+            array("name" => "Non-Governmental Organization", "description"=>"NGO","user_id"=> "1"),
+            array("name" => "Faith-based", "description" => "FBO", "user_id" => "1")
         );
         foreach ($labTypes as $labType) {
             LabType::create($labType);

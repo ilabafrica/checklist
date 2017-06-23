@@ -73,6 +73,7 @@ class LabController extends Controller {
 		$lab->county_id = $request->county_id;
 		$lab->subcounty = $request->state;
 		$lab->telephone = $request->telephone;
+		$lab->country_id = 5;
 		$lab->email = $request->email;
 		 $lab->user_id = Auth::user()->id;
         $lab->save();
