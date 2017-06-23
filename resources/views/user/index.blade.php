@@ -37,6 +37,7 @@
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.name', 1) }}</th>
+                            <th>{{ Lang::choice('messages.username', 1) }}</th>
                             <th>{{ Lang::choice('messages.email', 1) }}</th>
                             <th>{{ Lang::choice('messages.phone', 1) }}</th>
                             <th>{{ Lang::choice('messages.address', 1) }}</th>
@@ -50,6 +51,7 @@
                             @endif
                             >
                             <td>{{ $user->name }}</td>
+                            <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>
                             <td>{{ $user->address }}</td>

@@ -77,7 +77,7 @@ class ReviewController extends Controller {
 	 */
 	public function store()
 	{
-		//dd(Input::all());
+
 		//	Get all SLMTA audit types
         $assessments = Assessment::lists('name', 'id');
         //	Get all SLMTA audit stars
@@ -621,11 +621,12 @@ class ReviewController extends Controller {
 		
 		$pending_lab_reviews = Lab::where('labs.id', $lab_id) ->join('reviews', 'labs.id', '=', 'reviews.lab_id')
 									->where('reviews.lab_id', '=', $lab_id)
-									->where('reviews.status', '=', $status)->get();
+									->where('reviews.status', '=', $status)->pluck('name');
+		// dd($pending_lab_reviews);
 
-		if (!empty($pending_lab_reviews)) 
+		if ($pending_lab_reviews!=null)
 		{			
-			$message = 'There are pending reviews for '.$pending_lab_reviews[0]['name'].' that need to be completed';
+			$message = 'There are pending reviews for '.$pending_lab_reviews.' that need to be completed';
         	return redirect('report')->with('message', $message);
 
 		} else
@@ -675,8 +676,11 @@ class ReviewController extends Controller {
 	{
 		$user_id = Auth::user()->id;
 		if ($id==NULL){
-			//	Get all audits
-			$responses = Review:: where('user_id', '=' ,$user_id)->get();
+			//get all the reviews the user has created or edited
+			$first = DB::table('review_assessors')->where('assessor_id', $user_id)->lists('review_id');
+			$reviews = Review::whereIn('id', $first)->get();		
+		
+			// $responses = Review:: where('user_id', '=' ,$user_id)->get();
 		}
 		else{
 			$audit = AuditType::find($id);

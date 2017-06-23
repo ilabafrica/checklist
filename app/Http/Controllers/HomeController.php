@@ -2,6 +2,7 @@
 use App\Models\User;
 use App\Models\Review;
 use Auth;
+use DB;
 
 class HomeController extends Controller {
 
@@ -34,8 +35,11 @@ class HomeController extends Controller {
 	public function index()
 	{
 		$user_id = Auth::user()->id;
-
-		$reviews = Review::where('user_id', '=' ,$user_id)->get();
+		
+		//get all the reviews the user has created or edited
+		$first = DB::table('review_assessors')->where('assessor_id', $user_id)->lists('review_id');
+		$reviews = Review::whereIn('id', $first)->get();		
+		
 		$message = '';
 		return view('home', compact('reviews', 'message'));
 	}
