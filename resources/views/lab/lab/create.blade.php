@@ -26,9 +26,14 @@
             </div>
             @endif
             {!! Form::open(array('route' => 'lab.store', 'id' => 'form-add-lab', 'class' => 'form-horizontal')) !!}
+
+                <!-- lab id when a match is found-->
+                <input type="hidden" name="lab_id" id="lab_id">
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                 <!-- ./ csrf token -->
+
+
                 
                 <div class="form-group">
                     {!! Form::label('name', Lang::choice('messages.lab-name', 1), array('class' => 'col-sm-4 control-label')) !!}

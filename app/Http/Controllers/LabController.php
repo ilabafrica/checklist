@@ -54,6 +54,30 @@ class LabController extends Controller {
 		$labTypes = LabType::lists('name', 'id');
 		return view('lab.lab.create', compact('counties', 'labLevels', 'labAffiliations', 'labTypes'));
 	}
+	/*
+		Function to autoload labs already created from the database
+	*/
+
+	public function autocomplete() {
+        $term = Input::get('term');
+	
+		$results = array();
+		
+		$queries = DB::table('labs')
+			->where('name', 'LIKE', '%'.$term.'%')
+			->take(5)->get();
+		
+		foreach ($queries as $query)
+		{
+		    $results[] = [ 'id' => $query->id, 'value' => $query->name];
+		}
+		if (empty($results)>0) {
+			# code...
+		    $results[] = [ 'id' => 0, 'value' => 'No Records found'];
+		} 
+		return Response::json($results);
+       
+    }
 
 	/**
 	 * Store a newly created resource in storage.
@@ -75,6 +99,7 @@ class LabController extends Controller {
 		$lab->telephone = $request->telephone;
 		$lab->country_id = 5;
 		$lab->email = $request->email;
+		$lab->country_id = 5;
 		 $lab->user_id = Auth::user()->id;
         $lab->save();
         $url = session('SOURCE_URL');

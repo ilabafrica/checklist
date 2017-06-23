@@ -77,7 +77,7 @@ class ReviewController extends Controller {
 	 */
 	public function store()
 	{
-		//dd(Input::all());
+
 		//	Get all SLMTA audit types
         $assessments = Assessment::lists('name', 'id');
         //	Get all SLMTA audit stars
@@ -615,27 +615,44 @@ class ReviewController extends Controller {
 	 */
 	public function start()
 	{
-		//	Get values for creation of audit response		
-		$response = new Review;
-        $response->lab_id = Input::get('lab_id');
-        if(Input::get('checklist'))
-        	$response->audit_type_id = Input::get('checklist');
-        else
-        	$response->audit_type_id = 1;
-        $response->status = Review::INCOMPLETE;
-        $response->user_id = Auth::user()->id;
-        $response->update_user_id = Auth::user()->id;
-        $response->save();
+		$lab_id = Input::get('lab_id');
+		$audit_type_id = Input::get('checklist');
+		$status = Review::INCOMPLETE;
+		
+		$pending_lab_reviews = Lab::where('labs.id', $lab_id) ->join('reviews', 'labs.id', '=', 'reviews.lab_id')
+									->where('reviews.lab_id', '=', $lab_id)
+									->where('reviews.status', '=', $status)->pluck('name');
+		// dd($pending_lab_reviews);
 
-        //	Get variables ready for processing of new audit
-        $audit = AuditType::find($response->audit_type_id);
-        $lab = Lab::find($response->lab_id);
-        $page = $audit->sections[0];
-        //	Get saved review
-        $review = Review::find($response->id);
-      
+		if ($pending_lab_reviews!=null)
+		{			
+			$message = 'There are pending reviews for '.$pending_lab_reviews.' that need to be completed';
+        	return redirect('report')->with('message', $message);
 
-        return view('audit.review.create', compact('audit', 'lab', 'page', 'review'));
+		} else
+		{
+			//	Get values for creation of audit response		
+			$response = new Review;
+	        $response->lab_id = Input::get('lab_id');
+	        if(Input::get('checklist'))
+	        	$response->audit_type_id = Input::get('checklist');
+	        else
+	        	$response->audit_type_id = 1;
+	        $response->status = Review::INCOMPLETE;
+	        $response->user_id = Auth::user()->id;
+	        $response->update_user_id = Auth::user()->id;
+	        $response->save();
+
+	        //	Get variables ready for processing of new audit
+	        $audit = AuditType::find($response->audit_type_id);
+	        $lab = Lab::find($response->lab_id);
+	        $page = $audit->sections[0];
+	        //	Get saved review
+	        $review = Review::find($response->id);
+	      
+
+	        return view('audit.review.create', compact('audit', 'lab', 'page', 'review'));
+    	}
 	}
 	
 	/**
@@ -657,9 +674,13 @@ class ReviewController extends Controller {
 	 */
 	public function assessments($id=NULL)
 	{
+		$user_id = Auth::user()->id;
 		if ($id==NULL){
-			//	Get all audits
-			$responses = Review::all();
+			//get all the reviews the user has created or edited
+			$first = DB::table('review_assessors')->where('assessor_id', $user_id)->lists('review_id');
+			$reviews = Review::whereIn('id', $first)->get();		
+		
+			// $responses = Review:: where('user_id', '=' ,$user_id)->get();
 		}
 		else{
 			$audit = AuditType::find($id);
@@ -733,7 +754,7 @@ class ReviewController extends Controller {
 		$scored_questions = array(); 
 		$rqs = $review->rq;
 		foreach ($rqs as $rq) {
-			if($rq->qa)
+			if($rq->qs)
 				array_push($scored_questions, $rq);
 			else
 				continue;
@@ -756,6 +777,7 @@ class ReviewController extends Controller {
 		if(count($questions) == count($scored_questions)){
 			$review->status = Review::COMPLETE;
 			$review->updated_at = date('Y-m-d H:i:s');
+			$review->save();
         	return redirect()->to('review/assessment/'.$review->audit_type_id)->with('message', 'Audit marked complete')->with('active_review', $review->id);
 		}
 		else{

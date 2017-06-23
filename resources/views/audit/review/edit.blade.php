@@ -95,6 +95,7 @@
                                 <div class="col-sm-6">
                                     <div class="panel panel-default">
                                         <div class="panel-body">
+
                                             <?php 
                                                 $cnt = 0;
                                                 $zebra = "";
@@ -106,9 +107,15 @@
                                                     $zebra = (((int)$cnt/4)%2==1?"row-striped":"");
                                                 ?>
                                                 <div class="col-md-6">
-                                                    <label  class="checkbox-inline">
+                                                    <label  class="checkbox-inline ">
                                                         <input type="checkbox" name="assessors[]" value="{{ $value->id}}"
-                                                        {{ in_array($value->id, $review->assessors?$review->assessors->lists('id'):[])?"checked":"" }} />
+
+
+                                                        {{ in_array($value->id, $review->assessors?$review->assessors->lists('id'):[])||$value->id==Auth::user()->id?"checked":"" }} 
+                                                        
+                                                        {{$value->id==Auth::user()->id||$value->id==$review->user_id?'onclick="return false"':'' }}
+
+                                                        />
                                                         {{ $value->name }}
                                                     </label>
                                                 </div>
@@ -518,7 +525,7 @@
                                 <div class="col-sm-6">
                                     <div class="row">
                                         <div class="col-sm-8">
-                                            <p>{!! Lang::choice('messages.cleaner-trained', 1) !!}</p>
+                                            <p>{!! Lang::choice('messages.driver-trained', 1) !!}</p>
                                         </div>
                                         <div class="col-sm-4">
                                             <div class="form-group">

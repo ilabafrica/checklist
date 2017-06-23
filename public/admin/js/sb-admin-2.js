@@ -345,6 +345,30 @@ $('#radioBtn a').on('click', function(){
     $('a[data-toggle="'+tog+'"][data-title="'+sel+'"]').removeClass('notActive').addClass('active');
 });
 
+/** Disable a user 
+     *  Alert on  delete
+     */
+    $('.confirm-delete-modal').on('show.bs.modal', function(e) {
+        $('#delete-url').val($(e.relatedTarget).data('id'));
+    });
+
+    $('.btn-delete').click(function(){
+        $('.confirm-delete-modal').modal('toggle');
+        window.location.href = $('#delete-url').val();
+    });
+
+    /** Reset a user's password 
+     *  Alert on irreversible reset
+     */
+    $('.confirm-reset-password-modal').on('show.bs.modal', function(e) {
+        $('#reset-password-url').val($(e.relatedTarget).data('id'));
+    });
+
+    $('.btn-reset-password').click(function(){
+        $('.confirm-reset-password-modal').modal('toggle');
+        window.location.href = $('#reset-password-url').val();
+    });
+
 /* sub-question notes into main-question text area */
 function notes(name)
 {

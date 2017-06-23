@@ -50,7 +50,7 @@
                 <table class="table table-striped table-bordered table-hover {!! !$responses->isEmpty()?'search-table':'' !!}">
                     <thead>
                         <tr>
-                            <th>{{ Lang::choice('messages.response-no', 1) }}</th>
+                            <th>{{ Lang::choice('messages.no', 1) }}</th>
                             <th>{{ Lang::choice('messages.assessor', 1) }}</th>
                             <th>{{ Lang::choice('messages.lab', 1) }}</th>
                             <th>{{ Lang::choice('messages.audit', 1) }}</th>
@@ -70,11 +70,13 @@
                             <td>{{ $response->lab->name }}</td>
                             <td>{{ $response->auditType->name }}</td>
                             <td>{{ $response->created_at }}</td>
-                            <td>{{ $response->status==App\Models\Review::COMPLETE?Lang::choice('messages.audit-status', 1):Lang::choice('messages.audit-status', 2) }}</td>
+                            <td>{!! $response->status==App\Models\Review::COMPLETE?'<span class="label label-success">'.Lang::choice('messages.audit-status', 1).'</span>':'<span class="label label-warning">'.Lang::choice('messages.audit-status', 2).'</span>' !!}</td> 
                             <td>
                               <a href="{{ URL::to("review/" . $response->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {{ Lang::choice('messages.view', 1) }}</span></a>
                               <a href="{{ URL::to("review/" . $response->id . "/edit") }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit', 1) }}</span></a>
+                              @if(Entrust::can('complete-audit'))
                               <a href="{{ URL::to("review/" . $response->id . "/complete") }}" class="btn btn-danger btn-sm"><i class="fa fa-check-square-o"></i><span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</span></a>
+                              @endif
                               <a href="{{ URL::to("review/" . $response->id . "/export") }}" class="btn btn-default btn-sm"><i class="fa fa-external-link"></i><span> {{ Lang::choice('messages.export-audit', 1) }}</span></a>
                               <a href="{{ URL::to("report/" . $response->id) }}" class="btn btn-info btn-sm"><i class="fa fa-bar-chart"></i><span> {{ Lang::choice('messages.run-reports', 1) }}</span></a>
                             </td>

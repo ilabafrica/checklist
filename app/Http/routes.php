@@ -26,12 +26,19 @@ Route::group(array("before" => "guest"), function()
 	    "as" => "auth.login",
 	    "uses" => "WelcomeController@index"
 	));
-
     Route::any('user/login', array(
-	    "as" => "user.login",
-	    "uses" => "Auth\AuthController@postLogin"
-	));
-    
+        "as" => "user.login",
+        "uses" => "Auth\AuthController@postLogin"
+
+    ));
+    Route::any('/register', array(
+        "as" => "user.register",
+        "uses" => "Auth\AuthController@register"
+    ));
+    Route::any('/registerSave', array(
+        "as" => "registerSave",
+        "uses" => "UserController@registerSave"
+    ));
 });
 /* Routes accessible before logging in */
 Route::group(['middleware' => 'auth'], function(){
@@ -57,6 +64,16 @@ Route::group(['middleware' => 'auth'], function(){
         "as"   => "user.delete",
         "uses" => "UserController@delete"
     ));
+     Route::get("/user/{id}/enable", array(
+        "as"   => "user.enable",
+        "uses" => "UserController@enable"
+    ));
+      Route::get("/user/{id}/reset_password", array(
+        "as"   => "user.reset_password",
+        "uses" => "UserController@reset_password"
+    ));
+    
+   
     //	Lab Levels controller
     Route::resource('labLevel', 'LabLevelController');
     Route::get("/labLevel/{id}/delete", array(
@@ -87,6 +104,7 @@ Route::group(['middleware' => 'auth'], function(){
         "as"   => "lab.select",
         "uses" => "LabController@select"
     ));
+    Route::get('search/autocomplete', 'LabController@autocomplete');
 
     //	Audit Types controller
     Route::resource('auditType', 'AuditTypeController');
