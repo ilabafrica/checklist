@@ -25,6 +25,7 @@ class LabRequest extends Request {
 		$id = $this->ingnoreId();
 		return [
             'name'   => 'required|unique:labs,name,'.$id,
+            'lab_number'   => 'required|numeric|unique:labs,lab_number,'.$id,
             'lab_type'   => 'required:labs,lab_type_id,'.$id,
             'county_id'   => 'required:labs,county_id,'.$id,
             'address'   => 'required:labs,address,'.$id,
