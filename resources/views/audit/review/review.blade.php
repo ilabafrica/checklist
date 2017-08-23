@@ -47,7 +47,7 @@
         <div class="row">
             <div class="col-sm-12">
 
-                <table class="table table-striped table-bordered table-hover {!! !$responses->isEmpty()?'search-table':'' !!}">
+                <table class="table table-striped table-bordered table-hover ">
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.no', 1) }}</th>

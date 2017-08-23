@@ -678,8 +678,8 @@ class ReviewController extends Controller {
 		if ($id==NULL){
 			//get all the reviews the user has created or edited
 			$first = DB::table('review_assessors')->where('assessor_id', $user_id)->lists('review_id');
-			$reviews = Review::whereIn('id', $first)->get();		
-		
+			$responses = Review::whereIn('id', $first)->get();		
+	
 			// $responses = Review:: where('user_id', '=' ,$user_id)->get();
 		}
 		else{

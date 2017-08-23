@@ -227,7 +227,7 @@ class ReportController extends Controller {
 			array(Lang::choice('messages.official-slmta', 1), $review->slmta?($review->slmta->official_slmta == Review::OFFICIAL?Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1)):''),
 			array(Lang::choice('messages.audit-start-date', 1), $review->slmta?$review->slmta->audit_start_date:''),
 			array(Lang::choice('messages.audit-end-date', 1), $review->slmta?$review->slmta->audit_end_date:''),
-			array(Lang::choice('messages.names-affiliations-of-auditors', 1), $review->slmta?implode(", ", $review->assessors->lists('name')):''),
+			array(Lang::choice('messages.names-affiliations-of-auditors', 1), $review->slmta?implode(", ", $review->assessors->lists('name')->all()):''),
 			array(Lang::choice('messages.slmta-audit-type', 1), $review->slmta?$review->assessment($review->slmta->assessment_id)->name:''),
 			array(Lang::choice('messages.tests-before-slmta', 1), $review->slmta?$review->slmta->tests_before_slmta:''),
 			array(Lang::choice('messages.tests-this-year', 1), $review->slmta?$review->slmta->tests_this_year:''),
