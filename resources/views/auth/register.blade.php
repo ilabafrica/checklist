@@ -63,14 +63,22 @@
 			                        {!! Form::text('username', Input::old('username'), array('class' => 'form-control')) !!}
 			                    </div>
 			                </div>
-			                <div class="form-group">
+		                  	<div class="col-md-8 ">
+				                <div class="form-group">
+				                    {!! Form::label('user_role', Lang::choice('messages.role', 1), array('class' => 'col-sm-4 control-label')) !!}
+				                    <div class="col-sm-8">
+				                        {!! Form::select('user_role', array(''=>trans('messages.select'))+$roles,'', array('class' => 'form-control', 'id' => 'user_role')) !!}
+				                    </div>
+				                </div> 
+				            </div>
+			               <!--  <div class="form-group">
 			                    <div class="col-sm-offset-4 col-sm-8">
 			                        <label class="checkbox-inline">
 			                            {!! Form::checkbox("default_password", '1', '', array('onclick' => 'toggle(".pword", this)')) !!}{{ Lang::choice('messages.use-default-password', 1) }}
 			                        </label>
 			                    </div>
-			                </div>
-			                <div class="pword">
+			                </div> -->
+			               <!--  <div class="pword">
 				                <div class="form-group">
 				                    {!! Form::label('password', Lang::choice('messages.password', 1), array('class' => 'col-sm-4 control-label')) !!}
 				                    <div class="col-sm-8">
@@ -83,7 +91,7 @@
 				                        {!! Form::password('password_confirmation', array('class' => 'form-control')) !!}
 				                    </div>
 				                </div>
-			                </div>
+			                </div> -->
 			                <div class="form-group">
 			                    <div class="col-sm-offset-4 col-sm-8">
 			                    {!! Form::button("<i class='glyphicon glyphicon-ok-circle'></i> ".Lang::choice('messages.save', 1), 
@@ -95,15 +103,7 @@
 			                </div>
 					        </div>
 					        <div class="col-md-6">
-					        <div class="row">					                
-					            <div class="col-md-8 ">
-					                <div class="form-group">
-					                    {!! Form::label('user_role', Lang::choice('messages.role', 1), array('class' => 'col-sm-4 control-label')) !!}
-					                    <div class="col-sm-8">
-					                        {!! Form::select('user_role', array(''=>trans('messages.select'))+$roles,'', array('class' => 'form-control', 'id' => 'user_role')) !!}
-					                    </div>
-					                </div> 
-					             </div>
+					        <div class="row">	
 					            </div>
 					            <div class="row">
 					                <div class="col-md-8 col-sm-offset-3">

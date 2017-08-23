@@ -88,7 +88,7 @@ class LabController extends Controller {
 	{
 		$lab = new Lab;
 		$lab->name = $request->name;
-		$lab->lab_number = $request->number;
+		$lab->lab_number = $request->lab_number;
 		$lab->lab_type_id = $request->lab_type;
        	$lab->lab_level_id = $request->lab_level;
         $lab->lab_affiliation_id = $request->lab_affiliation;
