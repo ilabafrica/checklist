@@ -10,6 +10,7 @@ use App\Models\Role;
 use Hash;
 use Input;
 use Session;
+use Mail;
 use Carbon\Carbon;
 
 class UserController extends Controller {
@@ -75,11 +76,8 @@ class UserController extends Controller {
         $user->username = $request->username;
         $user->address = $request->address;
         $user->deleted_at =Carbon::now(); // by default a newly registered user's is deactivated. The admin should accept the new user's role then activate it.
+        $user->password = Hash::make(User::DEFAULT_PASSWORD);
 
-        if($request->default_password)
-        	$user->password = Hash::make(User::DEFAULT_PASSWORD);
-        else
-        	$user->password = Hash::make($request->password);
         if(Input::hasFile('photo'))
         	$user->image = $this->imageModifier($request, $request->all()['photo']);
 
@@ -93,7 +91,17 @@ class UserController extends Controller {
 		}catch(Exception $e){
 			dd($e);
 		}
-        return redirect()->to('/')->with('message', 'Registration successful. Kindly contact the Admin to activate your account.')->with('active_user', $user ->id);
+
+		$token = app()['auth.password.tokens']->create($user);
+        $user->token = $token;
+		$usr = $user->toArray();
+		
+		Mail::send('auth.email.welcome', $usr, function($message) use ($usr) {
+           	$message->to($usr['email']);
+          	$message->subject('National HIV PT - Account Created Successfully');
+       });
+		
+		return redirect()->to('/')->with('message', 'Registration successful. Kindly check your email to view your log in credentials.')->with('active_user', $user ->id);
 	}
 
 	/**
@@ -170,6 +178,16 @@ class UserController extends Controller {
 		$user= User::withTrashed()->find($id);
 		$user->deleted_at = null;
 		$user->save();
+
+		$token = app()['auth.password.tokens']->create($user);
+        $user->token = $token;
+		$usr = $user->toArray();
+		
+		Mail::send('auth..email.approved', $usr, function($message) use ($usr) {
+           	$message->to($usr['email']);
+          	$message->subject('National HIV PT - Account Access Approved');
+       	});
+
 		return redirect('user')->with('message', 'User enabled successfully.');
 	}
 

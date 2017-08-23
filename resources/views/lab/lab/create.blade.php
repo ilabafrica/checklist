@@ -42,9 +42,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('number', Lang::choice('messages.lab-number', 1), array('class' => 'col-sm-4 control-label')) !!}
+                    {!! Form::label('lab_number', Lang::choice('messages.lab-number', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('number', Input::old('number'), array('class' => 'form-control', 'placeholder' => 'e.g facility MFL')) !!}
+                        {!! Form::text('lab_number', Input::old('lab_number'), array('class' => 'form-control', 'placeholder' => 'e.g facility MFL')) !!}
                     </div>
                 </div>
                 <div class="form-group">
