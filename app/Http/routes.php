@@ -130,6 +130,10 @@ Route::group(['middleware' => 'auth'], function(){
 
     //	Audits controller
     Route::resource('review', 'ReviewController');
+    Route::get("/review/{id}/delete", array(
+        "as"   => "review.delete",
+        "uses" => "ReviewController@delete"
+    ));
     //  Start an audit
     Route::any("assess", array(
         "as"   => "review.start",

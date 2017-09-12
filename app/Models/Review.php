@@ -2,10 +2,16 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
+use Sofa\Revisionable\Revisionable; // interface
 use Lang;
 
-class Review extends Model {
-
+class Review extends Model implements Revisionable{
+	
+	use SoftDeletes;
+	use RevisionableTrait;
+	protected $dates = ['deleted_at'];
 	protected $table = 'reviews';
 	/**
 	* Official SLMTA?

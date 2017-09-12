@@ -2,6 +2,7 @@
 
 use App\Http\Requests\Request;
 use App\Models\User;
+use Route;
 
 class UserRequest extends Request {
 
@@ -22,14 +23,18 @@ class UserRequest extends Request {
 	 */
 	public function rules()
 	{
-		$id = $this->ingnoreId();
+		// $id = $this->ingnoreId();
+		$id = $this->route('user');
+		
 		return [
             'name'   => 'required|unique:users,name,'.$id,
             'gender'   => 'required:users,gender,'.$id,
-            'email'   => 'unique:users,email,'.$id,
+            'email' => 'unique:users,email,'.$id,
             'phone'   => 'required|unique:users,phone,'.$id,
             'username'   => 'required|unique:users,username,'.$id,
+
         ];
+
 	}
 	/**
 	* @return \Illuminate\Routing\Route|null|string
@@ -38,6 +43,6 @@ class UserRequest extends Request {
 		$id = $this->route('user');
 		$name = $this->input('name');
 		$email = $this->input('email');
-		return User::where(compact('id', 'names', 'email'))->exists() ? $id : '';
+		return User::where(compact('id', 'name', 'email'))->exists() ? $id : '';
 	}
 }

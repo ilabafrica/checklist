@@ -22,7 +22,9 @@ class LabRequest extends Request {
 	 */
 	public function rules()
 	{		
-		$id = $this->ingnoreId();
+		// $id = $this->ingnoreId();
+		$id = $this->route('lab');
+
 		return [
             'name'   => 'required|unique:labs,name,'.$id,
             'lab_number'   => 'required|numeric|unique:labs,lab_number,'.$id,

@@ -62,6 +62,9 @@
                               @if(Entrust::can('complete-audit'))
                               <a href="{{ URL::to("review/" . $review->id . "/complete") }}" class="btn btn-danger btn-sm"><i class="fa fa-check-square-o"></i><span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</span></a>
                               @endif
+                              @if(Entrust::can('manage-labs'))
+                              <a href="{{ URL::to("review/" . $review->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> {{Lang::choice('messages.delete', 1)}}</span></a>
+                              @endif
                             </td>
                         </tr>
                         @empty
