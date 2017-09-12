@@ -1,5 +1,6 @@
 <?php namespace App\Http\Controllers;
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Review;
 use Auth;
 use DB;
@@ -34,12 +35,25 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		$user_id = Auth::user()->id;
-		
-		//get all the reviews the user has created or edited
-		$first = DB::table('review_assessors')->where('assessor_id', $user_id)->lists('review_id');
-		$reviews = Review::whereIn('id', $first)->get();		
-		
+		$user = Auth::user();
+		$role = $user->roles()->first();
+
+		//get all reviews for the admin
+		if ($role->name ==$user->isAdmin()) {
+			$reviews = Review::all();
+		}else
+		{		
+			//get all the reviews the user has created or edited
+			$first = DB::table('review_assessors')->where('assessor_id', $user->id)->lists('review_id');
+			$user_reviews = Review::where('user_id', Auth::user()->id)->lists('id');				
+			$all_reviews = array_merge($first, $user_reviews);
+
+			// dd($all_reviews);
+
+
+			$reviews = Review::whereIn('id', $first)->get();		
+		}
+
 		$message = '';
 		return view('home', compact('reviews', 'message'));
 	}

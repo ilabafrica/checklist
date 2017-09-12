@@ -42,7 +42,7 @@
                 <div class="form-group">
                     {!! Form::label('number', Lang::choice('messages.lab-number', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('number', $lab->lab_number, array('class' => 'form-control')) !!}
+                        {!! Form::text('lab_number', $lab->lab_number, array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">

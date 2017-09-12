@@ -85,7 +85,18 @@ class LabController extends Controller {
 	 * @return Response
 	 */
 	public function store(LabRequest $request)
-	{
+	{	
+		// $this->validate($request, [
+  //           'name'   => 'required|unique:labs,name',
+  //           'lab_number'   => 'unique:labs,lab_number',
+  //           'lab_type'   => 'required',
+  //           'county_id'   => 'required',
+  //           'address'   => 'required',
+  //           'postal_address'   => 'required',
+  //           'lab_level'   => 'required',
+  //           'lab_affiliation'   => 'required',
+  //       ]);
+
 		$lab = new Lab;
 		$lab->name = $request->name;
 		$lab->lab_number = $request->lab_number;
@@ -100,7 +111,7 @@ class LabController extends Controller {
 		$lab->country_id = 5;
 		$lab->email = $request->email;
 		$lab->country_id = 5;
-		 $lab->user_id = Auth::user()->id;
+		$lab->user_id = Auth::user()->id;
         $lab->save();
         $url = session('SOURCE_URL');
 
@@ -164,7 +175,7 @@ class LabController extends Controller {
 		$lab->lab_level_id = $request->lab_level;
         $lab->lab_affiliation_id = $request->lab_affiliation;
         $lab->name = $request->name;
-		$lab->lab_number = $request->number;
+		$lab->lab_number = $request->lab_number;
 		$lab->address = $request->address;
 		$lab->postal_address = $request->postal_address;
 		$lab->county_id = $request->county_id;

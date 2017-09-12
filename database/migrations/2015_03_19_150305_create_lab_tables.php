@@ -27,14 +27,14 @@ class CreateLabTables extends Migration {
 			$table->timestamps();
 		});
 		//Counties
-		/*Schema::create('counties', function(Blueprint $table)
+		Schema::create('counties', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->string('name');		
 				
             $table->softDeletes();
 			$table->timestamps();
-		});*/
+		});
 		
 		//	Lab Levels
 		Schema::create('lab_levels', function(Blueprint $table)
@@ -87,7 +87,7 @@ class CreateLabTables extends Migration {
 			$table->string('address', 100)->nullable();
 			$table->string('postal_code', 100)->nullable();
 			$table->string('postal_address', 100)->nullable();
-			// $table->integer('county_id')->unsigned();
+			$table->integer('county_id')->unsigned();
 			$table->string('subcounty')->nullable();
 			$table->string('state')->nullable();
 			$table->integer('country_id')->unsigned();
@@ -98,7 +98,7 @@ class CreateLabTables extends Migration {
 			$table->integer('user_id')->unsigned();
 
 			$table->foreign('country_id')->references('id')->on('countries');
-			// $table->foreign('county_id')->references('id')->on('counties');
+			$table->foreign('county_id')->references('id')->on('counties');
             $table->foreign('lab_level_id')->references('id')->on('lab_levels');
             $table->foreign('lab_affiliation_id')->references('id')->on('lab_affiliations');
             $table->foreign('lab_type_id')->references('id')->on('lab_types');

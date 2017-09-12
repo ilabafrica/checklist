@@ -52,14 +52,23 @@ class UserController extends Controller {
         $user->phone = $request->phone;
         $user->username = $request->username;
         $user->address = $request->address;
-        if($request->default_password)
-        	$user->password = Hash::make(User::DEFAULT_PASSWORD);
-        else
-        	$user->password = Hash::make($request->password);
+        $user->password = Hash::make(User::DEFAULT_PASSWORD);
+        // if($request->default_password)
+        // else
+        // 	$user->password = Hash::make($request->password);
         if(Input::hasFile('photo'))
         	$user->image = $this->imageModifier($request, $request->all()['photo']);
         $user->save();
         $url = session('SOURCE_URL');
+
+        $token = app()['auth.password.tokens']->create($user);
+        $user->token = $token;
+		$usr = $user->toArray();
+		
+		Mail::send('auth.email.welcome', $usr, function($message) use ($usr) {
+           	$message->to($usr['email']);
+          	$message->subject('National HIV PT - Account Created Successfully');
+       });
 
         return redirect()->to($url)->with('message', 'User created successfully.')->with('active_user', $user ->id);
 	}

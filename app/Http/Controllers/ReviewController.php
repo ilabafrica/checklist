@@ -397,11 +397,12 @@ class ReviewController extends Controller {
 		$review = Review::find($id);
 		//	Save Auditors
 		if(Input::get('assessors')){
-			$review->setAssessors(Input::get('assessors'));
+			$review->setAssessors(Input::get('assessors'), $review->user_id);
 		}
 		//	Check if SLMTA Info exists for the review
 	    $slmta = $review->slmta;
 	    if(!count($slmta)>0){
+
 	    	$slmtaInfo = new ReviewSlmtaInfo;
 	    	$slmtaInfo->review_id = $review->id;
 	    	$slmtaInfo->official_slmta = Input::get('official_slmta');
@@ -409,14 +410,34 @@ class ReviewController extends Controller {
 	    	$slmtaInfo->tests_before_slmta  = Input::get('tests_before_slmta');
 	    	$slmtaInfo->tests_this_year  = Input::get('tests_this_year');
 	    	$slmtaInfo->cohort_id  = Input::get('cohort_id');
-	    	$slmtaInfo->baseline_audit_date  = Input::get('baseline_audit_date');
-	    	$slmtaInfo->slmta_workshop_date  = Input::get('slmta_workshop_date');
-	    	$slmtaInfo->exit_audit_date  = Input::get('exit_audit_date');
+
+	    	if (!Input::get('baseline_audit_date')) {
+	    		$slmtaInfo->baseline_audit_date  = '0000-00-00';
+	    	}else{
+	    		$slmtaInfo->baseline_audit_date  = Input::get('baseline_audit_date');
+	    	}
+	    	if (!Input::get('slmta_workshop_date')) {
+	    		$slmtaInfo->slmta_workshop_date  = '0000-00-00';
+	    	}else{
+	    		$slmtaInfo->slmta_workshop_date  = Input::get('slmta_workshop_date');
+	    	}
+
+	    	if (!Input::get('exit_audit_date')) {
+	    		$slmtaInfo->exit_audit_date  = '0000-00-00';
+	    	}else{
+	    		$slmtaInfo->exit_audit_date  = Input::get('exit_audit_date');		
+	    	}
 	    	$slmtaInfo->baseline_score  = Input::get('baseline_score');
 	    	$slmtaInfo->baseline_stars_obtained  = Input::get('baseline_stars');
 	    	$slmtaInfo->exit_score  = Input::get('exit_score');
 	    	$slmtaInfo->exit_stars_obtained  = Input::get('exit_stars');
-	    	$slmtaInfo->last_audit_date  = Input::get('last_audit_date');
+	    	
+	    	if (!Input::get('last_audit_date')) {
+	    		$slmtaInfo->last_audit_date  = '0000-00-00';
+	    	}else{
+	    		$slmtaInfo->last_audit_date  = Input::get('last_audit_date');
+	    	}
+
 	    	$slmtaInfo->last_audit_score  = Input::get('last_audit_score');
 	    	$slmtaInfo->prior_audit_status  = Input::get('prior_audit_status');
 	    	$slmtaInfo->audit_start_date  = Input::get('audit_start_date');
@@ -427,6 +448,53 @@ class ReviewController extends Controller {
 	    		$slmtaInfo->save();
 	    }
 	    if(count($slmta)>0){
+	    	//Get existing SMLTA info 
+	    	if (Input::get('assessment_id')) {
+
+	    		$slmtaInfo = ReviewSlmtaInfo::find($slmta->id);
+	    		
+		    	$slmtaInfo->review_id = $review->id;
+		    	$slmtaInfo->official_slmta = Input::get('official_slmta');
+		    	$slmtaInfo->assessment_id = Input::get('assessment_id');
+		    	$slmtaInfo->tests_before_slmta  = Input::get('tests_before_slmta');
+		    	$slmtaInfo->tests_this_year  = Input::get('tests_this_year');
+		    	$slmtaInfo->cohort_id  = Input::get('cohort_id');
+
+		    	if (!Input::get('baseline_audit_date')) {
+		    		$slmtaInfo->baseline_audit_date  = '0000-00-00';
+		    	}else{
+		    		$slmtaInfo->baseline_audit_date  = Input::get('baseline_audit_date');
+		    	}
+		    	if (!Input::get('slmta_workshop_date')) {
+		    		$slmtaInfo->slmta_workshop_date  = '0000-00-00';
+		    	}else{
+		    		$slmtaInfo->slmta_workshop_date  = Input::get('slmta_workshop_date');
+		    	}
+
+		    	if (!Input::get('exit_audit_date')) {
+		    		$slmtaInfo->exit_audit_date  = '0000-00-00';
+		    	}else{
+		    		$slmtaInfo->exit_audit_date  = Input::get('exit_audit_date');		
+		    	}
+		    	$slmtaInfo->baseline_score  = Input::get('baseline_score');
+		    	$slmtaInfo->baseline_stars_obtained  = Input::get('baseline_stars');
+		    	$slmtaInfo->exit_score  = Input::get('exit_score');
+		    	$slmtaInfo->exit_stars_obtained  = Input::get('exit_stars');
+		    	
+		    	if (!Input::get('last_audit_date')) {
+		    		$slmtaInfo->last_audit_date  = '0000-00-00';
+		    	}else{
+		    		$slmtaInfo->last_audit_date  = Input::get('last_audit_date');
+		    	}
+		    	
+		    	$slmtaInfo->last_audit_score  = Input::get('last_audit_score');
+		    	$slmtaInfo->prior_audit_status  = Input::get('prior_audit_status');
+		    	$slmtaInfo->audit_start_date  = Input::get('audit_start_date');
+		    	$slmtaInfo->audit_end_date  = Input::get('audit_end_date');
+	    		$slmtaInfo->save();
+
+		    }
+
 		    //	Check if Lab Info exists for the review
 		    $profile = $review->laboratory;
 		    if(!count($profile)>0 && Input::get('head')){
@@ -438,55 +506,68 @@ class ReviewController extends Controller {
 		    	$labProfile->save();
 		    }
 		    else if(count($profile)>0){
-		    	$labProfile = ReviewLabProfile::find($profile->id);
-		    	//	Get elements with values given
-		    	if(Input::get('degree_staff'))
-		    		$labProfile->degree_staff = Input::get('degree_staff');
-		    	if(Input::get('degree_staff_adequate'))
-		    		$labProfile->degree_staff_adequate = Input::get('degree_staff_adequate');
-		    	if(Input::get('diploma_staff'))
-		    		$labProfile->diploma_staff = Input::get('diploma_staff');
-		    	if(Input::get('diploma_staff_adequate'))
-		    		$labProfile->diploma_staff_adequate = Input::get('diploma_staff_adequate');
-		    	if(Input::get('certificate_staff')) 
-		    		$labProfile->certificate_staff = Input::get('certificate_staff');
-		    	if(Input::get('certificate_staff_adequate'))
-		    		$labProfile->certificate_staff_adequate = Input::get('certificate_staff_adequate');
-		    	if(Input::get('microscopist'))
-		    		$labProfile->microscopist = Input::get('microscopist');
-		    	if(Input::get('microscopist_adequate'))
-		    		$labProfile->microscopist_adequate = Input::get('microscopist_adequate');
-		    	if(Input::get('phlebotomist'))
-		    		$labProfile->phlebotomist = Input::get('phlebotomist');
-		    	if(Input::get('phlebotomist_adequate'))
-		    		$labProfile->phlebotomist_adequate = Input::get('phlebotomist_adequate');
-		    	if(Input::get('data_clerk'))
-		    		$labProfile->data_clerk = Input::get('data_clerk');
-		    	if(Input::get('data_clerk_adequate'))
-		    		$labProfile->data_clerk_adequate = Input::get('data_clerk_adequate');
-		    	if(Input::get('cleaner'))
-		    		$labProfile->cleaner = Input::get('cleaner');
-		    	if(Input::get('cleaner_adequate'))
-		    		$labProfile->cleaner_adequate = Input::get('cleaner_adequate');
-		    	if(Input::get('cleaner_dedicated'))
-		    		$labProfile->cleaner_dedicated = Input::get('cleaner_dedicated');
-		    	if(Input::get('cleaner_trained'))
-		    		$labProfile->cleaner_trained = Input::get('cleaner_trained');
-		    	if(Input::get('driver'))
-		    		$labProfile->driver = Input::get('driver');
-		    	if(Input::get('driver_adequate'))
-		    		$labProfile->driver_adequate = Input::get('driver_adequate');
-		    	if(Input::get('driver_dedicated'))
-		    		$labProfile->driver_dedicated = Input::get('driver_dedicated');
-		    	if(Input::get('driver_trained'))
-		    		$labProfile->driver_trained = Input::get('driver_trained');
-		    	if(Input::get('other_staff'))
-		    		$labProfile->other_staff = Input::get('other_staff');
-		    	if(Input::get('other_staff_adequate'))
-		    		$labProfile->other_staff_adequate = Input::get('other_staff_adequate');
-		    	//	Update the lab_profile
-				if(count($labProfile)>0)
-		    		$labProfile->save();
+		    	if (Input::get('head')) {
+		    		$labProfile = ReviewLabProfile::find($profile->id);
+			    	$labProfile->review_id = $review->id;
+			    	$labProfile->head = Input::get('head');
+			    	$labProfile->head_work_telephone = Input::get('head_work_telephone');
+			    	$labProfile->head_personal_telephone = Input::get('head_personal_telephone');
+			    	$labProfile->save();
+		    	}
+		    	
+		    	if (Input::get('degree_staff')) {
+
+			    	$labProfile = ReviewLabProfile::find($profile->id);
+		    		// dd($labProfile);
+			    	//	Get elements with values given
+			    	if(Input::get('degree_staff'))
+			    		$labProfile->degree_staff = Input::get('degree_staff');
+			    	if(Input::get('degree_staff_adequate'))
+			    		$labProfile->degree_staff_adequate = Input::get('degree_staff_adequate');
+			    	if(Input::get('diploma_staff'))
+			    		$labProfile->diploma_staff = Input::get('diploma_staff');
+			    	if(Input::get('diploma_staff_adequate'))
+			    		$labProfile->diploma_staff_adequate = Input::get('diploma_staff_adequate');
+			    	if(Input::get('certificate_staff')) 
+			    		$labProfile->certificate_staff = Input::get('certificate_staff');
+			    	if(Input::get('certificate_staff_adequate'))
+			    		$labProfile->certificate_staff_adequate = Input::get('certificate_staff_adequate');
+			    	if(Input::get('microscopist'))
+			    		$labProfile->microscopist = Input::get('microscopist');
+			    	if(Input::get('microscopist_adequate'))
+			    		$labProfile->microscopist_adequate = Input::get('microscopist_adequate');
+			    	if(Input::get('phlebotomist'))
+			    		$labProfile->phlebotomist = Input::get('phlebotomist');
+			    	if(Input::get('phlebotomist_adequate'))
+			    		$labProfile->phlebotomist_adequate = Input::get('phlebotomist_adequate');
+			    	if(Input::get('data_clerk'))
+			    		$labProfile->data_clerk = Input::get('data_clerk');
+			    	if(Input::get('data_clerk_adequate'))
+			    		$labProfile->data_clerk_adequate = Input::get('data_clerk_adequate');
+			    	if(Input::get('cleaner'))
+			    		$labProfile->cleaner = Input::get('cleaner');
+			    	if(Input::get('cleaner_adequate'))
+			    		$labProfile->cleaner_adequate = Input::get('cleaner_adequate');
+			    	if(Input::get('cleaner_dedicated'))
+			    		$labProfile->cleaner_dedicated = Input::get('cleaner_dedicated');
+			    	if(Input::get('cleaner_trained'))
+			    		$labProfile->cleaner_trained = Input::get('cleaner_trained');
+			    	if(Input::get('driver'))
+			    		$labProfile->driver = Input::get('driver');
+			    	if(Input::get('driver_adequate'))
+			    		$labProfile->driver_adequate = Input::get('driver_adequate');
+			    	if(Input::get('driver_dedicated'))
+			    		$labProfile->driver_dedicated = Input::get('driver_dedicated');
+			    	if(Input::get('driver_trained'))
+			    		$labProfile->driver_trained = Input::get('driver_trained');
+			    	if(Input::get('other_staff'))
+			    		$labProfile->other_staff = Input::get('other_staff');
+			    	if(Input::get('other_staff_adequate'))
+			    		$labProfile->other_staff_adequate = Input::get('other_staff_adequate');
+			    	//	Update the lab_profile
+					if(count($labProfile)>0)
+			    		$labProfile->save();
+		    	}
 		    }
 		}
 		//	Store Audit data
@@ -643,6 +724,8 @@ class ReviewController extends Controller {
 	        $response->update_user_id = Auth::user()->id;
 	        $response->save();
 
+	        DB::table('review_assessors')->insert(['review_id' =>$response->id , 'assessor_id' => Auth::user()->id]);
+
 	        //	Get variables ready for processing of new audit
 	        $audit = AuditType::find($response->audit_type_id);
 	        $lab = Lab::find($response->lab_id);
@@ -651,7 +734,7 @@ class ReviewController extends Controller {
 	        $review = Review::find($response->id);
 	      
 
-	        return view('audit.review.create', compact('audit', 'lab', 'page', 'review'));
+	        return view('audit.review.edit', compact('audit', 'lab', 'page', 'review'));
     	}
 	}
 	

@@ -69,10 +69,8 @@
                               <a href="{{ URL::to("lab/" . $lab->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> {{Lang::choice('messages.delete', 1)}}</span></a>
                               @endif
                               @if(Entrust::can('create-audit'))
-                              @if(Auth::user()->id !=1)
                               <button class="btn btn-default btn-sm start-data-item-link" data-toggle="modal" data-target=".start-data-modal" data-lab="{{{ $lab->name }}}" data-id="{!! $lab->id !!}"><i class="fa fa-folder-open"></i><span> {!! Lang::choice('messages.start-audit', 1) !!}</span></button>
                               <!-- <a href="{{ URL::to("lab/" . $lab->id ."/select") }}" class="btn btn-default btn-sm"><i class="fa fa-folder-open"></i><span> {{Lang::choice('messages.start-audit', 1)}}</span></a> -->
-                              @endif
                               @endif
                             </td>
                         </tr>

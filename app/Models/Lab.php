@@ -21,7 +21,6 @@ class Lab extends Model implements Revisionable{
     protected $revisionable = [
         'name',
         'lab_type_id',
-        'lab_number',
         'address',
         'postal_code',
         'city',

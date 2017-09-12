@@ -66,7 +66,7 @@ class Review extends Model {
 	 	return $this->belongsToMany('App\Models\User', 'review_assessors', 'review_id', 'assessor_id');
 	}
 	//	Set auditors for the review
-	public function setAssessors($field){
+	public function setAssessors($field,$review_user_id){
 
 		$fieldAdded = array();
 		$reviewId = 0;	
@@ -84,7 +84,7 @@ class Review extends Model {
 
 		}
 		// Delete existing parent-child mappings
-		DB::table('review_assessors')->where('review_id', '=', $reviewId)->delete();
+		DB::table('review_assessors')->where('review_id', '=', $reviewId)->where('assessor_id', '!=', $review_user_id) ->delete();
 
 		// Add the new mapping
 		DB::table('review_assessors')->insert($fieldAdded);

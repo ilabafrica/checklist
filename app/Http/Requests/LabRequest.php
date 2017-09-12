@@ -21,7 +21,7 @@ class LabRequest extends Request {
 	 * @return array
 	 */
 	public function rules()
-	{
+	{		
 		$id = $this->ingnoreId();
 		return [
             'name'   => 'required|unique:labs,name,'.$id,

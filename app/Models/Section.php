@@ -126,7 +126,7 @@ class Section extends Model implements Revisionable{
 		$na = 0;
 		$rqs = Review::find($review)->rq;
 		foreach ($rqs as $rq) {
-			if(in_array($rq->question_id, $this->questions->lists('id')->all()))
+			if(in_array($rq->question_id, $this->questions->lists('id')))
 				$sum+=(int)$rq->qs['audited_score'];
 			if($rq->na)
 				$na+=(int)$rq->na;
