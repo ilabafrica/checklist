@@ -71,8 +71,8 @@
                                                 <br />
                                                 <div class="nchi{!! $user->id !!}" <?php if(!$user->hasRole('Country Admin')){ ?>style="display:none" <?php } ?>>
                                                     <div class="form-group">
-                                                        <div class="col-sm-8">
-                                                            {!! Form::select('country'.$user->id, array(''=>trans('messages.select-country'))+$countries, ($user->tier && $user->hasRole('Country Admin'))?$user->tier->tier:'', 
+								<div class="col-sm-8">
+                                                            {!! Form::select('country'.$user->id, array(''=>trans('messages.select-country'))+$countries->toArray(), ($user->tier && $user->hasRole('Country Admin'))?$user->tier->tier:'', 
                                                                 array('class' => 'form-control', 'id' => 'country'.$user->id)) !!}
                                                         </div>
                                                     </div>
@@ -84,14 +84,14 @@
                                                 <br />
                                                 <div class="form-group partner{!! $user->id !!}" <?php if(!$user->hasRole('Partner Admin')){ ?>style="display:none"<?php } ?>>
                                                     <div class="col-sm-8">
-                                                        {!! Form::select('country_'.$user->id, array(''=>trans('messages.select-country'))+$countries, 
+                                                        {!! Form::select('country_'.$user->id, array(''=>trans('messages.select-country'))+$countries->toArray(), 
                                                             ($user->tier&& $user->hasRole('Partner Admin'))?App\Models\Partner::find($user->tier->tier)->country->id:'', 
                                                             array('class' => 'form-control', 'id' => 'country_'.$user->id, 'onchange' => "load('$user->id')")) !!}
                                                     </div>
                                                 </div>
                                                 <div class="form-group partner{!! $user->id !!}" <?php if(!$user->hasRole('Partner Admin')){ ?>style="display:none"<?php } ?>>
                                                     <div class="col-sm-8">
-                                                        {!! Form::select('partner'.$user->id, array(''=>trans('messages.select-partner'))+$partners, 
+                                                        {!! Form::select('partner'.$user->id, array(''=>trans('messages.select-partner'))+$partners->toArray(), 
                                                             ($user->tier&& $user->hasRole('Partner Admin'))?$user->tier->tier:'', 
                                                             array('class' => 'form-control', 'id' => 'partner'.$user->id)) !!}
                                                     </div>
@@ -104,7 +104,7 @@
                                             <div class="laboratory{!! $user->id !!}" <?php if(!$user->hasRole('Lab In-charge')){ ?>style="display:none" <?php } ?>>
                                                 <div class="form-group">
                                                     <div class="col-sm-8">
-                                                        {!! Form::select('lab'.$user->id, array(''=>trans('messages.select'))+$labs, ($user->tier && $user->hasRole('Lab In-charge'))?$user->tier->tier:'', 
+                                                        {!! Form::select('lab'.$user->id, array(''=>trans('messages.select'))+$labs->toArray(), ($user->tier && $user->hasRole('Lab In-charge'))?$user->tier->tier:'', 
                                                             array('class' => 'form-control', 'id' => 'lab'.$user->id)) !!}
                                                     </div>
                                                 </div>

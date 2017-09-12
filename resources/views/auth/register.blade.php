@@ -67,7 +67,7 @@
 				                <div class="form-group">
 				                    {!! Form::label('user_role', Lang::choice('messages.role', 1), array('class' => 'col-sm-4 control-label')) !!}
 				                    <div class="col-sm-8">
-				                        {!! Form::select('user_role', array(''=>trans('messages.select'))+$roles,'', array('class' => 'form-control', 'id' => 'user_role')) !!}
+				                        {!! Form::select('user_role', array(''=>trans('messages.select'))+$roles->toArray(),'', array('class' => 'form-control', 'id' => 'user_role')) !!}
 				                    </div>
 				                </div> 
 				            </div>

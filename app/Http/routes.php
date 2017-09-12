@@ -15,14 +15,15 @@ Route::get('/', 'WelcomeController@index');
 
 Route::get('home', 'HomeController@index');
 
+
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
 /* Routes accessible before logging in */
 Route::group(array("before" => "guest"), function()
-{
-	Route::any('/', array(
+{	
+    Route::any('/', array(
 	    "as" => "auth.login",
 	    "uses" => "WelcomeController@index"
 	));
@@ -31,7 +32,8 @@ Route::group(array("before" => "guest"), function()
         "uses" => "Auth\AuthController@postLogin"
 
     ));
-    Route::any('/register', array(
+   Route::get('emailto', 'UserController@email');
+   Route::any('/register', array(
         "as" => "user.register",
         "uses" => "Auth\AuthController@register"
     ));
@@ -130,6 +132,10 @@ Route::group(['middleware' => 'auth'], function(){
 
     //	Audits controller
     Route::resource('review', 'ReviewController');
+     Route::get("/review/{id}/delete", array(
+        "as"   => "review.delete",
+        "uses" => "ReviewController@delete"
+    ));
     //  Start an audit
     Route::any("assess", array(
         "as"   => "review.start",

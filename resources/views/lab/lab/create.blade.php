@@ -49,22 +49,22 @@
                 </div>
                 <div class="form-group">
                     {!! Form::label('lab_type_id', Lang::choice('messages.lab-type', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::select('lab_type', array(''=>trans('messages.select-lab-type'))+$labTypes,'', 
+			    <div class="col-sm-8">
+                        {!! Form::select('lab_type', array(''=>trans('messages.select-lab-type'))+$labTypes->toArray(),'', 
                             array('class' => 'form-control', 'id' => 'lab_type')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('lab_level_id', Lang::choice('messages.lab-level', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('lab_level', array(''=>trans('messages.select-lab-level'))+$labLevels,'', 
+                        {!! Form::select('lab_level', array(''=>trans('messages.select-lab-level'))+$labLevels->toArray(),'', 
                             array('class' => 'form-control', 'id' => 'lab_level')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('lab_affiliation_id', Lang::choice('messages.lab-affiliation', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('lab_affiliation', array(''=>trans('messages.select-lab-affiliation'))+$labAffiliations,'', 
+                        {!! Form::select('lab_affiliation', array(''=>trans('messages.select-lab-affiliation'))+$labAffiliations->toArray(),'', 
                             array('class' => 'form-control', 'id' => 'lab_affiliation')) !!}
                     </div>
                 </div>               
@@ -83,7 +83,7 @@
                 <div class="form-group">
                     {!! Form::label('county_id', Lang::choice('messages.county', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::select('county_id', array(''=>trans('messages.select'))+$counties,'', array('class' => 'form-control', 'id' => 'county_id')) !!}
+                        {!! Form::select('county_id', array(''=>trans('messages.select'))+$counties->toArray(),'', array('class' => 'form-control', 'id' => 'county_id')) !!}
                     </div>
                 </div>               
                 <div class="form-group">

@@ -34,13 +34,32 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		$user_id = Auth::user()->id;
+		$user = Auth::user();
+		$role = $user->roles()->first();
+		
+		//get all reviews for the admin
+		if ($role->name ==$user->isAdmin()) {
+			$reviews = Review::all();
+		}else{
+		
 		
 		//get all the reviews the user has created or edited
-		$first = DB::table('review_assessors')->where('assessor_id', $user_id)->lists('review_id');
-		$reviews = Review::whereIn('id', $first)->get();		
+		$first = DB::table('review_assessors')->where('assessor_id', Auth::user()->id)->lists('review_id');
+		$reviews = Review::whereIn('id', $first)->get();				}
 		
 		$message = '';
 		return view('home', compact('reviews', 'message'));
+	}
+	public function email()
+	{
+		$user = User::find(1);
+		$usr = $user->toArray();
+
+		Mail::send('auth.email.welcome', $usr, function($message) use ($usr) {
+		   	$message->to($usr['email']);
+  			$message->subject('National HIV PT - Account Created Successfully');
+		});
+
+		echo("Mail supposedly sent");
 	}
 }

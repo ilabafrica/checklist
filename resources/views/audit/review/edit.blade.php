@@ -79,14 +79,14 @@
                             <div class="form-group">
                                 {!! Form::label('audit-start-date', Lang::choice('messages.audit-start-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                    {!! Form::text('audit_start_date', $slmta?$slmta->audit_start_date:'', array('class' => 'form-control')) !!}
+                                    {!! Form::text('audit_start_date', $slmta?$slmta->audit_start_date:'', array('class' => 'form-control validate[required,past[#audit_end_date]]')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('audit-end-date', Lang::choice('messages.audit-end-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                    {!! Form::text('audit_end_date', $slmta?$slmta->audit_end_date:'', array('class' => 'form-control')) !!}
+                                    {!! Form::text('audit_end_date', $slmta?$slmta->audit_end_date:'', array('class' => 'form-control validate[required,future[#audit_start_date]]')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
@@ -111,9 +111,9 @@
                                                         <input type="checkbox" name="assessors[]" value="{{ $value->id}}"
 
 
-                                                        {{ in_array($value->id, $review->assessors?$review->assessors->lists('id'):[])||$value->id==Auth::user()->id?"checked":"" }} 
+                                                        {{ in_array($value->id, $review->assessors?$review->assessors->lists('id')->toArray():[])||$value->id==Auth::user()->id?"checked":"" }} 
                                                         
-                                                        {{$value->id==Auth::user()->id||$value->id==$review->user_id?'onclick="return false"':'' }}
+                                                        {{ $review->user_id == $value->id?"disabled='true'":"" }}
 
                                                         />
                                                         {{ $value->name }}
@@ -125,30 +125,30 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                             <div class="form-group">
                                 {!! Form::label('assessment_id', Lang::choice('messages.slmta-audit', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments,$slmta?$slmta->assessment_id:'', 
-                                        array('class' => 'form-control', 'id' => 'assessment_id')) !!}
+                                    {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments->toArray(),$slmta?$slmta->assessment_id:'', 
+                                        array('class' => 'form-control validate[required]', 'id' => 'assessment_id')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('tests-before-slmta', Lang::choice('messages.tests-before-slmta', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-before-slmta')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('tests_before_slmta', $slmta?$slmta->tests_before_slmta:'', array('class' => 'form-control', 'id' => 'tests_before_slmta')) !!}
+                                    {!! Form::text('tests_before_slmta', $slmta?$slmta->tests_before_slmta:'', array('class' => 'form-control validate[required,custom[integer]]', 'id' => 'tests_before_slmta')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('tests-this-year', Lang::choice('messages.tests-this-year', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-this-year')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('tests_this_year', $slmta?$slmta->tests_this_year:'', array('class' => 'form-control', 'id' => 'tests_this_year')) !!}
+                                    {!! Form::text('tests_this_year', $slmta?$slmta->tests_this_year:'', array('class' => 'form-control validate[required,custom[integer]]', 'id' => 'tests_this_year')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('cohort-id', Lang::choice('messages.cohort-id', 1), array('class' => 'col-sm-4 control-label', 'id' => 'cohort-id')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('cohort_id', $slmta?$slmta->cohort_id:'', array('class' => 'form-control', 'id' => 'cohort_id')) !!}
+                                    {!! Form::text('cohort_id', $slmta?$slmta->cohort_id:'', array('class' => 'form-control validate[required,custom[integer]]', 'id' => 'cohort_id')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -181,27 +181,27 @@
                             <div class="form-group">
                                 {!! Form::label('baseline-score', Lang::choice('messages.baseline-score', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('baseline_score', $slmta?$slmta->baseline_score:'', array('class' => 'form-control', 'id' => 'baseline_score')) !!}
+                                    {!! Form::text('baseline_score', $slmta?$slmta->baseline_score:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'baseline_score')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('baseline-stars', Lang::choice('messages.baseline-stars', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
                                     {!! Form::select('baseline_stars', array(''=>trans('messages.select'))+$stars,$slmta?$slmta->baseline_stars_obtained:'', 
-                                        array('class' => 'form-control', 'id' => 'baseline_stars')) !!}
+                                        array('class' => 'form-control validate[required]', 'id' => 'baseline_stars')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('exit-score', Lang::choice('messages.exit-score', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('exit_score', $slmta?$slmta->exit_score:'', array('class' => 'form-control', 'id' => 'exit_score')) !!}
+                                    {!! Form::text('exit_score', $slmta?$slmta->exit_score:'', array('class' => 'form-control validate[required,custom[integer]]', 'id' => 'exit_score')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('exit-stars', Lang::choice('messages.exit-stars', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
                                     {!! Form::select('exit_stars', array(''=>trans('messages.select'))+$stars,$slmta?$slmta->exit_stars_obtained:'', 
-                                        array('class' => 'form-control', 'id' => 'exit_stars')) !!}
+                                        array('class' => 'form-control validate[required]', 'id' => 'exit_stars')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
@@ -214,14 +214,14 @@
                             <div class="form-group">
                                 {!! Form::label('last-audit-score', Lang::choice('messages.last-audit-score', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::text('last_audit_score', $slmta?$slmta->last_audit_score:'', array('class' => 'form-control', 'id' => 'last_audit_score')) !!}
+                                    {!! Form::text('last_audit_score', $slmta?$slmta->last_audit_score:'', array('class' => 'form-control validate[required,custom[integer]]', 'id' => 'last_audit_score')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('prior-audit-status', Lang::choice('messages.prior-audit-status', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
                                     {!! Form::select('prior_audit_status', array(''=>trans('messages.select'))+$stars,$slmta?$slmta->prior_audit_status:'', 
-                                        array('class' => 'form-control', 'id' => 'prior_audit_status')) !!}
+                                        array('class' => 'form-control validate[required]', 'id' => 'prior_audit_status')) !!}
                                 </div>
                             </div>
                         @elseif($page->name == 'Lab Info')
@@ -581,12 +581,12 @@
                                                         $summary = '';
                                                         foreach($audit->sections as $part)
                                                         {
-                                                            if(count(array_intersect($questions, $part->questions->lists('id')))>0)
+                                                            if(count(array_intersect($questions, $part->questions->lists('id')->toArray()))>0)
                                                             {
                                                                 $summary.="\n".$part->label."\n";
                                                                 foreach($notes as $note)
                                                                 {
-                                                                    if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')))
+                                                                    if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')->toArray()))
                                                                     {
                                                                         $summary.="\n".$note->note;
                                                                     }
@@ -832,7 +832,44 @@
         </div>
     </div>
 </div>
+
+<!-- Check if Assessment Type has been selected Modal-->
+<div class="modal fade" id="audit_type_check" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">
+                    <i class="fa fa-check-square-o"></i>
+                    <span> <strong>Important</strong></span>
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-10">
+                        <p>Ensure that you have filled in the SLMTA INFO first before proceeding to other sections.</p>
+                        <p>For the following fields, if you're not sure of the information just fill in 0 (numbers only):<br/> SLMTA Audit,<br/> Total Tests before SLMTA, <br/>Total tests this year, <br/>Cohort ID,<br/>Baseline Score, <br/>Exit Score and<br/> Score for Last Audit </p>
+                        <p> For the following fields, if you're not sure of the information just leave them blank,<br/> Dates of baseline audit,<br/> SLMTA workshop #1, <br/>Exit audit performed and <br/>Date of Last Audit  </p>
+
+                        <p><i>Ensure that the SLMTA Audit, Audit Start and Audit End Date are filled in.</i></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    <i class="fa fa-times-circle-o"></i><span> Close</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
+
+$(window).on('load',function(){
+        if ($("#assessment_id").val()=='') {
+        $('#audit_type_check').modal('show');
+    }
+    });
     jQuery(document).ready( function() {
         jQuery("#form-edit-review").validationEngine({promptPosition:"topLeft", scroll:true});
         // binds form submission and fields to the validation engine

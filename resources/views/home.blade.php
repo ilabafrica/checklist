@@ -55,12 +55,13 @@
                             <td>{!! $review->status==App\Models\Review::COMPLETE?'<span class="label label-success">'.Lang::choice('messages.audit-status', 1).'</span>':'<span class="label label-warning">'.Lang::choice('messages.audit-status', 2).'</span>' !!}</td>
                             <td>
                               <a href="{{ URL::to("review/" . $review->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {{ Lang::choice('messages.view', 1) }}</span></a>
-                              <a href="{{ URL::to("review/" . $review->id . "/edit") }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit', 1) }}</span></a>
-                              <a href="{{ URL::to("review/" . $review->id . "/export") }}" class="btn btn-default btn-sm"><i class="fa fa-external-link"></i><span> {{ Lang::choice('messages.export-audit', 1) }}</span></a>
+                              <a href="{{ URL::to("review/" . $review->id . "/edit") }}" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit', 1) }}</span></a>
+                              <a href="{{ URL::to("review/" . $review->id . "/export") }}" class="btn btn-warning btn-sm"><i class="fa fa-external-link"></i><span> {{ Lang::choice('messages.export-audit', 1) }}</span></a>
                               <a href="{{ URL::to("report/" . $review->id) }}" class="btn btn-info btn-sm"><i class="fa fa-bar-chart"></i><span> {{ Lang::choice('messages.run-reports', 1) }}</span></a>
 
                               @if(Entrust::can('complete-audit'))
-                              <a href="{{ URL::to("review/" . $review->id . "/complete") }}" class="btn btn-danger btn-sm"><i class="fa fa-check-square-o"></i><span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</span></a>
+                              <a href="{{ URL::to("review/" . $review->id . "/complete") }}" class="btn btn-default btn-sm"><i class="fa fa-check-square-o"></i><span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</span></a>
+			       <a href="{{ URL::to("review/" . $review->id . "/delete") }}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i><span> Remove </span></a>
                               @endif
                             </td>
                         </tr>

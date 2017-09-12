@@ -119,7 +119,7 @@
                             <div class="form-group">
                                 {!! Form::label('assessment_id', Lang::choice('messages.slmta-audit-type', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments,'', 
+                                    {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments->toArray(),'', 
                                         array('class' => 'form-control', 'id' => 'assessment_id')) !!}
                                 </div>
                             </div>

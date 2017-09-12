@@ -20,4 +20,9 @@ class LabLevel extends Model implements Revisionable{
         'name',
         'description',
     ];
+	public function lab()
+        {
+                return $this->hasMany('App\Models\Lab');
+        }
+
 }

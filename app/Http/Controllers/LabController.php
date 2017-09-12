@@ -48,7 +48,7 @@ class LabController extends Controller {
 		$counties = County::lists('name', 'id');
 		//	Get all lab levels
 		$labLevels = LabLevel::lists('name', 'id');
-		//	Get all lab affiliations
+			//	Get all lab affiliations
 		$labAffiliations = LabAffiliation::lists('name', 'id');
 		//	Get all lab types
 		$labTypes = LabType::lists('name', 'id');
@@ -164,7 +164,7 @@ class LabController extends Controller {
 		$lab->lab_level_id = $request->lab_level;
         $lab->lab_affiliation_id = $request->lab_affiliation;
         $lab->name = $request->name;
-		$lab->lab_number = $request->number;
+		$lab->lab_number = $request->lab_number;
 		$lab->address = $request->address;
 		$lab->postal_address = $request->postal_address;
 		$lab->county_id = $request->county_id;

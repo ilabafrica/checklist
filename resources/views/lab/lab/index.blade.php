@@ -57,9 +57,9 @@
                             <td> No County Selected</td>
                             @endif
 
-                            <td>{{ $lab->labLevel->name}}</td>
-                            <td>{{ $lab->labAffiliation->name }}</td>
-                            <td>{{ $lab->labType->name}}</td>
+                            <td>{{ $lab->labLevel['name']}}</td>
+                            <td>{{ $lab->labAffiliation['name'] }}</td>
+                            <td>{{ $lab->labType['name']}}</td>
                             <td>
                               <a href="{{ URL::to("lab/" . $lab->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {{Lang::choice('messages.view', 1)}}</span></a>
                               @if(Entrust::can('edit-lab'))
@@ -71,7 +71,7 @@
                               @if(Entrust::can('create-audit'))
                               @if(Auth::user()->id !=1)
                               <button class="btn btn-default btn-sm start-data-item-link" data-toggle="modal" data-target=".start-data-modal" data-lab="{{{ $lab->name }}}" data-id="{!! $lab->id !!}"><i class="fa fa-folder-open"></i><span> {!! Lang::choice('messages.start-audit', 1) !!}</span></button>
-                              <!-- <a href="{{ URL::to("lab/" . $lab->id ."/select") }}" class="btn btn-default btn-sm"><i class="fa fa-folder-open"></i><span> {{Lang::choice('messages.start-audit', 1)}}</span></a> -->
+                              <!--<a href="{{ URL::to("lab/" . $lab->id ."/select") }}" class="btn btn-default btn-sm"><i class="fa fa-folder-open"></i><span> {{Lang::choice('messages.start-audit', 1)}}</span></a> -->
                               @endif
                               @endif
                             </td>

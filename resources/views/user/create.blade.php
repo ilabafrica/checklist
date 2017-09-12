@@ -67,7 +67,7 @@
                         {!! Form::text('username', Input::old('username'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
-                <div class="form-group">
+<!--                <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                         <label class="checkbox-inline">
                             {!! Form::checkbox("default_password", '1', '', array('onclick' => 'toggle(".pword", this)')) !!}{{ Lang::choice('messages.use-default-password', 1) }}
@@ -87,7 +87,7 @@
                         {!! Form::password('password_confirmation', array('class' => 'form-control')) !!}
                     </div>
                 </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                     {!! Form::button("<i class='glyphicon glyphicon-ok-circle'></i> ".Lang::choice('messages.save', 1), 

@@ -59,7 +59,7 @@
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.names-affiliations-of-auditors', 1) !!}</td>
-                                            <td>{!! $review->assessors?implode(", ", $review->assessors->lists('name')):'' !!}</td>
+                                            <td>{!! $review->assessors?implode(", ", $review->assessors->lists('name')->toArray()):'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.slmta-audit-type', 1) !!}</td>
@@ -291,11 +291,11 @@
                                                 <td><strong>{!! Lang::choice('messages.commendations', 1) !!}</strong></td>
                                                 <td>
                                                     @foreach($audit->sections as $part)
-                                                        @if(count(array_intersect($questions, $part->questions->lists('id')))>0)
+                                                        @if(count(array_intersect($questions, $part->questions->lists('id')->toArray()))>0)
                                                           <p>
                                                             <strong>{!! $part->label !!}</strong>
                                                             @foreach($notes as $note)
-                                                                @if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')))
+                                                                @if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')->toArray()))
                                                                     <br>{!! $note->note !!}
                                                                 @endif
                                                             @endforeach

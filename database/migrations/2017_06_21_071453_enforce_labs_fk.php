@@ -15,7 +15,7 @@ class EnforceLabsFk extends Migration {
 		// Update laboratories table
 		Schema::table('labs', function(Blueprint $table)
 		{
-			$table->foreign('county_id')->references('id')->on('counties');
+//			$table->foreign('county_id')->references('id')->on('counties');
 		});
 	}
 
