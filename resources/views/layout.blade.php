@@ -103,6 +103,11 @@
                         <span class="fa fa-bar-chart"></span> {{ Lang::choice('messages.report', 2) }}
                     </a>
                 </li>
+                <li class="dropdown">
+                    <a href="{!! URL::route('faqs') !!}" target="_blank" role="button" aria-expanded="false">
+                        <span class="fa fa-bar-chart"></span> {{ Lang::choice('messages.faq', 2) }}
+                    </a>
+                </li>
             </ul>
             <!-- End Audit, Lab -->
             <ul class="nav navbar-top-links navbar-right">

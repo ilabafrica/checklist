@@ -205,10 +205,17 @@ Route::group(['middleware' => 'auth'], function(){
         "as"    =>  "report.bar",
         "uses"  =>  "ReportController@bar"
     ));
-    Route::any('/spider/{id}', array(
-        "as"    =>  "report.spider",
-        "uses"  =>  "ReportController@spider"
-    ));
+    Route::get('/faq',[
+        'as'=>'faqs',
+        'uses'=>'FaqController@index'
+    ]);
+
+    //  FaQs
+//    Route::get('faqs', function()
+//    {
+//        return view ('faq.show');
+//    });
+
 
     //  Export to excel
     Route::any('/review/{id}/export', array(
