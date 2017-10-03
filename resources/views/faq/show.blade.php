@@ -13,61 +13,72 @@
     <link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
     <script src="js/modernizr.js"></script> <!-- Modernizr -->
     <script src="js/main.js"></script>
-    <script src="js/jquery-2.1.1.js"></script> <!-- Modernizr -->
-    <script src="js/jquery.mobile.custom.min.js"></script> <!-- Modernizr -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/jquery.mobile.custom.min.js"></script>
 
 
     <title>FAQ Template | CodyHouse</title>
 </head>
 <body>
 <header>
-    <h1>FAQ Template</h1>
+    <h1>eChecklist FAQ Page</h1>
 </header>
 <section class="cd-faq">
     <ul class="cd-faq-categories">
         <li><a class="selected" href="#basics">Basics</a></li>
-        <li><a href="#Lab Catalog">Lab Catalog</a></li>
-        <li><a href="#Audit Configuration">Audit Configuration</a></li>
-        <li><a href="#Users">Users</a></li>
-        <li><a href="#Audit">Audit</a></li>
-        <li><a href="#Report">Reports</a></li>
-        <li><a href="#Access Controls">Access Controls</a></li>
+        <li><a href="#lab catalog">Lab Catalog</a></li>
+        <li><a href="#audit configuration">Audit Configuration</a></li>
+        <li><a href="#users">Users</a></li>
+        <li><a href="#audit">Audit</a></li>
+        <li><a href="#report">Reports</a></li>
+        <li><a href="#access controls">Access Controls</a></li>
     </ul> <!-- cd-faq-categories -->
 
     <div class="cd-faq-items">
         <ul id="basics" class="cd-faq-group">
             <li class="cd-faq-title"><h2>Basics</h2></li>
             <li>
-                <a class="cd-faq-trigger" href="#0">How do I change my password?</a>
+                <a class="cd-faq-trigger" href="#0">How do I sign in?</a>
                 <div class="cd-faq-content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae quidem blanditiis delectus corporis, possimus officia sint sequi ex tenetur id impedit est pariatur iure animi non a ratione reiciendis nihil sed consequatur atque repellendus fugit perspiciatis rerum et. Dolorum consequuntur fugit deleniti, soluta fuga nobis. Ducimus blanditiis velit sit iste delectus obcaecati debitis omnis, assumenda accusamus cumque perferendis eos aut quidem! Aut, totam rerum, cupiditate quae aperiam voluptas rem inventore quas, ex maxime culpa nam soluta labore at amet nihil laborum? Explicabo numquam, sit fugit, voluptatem autem atque quis quam voluptate fugiat earum rem hic, reprehenderit quaerat tempore at. Aperiam.</p>
+                    <p>
+                    <ol>
+                        <li>To sign in,one must have a username and a password. </li>
+                        <li>Input your username and password</li>
+                        <li>Click on the sign In button</li>
+                    </ol>
+                    </p>
                 </div> <!-- cd-faq-content -->
             </li>
 
             <li>
-                <a class="cd-faq-trigger" href="#0">How do I sign up?</a>
+                <a class="cd-faq-trigger" href="#0">How do I create an account?</a>
                 <div class="cd-faq-content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi cupiditate et laudantium esse adipisci consequatur modi possimus accusantium vero atque excepturi nobis in doloremque repudiandae soluta non minus dolore voluptatem enim reiciendis officia voluptates, fuga ullam? Voluptas reiciendis cumque molestiae unde numquam similique quas doloremque non, perferendis doloribus necessitatibus itaque dolorem quam officia atque perspiciatis dolore laudantium dolor voluptatem eligendi? Aliquam nulla unde voluptatum molestiae, eos fugit ullam, consequuntur, saepe voluptas quaerat deleniti. Repellendus magni sint temporibus, accusantium rem commodi?</p>
+                    <p>
+                    <ol>
+                        <li>To create an account,one has to be a first time user. </li>
+                        <li>Click on the Create Account button.</li>
+                        <li>Fill in the fields appropriately  then click on save </li>
+                    </ol>
+                    </p>
                 </div> <!-- cd-faq-content -->
             </li>
 
             <li>
-                <a class="cd-faq-trigger" href="#0">Can I remove a post?</a>
+                <a class="cd-faq-trigger" href="#0">How do I reset my password?</a>
                 <div class="cd-faq-content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
-                </div> <!-- cd-faq-content -->
-            </li>
-
-            <li>
-                <a class="cd-faq-trigger" href="#0">How do reviews work?</a>
-                <div class="cd-faq-content">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+                    <p>
+                    <ol>
+                        <li>Click on the reset password button. </li>
+                        <li>Input the Email address used while signing up to eChecklist.</li>
+                        <li>Click send reset password link button.</li>
+                    </ol>
+                    </p>
                 </div> <!-- cd-faq-content -->
             </li>
         </ul> <!-- cd-faq-group -->
 
-        <ul id="mobile" class="cd-faq-group">
-            <li class="cd-faq-title"><h2>Mobile</h2></li>
+        <ul id="lab catalog" class="cd-faq-group">
+            <li class="cd-faq-title"><h2>Lab Catalog</h2></li>
             <li>
                 <a class="cd-faq-trigger" href="#0">How does syncing work?</a>
                 <div class="cd-faq-content">
@@ -90,8 +101,8 @@
             </li>
         </ul> <!-- cd-faq-group -->
 
-        <ul id="account" class="cd-faq-group">
-            <li class="cd-faq-title"><h2>Account</h2></li>
+        <ul id="audit configuration" class="cd-faq-group">
+            <li class="cd-faq-title"><h2>Audit Configuration</h2></li>
             <li>
                 <a class="cd-faq-trigger" href="#0">How do I change my password?</a>
                 <div class="cd-faq-content">
@@ -121,8 +132,8 @@
             </li>
         </ul> <!-- cd-faq-group -->
 
-        <ul id="payments" class="cd-faq-group">
-            <li class="cd-faq-title"><h2>Payments</h2></li>
+        <ul id="users" class="cd-faq-group">
+            <li class="cd-faq-title"><h2>Users</h2></li>
             <li>
                 <a class="cd-faq-trigger" href="#0">Can I have an invoice for my subscription?</a>
                 <div class="cd-faq-content">
@@ -145,8 +156,8 @@
             </li>
         </ul> <!-- cd-faq-group -->
 
-        <ul id="privacy" class="cd-faq-group">
-            <li class="cd-faq-title"><h2>Privacy</h2></li>
+        <ul id="audit" class="cd-faq-group">
+            <li class="cd-faq-title"><h2>Audit</h2></li>
             <li>
                 <a class="cd-faq-trigger" href="#0">Can I specify my own private key?</a>
                 <div class="cd-faq-content">
@@ -176,8 +187,8 @@
             </li>
         </ul> <!-- cd-faq-group -->
 
-        <ul id="delivery" class="cd-faq-group">
-            <li class="cd-faq-title"><h2>Delivery</h2></li>
+        <ul id="reports" class="cd-faq-group">
+            <li class="cd-faq-title"><h2>Reports</h2></li>
             <li>
                 <a class="cd-faq-trigger" href="#0">What should I do if my order hasn't been delivered yet?</a>
                 <div class="cd-faq-content">
@@ -236,6 +247,37 @@
 
             <li>
                 <a class="cd-faq-trigger" href="#0">When will my order ship?</a>
+                <div class="cd-faq-content">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+                </div> <!-- cd-faq-content -->
+            </li>
+        </ul> <!-- cd-faq-group -->
+
+        <ul id="access control" class="cd-faq-group">
+            <li class="cd-faq-title"><h2>Access Control</h2></li>
+            <li>
+                <a class="cd-faq-trigger" href="#0">Can I specify my own private key?</a>
+                <div class="cd-faq-content">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Impedit quidem delectus rerum eligendi mollitia, repudiandae quae beatae. Et repellat quam atque corrupti iusto architecto impedit explicabo repudiandae qui similique aut iure ipsum quis inventore nulla error aliquid alias quia dolorem dolore, odio excepturi veniam odit veritatis. Quo iure magnam, et cum. Laudantium, eaque non? Tempore nihil corporis cumque dolor ipsum accusamus sapiente aliquid quis ea assumenda deserunt praesentium voluptatibus, accusantium a mollitia necessitatibus nostrum voluptatem numquam modi ab, sint rem.</p>
+                </div> <!-- cd-faq-content -->
+            </li>
+
+            <li>
+                <a class="cd-faq-trigger" href="#0">My files are missing! How do I get them back?</a>
+                <div class="cd-faq-content">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
+                </div> <!-- cd-faq-content -->
+            </li>
+
+            <li>
+                <a class="cd-faq-trigger" href="#0">How can I access my account data?</a>
+                <div class="cd-faq-content">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus magni vero deserunt enim et quia in aliquam, rem tempore voluptas illo nisi veritatis quas quod placeat ipsa! Error qui harum accusamus incidunt at libero ipsum, suscipit dolorum esse explicabo in eius voluptates quidem voluptatem inventore amet eaque deserunt veniam dignissimos excepturi? Dolore, quo amet nostrum autem nemo. Sit nam assumenda, corporis ea sunt distinctio nostrum doloribus alias, beatae nesciunt dolore saepe consequuntur minima eveniet porro dolor officiis maiores ab obcaecati officia enim aliquam. Itaque fuga molestiae hic accusantium atque corporis quia id sequi enim vero? Hic aperiam sint facilis aliquam quia, accusamus tenetur earum totam enim est, error. Iusto, reiciendis necessitatibus molestias. Voluptatibus eos explicabo repellat nesciunt nam vero minima.</p>
+                </div> <!-- cd-faq-content -->
+            </li>
+
+            <li>
+                <a class="cd-faq-trigger" href="#0">How can I control if other search engines can link to my profile?</a>
                 <div class="cd-faq-content">
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis provident officiis, reprehenderit numquam. Praesentium veritatis eos tenetur magni debitis inventore fugit, magnam, reiciendis, saepe obcaecati ex vero quaerat distinctio velit.</p>
                 </div> <!-- cd-faq-content -->
