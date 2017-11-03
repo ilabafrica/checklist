@@ -10,6 +10,7 @@ return [
 	'total-points' => 'Total Points',
 	'total-score' => 'TOTAL SCORE',
 	'reports'	=>	'Reports',
+    'faq'	=>	'FaQs',
 	'access-controls'	=>	'Access Controls',
 	'name'	=>	'Name|Names',
 	'description'	=>	'Description',
