@@ -12,6 +12,8 @@ use Response;
 use Auth;
 use Session;
 use Lang;
+use DB;
+// use Lab;
 
 class PartnerController extends Controller {
 
@@ -127,5 +129,36 @@ class PartnerController extends Controller {
 	public function destroy($id)
 	{
 		//
+	}
+	public function partnerLabs($id){
+		//All labs
+		$all_labs = Lab::all();
+
+		//a partner's labs
+        $partner_labs = DB::table('partner_labs')->where('id', $id)->get();
+        
+        foreach ($partner_labs as $key => $value) {        	
+        	//get lab info
+        	$labs = Lab::where('id', $value->lab_id)->get();
+        }
+		return view('partner.partner_labs', compact('labs', 'all_labs'));
+	}
+	public function add_partner_labs(PartnerRequest $request)
+	{
+		$partner = new Partner;
+  //       $partner->name = $request->name;
+  //       $partner->head = $request->head;
+  //       $partner->contact = $request->contact;
+  //       $partner->user_id = Auth::user()->id;
+  //       $partner->save();
+        //	Save labs
+        // dd($request->labs);
+	    if($request->labs){
+			$partner->setLabs($request->labs);
+		}
+        $url = session('SOURCE_URL');
+
+        return redirect()->to($url)->with('message', Lang::choice('messages.record-successfully-saved', 1));
+        // ->with('active_partner', $partner->id);
 	}
 }

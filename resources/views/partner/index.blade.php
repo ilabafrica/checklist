@@ -50,6 +50,7 @@
                                 <a href="{{ url("partner/" . $partner->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {!! Lang::choice('messages.view', 1) !!}</span></a>
                                 <a href="{{ url("partner/" . $partner->id . "/edit") }}" class="btn btn-info btn-sm"><i class="fa fa-edit"></i><span> {!! Lang::choice('messages.edit', 1) !!}</span></a>
                                 <a href="{{ url("partner/" . $partner->id . "/delete") }}" class="btn btn-warning btn-sm"><i class="fa fa-trash-o"></i><span> {!! Lang::choice('messages.delete', 1) !!}</span></a>
+                                <a href="{{ url("partner/" . $partner->id . "/labs") }}" class="btn btn-primary btn-sm"><i class="fa fa-trash-o"></i><span> {!! Lang::choice('messages.lab', 1) !!}</span></a>
                             </td>
                         </tr>
                         @empty

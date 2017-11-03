@@ -58,6 +58,15 @@ Route::group(['middleware' => 'auth'], function(){
         "as"    =>  "partner.dropdown",
         "uses"  =>  "CountryController@dropdown"
     ));
+
+    Route::get('/partner/{id}/labs', array(
+        "as"    =>  "partner.partner/labs",
+        "uses"  =>  "PartnerController@partnerLabs"
+    ));
+    Route::post('add_partner_labs', array(
+        "as"    =>  "add_partner_labs",
+        "uses"  =>  "PartnerController@add_partner_labs"
+    ));
     //	User controller
     Route::resource('user', 'UserController');
     Route::get("/user/{id}/delete", array(

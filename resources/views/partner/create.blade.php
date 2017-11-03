@@ -48,30 +48,7 @@
                             array('class' => 'form-control', 'rows' => '3')) !!}
                     </div>
                 </div>
-                <div class="form-group">
-                    {!! Form::label('labs', Lang::choice('messages.lab', 2)) !!}
-                    <div class="form-pane panel panel-default">
-                        <div class="container-fluid">
-                            <?php 
-                                $cnt = 0;
-                                $zebra = "";
-                            ?>
-                            @foreach($labs as $key=>$value)
-                                {!! ($cnt%4==0)?"<div class='row $zebra'>":"" !!}
-                                <?php
-                                    $cnt++;
-                                    $zebra = (((int)$cnt/4)%2==1?"row-striped":"");
-                                ?>
-                                <div class="col-md-3">
-                                    <label  class="checkbox-inline">
-                                        <input type="checkbox" name="labs[]" value="{{ $value->id}}" />{{$value->name}}
-                                    </label>
-                                </div>
-                                {{ ($cnt%4==0)?"</div>":"" }}
-                            @endforeach
-                            </div>
-                        </div>
-                    </div>
+                
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
