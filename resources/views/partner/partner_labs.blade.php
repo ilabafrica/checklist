@@ -77,6 +77,7 @@
                 </h4>
             </div>
             {!! Form::open(array('route' => 'add_partner_labs', 'id' => 'form-add-partner', 'class' => 'form-horizontal')) !!}
+            <input type="hidden" name="partner_id">>
             <div class="modal-body">                
                 <div class="form-group">
                 {!! Form::label('labs', Lang::choice('messages.lab', 2)) !!}
