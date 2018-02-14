@@ -260,4 +260,8 @@ Route::group(['middleware' => 'auth'], function(){
         "as"   => "review.report",
         "uses" => "ReviewController@assessments"
     ));
+    Route::any("search", array(
+        "as"   => "home.search",
+        "uses" => "HomeController@search"
+    ));
 });

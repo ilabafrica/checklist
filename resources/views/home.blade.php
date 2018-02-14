@@ -10,6 +10,79 @@
         </ol>
     </div>
 </div>
+{!! Form::open(array('route' => 'home.search', 'id' => 'form-result-search','class' => 'form-horizontal')) !!}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            {!! Form::label('lab_number', Lang::choice('messages.lab', 2), array('class' => 'col-sm-4 control-label')) !!}
+            <div class="col-sm-6">
+                {!! Form::select('lab', array(''=>trans('Select'))+$all_labs,'', 
+                    array('class' => 'form-control', 'id' => 'lab')) !!}
+            </div>
+        </div>
+        <div class="col-sm-4">
+            {!! Form::label('assessment_type', Lang::choice('messages.assessment', 1), array('class' => 'col-sm-4 control-label')) !!}
+            <div class="col-sm-6">
+                {!! Form::select('assessment_type', array(''=>trans('Select'))+$all_assessment_types,'', 
+                    array('class' => 'form-control', 'id' => 'assessment_type')) !!}
+            </div>
+        </div>
+        <div class="col-sm-4">
+            {!! Form::label('status', Lang::choice('messages.status', 1), array('class' => 'col-sm-4 control-label')) !!}
+            <div class="col-sm-6">
+                {!! Form::select('status', [
+                       '' => 'Select',
+                       '0' => 'Incomplete',
+                       '1' => 'Complete'
+                    ],'', 
+                    array('class' => 'form-control', 'id' => 'status')) !!}
+            </div>
+        </div>
+    </div>   
+    <div class="row">
+        <div class="col-sm-4">        
+            {!! Form::label('from', Lang::choice('From', 1), array('class' => 'col-sm-4 control-label')) !!}
+            <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
+                {!! Form::text('from','', array('class' => 'form-control')) !!}
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+        </div>    
+        <div class="col-sm-4">
+            {!! Form::label('to', Lang::choice('To', 1), array('class' => 'col-sm-4 control-label')) !!}
+            <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
+                {!! Form::text('to','', array('class' => 'form-control')) !!}
+                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+        </div>
+        <div class="col-sm-4">
+        {!! Form::button("<i class='fa fa-search'></i> ".Lang::choice('messages.search', 1), 
+              array('class' => 'btn btn-success', 'onclick' => 'submit()')) !!}  
+        </div>
+    </div>     
+</div>
+    </br>
+    
+<script type="text/javascript">
+    $(function () {
+        $('#datepickerfrom').datepicker({
+            format:'yyyy-mm-dd'
+        });
+        $('#datepickerto').datepicker({
+            useCurrent:false,
+            format:'yyyy-mm-dd'
+    });
+    $('#datepickerfrom').on("dp.change",function (e) {
+        $('#datepickerto').date("DatePicker").minDate(e.date);           
+        
+    });
+    $('#datepickerto').on("dp.change",function (e) {
+        $('#datepickerfrom').date("DatePicker").maxDate(e.date);           
+        
+    });
+
+});
+</script>
+{!! Form::close() !!}
 <div class="panel panel-default">
     <div class="panel-heading"><i class="fa fa-book"></i> {{ Lang::choice('messages.audits-owned', 2) }} </div>
     <div class="panel-body">
@@ -34,7 +107,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-striped table-bordered table-hover {!! !$reviews->isEmpty()?'search-table':'' !!}">
+                <table id = "reviews" class="table table-striped table-bordered table-hover {!! !$reviews->isEmpty()?'search-table':'' !!}">
                     <thead>
                         <tr>
                             <th>{{ Lang::choice('messages.response-no', 1) }}</th>
