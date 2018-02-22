@@ -14,6 +14,7 @@ return [
 	'name'	=>	'Name|Names',
 	'description'	=>	'Description',
 	'save'	=>	'Save|Save Changes',
+	'search' => 'Search',
 	'cancel'	=>	'Cancel',
 	'view'	=>	'View',
 	'edit'	=>	'Edit',
