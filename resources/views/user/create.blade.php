@@ -43,13 +43,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    {!! Form::label('dob', Lang::choice('messages.dob', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-offset-4 col-sm-7 input-group input-append date datepicker" id="date-of-birth" style="margin-left:170px;">
-                        {!! Form::text('dob', Input::old('dob'), array('class' => 'form-control')) !!}
-                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                    </div>
-                </div>
-                <div class="form-group">
                     {!! Form::label('email', Lang::choice('messages.email', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
                         {!! Form::text('email', Input::old('email'), array('class' => 'form-control')) !!}
@@ -74,14 +67,14 @@
                         {!! Form::text('username', Input::old('username'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
-                <div class="form-group">
+                  <!--<div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                         <label class="checkbox-inline">
                             {!! Form::checkbox("default_password", '1', '', array('onclick' => 'toggle(".pword", this)')) !!}{{ Lang::choice('messages.use-default-password', 1) }}
                         </label>
                     </div>
                 </div>
-                <div class="pword">
+               <div class="pword">
                 <div class="form-group">
                     {!! Form::label('password', Lang::choice('messages.password', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
@@ -94,7 +87,7 @@
                         {!! Form::password('password_confirmation', array('class' => 'form-control')) !!}
                     </div>
                 </div>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                     {!! Form::button("<i class='glyphicon glyphicon-ok-circle'></i> ".Lang::choice('messages.save', 1), 

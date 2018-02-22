@@ -118,11 +118,7 @@ class CreateAuditTables extends Migration {
 			$table->string('title')->nullable();
 			$table->text('description')->nullable();
 			$table->tinyInteger('question_type');
-			$table->integer('required')->nullable();
-			$table->string('info')->nullable();
-			$table->string('comment')->nullable();
 			$table->integer('score')->nullable();
-			$table->tinyInteger('one_star')->nullable();
 
 			$table->integer('user_id')->unsigned();
 
@@ -238,13 +234,6 @@ class CreateAuditTables extends Migration {
 			$table->tinyInteger('driver_trained')->nullable();
 			$table->tinyInteger('other_staff')->nullable();
 			$table->tinyInteger('other_staff_adequate')->nullable();
-			$table->tinyInteger('sufficient_space')->nullable();
-			$table->tinyInteger('equipment')->nullable();
-			$table->tinyInteger('supplies')->nullable();
-			$table->tinyInteger('personnel')->nullable();
-			$table->tinyInteger('infrastructure')->nullable();
-			$table->tinyInteger('other')->nullable();
-			$table->string('other_description')->nullable();
 
 			$table->foreign('review_id')->references('id')->on('reviews');
             

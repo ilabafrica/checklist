@@ -34,10 +34,6 @@
         </h5>
         <hr>
         <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.dob', 1) }}:</strong> <span> {{ $user->dob }}</span>
-        </h5>
-        <hr>
-        <h5 class="no-margn">
           <strong>{{ Lang::choice('messages.email', 1) }}:</strong> <span> {{ $user->email }}</span>
         </h5>
         <hr>

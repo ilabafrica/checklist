@@ -35,7 +35,7 @@ return array(
 	|
 	*/
 
-	'slipta' => 'Stepwise Laboratory Improvement Process Towards Accreditation (SLIPTA) Checklist',
+	'slipta' => 'Stepwise Laboratory Improvement Process Towards Accreditation (SLIPTA) Checklist Version 2:2015',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -53,7 +53,7 @@ return array(
 	|
 	*/
 
-	'slipta-logo' => '/e-slipta/public/images/who_africa.png',
+	'slipta-logo' => '/img/who_africa.png',
 	
 	/*
 	|--------------------------------------------------------------------------

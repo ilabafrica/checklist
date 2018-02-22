@@ -47,15 +47,15 @@
                                         <tbody>
                                           <tr>
                                             <td>{!! Lang::choice('messages.official-slmta', 1) !!}</td>
-                                            <td>{!! ($review->slmta() && $review->slmta()->official_slmta == App\Models\Review::OFFICIAL)?Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1) !!}</td>
+                                            <td>{!! ($review->slmta && $review->slmta->official_slmta == App\Models\Review::OFFICIAL)?Lang::choice('messages.yes', 1):Lang::choice('messages.no', 1) !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.audit-start-date', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->audit_start_date:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->audit_start_date:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.audit-end-date', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->audit_end_date:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->audit_end_date:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.names-affiliations-of-auditors', 1) !!}</td>
@@ -63,19 +63,19 @@
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.slmta-audit-type', 1) !!}</td>
-                                            <td>{!! ($review->slmta() && $review->assessment($review->slmta()->assessment_id))?$review->assessment($review->slmta()->assessment_id)->name:'' !!}</td>
+                                            <td>{!! ($review->slmta && $review->assessment($review->slmta->assessment_id))?$review->assessment($review->slmta->assessment_id)->name:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.tests-before-slmta', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->tests_before_slmta:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->tests_before_slmta:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.tests-this-year', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->tests_this_year:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->tests_this_year:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.cohort-id', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->cohort_id:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->cohort_id:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.slmta-lab-type', 1) !!}</td>
@@ -83,43 +83,43 @@
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.baseline-audit-date', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->baseline_audit_date:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->baseline_audit_date:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.slmta-workshop-date', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->slmta_workshop_date:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->slmta_workshop_date:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.exit-audit-date', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->exit_audit_date:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->exit_audit_date:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.baseline-score', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->baseline_score:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->baseline_score:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.baseline-stars', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->stars($review->slmta()->baseline_stars_obtained):'' !!}</td>
+                                            <td>{!! $review->slmta?$review->stars($review->slmta->baseline_stars_obtained):'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.exit-score', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->exit_score:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->exit_score:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.exit-stars', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->stars($review->slmta()->exit_stars_obtained):'' !!}</td>
+                                            <td>{!! $review->slmta?$review->stars($review->slmta->exit_stars_obtained):'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.last-audit-date', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->last_audit_date:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->last_audit_date:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.last-audit-score', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->slmta()->last_audit_score:'' !!}</td>
+                                            <td>{!! $review->slmta?$review->slmta->last_audit_score:'' !!}</td>
                                           </tr>
                                           <tr>
                                             <td>{!! Lang::choice('messages.prior-audit-status', 1) !!}</td>
-                                            <td>{!! $review->slmta()?$review->stars($review->slmta()->prior_audit_status):'' !!}</td>
+                                            <td>{!! $review->slmta?$review->stars($review->slmta->prior_audit_status):'' !!}</td>
                                           </tr>
                                         </tbody>
                                     </table>
@@ -155,15 +155,15 @@
                                             </tr>
                                             <tr>
                                                 <td>{!! Lang::choice('messages.lab-head', 1) !!}</td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->head:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->head:'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td>{!! Lang::choice('messages.lab-head-telephone-personal', 1) !!}</td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->head_personal_telephone:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->head_personal_telephone:'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td>{!! Lang::choice('messages.lab-head-telephone-work', 1) !!}</td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->head_work_telephone:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->head_work_telephone:'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td>{!! Lang::choice('messages.lab-level', 1) !!}</td>
@@ -188,64 +188,64 @@
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.degree', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->degree_staff:'' !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->degree_staff_adequate):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->degree_staff:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->degree_staff_adequate):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.diploma', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->diploma_staff:'' !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->diploma_staff_adequate):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->diploma_staff:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->diploma_staff_adequate):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.certificate', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->certificate_staff:'' !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->certificate_staff_adequate):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->certificate_staff:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->certificate_staff_adequate):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.microscopist', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->microscopist:'' !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->microscopist_adequate):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->microscopist:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->microscopist_adequate):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.data-clerk', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->data_clerk:'' !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->data_clerk_adequate):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->data_clerk:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->data_clerk_adequate):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.phlebotomist', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->phlebotomist:'' !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->phlebotomist_adequate):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->phlebotomist:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->phlebotomist_adequate):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.cleaner', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->cleaner:'' !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->cleaner_adequate):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->cleaner:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->cleaner_adequate):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">{!! Lang::choice('messages.cleaner-dedicated', 1) !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->cleaner_dedicated):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->cleaner_dedicated):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">{!! Lang::choice('messages.cleaner-trained', 1) !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->cleaner_trained):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->cleaner_trained):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.driver', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->driver:'' !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->driver_adequate):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->driver:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->driver_adequate):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">{!! Lang::choice('messages.driver-dedicated', 1) !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->driver_dedicated):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->driver_dedicated):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">{!! Lang::choice('messages.driver-trained', 1) !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->driver_trained):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->driver_trained):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.other', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->laboratory()->other_staff:'' !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->other_staff_adequate):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->laboratory->other_staff:'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->other_staff_adequate):'' !!}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -257,94 +257,28 @@
                                         <tbody>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.sufficient-space', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->sufficient_space):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->sufficient_space):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.equipment', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->equipment):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->equipment):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.supplies', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->supplies):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->supplies):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.personnel', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->personnel):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->personnel):'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.infrsatructure', 1) !!}</strong></td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->infrastructure):'' !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->infrastructure):'' !!}</td>
                                             </tr>
                                             <tr>
-                                                <td>{!! '<strong>'.Lang::choice('messages.other-specify', 1).'</strong> '.($review->laboratory()?$review->laboratory()->other_description:'') !!}</td>
-                                                <td>{!! $review->laboratory()?$review->adequate($review->laboratory()->other):'' !!}</td>
+                                                <td>{!! '<strong>'.Lang::choice('messages.other-specify', 1).'</strong> '.($review->laboratory?$review->laboratory->other_description:'') !!}</td>
+                                                <td>{!! $review->laboratory?$review->adequate($review->laboratory->other):'' !!}</td>
                                             </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @elseif($section->name == Lang::choice('messages.criteria-1', 1))
-                                <hr><h4>{!! $section->label !!}</h4><hr>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <tbody>
-                                            <tr>
-                                                <td colspan="2"><strong>{!! Lang::choice('messages.criteria-one', 1) !!}</strong></td>
-                                                <td><strong>{!! Lang::choice('messages.frequency', 1) !!}</strong></td>
-                                            </tr>
-                                            @foreach($section->questions as $question)
-                                                @if(count($question->children)>0)
-                                                    <tr>
-                                                        <td><strong>{!! $question->title !!}</strong></td>
-                                                        <td>{!! $question->description !!}</td>
-                                                        <td>{!! $question->qa($review->id)?App\Models\Answer::find($question->qa($review->id)[0])->name:'' !!}</td>
-                                                    </tr>
-                                                    @foreach($question->children as $kid)
-                                                        <tr>
-                                                            <td></td>
-                                                            <td>{!! $kid->description !!}</td>
-                                                            <td>{!! $kid->qa($review->id)?App\Models\Answer::find($kid->qa($review->id)[0])->name:'' !!}</td>
-                                                        </tr>
-                                                    @endforeach
-                                                @elseif($question->question_type == App\Models\Question::TEXTAREA)
-                                                    <tr>
-                                                        <td><strong>{!! $question->title !!}</strong></td>
-                                                        <td colspan="2">{!! $question->qa($review->id)?$question->qa($review->id)[0]:'' !!}</td>
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            @elseif($section->name == Lang::choice('messages.criteria-2', 1))
-                                <hr><h4>{!! $section->label !!}</h4><hr>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered table-hover">
-                                        <tbody>
-                                            <tr>
-                                                <td><strong>{!! Lang::choice('messages.criteria-two', 1) !!}</strong></td>
-                                                <td><strong>{!! Lang::choice('messages.date-of-panel-receipt', 1) !!}</strong></td>
-                                                <td><strong>{!! Lang::choice('messages.within-days', 1) !!}</strong></td>
-                                                <td><strong>{!! Lang::choice('messages.percentage-correct', 1) !!}</strong></td>
-                                            </tr>
-                                            @foreach($section->questions as $question)
-                                              @if(count($question->children)>0)
-                                                  <tr>
-                                                      <td colspan="4"><strong>{!! $question->title !!}</strong></td>
-                                                  </tr>
-                                                @foreach($question->children as $kid)
-                                                    @if($kid->question_type == App\Models\Question::DATE)
-                                                        <tr>
-                                                            <td>{!! $kid->title !!}</td>
-                                                            <td>{!! $kid->qa($review->id)?$kid->qa($review->id):'' !!}</td>
-                                                    @elseif($kid->question_type == App\Models\Question::CHOICE)
-                                                        <td>{!! $kid->qa($review->id)?App\Models\Answer::find($kid->qa($review->id)[0])->name:'' !!}</td>
-                                                    @elseif($kid->question_type == App\Models\Question::FIELD)
-                                                        <td>{!! $kid->qa($review->id)?$kid->qa($review->id):'' !!}</td>
-                                                      </tr>
-                                                    @endif
-                                                @endforeach
-                                              @endif
-                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -355,7 +289,20 @@
                                         <tbody>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.commendations', 1) !!}</strong></td>
-                                                <td>{!! $review->summary_commendations?$review->summary_commendations:'' !!}</td>
+                                                <td>
+                                                    @foreach($audit->sections as $part)
+                                                        @if(count(array_intersect($questions, $part->questions->lists('id')))>0)
+                                                          <p>
+                                                            <strong>{!! $part->label !!}</strong>
+                                                            @foreach($notes as $note)
+                                                                @if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')))
+                                                                    <br>{!! $note->note !!}
+                                                                @endif
+                                                            @endforeach
+                                                          </p>
+                                                        @endif
+                                                    @endforeach
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.challenges', 1) !!}</strong></td>
@@ -407,6 +354,7 @@
                                     <th>{!! Lang::choice('messages.count', 1) !!}</th>
                                     <th>{!! Lang::choice('messages.question', 1) !!}</th>
                                     <th>{!! Lang::choice('messages.response', 1) !!}</th>
+                                    <th>{!! Lang::choice('messages.comment', 1) !!}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -420,14 +368,16 @@
                                             <tr>
                                                 <td>{!! $kid->id !!}</td>
                                                 <td>{!! $kid->title?'<u><strong>'.$kid->title.'</strong></u><br />':''!!}{!! $kid->description !!}</td>
-                                                <td>{!! $kid->qa($review->id)?App\Models\Answer::find((int)$kid->qa($review->id)[0])->name:'' !!}</td>
+                                                <td>{!! $kid->qa($review->id)?App\Models\Answer::find((int)$kid->qa($review->id))->name:'' !!}</td>
+                                                <td>{!! $kid->note($review->id)?$kid->note($review->id)->note:'' !!}</td>
                                             </tr>
                                         @endforeach
                                     @elseif($question->score != 0)
                                     <tr>
                                         <td>{!! $question->id !!}</td>
                                         <td>{!! $question->title?'<u><strong>'.$question->title.'</strong></u><br />':''!!}<strong>{!! $question->description !!}</strong></td>
-                                        <td>{!! $question->qa($review->id)?App\Models\Answer::find((int)$question->qa($review->id)[0])->name:'' !!}</td>
+                                        <td>{!! $question->qa($review->id)?App\Models\Answer::find((int)$question->qa($review->id))->name:'' !!}</td>
+                                        <td>{!! $question->note($review->id)?$question->note($review->id)->note:'' !!}</td>
                                     </tr>
                                     @endif
                                 @endforeach

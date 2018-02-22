@@ -21,15 +21,17 @@ class LabRequest extends Request {
 	 * @return array
 	 */
 	public function rules()
-	{
-		$id = $this->ingnoreId();
+	{		
+		// $id = $this->ingnoreId();
+		$id = $this->route('lab');
+
 		return [
             'name'   => 'required|unique:labs,name,'.$id,
+            'lab_number'   => 'required|numeric|unique:labs,lab_number,'.$id,
             'lab_type'   => 'required:labs,lab_type_id,'.$id,
-            'country'   => 'required:labs,country_id,'.$id,
+            'county_id'   => 'required:labs,county_id,'.$id,
             'address'   => 'required:labs,address,'.$id,
-            'city'   => 'required:labs,city,'.$id,
-            'postal_code'   => 'required:labs,postal_code,'.$id,
+            'postal_address'   => 'required:labs,postal_address,'.$id,
             'lab_level'   => 'required:labs,lab_level_id,'.$id,
             'lab_affiliation'   => 'required:labs,lab_affiliation_id,'.$id,
         ];

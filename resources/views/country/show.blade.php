@@ -16,7 +16,7 @@
 </div>
 <div class="panel panel-primary">
   <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.country', 1) }} <span class="panel-btn">
-  <a class="btn btn-sm btn-info" href="{{ URL::to("country/" . $country->id . "/edit") }}" >
+  <a class="btn btn-sm btn-info" href="{{ url("country/" . $country->id . "/edit") }}" >
     <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-country', 1) }}</span>
   </a>
   </span></div>
@@ -29,14 +29,6 @@
         <hr>
         <h5 class="no-margn">
           <strong>{{ Lang::choice('messages.code', 1) }}:</strong> <span> {{ $country->code }}</span>
-        </h5>
-        <hr>
-        <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.country-iso', 1) }}:</strong> <span> {{ $country->iso_3166_2 }}</span>
-        </h5>
-        <hr>
-        <h5 class="no-margn">
-          <strong>{{ Lang::choice('messages.country-iso', 2) }}:</strong> <span> {{ $country->iso_3166_3 }}</span>
         </h5>
         <hr>
         <h5 class="no-margn">

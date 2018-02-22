@@ -15,9 +15,9 @@
     </div>
 </div>
 <div class="panel panel-primary">
-    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.create-audit-type', '1') }}</div>
+    <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.create-country', '1') }}</div>
     <div class="panel-body">
-        <div class="col-lg-6 main">
+        <div class="col-lg-12 main">
             <!-- Begin form --> 
             @if($errors->all())
             <div class="alert alert-danger alert-dismissible" role="alert">
@@ -25,39 +25,51 @@
                 {!! HTML::ul($errors->all(), array('class'=>'list-unstyled')) !!}
             </div>
             @endif
-            {!! Form::open(array('route' => 'country.store', 'id' => 'form-add-audit-type', 'class' => 'form-horizontal')) !!}
+            {!! Form::open(array('route' => 'country.store', 'id' => 'form-add-country', 'class' => 'form-horizontal')) !!}
                 <!-- CSRF Token -->
                 <input type="hidden" name="_token" value="{{{ csrf_token() }}}" />
                 <!-- ./ csrf token -->
                 <div class="form-group">
                     {!! Form::label('name', Lang::choice('messages.name', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('name', Input::old('name'), array('class' => 'form-control')) !!}
+                        {!! Form::text('name', old('name'), array('class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('code', Lang::choice('messages.code', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::textarea('code', Input::old('code'), 
-                            array('class' => 'form-control', 'rows' => '3')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('iso-2', Lang::choice('messages.country-iso', 1), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('iso_3166_2', Input::old('iso_3166_2'), array('class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    {!! Form::label('iso-3', Lang::choice('messages.country-iso', 2), array('class' => 'col-sm-4 control-label')) !!}
-                    <div class="col-sm-8">
-                        {!! Form::text('iso_3166_3', Input::old('iso_3166_3'), array('class' => 'form-control')) !!}
+                        {!! Form::text('code', old('code'), array('class' => 'form-control', 'rows' => '3')) !!}
                     </div>
                 </div>
                 <div class="form-group">
                     {!! Form::label('capital', Lang::choice('messages.capital', 1), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
-                        {!! Form::text('capital', Input::old('capital'), array('class' => 'form-control')) !!}
+                        {!! Form::text('capital', old('capital'), array('class' => 'form-control')) !!}
+                    </div>
+                </div>
+                <div class="form-group">
+                    {!! Form::label('partners', Lang::choice('messages.partner', 2)) !!}
+                    <div class="form-pane panel panel-default">
+                        <div class="container-fluid">
+                            <?php 
+                                $cnt = 0;
+                                $zebra = "";
+                            ?>
+                            @foreach($partners as $key=>$value)
+                                {!! ($cnt%4==0)?"<div class='row $zebra'>":"" !!}
+                                <?php
+                                    $cnt++;
+                                    $zebra = (((int)$cnt/4)%2==1?"row-striped":"");
+                                ?>
+                                <div class="col-md-3">
+                                    <label  class="checkbox-inline">
+                                        <input type="checkbox" name="partners[]" value="{{ $value->id}}" />{{$value->name}}
+                                    </label>
+                                </div>
+                                {{ ($cnt%4==0)?"</div>":"" }}
+                            @endforeach
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">

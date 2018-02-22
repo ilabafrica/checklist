@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
+use App\Models\Role;
 
 class AuthController extends Controller {
 
@@ -55,4 +56,11 @@ class AuthController extends Controller {
 		->with('message', 'Invalid credentials.')
 		->withInput($request->only('username'));
 	}
+	public function register(){
+
+		$roles = Role::lists('name', 'id');
+
+		return view('auth/register')->with('roles', $roles);
+	}
+	
 }

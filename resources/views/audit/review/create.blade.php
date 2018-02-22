@@ -558,107 +558,6 @@
                                     </div>
                                 </div>
                             </div>
-                        @elseif($page->name == 'Org Structure')
-                            <u><h4>{{ $page->label }}</h4></u>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            {!! Lang::choice('messages.org-structure-note', 1) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <strong><p>{!! Lang::choice('messages.sufficient-space', 1) !!}</p></strong>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('sufficient_space', App\Models\Answer::YES, '') !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('sufficient_space', App\Models\Answer::NO, '') !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <strong><p>{!! Lang::choice('messages.equipment', 1) !!}</p></strong>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('equipment', App\Models\Answer::YES, '') !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('equipment', App\Models\Answer::NO, '') !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <strong><p>{!! Lang::choice('messages.supplies', 1) !!}</p></strong>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('supplies', App\Models\Answer::YES, '') !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('supplies', App\Models\Answer::NO, '') !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <strong><p>{!! Lang::choice('messages.personnel', 1) !!}</p></strong>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('personnel', App\Models\Answer::YES, '') !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('personnel', App\Models\Answer::NO, '') !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <strong><p>{!! Lang::choice('messages.infrastructure', 1) !!}</p></strong>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('infrastructure', App\Models\Answer::YES, '') !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('infrastructure', App\Models\Answer::NO, '') !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-8">
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <strong><p>{!! Lang::choice('messages.other-specify', 1) !!}</p></strong>
-                                        </div>
-                                        <div class="col-sm-6" >
-                                            <div class="form-group">
-                                                <div class="col-sm-12">
-                                                    {!! Form::textarea('other_description', Input::old('other_description'), array('class' => 'form-control', 'rows' => '3')) !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-group">
-                                        <div class="col-sm-12">
-                                            <label class="radio-inline">{!! Form::radio('other', App\Models\Answer::YES, '') !!}{{ Lang::choice('messages.yes', 1) }}</label>
-                                            <label class="radio-inline">{!! Form::radio('other', App\Models\Answer::NO, '') !!}{{ Lang::choice('messages.no', 1) }}</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         @elseif($page->name == 'Summary')
                             <h4>{{ $page->label }}</h4>
                             <div class="row">
@@ -668,7 +567,25 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    {!! Form::textarea('commendations', Input::old('pt_description'), array('class' => 'form-control', 'rows' => '3')) !!}
+                                                    <?php
+                                                        $summary = '';
+                                                        foreach($audit->sections as $part)
+                                                        {
+                                                            if(count(array_intersect($questions, $part->questions->lists('id')))>0)
+                                                            {
+                                                                $summary.="\n".$part->label."\n";
+                                                                foreach($notes as $note)
+                                                                {
+                                                                    if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')))
+                                                                    {
+                                                                        $summary.="\n".$note->note;
+                                                                    }
+                                                                }
+                                                            $summary.="\n";
+                                                            }
+                                                        }
+                                                    ?>
+                                                    {!! Form::textarea('commendations', html_entity_decode($summary), array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -736,160 +653,6 @@
                                 </div>
                             </div>
                         @endif
-                    @elseif($page->name == 'Criteria 1')
-                        <h4>{{ $page->label }}</h4>
-                        <!-- Hidden field for audit data -->
-                        {!! Form::hidden('assessment_data', 1, array('id' => 'assessment_data')) !!}
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-sm-2"><strong>{!! $page->label !!}</strong></div>
-                                            <div class="col-sm-5"><strong>{!! Lang::choice('messages.criteria-one', 1) !!}</strong></div>
-                                            <div class="col-sm-5"><strong>{!! Lang::choice('messages.frequency', 1) !!}({!! Lang::choice('messages.daily', 1) !!}, {!! Lang::choice('messages.weekly', 1) !!}, {!! Lang::choice('messages.with-every-run', 1) !!})</strong></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                    @foreach($page->questions as $question)
-                                        @if(count($question->children)>0)
-                                        <div class="row">
-                                            <div class="col-sm-5"><strong>{!! $question->title !!}</strong></div>
-                                            <div class="col-sm-3">{!! $question->description !!}</div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <div class="col-sm-12">
-                                                        @foreach($question->answers as $answer)
-                                                            <label class="radio-inline">{!! Form::radio('radio_'.$question->id, $answer->id, '', array('class'=>'radio')) !!}{{ $answer->name }}</label>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                            @foreach($question->children as $kid)
-                                            <div class="row">
-                                                <div class="col-sm-5"></div>
-                                                <div class="col-sm-3">{!! $kid->description !!}</div>
-                                                <div class="col-sm-4">
-                                                    <div class="form-group">
-                                                        <div class="col-sm-12">
-                                                            @foreach($kid->answers as $answer)
-                                                                <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, '', array('class'=>'radio')) !!}{{ $answer->name }}</label>
-                                                            @endforeach
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endforeach
-                                        <hr>
-                                        @else
-                                            @if($question->question_type == App\Models\Question::TEXTAREA)
-                                            <div class="row">
-                                                <div class="col-sm-4">
-                                                    <h5><strong>{!! $question->title !!}</strong></h5>
-                                                </div>
-                                                <div class="col-sm-8">
-                                                    <div class="form-group">
-                                                        <div class="col-sm-12">
-                                                            {!! Form::textarea('pt_'.$question->id, '', array('class' => 'form-control', 'rows' => '3')) !!}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            @endif
-                                        @endif
-                                    @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @elseif($page->name == 'Criteria 2')
-                        <h4>{{ $page->label }}</h4>
-                        <!-- Hidden field for audit data -->
-                        {!! Form::hidden('assessment_data', 1, array('id' => 'assessment_data')) !!}
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-sm-1"><strong>{!! $page->label !!}</strong></div>
-                                            <div class="col-sm-5"><strong>{!! Lang::choice('messages.criteria-two', 1) !!}</div>
-                                            <div class="col-sm-2"><strong>{!! Lang::choice('messages.date-of-panel-receipt', 1) !!}</div>
-                                            <div class="col-sm-2"><strong>{!! Lang::choice('messages.within-days', 1) !!}</div>
-                                            <div class="col-sm-2"><strong>{!! Lang::choice('messages.percentage-correct', 1) !!}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        @foreach($page->questions as $question)
-                                            @if(count($question->children)>0)
-                                                <div class="row">
-                                                @if($question->question_type == App\Models\Question::FIELD)
-                                                    <div class="col-sm-8"><strong>{!! $question->title !!}</strong></div>
-                                                    <div class="col-sm-4">
-                                                        <div class="form-group">
-                                                            <div class="col-sm-12">
-                                                                {!! Form::text('disease_'.$question->id, '', array('class' => 'form-control')) !!}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                @else
-                                                    <div class="col-sm-12"><strong>{!! $question->title !!}</strong></div>
-                                                @endif
-                                                </div>
-                                                @foreach($question->children as $kid)
-                                                    @if($kid->question_type == App\Models\Question::DATE)
-                                                        <div class="row">
-                                                            <div class="col-sm-6">
-                                                                <h5>{!! $kid->title !!}</h5>
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <div class="form-group">
-                                                                    <div class="col-sm-12 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                                                        {!! Form::text('date_'.$kid->id, Input::old('audit_start_date'), array('class' => 'form-control')) !!}
-                                                                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                                                    </div>
-                                                                </div>    
-                                                            </div>
-                                                    @elseif($kid->question_type == App\Models\Question::FIELD)
-                                                        <div class="col-sm-2">
-                                                            <div class="form-group">
-                                                                <div class="col-sm-12">
-                                                                    {!! Form::text('percent_', Input::old('other_pt'), array('class' => 'form-control')) !!}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    @else($kid->question_type == App\Models\Question::CHOICE)
-                                                        <div class="col-sm-2">
-                                                            <div class="form-group">
-                                                                <div class="col-sm-12">
-                                                                    @foreach($kid->answers as $answer)
-                                                                        <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, '', array('class'=>'radio')) !!}{{ $answer->name }}</label>
-                                                                    @endforeach
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                @endforeach
-                                                <hr>
-                                            @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     @else
                         <!-- Hidden field for audit data -->
                         {!! Form::hidden('assessment_data', 1, array('id' => 'assessment_data')) !!}
@@ -937,7 +700,6 @@
                                                                 </div>
                                                             </div>
                                                         @endif
-                                                        <label class="checkbox-inline">{!! Form::checkbox('check_'.$question->id, 1, '') !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -956,7 +718,7 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-sm-4">
-                                                    {!! $kid->title?'<strong><u>'.$kid->title.'</u></strong><br />':''.$kid->description !!}<br /><i><small>{{ $kid->info }}</small></i>
+                                                    {!! $kid->title!=NULL?'<strong><u>'.$kid->title.'</u></strong><br />':'' !!}{!! $kid->description !!}<br /><i><small>{{ $kid->info }}</small></i>
                                                 </div>
                                                 <div class="col-sm-8">
                                                     <div class="row">
@@ -966,20 +728,33 @@
                                                                 @foreach($kid->answers as $answer)
                                                                     <label class="radio-inline">{!! Form::radio('radio_'.$kid->id, $answer->id, '', ['class' => 'validate[required] radio radio_'.$question->id, 'id' => 'radio_'.$kid->id, 'onclick' => "noteChange('radio_$question->id', '$question->score')"]) !!}{{ $answer->name }}</label>
                                                                 @endforeach
-                                                                <label class="checkbox-inline">{!! Form::checkbox('check_'.$kid->id, 1, '') !!}{{ Lang::choice('messages.non-compliant', 1) }}</label>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <div class="form-group">
                                                                 <div class="col-sm-12">
-                                                                    {!! Form::textarea('text_'.$kid->id, Input::old('text_'.$kid->id), array('class' => 'form-control', 'id' => 'text_'.$kid->id, 'rows' => '3')) !!}
+                                                                    {{--*/ $kid->title!=NULL?$title = $kid->title:$title = substr($kid->description, 0, 2) /*--}}
+                                                                    {!! Form::textarea('text_'.$kid->id, $kid->note($review->id)?$kid->note($review->id)->note:'', array('class' => 'form-control area_'.$question->id, 'onchange' => "notes('area_$question->id')", 'data-title' => $title, 'rows' => '3', 'id' => 'text_'.$kid->id)) !!}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            @if(count($kid->notes)>0)
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-body">
+                                                            @foreach($kid->notes as $note)
+                                                            {!! $note->description !!}
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
                                         @endforeach
                                     @endif
                                     @if(count($question->notes)>0)
@@ -1023,9 +798,9 @@
                             @endif
                         @else
                         {!! Form::submit(Lang::choice('messages.save', 1), 
-                              array('class' => 'btn btn-success', 'id' => 'save', 'name' =>Lang::choice('messages.save', 1), 'onclick' => 'submit()')) !!}
+                              array('class' => 'btn btn-success', 'id' => 'save', 'name' =>Lang::choice('messages.save', 1))) !!}
                         {!! Form::submit(Lang::choice('messages.save-and-continue', 1), 
-                              array('class' => 'btn btn-info', 'id' => 'continue', 'name' =>Lang::choice('messages.save-and-continue', 1), 'onclick' => 'submit()')) !!}
+                              array('class' => 'btn btn-info',  'id' => 'continue', 'name' =>Lang::choice('messages.save-and-continue', 1))) !!}
                         @endif
                         <a href="#" class="btn btn-s-md btn-warning"><i class="glyphicon glyphicon-ban-circle"></i> {{ Lang::choice('messages.cancel', 1) }}</a>
                         </div>

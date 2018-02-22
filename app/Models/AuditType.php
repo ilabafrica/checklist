@@ -61,4 +61,21 @@ class AuditType extends Model implements Revisionable{
 		// Add the new mapping
 		DB::table('audit_type_sections')->insert($fieldAdded);
 	}
+	/**
+	* Return audit type ID given the name
+	* @param $name the name of the audit-type
+	*/
+	public static function idByName($name)
+	{
+		try 
+		{
+			$audit_type = AuditType::where('name', $name)->orderBy('name', 'asc')->firstOrFail();
+			return $audit_type->id;
+		} catch (ModelNotFoundException $e) 
+		{
+			Log::error("The audit type ` $name ` does not exist:  ". $e->getMessage());
+			//TODO: send email?
+			return null;
+		}
+	}
 }

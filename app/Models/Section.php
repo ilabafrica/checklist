@@ -120,15 +120,21 @@ class Section extends Model implements Revisionable{
 	/**
 	* Get Subtotal score
 	*/
-	public function subtotal($review)
+	public function subtotal($review, $per = null)
 	{
 		$sum = 0;
+		$na = 0;
 		$rqs = Review::find($review)->rq;
 		foreach ($rqs as $rq) {
 			if(in_array($rq->question_id, $this->questions->lists('id')))
 				$sum+=(int)$rq->qs['audited_score'];
+			if($rq->na)
+				$na+=(int)$rq->na;
 		}
-		return $sum;
+		if($per)
+			return $sum;
+		else
+			return round($sum*100/($this->total_points-$na), 2);
 	}
 	/**
 	 * Parent relationship

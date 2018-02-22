@@ -103,11 +103,16 @@
                         <span class="fa fa-bar-chart"></span> {{ Lang::choice('messages.report', 2) }}
                     </a>
                 </li>
+                <li class="dropdown">
+                    <a href="{!! URL::route('faqs') !!}" target="_blank" role="button" aria-expanded="false">
+                        <span class="fa fa-bar-chart"></span> {{ Lang::choice('messages.faq', 2) }}
+                    </a>
+                </li>
             </ul>
             <!-- End Audit, Lab -->
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown -->
-                {!! HTML::image('images/profiles/'.Auth::user()->image, Lang::choice('messages.no-photo-available', 1), array('class'=>'btn btn-default btn-circle')) !!}
+                {!! HTML::image('img/profiles/default.png', Lang::choice('messages.no-photo-available', 1), array('class'=>'btn btn-default btn-circle')) !!}
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-user"></span> {{ Auth::user()->name }} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -143,7 +148,6 @@
     <script src="{{ URL::asset('admin/js/metisMenu.min.js') }}"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="{{ URL::asset('admin/js/sb-admin-2.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('admin/js/jquery.dataTables.js') }}"></script>
     <script type="text/javascript" src="{{ URL::asset('admin/js/dataTables.bootstrap.js') }}"></script>
     <script src="{{ URL::asset('admin/js/moment.js') }}"></script>
@@ -151,6 +155,7 @@
     <!-- Posabsolute jQuery validation -->
     <script src="{{ URL::asset('admin/js/jquery.validationEngine-en.js') }}"></script>
     <script src="{{ URL::asset('admin/js/jquery.validationEngine.js') }}"></script>
+    <script src="{{ URL::asset('admin/js/sb-admin-2.js') }}"></script>
 </body>
 
 </html>

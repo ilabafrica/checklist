@@ -4,6 +4,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
 use Sofa\Revisionable\Revisionable; // interface
+use Illuminate\Support\Facades\DB;
+use Lang;
 
 class Lab extends Model implements Revisionable{
 	use SoftDeletes;
@@ -19,7 +21,6 @@ class Lab extends Model implements Revisionable{
     protected $revisionable = [
         'name',
         'lab_type_id',
-        'lab_number',
         'address',
         'postal_code',
         'city',
@@ -77,5 +78,16 @@ class Lab extends Model implements Revisionable{
 	public function country()
 	{
 		return $this->belongsTo('App\Models\Country');
+	}
+	/* 
+	* Relationship with Review
+	*/
+	public function review(){
+		return $this->hasMany('App\Models\Review');
+	}
+
+public function county()
+	{
+		return $this->belongsTo('App\Models\County');
 	}
 }

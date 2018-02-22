@@ -138,7 +138,18 @@ class Question extends Model implements Revisionable{
 	*/
 	public function qa($review)
 	{
-		$this->rq->where('review_id', $review)->first()?$row = $this->rq->where('review_id', $review)->first()->qa->lists('answer'):$row=NULL;
+		$row = null;
+		$qstn = ReviewQuestion::where('review_id', $review)->where('question_id', $this->id)->first();
+		if($qstn)
+		{
+			if($qstn->qa)
+				$row = $qstn->qa->answer;
+		}
+		return $row;
+	}
+	public function qas($review)
+	{
+		$this->rq->where('review_id', $review)->first()?$row = $this->rq->where('review_id', $review)->first()->qa:$row=NULL;
 		if(count($row)>0)
 			return $row;
 	}
@@ -175,7 +186,15 @@ class Question extends Model implements Revisionable{
 		if($score == $this->score)
 			return Lang::choice('messages.yes', 2);
 		else if($score == 0)
-			return Lang::choice('messages.no', 2);
+		{
+			if($val = $this->rq()->where('review_id', $review)->first())
+			{
+				if($val->na == 1)
+					return Lang::choice('messages.na', 2);
+				else
+					return Lang::choice('messages.no', 2);
+			}
+		}
 		else if($score == 1)
 			return Lang::choice('messages.partial', 2);
 		else
@@ -188,7 +207,7 @@ class Question extends Model implements Revisionable{
 	public function complete($review)
 	{
 		$ids = Question::find($this->id)->children->lists('id');
-		$row = DB::table('review_question_answers')->where('review_id', $review)->whereIn('question_id', $ids)->lists('id');
+		$row = ReviewQuestion::where('review_id', $review)->whereIn('question_id', $ids)->lists('id');
 		if(count($row)>0)
 			return $row;
 	}

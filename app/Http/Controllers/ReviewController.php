@@ -1,5 +1,5 @@
 <?php namespace App\Http\Controllers;
-
+set_time_limit(0);
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -64,8 +64,10 @@ class ReviewController extends Controller {
         $stars = array(Review::NOTAUDITED => Lang::choice('messages.not-audited', 1), Review::ZEROSTARS => Lang::choice('messages.zero-stars', 1), Review::ONESTAR => Lang::choice('messages.one-star', 1), Review::TWOSTARS => Lang::choice('messages.two-stars', 1), Review::THREESTARS => Lang::choice('messages.three-stars', 1), Review::FOURSTARS => Lang::choice('messages.four-stars', 1), Review::FIVESTARS => Lang::choice('messages.five-stars', 1));
         //	Get users - to be updated to pick auditors alone
         $assessors = User::all();
+        //	Get notes for main questions only
+        $notes = $review->notes();
         
-		return view('audit.review.create', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors'));
+		return view('audit.review.create', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors', 'notes'));
 	}
 
 	/**
@@ -75,7 +77,7 @@ class ReviewController extends Controller {
 	 */
 	public function store()
 	{
-		//dd(Input::all());
+
 		//	Get all SLMTA audit types
         $assessments = Assessment::lists('name', 'id');
         //	Get all SLMTA audit stars
@@ -103,7 +105,7 @@ class ReviewController extends Controller {
 	    }
 	    //	Save Auditors
 	    if(Input::get('assessors')){
-			$review->setAssessors(array(Input::get('assessors')));
+			$review->setAssessors(Input::get('assessors'));
 		}
 	    //	Check if SLMTA Info exists for the review
 	    $slmta = $review->slmta;
@@ -127,8 +129,6 @@ class ReviewController extends Controller {
 	    	$slmtaInfo->prior_audit_status  = Input::get('prior_audit_status');
 	    	$slmtaInfo->audit_start_date  = Input::get('audit_start_date');
 	    	$slmtaInfo->audit_end_date  = Input::get('audit_end_date');
-	    	$slmtaInfo->created_at = date('Y-m-d H:i:s');
-	    	$slmtaInfo->updated_at = date('Y-m-d H:i:s');
 	    	if(!Input::get('assessment_id'))
 				return redirect()->back()->with('error', 'Type of SLMTA audit cannot be empty.');
 			else
@@ -143,7 +143,6 @@ class ReviewController extends Controller {
 		    	$labProfile->head = Input::get('head');
 		    	$labProfile->head_work_telephone = Input::get('head_work_telephone');
 		    	$labProfile->head_personal_telephone = Input::get('head_personal_telephone');
-		    	$labProfile->created_at = date('Y-m-d H:i:s');
 		    	$labProfile->save();
 		    }
 		    else if(count($profile)>0){
@@ -193,22 +192,7 @@ class ReviewController extends Controller {
 		    		$labProfile->other_staff = Input::get('other_staff');
 		    	if(Input::get('other_staff_adequate'))
 		    		$labProfile->other_staff_adequate = Input::get('other_staff_adequate');
-		    	if(Input::get('sufficient_space'))
-		    		$labProfile->sufficient_space = Input::get('sufficient_space');
-		    	if(Input::get('equipment'))
-		    		$labProfile->equipment = Input::get('equipment');
-		    	if(Input::get('supplies'))
-		    		$labProfile->supplies = Input::get('supplies');
-		    	if(Input::get('personnel'))
-		    		$labProfile->personnel = Input::get('personnel');
-		    	if(Input::get('infrastructure'))
-		    		$labProfile->infrastructure = Input::get('infrastructure');
-		    	if(Input::get('other'))
-		    		$labProfile->other = Input::get('other');
-		    	if(Input::get('other_description'))
-		    		$labProfile->other_description = Input::get('other_description');
 		    	//	Update the lab_profile
-		    	$labProfile->updated_at = date('Y-m-d H:i:s');
 				if(count($labProfile)>0)
 		    		$labProfile->save();
 		    }
@@ -216,7 +200,7 @@ class ReviewController extends Controller {
 		//	Store Audit data
 		if(Input::get('assessment_data')){
 			foreach (Input::all() as $key => $value) {
-				if((stripos($key, 'token') !==FALSE) || (stripos($key, 'audit') !==FALSE) || (stripos($key, 'lab') !==FALSE) || (stripos($key, 'review') !==FALSE) || (stripos($key, 'section') !==FALSE) || (stripos($key, 'assessment') !==FALSE) || (stripos($key, 'answer') !==FALSE))
+				if((stripos($key, 'token') !==FALSE) || (stripos($key, 'audit') !==FALSE) || (stripos($key, 'lab') !==FALSE) || (stripos($key, 'review') !==FALSE) || (stripos($key, 'section') !==FALSE) || (stripos($key, 'assessment') !==FALSE))
 					continue;
 				$fieldId = $this->strip($key);
 				$rq = ReviewQuestion::where('review_id', $review->id)->where('question_id', $fieldId)->first();
@@ -225,8 +209,6 @@ class ReviewController extends Controller {
 					$rq = new ReviewQuestion;
 					$rq->review_id = $review->id;
 					$rq->question_id = $fieldId;
-					$rq->created_at = date('Y-m-d H:i:s');
-					$rq->updated_at = date('Y-m-d H:i:s');
 					$rq->save();
 				}
 				if((stripos($key, 'radio') !==FALSE) || (stripos($key, 'pt') !==FALSE) || (stripos($key, 'date') !==FALSE) || (stripos($key, 'percent') !==FALSE)){
@@ -236,8 +218,6 @@ class ReviewController extends Controller {
 						$rqa = new ReviewQAnswer;
 						$rqa->review_question_id = $rq->id;
 						$rqa->answer = $value;
-						$rqa->created_at = date('Y-m-d H:i:s');
-						$rqa->updated_at = date('Y-m-d H:i:s');
 						$rqa->save();
 					}
 					else{
@@ -245,8 +225,12 @@ class ReviewController extends Controller {
 						$rqa = ReviewQAnswer::find($rqa->id);
 						$rqa->review_question_id = $rq->id;
 						$rqa->answer = $value;
-						$rqa->updated_at = date('Y-m-d H:i:s');
 						$rqa->save();
+					}
+					if((int)$value == 3 && $rq->question->score != 0)
+					{
+						$rq->na = 1;
+						$rq->save();
 					}
 				}
 				else if(stripos($key, 'text') !==FALSE){
@@ -259,31 +243,37 @@ class ReviewController extends Controller {
 						$rn->note = $notes;
 						if(Input::get('check_'.$fieldId))
 							$rn->non_compliance = 1;
-						$rn->created_at = date('Y-m-d H:i:s');
-						$rn->updated_at = date('Y-m-d H:i:s');
 						$rn->save();
 					}
 					else{
 						//	Update review-notes
-						$rn = ReviewNote::find($rqn->id);
+						$rn = ReviewNote::find($rn->id);
 						$rn->review_question_id = $rq->id;
 						$rn->note = $notes;
 						if(Input::get('check_'.$fieldId))
 							$rn->non_compliance = 1;
-						$rn->updated_at = date('Y-m-d H:i:s');
 						$rn->save();
+					}
+				}
+				else if(stripos($key, 'answer') !==FALSE){
+					if($value === 'NOT APPLICABLE')
+					{
+						$rq->na = 1;
+						$rq->save();
 					}
 				}
 				else if(stripos($key, 'points') !==FALSE){
 					$rqs = $rq->qs;
 					$score = $value;
+					$na = 'answer_'.$key;
+					$rna = 'radio_'.$key;
+					if(Input::get($na) == 'NOT APPLICABLE' || ($score == 0 && (int)Input::get($rna) == 3))
+						$score = -(int)Question::find($key)->score;
 					if(!$rqs){
 						//	Create review-question-score
 						$rqs = new ReviewQScore;
 						$rqs->review_question_id = $rq->id;
 						$rqs->audited_score = $score;
-						$rqs->created_at = date('Y-m-d H:i:s');
-						$rqs->updated_at = date('Y-m-d H:i:s');
 						$rqs->save();
 					}
 					else{
@@ -291,7 +281,6 @@ class ReviewController extends Controller {
 						$rqa = ReviewQScore::find($rqs->id);
 						$rqa->review_question_id = $rq->id;
 						$rqa->audited_score = $score;
-						$rqa->updated_at = date('Y-m-d H:i:s');
 						$rqa->save();
 					}
 				}
@@ -331,9 +320,15 @@ class ReviewController extends Controller {
 	public function show($id)
 	{
 		$review = Review::find($id);
+		//	Get notes for main questions, sanitize and post to view
+		$notes = $review->notes($id);
+		$questions = [];
+		foreach ($notes as $note) {
+			array_push($questions, ReviewQuestion::find($note->review_question_id)->question_id);
+		}
 		//	Get audit type
 		$audit = AuditType::find($review->audit_type_id);
-		return view('audit.review.show', compact('review', 'audit'));
+		return view('audit.review.show', compact('review', 'audit', 'notes', 'questions'));
 	}
 
 	/**
@@ -382,9 +377,13 @@ class ReviewController extends Controller {
         $slmta = $review->slmta;
         //	Get Lab profile
         $profile = $review->laboratory;
-        //	Get radios selected
-
-		return view('audit.review.edit', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors', 'slmta', 'profile'));
+        //	Get notes for main questions only
+        $notes = $review->notes($id);
+		$questions = [];
+		foreach ($notes as $note) {
+			array_push($questions, ReviewQuestion::find($note->review_question_id)->question_id);
+		}
+		return view('audit.review.edit', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors', 'slmta', 'profile', 'notes', 'questions'));
 	}
 	/**
 	 * Update the specified resource in storage.
@@ -394,15 +393,16 @@ class ReviewController extends Controller {
 	 */
 	public function update($id)
 	{
-		//dd(Input::all());
+		// dd(Input::all());
 		$review = Review::find($id);
 		//	Save Auditors
 		if(Input::get('assessors')){
-			$review->setAssessors(array(Input::get('assessors')));
+			$review->setAssessors(Input::get('assessors'), $review->user_id);
 		}
 		//	Check if SLMTA Info exists for the review
 	    $slmta = $review->slmta;
 	    if(!count($slmta)>0){
+
 	    	$slmtaInfo = new ReviewSlmtaInfo;
 	    	$slmtaInfo->review_id = $review->id;
 	    	$slmtaInfo->official_slmta = Input::get('official_slmta');
@@ -410,26 +410,91 @@ class ReviewController extends Controller {
 	    	$slmtaInfo->tests_before_slmta  = Input::get('tests_before_slmta');
 	    	$slmtaInfo->tests_this_year  = Input::get('tests_this_year');
 	    	$slmtaInfo->cohort_id  = Input::get('cohort_id');
-	    	$slmtaInfo->baseline_audit_date  = Input::get('baseline_audit_date');
-	    	$slmtaInfo->slmta_workshop_date  = Input::get('slmta_workshop_date');
-	    	$slmtaInfo->exit_audit_date  = Input::get('exit_audit_date');
+
+	    	if (!Input::get('baseline_audit_date')) {
+	    		$slmtaInfo->baseline_audit_date  = '0000-00-00';
+	    	}else{
+	    		$slmtaInfo->baseline_audit_date  = Input::get('baseline_audit_date');
+	    	}
+	    	if (!Input::get('slmta_workshop_date')) {
+	    		$slmtaInfo->slmta_workshop_date  = '0000-00-00';
+	    	}else{
+	    		$slmtaInfo->slmta_workshop_date  = Input::get('slmta_workshop_date');
+	    	}
+
+	    	if (!Input::get('exit_audit_date')) {
+	    		$slmtaInfo->exit_audit_date  = '0000-00-00';
+	    	}else{
+	    		$slmtaInfo->exit_audit_date  = Input::get('exit_audit_date');		
+	    	}
 	    	$slmtaInfo->baseline_score  = Input::get('baseline_score');
 	    	$slmtaInfo->baseline_stars_obtained  = Input::get('baseline_stars');
 	    	$slmtaInfo->exit_score  = Input::get('exit_score');
 	    	$slmtaInfo->exit_stars_obtained  = Input::get('exit_stars');
-	    	$slmtaInfo->last_audit_date  = Input::get('last_audit_date');
+	    	
+	    	if (!Input::get('last_audit_date')) {
+	    		$slmtaInfo->last_audit_date  = '0000-00-00';
+	    	}else{
+	    		$slmtaInfo->last_audit_date  = Input::get('last_audit_date');
+	    	}
+
 	    	$slmtaInfo->last_audit_score  = Input::get('last_audit_score');
 	    	$slmtaInfo->prior_audit_status  = Input::get('prior_audit_status');
 	    	$slmtaInfo->audit_start_date  = Input::get('audit_start_date');
 	    	$slmtaInfo->audit_end_date  = Input::get('audit_end_date');
-	    	$slmtaInfo->created_at = date('Y-m-d H:i:s');
-	    	$slmtaInfo->updated_at = date('Y-m-d H:i:s');
 	    	if(!Input::get('assessment_id'))
 				return redirect()->back()->with('error', 'Type of SLMTA audit cannot be empty.');
 			else
 	    		$slmtaInfo->save();
 	    }
 	    if(count($slmta)>0){
+	    	//Get existing SMLTA info 
+	    	if (Input::get('assessment_id')) {
+
+	    		$slmtaInfo = ReviewSlmtaInfo::find($slmta->id);
+	    		
+		    	$slmtaInfo->review_id = $review->id;
+		    	$slmtaInfo->official_slmta = Input::get('official_slmta');
+		    	$slmtaInfo->assessment_id = Input::get('assessment_id');
+		    	$slmtaInfo->tests_before_slmta  = Input::get('tests_before_slmta');
+		    	$slmtaInfo->tests_this_year  = Input::get('tests_this_year');
+		    	$slmtaInfo->cohort_id  = Input::get('cohort_id');
+
+		    	if (!Input::get('baseline_audit_date')) {
+		    		$slmtaInfo->baseline_audit_date  = '0000-00-00';
+		    	}else{
+		    		$slmtaInfo->baseline_audit_date  = Input::get('baseline_audit_date');
+		    	}
+		    	if (!Input::get('slmta_workshop_date')) {
+		    		$slmtaInfo->slmta_workshop_date  = '0000-00-00';
+		    	}else{
+		    		$slmtaInfo->slmta_workshop_date  = Input::get('slmta_workshop_date');
+		    	}
+
+		    	if (!Input::get('exit_audit_date')) {
+		    		$slmtaInfo->exit_audit_date  = '0000-00-00';
+		    	}else{
+		    		$slmtaInfo->exit_audit_date  = Input::get('exit_audit_date');		
+		    	}
+		    	$slmtaInfo->baseline_score  = Input::get('baseline_score');
+		    	$slmtaInfo->baseline_stars_obtained  = Input::get('baseline_stars');
+		    	$slmtaInfo->exit_score  = Input::get('exit_score');
+		    	$slmtaInfo->exit_stars_obtained  = Input::get('exit_stars');
+		    	
+		    	if (!Input::get('last_audit_date')) {
+		    		$slmtaInfo->last_audit_date  = '0000-00-00';
+		    	}else{
+		    		$slmtaInfo->last_audit_date  = Input::get('last_audit_date');
+		    	}
+		    	
+		    	$slmtaInfo->last_audit_score  = Input::get('last_audit_score');
+		    	$slmtaInfo->prior_audit_status  = Input::get('prior_audit_status');
+		    	$slmtaInfo->audit_start_date  = Input::get('audit_start_date');
+		    	$slmtaInfo->audit_end_date  = Input::get('audit_end_date');
+	    		$slmtaInfo->save();
+
+		    }
+
 		    //	Check if Lab Info exists for the review
 		    $profile = $review->laboratory;
 		    if(!count($profile)>0 && Input::get('head')){
@@ -438,80 +503,77 @@ class ReviewController extends Controller {
 		    	$labProfile->head = Input::get('head');
 		    	$labProfile->head_work_telephone = Input::get('head_work_telephone');
 		    	$labProfile->head_personal_telephone = Input::get('head_personal_telephone');
-		    	$labProfile->created_at = date('Y-m-d H:i:s');
 		    	$labProfile->save();
 		    }
 		    else if(count($profile)>0){
-		    	$labProfile = ReviewLabProfile::find($profile->id);
-		    	//	Get elements with values given
-		    	if(Input::get('degree_staff'))
-		    		$labProfile->degree_staff = Input::get('degree_staff');
-		    	if(Input::get('degree_staff_adequate'))
-		    		$labProfile->degree_staff_adequate = Input::get('degree_staff_adequate');
-		    	if(Input::get('diploma_staff'))
-		    		$labProfile->diploma_staff = Input::get('diploma_staff');
-		    	if(Input::get('diploma_staff_adequate'))
-		    		$labProfile->diploma_staff_adequate = Input::get('diploma_staff_adequate');
-		    	if(Input::get('certificate_staff')) 
-		    		$labProfile->certificate_staff = Input::get('certificate_staff');
-		    	if(Input::get('certificate_staff_adequate'))
-		    		$labProfile->certificate_staff_adequate = Input::get('certificate_staff_adequate');
-		    	if(Input::get('microscopist'))
-		    		$labProfile->microscopist = Input::get('microscopist');
-		    	if(Input::get('microscopist_adequate'))
-		    		$labProfile->microscopist_adequate = Input::get('microscopist_adequate');
-		    	if(Input::get('phlebotomist'))
-		    		$labProfile->phlebotomist = Input::get('phlebotomist');
-		    	if(Input::get('phlebotomist_adequate'))
-		    		$labProfile->phlebotomist_adequate = Input::get('phlebotomist_adequate');
-		    	if(Input::get('data_clerk'))
-		    		$labProfile->data_clerk = Input::get('data_clerk');
-		    	if(Input::get('data_clerk_adequate'))
-		    		$labProfile->data_clerk_adequate = Input::get('data_clerk_adequate');
-		    	if(Input::get('cleaner'))
-		    		$labProfile->cleaner = Input::get('cleaner');
-		    	if(Input::get('cleaner_adequate'))
-		    		$labProfile->cleaner_adequate = Input::get('cleaner_adequate');
-		    	if(Input::get('cleaner_dedicated'))
-		    		$labProfile->cleaner_dedicated = Input::get('cleaner_dedicated');
-		    	if(Input::get('cleaner_trained'))
-		    		$labProfile->cleaner_trained = Input::get('cleaner_trained');
-		    	if(Input::get('driver'))
-		    		$labProfile->driver = Input::get('driver');
-		    	if(Input::get('driver_adequate'))
-		    		$labProfile->driver_adequate = Input::get('driver_adequate');
-		    	if(Input::get('driver_dedicated'))
-		    		$labProfile->driver_dedicated = Input::get('driver_dedicated');
-		    	if(Input::get('driver_trained'))
-		    		$labProfile->driver_trained = Input::get('driver_trained');
-		    	if(Input::get('other_staff'))
-		    		$labProfile->other_staff = Input::get('other_staff');
-		    	if(Input::get('other_staff_adequate'))
-		    		$labProfile->other_staff_adequate = Input::get('other_staff_adequate');
-		    	if(Input::get('sufficient_space'))
-		    		$labProfile->sufficient_space = Input::get('sufficient_space');
-		    	if(Input::get('equipment'))
-		    		$labProfile->equipment = Input::get('equipment');
-		    	if(Input::get('supplies'))
-		    		$labProfile->supplies = Input::get('supplies');
-		    	if(Input::get('personnel'))
-		    		$labProfile->personnel = Input::get('personnel');
-		    	if(Input::get('infrastructure'))
-		    		$labProfile->infrastructure = Input::get('infrastructure');
-		    	if(Input::get('other'))
-		    		$labProfile->other = Input::get('other');
-		    	if(Input::get('other_description'))
-		    		$labProfile->other_description = Input::get('other_description');
-		    	//	Update the lab_profile
-		    	$labProfile->updated_at = date('Y-m-d H:i:s');
-				if(count($labProfile)>0)
-		    		$labProfile->save();
+		    	if (Input::get('head')) {
+		    		$labProfile = ReviewLabProfile::find($profile->id);
+			    	$labProfile->review_id = $review->id;
+			    	$labProfile->head = Input::get('head');
+			    	$labProfile->head_work_telephone = Input::get('head_work_telephone');
+			    	$labProfile->head_personal_telephone = Input::get('head_personal_telephone');
+			    	$labProfile->save();
+		    	}
+		    	
+		    	if (Input::get('degree_staff')) {
+
+			    	$labProfile = ReviewLabProfile::find($profile->id);
+		    		// dd($labProfile);
+			    	//	Get elements with values given
+			    	if(Input::get('degree_staff'))
+			    		$labProfile->degree_staff = Input::get('degree_staff');
+			    	if(Input::get('degree_staff_adequate'))
+			    		$labProfile->degree_staff_adequate = Input::get('degree_staff_adequate');
+			    	if(Input::get('diploma_staff'))
+			    		$labProfile->diploma_staff = Input::get('diploma_staff');
+			    	if(Input::get('diploma_staff_adequate'))
+			    		$labProfile->diploma_staff_adequate = Input::get('diploma_staff_adequate');
+			    	if(Input::get('certificate_staff')) 
+			    		$labProfile->certificate_staff = Input::get('certificate_staff');
+			    	if(Input::get('certificate_staff_adequate'))
+			    		$labProfile->certificate_staff_adequate = Input::get('certificate_staff_adequate');
+			    	if(Input::get('microscopist'))
+			    		$labProfile->microscopist = Input::get('microscopist');
+			    	if(Input::get('microscopist_adequate'))
+			    		$labProfile->microscopist_adequate = Input::get('microscopist_adequate');
+			    	if(Input::get('phlebotomist'))
+			    		$labProfile->phlebotomist = Input::get('phlebotomist');
+			    	if(Input::get('phlebotomist_adequate'))
+			    		$labProfile->phlebotomist_adequate = Input::get('phlebotomist_adequate');
+			    	if(Input::get('data_clerk'))
+			    		$labProfile->data_clerk = Input::get('data_clerk');
+			    	if(Input::get('data_clerk_adequate'))
+			    		$labProfile->data_clerk_adequate = Input::get('data_clerk_adequate');
+			    	if(Input::get('cleaner'))
+			    		$labProfile->cleaner = Input::get('cleaner');
+			    	if(Input::get('cleaner_adequate'))
+			    		$labProfile->cleaner_adequate = Input::get('cleaner_adequate');
+			    	if(Input::get('cleaner_dedicated'))
+			    		$labProfile->cleaner_dedicated = Input::get('cleaner_dedicated');
+			    	if(Input::get('cleaner_trained'))
+			    		$labProfile->cleaner_trained = Input::get('cleaner_trained');
+			    	if(Input::get('driver'))
+			    		$labProfile->driver = Input::get('driver');
+			    	if(Input::get('driver_adequate'))
+			    		$labProfile->driver_adequate = Input::get('driver_adequate');
+			    	if(Input::get('driver_dedicated'))
+			    		$labProfile->driver_dedicated = Input::get('driver_dedicated');
+			    	if(Input::get('driver_trained'))
+			    		$labProfile->driver_trained = Input::get('driver_trained');
+			    	if(Input::get('other_staff'))
+			    		$labProfile->other_staff = Input::get('other_staff');
+			    	if(Input::get('other_staff_adequate'))
+			    		$labProfile->other_staff_adequate = Input::get('other_staff_adequate');
+			    	//	Update the lab_profile
+					if(count($labProfile)>0)
+			    		$labProfile->save();
+		    	}
 		    }
 		}
 		//	Store Audit data
 		if(Input::get('assessment_data')){
 			foreach (Input::all() as $key => $value) {
-				if((stripos($key, 'token') !==FALSE) || (stripos($key, 'audit') !==FALSE) || (stripos($key, 'lab') !==FALSE) || (stripos($key, 'review') !==FALSE) || (stripos($key, 'section') !==FALSE) || (stripos($key, 'assessment') !==FALSE) || (stripos($key, 'answer') !==FALSE) || (stripos($key, 'method') !==FALSE))
+				if((stripos($key, 'token') !==FALSE) || (stripos($key, 'audit') !==FALSE) || (stripos($key, 'lab') !==FALSE) || (stripos($key, 'review') !==FALSE) || (stripos($key, 'section') !==FALSE) || (stripos($key, 'assessment') !==FALSE) || (stripos($key, 'method') !==FALSE))
 					continue;
 				$fieldId = $this->strip($key);
 				$rq = ReviewQuestion::where('review_id', $review->id)->where('question_id', $fieldId)->first();
@@ -520,8 +582,6 @@ class ReviewController extends Controller {
 					$rq = new ReviewQuestion;
 					$rq->review_id = $review->id;
 					$rq->question_id = $fieldId;
-					$rq->created_at = date('Y-m-d H:i:s');
-					$rq->updated_at = date('Y-m-d H:i:s');
 					$rq->save();
 				}
 				if((stripos($key, 'radio') !==FALSE) || (stripos($key, 'pt') !==FALSE) || (stripos($key, 'date') !==FALSE) || (stripos($key, 'percent') !==FALSE)){
@@ -531,8 +591,6 @@ class ReviewController extends Controller {
 						$rqa = new ReviewQAnswer;
 						$rqa->review_question_id = $rq->id;
 						$rqa->answer = $value;
-						$rqa->created_at = date('Y-m-d H:i:s');
-						$rqa->updated_at = date('Y-m-d H:i:s');
 						$rqa->save();
 					}
 					else{
@@ -540,8 +598,12 @@ class ReviewController extends Controller {
 						$rqa = ReviewQAnswer::find($rqa->id);
 						$rqa->review_question_id = $rq->id;
 						$rqa->answer = $value;
-						$rqa->updated_at = date('Y-m-d H:i:s');
 						$rqa->save();
+					}
+					if((int)$value == 3 && $rq->question->score != 0)
+					{
+						$rq->na = 1;
+						$rq->save();
 					}
 				}
 				else if(stripos($key, 'text') !==FALSE){
@@ -554,8 +616,6 @@ class ReviewController extends Controller {
 						$rn->note = $notes;
 						if(Input::get('check_'.$fieldId))
 							$rn->non_compliance = 1;
-						$rn->created_at = date('Y-m-d H:i:s');
-						$rn->updated_at = date('Y-m-d H:i:s');
 						$rn->save();
 					}
 					else{
@@ -569,6 +629,13 @@ class ReviewController extends Controller {
 						$rn->save();
 					}
 				}
+				else if(stripos($key, 'answer') !==FALSE){
+					if($value === 'NOT APPLICABLE')
+					{
+						$rq->na = 1;
+						$rq->save();
+					}
+				}
 				else if(stripos($key, 'points') !==FALSE){
 					$rqs = $rq->qs;
 					$score = $value;
@@ -577,8 +644,6 @@ class ReviewController extends Controller {
 						$rqs = new ReviewQScore;
 						$rqs->review_question_id = $rq->id;
 						$rqs->audited_score = $score;
-						$rqs->created_at = date('Y-m-d H:i:s');
-						$rqs->updated_at = date('Y-m-d H:i:s');
 						$rqs->save();
 					}
 					else{
@@ -586,7 +651,6 @@ class ReviewController extends Controller {
 						$rqs = ReviewQScore::find($rqs->id);
 						$rqs->review_question_id = $rq->id;
 						$rqs->audited_score = $score;
-						$rqs->updated_at = date('Y-m-d H:i:s');
 						$rqs->save();
 					}
 				}
@@ -622,6 +686,13 @@ class ReviewController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	public function delete($id)
+	{  
+		$lab= Review::find($id);
+		$lab->delete();
+		return redirect('home')->with('message', 'Review deleted successfully.');
+	}
+	
 	public function destroy($id)
 	{
 		//
@@ -632,23 +703,46 @@ class ReviewController extends Controller {
 	 */
 	public function start()
 	{
-		//	Get values for creation of audit response
-		$response = new Review;
-        $response->lab_id = Input::get('lab_id');
-        $response->audit_type_id = Input::get('audit_type_id');
-        $response->status = Review::INCOMPLETE;
-        $response->user_id = Auth::user()->id;
-        $response->update_user_id = Auth::user()->id;
-        $response->save();
+		$lab_id = Input::get('lab_id');
+		$audit_type_id = Input::get('checklist');
+		$status = Review::INCOMPLETE;
+		
+		$pending_lab_reviews = Lab::where('labs.id', $lab_id) ->join('reviews', 'labs.id', '=', 'reviews.lab_id')
+									->where('reviews.lab_id', '=', $lab_id)
+									->where('reviews.status', '=', $status)->pluck('name');
+		// dd($pending_lab_reviews);
 
-        //	Get variables ready for processing of new audit
-        $audit = AuditType::find($response->audit_type_id);
-        $lab = Lab::find($response->lab_id);
-        $page = $audit->sections[0];
-        //	Get saved review
-        $review = Review::find($response->id);
+		if ($pending_lab_reviews!=null)
+		{			
+			$message = 'There are pending reviews for '.$pending_lab_reviews.' that need to be completed';
+        	return redirect('report')->with('message', $message);
 
-        return view('audit.review.create', compact('audit', 'lab', 'page', 'review'));
+		} else
+		{
+			//	Get values for creation of audit response		
+			$response = new Review;
+	        $response->lab_id = Input::get('lab_id');
+	        if(Input::get('checklist'))
+	        	$response->audit_type_id = Input::get('checklist');
+	        else
+	        	$response->audit_type_id = 1;
+	        $response->status = Review::INCOMPLETE;
+	        $response->user_id = Auth::user()->id;
+	        $response->update_user_id = Auth::user()->id;
+	        $response->save();
+
+	        DB::table('review_assessors')->insert(['review_id' =>$response->id , 'assessor_id' => Auth::user()->id]);
+
+	        //	Get variables ready for processing of new audit
+	        $audit = AuditType::find($response->audit_type_id);
+	        $lab = Lab::find($response->lab_id);
+	        $page = $audit->sections[0];
+	        //	Get saved review
+	        $review = Review::find($response->id);
+	      
+
+	        return view('audit.review.edit', compact('audit', 'lab', 'page', 'review'));
+    	}
 	}
 	
 	/**
@@ -670,9 +764,13 @@ class ReviewController extends Controller {
 	 */
 	public function assessments($id=NULL)
 	{
+		$user_id = Auth::user()->id;
 		if ($id==NULL){
-			//	Get all audits
-			$responses = Review::all();
+			//get all the reviews the user has created or edited
+			$first = DB::table('review_assessors')->where('assessor_id', $user_id)->lists('review_id');
+			$responses = Review::whereIn('id', $first)->get();		
+	
+			// $responses = Review:: where('user_id', '=' ,$user_id)->get();
 		}
 		else{
 			$audit = AuditType::find($id);
@@ -746,7 +844,7 @@ class ReviewController extends Controller {
 		$scored_questions = array(); 
 		$rqs = $review->rq;
 		foreach ($rqs as $rq) {
-			if($rq->qa)
+			if($rq->qs)
 				array_push($scored_questions, $rq);
 			else
 				continue;
@@ -769,6 +867,7 @@ class ReviewController extends Controller {
 		if(count($questions) == count($scored_questions)){
 			$review->status = Review::COMPLETE;
 			$review->updated_at = date('Y-m-d H:i:s');
+			$review->save();
         	return redirect()->to('review/assessment/'.$review->audit_type_id)->with('message', 'Audit marked complete')->with('active_review', $review->id);
 		}
 		else{
@@ -815,12 +914,11 @@ class ReviewController extends Controller {
         Excel::load('/public/uploads/'.$excel, function($reader) use($audit_type_id, $review_id){
         	$laboratory_profile = $reader->get()[0];
         	$staffing_summary = $reader->get()[1];
-        	$organizational_structure = $reader->get()[2];
-        	$slmta_information = $reader->get()[3];
-        	$assessment = $reader->get()[4];
-        	$scores = $reader->get()[5];
-        	$summary = $reader->get()[6];
-        	$action_plan = $reader->get()[7];
+        	$slmta_information = $reader->get()[2];
+        	$assessment = $reader->get()[3];
+        	$scores = $reader->get()[4];
+        	$summary = $reader->get()[5];
+        	$action_plan = $reader->get()[6];
         	//	Initialize variables
         	$labName = $reader->first()[0]->value;
 	        $lab_id = Lab::labIdName($labName);
@@ -845,9 +943,8 @@ class ReviewController extends Controller {
 			//	Get review id
 			$review_id = $review->id;
 
-        	$reader->each(function($sheet) use($review_id, $laboratory_profile, $staffing_summary, $organizational_structure, $slmta_information, $assessment, $scores, $summary, $action_plan){
-        		$review = Review::find(1);
-        		$sheetTitle = $sheet->getTitle();
+        	$reader->each(function($sheet) use($review_id, $review, $laboratory_profile, $staffing_summary, $slmta_information, $assessment, $scores, $summary, $action_plan){
+	$sheetTitle = $sheet->getTitle();
         		if($sheetTitle == Lang::choice('messages.lab-info', 2)){
         			$counter = count($sheet);
         			$head = NULL;
@@ -858,7 +955,6 @@ class ReviewController extends Controller {
 		    		if(!count($lab_profile)){
 				    	$lab_profile = new ReviewLabProfile;
 				    	$lab_profile->review_id = $review_id;
-				    	$lab_profile->created_at = date('Y-m-d H:i:s');
 				    	$lab_profile->save();
 				    }
 					for($i=0;$i<$counter;$i++){
@@ -873,7 +969,6 @@ class ReviewController extends Controller {
 							$lab_profile->head_work_telephone = $sheet[$i]->value;
 						}
         			}
-        			$lab_profile->updated_at = date('Y-m-d H:is:s');
         			$lab_profile->save();
         		}
         		//	Staffing Summary
@@ -909,7 +1004,6 @@ class ReviewController extends Controller {
 		    		if(!count($lab_profile)){
 				    	$lab_profile = new ReviewLabProfile;
 				    	$lab_profile->review_id = $review_id;
-				    	$lab_profile->created_at = date('Y-m-d H:i:s');
 				    	$lab_profile->save();
 				    }
 					//	Begin saving
@@ -963,54 +1057,7 @@ class ReviewController extends Controller {
 							$lab_profile->other_staff_adequate = Answer::adequate($staffing_summary[$i]->adequate);
 						}
         			}
-        			$lab_profile->updated_at = date('Y-m-d H:i:s');
         			$lab_profile->save();
-        		}
-        		//	Organizational structure
-        		else if($sheetTitle == Lang::choice('messages.org-structure', 2)){
-        			$counter = count($organizational_structure);
-        			//	Declare variables
-        			$sufficient_space = NULL;
-        			$equipment = NULL;
-        			$supplies = NULL;
-        			$personnel = NULL;
-        			$infrastructure = NULL;
-        			$other = NULL;
-        			$other_description = NULL;
-        			//	Check lab profile
-    				$lab_profile = $review->laboratory;
-		    		if(!count($lab_profile)){
-				    	$lab_profile = new ReviewLabProfile;
-				    	$lab_profile->review_id = $review_id;
-				    	$lab_profile->created_at = date('Y-m-d H:i:s');
-				    	$lab_profile->save();
-				    }
-					//	Begin saving
-        			for($i=0;$i<$counter;$i++){
-        				if($organizational_structure[$i]->field == Lang::choice('messages.sufficient-space', 1)){
-							$lab_profile->sufficient_space = Answer::adequate($organizational_structure[$i]->value);
-						}
-						if($organizational_structure[$i]->field == Lang::choice('messages.equipment', 1)){
-							$lab_profile->equipment = Answer::adequate($organizational_structure[$i]->value);
-						}
-						if($organizational_structure[$i]->field == Lang::choice('messages.supplies', 1)){
-							$lab_profile->supplies = Answer::adequate($organizational_structure[$i]->value);
-						}
-						if($organizational_structure[$i]->field == Lang::choice('messages.personnel', 1)){
-							$lab_profile->personnel = Answer::adequate($organizational_structure[$i]->value);
-						}
-						if($organizational_structure[$i]->field == Lang::choice('messages.infrastructure', 1)){
-							$lab_profile->infrastructure = Answer::adequate($organizational_structure[$i]->value);
-						}
-						if(strpos($organizational_structure[$i]->field, Lang::choice('messages.other-specify', 1)) !== FALSE){
-							$lab_profile->other = Answer::adequate($organizational_structure[$i]->value);
-							if(($pos = strpos($organizational_structure[$i]->field, ':')) !== FALSE)
-								$other_description = substr($organizational_structure[$i]->field, $pos+2);
-							$lab_profile->other_description = trim($other_description);
-						}
-        			}
-        			$lab_profile->updated_at = date('Y-m-d H:i:s');
-				    $lab_profile->save();
         		}
         		//	SLMTA Information
         		else if($sheetTitle == Lang::choice('messages.slmta-info', 2)){
@@ -1076,13 +1123,13 @@ class ReviewController extends Controller {
 		    				$slmta->baseline_score = $slmta_information[$i]->value;
 		    			}
 		    			if($slmta_information[$i]->field == Lang::choice('messages.baseline-stars', 1)){
-		    				$slmta->baseline_stars = $slmta_information[$i]->value;
+		    				$slmta->baseline_stars_obtained = $slmta_information[$i]->value;
 		    			}
 		    			if($slmta_information[$i]->field == Lang::choice('messages.exit-score', 1)){
 		    				$slmta->exit_score = $slmta_information[$i]->value;
 		    			}
 		    			if($slmta_information[$i]->field == Lang::choice('messages.exit-stars', 1)){
-		    				$slmta->exit_stars = $slmta_information[$i]->value;
+		    				$slmta->exit_stars_obtained = $slmta_information[$i]->value;
 		    			}
 		    			if($slmta_information[$i]->field == Lang::choice('messages.last-audit-date', 1)){
 		    				$slmta->last_audit_date = $slmta_information[$i]->value;
@@ -1094,14 +1141,15 @@ class ReviewController extends Controller {
 		    				$slmta->prior_audit_status = $slmta_information[$i]->value;
 		    			}
 		    			if($slmta_information[$i]->field == Lang::choice('messages.names-affiliations-of-auditors', 1)){
-		    				foreach(explode(',', $slmta_information[$i]->value) as $assessor){
-		    					$assessors = array_push($assessors, User::userIdName($assessor));
+		    				foreach(explode(',', $slmta_information[$i]->value) as $assessor)
+		    				{
+		    					$assessor = trim($assessor);
+		    					array_push($assessors, User::userIdName($assessor));
 		    				}
 		    			}
 					}
-					Review::find($review_id)->setAssessors([$assessors]);
-					$slmta->created_at = date('Y-m-d H:i:s');
-					$slmta->updated_at = date('Y-m-d H:i:s');
+					Review::find($review_id)->setAssessors($assessors);
+					$slmta->review_id = $review_id;
 					$slmta->save();
         		}
         		//	Summary of Audit Findings
@@ -1124,7 +1172,6 @@ class ReviewController extends Controller {
         					$review->recommendations = $summary[$i]->value;
         				}
         			}
-        			$review->updated_at = date('Y-m-d H:i:s');
         			$review->save();
         		}
         		//	Action Plan
@@ -1141,8 +1188,6 @@ class ReviewController extends Controller {
 		        					$plan->action = $summary[$i]->action;
 		        					$plan->responsible_person = $summary[$i]->incharge;
 		        					$plan->timeline = $summary[$i]->timeline;
-		        					$plan->created_at = date('Y-m-d H:i:s');
-		        					$plan->updated_at = date('Y-m-d H:i:s');
 		        					$plan->save();
 		        				}
 		        			}
@@ -1152,7 +1197,6 @@ class ReviewController extends Controller {
 	        					$plan->action = $summary[$i]->action;
 	        					$plan->responsible_person = $summary[$i]->incharge;
 	        					$plan->timeline = $summary[$i]->timeline;
-	        					$plan->updated_at = date('Y-m-d H:i:s');
 	        					$plan->save();
 		        			}
 		        		}
@@ -1162,15 +1206,14 @@ class ReviewController extends Controller {
         		else if($sheetTitle == 'Assessment Details'){
         			$counter = count($assessment);
         			if($counter>0){
-	        			for($i=0; $i<$counter; $i++){
+	        			for($i=0; $i<$counter; $i++)
+	        			{
 	        				$rq = ReviewQuestion::where('review_id', $review_id)->where('question_id', $assessment[$i]->question)->first();
 							if(!$rq){
 								//	Create review-question
 								$rq = new ReviewQuestion;
 								$rq->review_id = $review_id;
-								$rq->question_id = $scores[$i]->question;
-								$rq->created_at = date('Y-m-d H:i:s');
-								$rq->updated_at = date('Y-m-d H:i:s');
+								$rq->question_id = $assessment[$i]->question;
 								$rq->save();
 							}
 							$rqa = $rq->qa;
@@ -1185,8 +1228,6 @@ class ReviewController extends Controller {
 									$rqa = new ReviewQAnswer;
 									$rqa->review_question_id = $rq->id;
 									$rqa->answer = Answer::idByName($assessment[$i]->response);
-									$rqa->created_at = date('Y-m-d H:i:s');
-									$rqa->updated_at = date('Y-m-d H:i:s');
 									$rqa->save();
 								}
 								else{
@@ -1194,7 +1235,6 @@ class ReviewController extends Controller {
 									$rqa = ReviewQAnswer::find($rqa->id);
 									$rqa->review_question_id = $rq->id;
 									$rqa->answer = Answer::idByName($assessment[$i]->response);
-									$rqa->updated_at = date('Y-m-d H:i:s');
 									$rqa->save();
 								}
 							}
@@ -1204,8 +1244,6 @@ class ReviewController extends Controller {
 								$rn->review_question_id = $rq->id;
 								$rn->note = $assessment[$i]->notes;
 								$rn->non_compliance = Answer::adequate($assessment[$i]->compliance);
-								$rn->created_at = date('Y-m-d H:i:s');
-								$rn->updated_at = date('Y-m-d H:i:s');
 								$rn->save();
 							}
 							else{
@@ -1214,7 +1252,6 @@ class ReviewController extends Controller {
 								$rn->review_question_id = $rq->id;
 								$rn->note = $assessment[$i]->notes;
 								$rn->non_compliance = Answer::adequate($assessment[$i]->compliance);
-								$rn->updated_at = date('Y-m-d H:i:s');
 								$rn->save();
 							}
 						}
@@ -1231,8 +1268,6 @@ class ReviewController extends Controller {
 								$rq = new ReviewQuestion;
 								$rq->review_id = $review_id;
 								$rq->question_id = $scores[$i]->question;
-								$rq->created_at = date('Y-m-d H:i:s');
-								$rq->updated_at = date('Y-m-d H:i:s');
 								$rq->save();
 							}
         					$rqs = $rq->qs;
@@ -1241,8 +1276,6 @@ class ReviewController extends Controller {
 								$rqs = new ReviewQScore;
 								$rqs->review_question_id = $rq->id;
 								$rqs->audited_score = $scores[$i]->points;
-								$rqs->created_at = date('Y-m-d H:i:s');
-								$rqs->updated_at = date('Y-m-d H:i:s');
 								$rqs->save();
 							}
 							else{
@@ -1250,7 +1283,6 @@ class ReviewController extends Controller {
 								$rqs = ReviewQScore::find($rqs->id);
 								$rqs->review_question_id = $rq->id;
 								$rqs->audited_score = $scores[$i]->points;
-								$rqs->updated_at = date('Y-m-d H:i:s');
 								$rqs->save();
 							}
         				}

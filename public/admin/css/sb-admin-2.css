@@ -450,3 +450,8 @@ table.dataTable thead .sorting:after {
   border-left: 10px solid #ac2925;
 }
 /* End breacrumb styles */
+/*Stylish radiobutton*/
+#radioBtn .notActive{
+    color: #3276b1;
+    background-color: #fff;
+}

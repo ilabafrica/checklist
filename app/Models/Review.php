@@ -2,10 +2,16 @@
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
+use Sofa\Revisionable\Revisionable; // interface
 use Lang;
 
-class Review extends Model {
-
+class Review extends Model implements Revisionable{
+	
+	use SoftDeletes;
+	use RevisionableTrait;
+	protected $dates = ['deleted_at'];
 	protected $table = 'reviews';
 	/**
 	* Official SLMTA?
@@ -66,7 +72,7 @@ class Review extends Model {
 	 	return $this->belongsToMany('App\Models\User', 'review_assessors', 'review_id', 'assessor_id');
 	}
 	//	Set auditors for the review
-	public function setAssessors($field){
+	public function setAssessors($field,$review_user_id){
 
 		$fieldAdded = array();
 		$reviewId = 0;	
@@ -84,7 +90,7 @@ class Review extends Model {
 
 		}
 		// Delete existing parent-child mappings
-		DB::table('review_assessors')->where('review_id', '=', $reviewId)->delete();
+		DB::table('review_assessors')->where('review_id', '=', $reviewId)->where('assessor_id', '!=', $review_user_id) ->delete();
 
 		// Add the new mapping
 		DB::table('review_assessors')->insert($fieldAdded);
@@ -135,12 +141,14 @@ class Review extends Model {
 	*/
 	public function adequate($id)
 	{
-		if($id == Answer::INSUFFICIENT)
+		if($id === Answer::INSUFFICIENT)
 			return Lang::choice('messages.insufficient-data', 1);
-		else if($id == Answer::YES)
+		else if($id ===Answer::YES)
 			return Lang::choice('messages.yes', 1);
-		else if($id == Answer::NO)
+		else if($id === Answer::NO)
 			return Lang::choice('messages.no', 1);
+		else
+			return null;
 	}
 	/**
 	* Action plan 
@@ -152,8 +160,19 @@ class Review extends Model {
 	/**
 	* Non-compliancies 
 	*/
-	public function noncompliance()
+	public function notes($i=0)
 	{
-		return DB::table('review_notes')->where('review_id', $this->id)->where('non_compliance', Answer::NONCOMPLIANT)->orderBy('question_id')->get();
+		$summary = [];
+		$notes = ReviewNote::whereHas('review_question', function($q){
+			$q->where('review_id', $this->id)->whereIn('question_id', Question::where('score', '!=', 0)->lists('id'))->orderBy('question_id', 'ASC');
+		})->where('note', '!=', '')->select('review_question_id', 'note')->get();
+		foreach ($notes as $note)
+		{
+			$summary[] = Question::find(ReviewQuestion::find($note->review_question_id)->question_id)->title.' - '.$note->note;
+		}
+		if($i!=0)
+			return $notes;
+		else
+			return $summary;
 	}
 }

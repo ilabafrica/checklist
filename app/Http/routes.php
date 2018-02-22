@@ -26,12 +26,19 @@ Route::group(array("before" => "guest"), function()
 	    "as" => "auth.login",
 	    "uses" => "WelcomeController@index"
 	));
-
     Route::any('user/login', array(
-	    "as" => "user.login",
-	    "uses" => "Auth\AuthController@postLogin"
-	));
-    
+        "as" => "user.login",
+        "uses" => "Auth\AuthController@postLogin"
+
+    ));
+    Route::any('/register', array(
+        "as" => "user.register",
+        "uses" => "Auth\AuthController@register"
+    ));
+    Route::any('/registerSave', array(
+        "as" => "registerSave",
+        "uses" => "UserController@registerSave"
+    ));
 });
 /* Routes accessible before logging in */
 Route::group(['middleware' => 'auth'], function(){
@@ -45,12 +52,37 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('authorization', 'AuthorizationController');
     //  Country controller
     Route::resource('country', 'CountryController');
+    /* Partner */
+    Route::resource('partner', 'PartnerController');
+    Route::any('/partner/dropdown', array(
+        "as"    =>  "partner.dropdown",
+        "uses"  =>  "CountryController@dropdown"
+    ));
+
+    Route::get('/partner/{id}/labs', array(
+        "as"    =>  "partner.partner/labs",
+        "uses"  =>  "PartnerController@partnerLabs"
+    ));
+    Route::post('add_partner_labs', array(
+        "as"    =>  "add_partner_labs",
+        "uses"  =>  "PartnerController@add_partner_labs"
+    ));
     //	User controller
     Route::resource('user', 'UserController');
     Route::get("/user/{id}/delete", array(
         "as"   => "user.delete",
         "uses" => "UserController@delete"
     ));
+     Route::get("/user/{id}/enable", array(
+        "as"   => "user.enable",
+        "uses" => "UserController@enable"
+    ));
+      Route::get("/user/{id}/reset_password", array(
+        "as"   => "user.reset_password",
+        "uses" => "UserController@reset_password"
+    ));
+    
+   
     //	Lab Levels controller
     Route::resource('labLevel', 'LabLevelController');
     Route::get("/labLevel/{id}/delete", array(
@@ -81,6 +113,7 @@ Route::group(['middleware' => 'auth'], function(){
         "as"   => "lab.select",
         "uses" => "LabController@select"
     ));
+    Route::get('search/autocomplete', 'LabController@autocomplete');
 
     //	Audit Types controller
     Route::resource('auditType', 'AuditTypeController');
@@ -106,6 +139,10 @@ Route::group(['middleware' => 'auth'], function(){
 
     //	Audits controller
     Route::resource('review', 'ReviewController');
+    Route::get("/review/{id}/delete", array(
+        "as"   => "review.delete",
+        "uses" => "ReviewController@delete"
+    ));
     //  Start an audit
     Route::any("assess", array(
         "as"   => "review.start",
@@ -173,6 +210,21 @@ Route::group(['middleware' => 'auth'], function(){
         "as"    =>  "report.index",
         "uses"  =>  "ReportController@index"
     ));
+    Route::any('/bar/{id}', array(
+        "as"    =>  "report.bar",
+        "uses"  =>  "ReportController@bar"
+    ));
+    Route::get('/faq',[
+        'as'=>'faqs',
+        'uses'=>'FaqController@index'
+    ]);
+
+    //  FaQs
+//    Route::get('faqs', function()
+//    {
+//        return view ('faq.show');
+//    });
+
 
     //  Export to excel
     Route::any('/review/{id}/export', array(
@@ -207,5 +259,9 @@ Route::group(['middleware' => 'auth'], function(){
     Route::any("report", array(
         "as"   => "review.report",
         "uses" => "ReviewController@assessments"
+    ));
+    Route::any("search", array(
+        "as"   => "home.search",
+        "uses" => "HomeController@search"
     ));
 });

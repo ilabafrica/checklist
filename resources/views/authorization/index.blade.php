@@ -65,7 +65,54 @@
                                         {!! Form::checkbox('userRoles['.$userKey.']['.$roleKey.']', '1', $user->hasRole($role->name),
                                         array('style'=>'display:none')) !!}
                                     @else
-                                       {!! Form::checkbox('userRoles['.$userKey.']['.$roleKey.']', '1', $user->hasRole($role->name)) !!}
+                                        @if($role->id == App\Models\Role::idByName('Country Admin'))
+                                            {!! Form::checkbox('userRoles['.$userKey.']['.$roleKey.']', '1', $user->hasRole($role->name), array('onclick' => "country('$user->id')")) !!}
+                                            @if($user->id != App\Models\User::getAdminUser()->id)
+                                                <br />
+                                                <div class="nchi{!! $user->id !!}" <?php if(!$user->hasRole('Country Admin')){ ?>style="display:none" <?php } ?>>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-8">
+                                                            {!! Form::select('country'.$user->id, array(''=>trans('messages.select-country'))+$countries, ($user->tier && $user->hasRole('Country Admin'))?$user->tier->tier:'', 
+                                                                array('class' => 'form-control', 'id' => 'country'.$user->id)) !!}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @elseif($role->id == App\Models\Role::idByName('Partner Admin'))
+                                            {!! Form::checkbox('userRoles['.$userKey.']['.$roleKey.']', '1', $user->hasRole($role->name), array('onclick' => "partner('$user->id')")) !!}
+                                            @if($user->id != App\Models\User::getAdminUser()->id)
+                                                <br />
+                                                <div class="form-group partner{!! $user->id !!}" <?php if(!$user->hasRole('Partner Admin')){ ?>style="display:none"<?php } ?>>
+                                                    <div class="col-sm-8">
+                                                        {!! Form::select('country_'.$user->id, array(''=>trans('messages.select-country'))+$countries, 
+                                                            ($user->tier&& $user->hasRole('Partner Admin'))?App\Models\Partner::find($user->tier->tier)->country->id:'', 
+                                                            array('class' => 'form-control', 'id' => 'country_'.$user->id, 'onchange' => "load('$user->id')")) !!}
+                                                    </div>
+                                                </div>
+                                                <div class="form-group partner{!! $user->id !!}" <?php if(!$user->hasRole('Partner Admin')){ ?>style="display:none"<?php } ?>>
+                                                    <div class="col-sm-8">
+                                                        {!! Form::select('partner'.$user->id, array(''=>trans('messages.select-partner'))+$partners, 
+                                                            ($user->tier&& $user->hasRole('Partner Admin'))?$user->tier->tier:'', 
+                                                            array('class' => 'form-control', 'id' => 'partner'.$user->id)) !!}
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        @elseif($role->id == App\Models\Role::idByName('Lab In-charge'))
+                                            {!! Form::checkbox('userRoles['.$userKey.']['.$roleKey.']', '1', $user->hasRole($role->name), array('onclick' => "lab('$user->id')")) !!}
+                                            @if($user->id != App\Models\User::getAdminUser()->id)
+                                            <br />
+                                            <div class="laboratory{!! $user->id !!}" <?php if(!$user->hasRole('Lab In-charge')){ ?>style="display:none" <?php } ?>>
+                                                <div class="form-group">
+                                                    <div class="col-sm-8">
+                                                        {!! Form::select('lab'.$user->id, array(''=>trans('messages.select'))+$labs, ($user->tier && $user->hasRole('Lab In-charge'))?$user->tier->tier:'', 
+                                                            array('class' => 'form-control', 'id' => 'lab'.$user->id)) !!}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @endif
+                                        @else
+                                            {!! Form::checkbox('userRoles['.$userKey.']['.$roleKey.']', '1', $user->hasRole($role->name)) !!}
+                                        @endif
                                     @endif
                                 </td>
                                 @empty
