@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth'], function(){
     //  Country controller
     Route::resource('country', 'CountryController');
     /* Partner */
+    Route::resource('analytics', 'DashboardController');
     Route::resource('partner', 'PartnerController');
     Route::any('/partner/dropdown', array(
         "as"    =>  "partner.dropdown",
