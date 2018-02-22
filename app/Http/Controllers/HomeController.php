@@ -40,8 +40,8 @@ class HomeController extends Controller {
 	{
 		$user = Auth::user();
 		$role = $user->roles()->first();
-		$all_labs = Lab::lists('name', 'id') ->toArray();
-		$all_assessment_types = Assessment::lists('name', 'id')->toArray();
+		$all_labs = Lab::lists('name', 'id') ;
+		$all_assessment_types = Assessment::lists('name', 'id');
 
 		//get all reviews for the admin
 		if ($role->name ==$user->isAdmin()) {
