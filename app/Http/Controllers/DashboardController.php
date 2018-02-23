@@ -27,12 +27,37 @@ class DashboardController extends Controller {
 		$labs = Lab::lists('name', 'id');
 		$assessments = Assessment::lists('name', 'id');
 		$sections = Section::lists('name', 'id');
-
+	
 		//reviews
 
 		//scores
 
 		return view('dashboard', compact('labs', 'assessments', 'sections'));
+	}
+
+	public function general_performance($assessment){	
+
+		$review = Review::find($id);
+		$categories = array();
+		$labels = array();
+		$overall = $review->auditType->sections->sum('total_points'); // total points that can be earned
+		$points = 0;
+		$score = 0;
+		$sections = $review->auditType->sections;
+		foreach($sections as $section){
+			if($section->total_points!=0)
+				array_push($categories, $section);
+			else
+				continue;
+		}
+		$counter = count($categories);
+		foreach($categories as $section){
+			// dd($section->id);
+			array_push($labels, $section->name);
+			$points+=(int)$section->subtotal($review->id);
+			$score+=(int)$section->subtotal($review->id, 1);
+		}
+		$average = $score*100/$overall;
 	}
 
 	/**

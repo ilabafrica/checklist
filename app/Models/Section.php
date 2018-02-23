@@ -124,12 +124,15 @@ class Section extends Model implements Revisionable{
 	{
 		$sum = 0;
 		$na = 0;
-		$rqs = Review::find($review)->rq;
+		$rqs = Review::find($review)->rq; //get review questions
 		foreach ($rqs as $rq) {
-			if(in_array($rq->question_id, $this->questions->lists('id')))
-				$sum+=(int)$rq->qs['audited_score'];
-			if($rq->na)
-				$na+=(int)$rq->na;
+			if(in_array($rq->question_id, $this->questions->lists('id'))) // check if the assessment questions match the questions table 
+				
+				$sum+=(int)$rq->qs['audited_score']; //get the audited score of each question from ReviewQScore
+			
+			if($rq->na)//check if the answer was Not Applicable in the review_questions table
+				
+				$na+=(int)$rq->na; //get how many NAs were answered
 		}
 		if($per)
 			return $sum;
