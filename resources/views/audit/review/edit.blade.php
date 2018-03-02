@@ -111,7 +111,7 @@
                                                         <input type="checkbox" name="assessors[]" value="{{ $value->id}}"
 
 
-                                                        {{ in_array($value->id, $review->assessors?$review->assessors->lists('id'):[])||$value->id==Auth::user()->id?"checked":"" }} 
+                                                        {{ in_array($value->id, $review->assessors?$review->assessors->lists('id')->toArray():[])||$value->id==Auth::user()->id?"checked":"" }}
                                                         
                                                         {{ $review->user_id == $value->id?"disabled='true'":"" }}
 
@@ -128,34 +128,34 @@
                             <div class="form-group">
                                 {!! Form::label('assessment_id', Lang::choice('messages.slmta-audit', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments,$slmta?$slmta->assessment_id:'', 
+                                    {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments->toArray(),$slmta?$slmta->assessment_id:'',
                                         array('class' => 'form-control validate[required]', 'id' => 'assessment_id')) !!}
                                 </div>
                             </div>
-                            <div class="form-group">
-                                {!! Form::label('tests-before-slmta', Lang::choice('messages.tests-before-slmta', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-before-slmta')) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('tests_before_slmta', $slmta?$slmta->tests_before_slmta:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'tests_before_slmta')) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('tests-this-year', Lang::choice('messages.tests-this-year', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-this-year')) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('tests_this_year', $slmta?$slmta->tests_this_year:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'tests_this_year')) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('cohort-id', Lang::choice('messages.cohort-id', 1), array('class' => 'col-sm-4 control-label', 'id' => 'cohort-id')) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('cohort_id', $slmta?$slmta->cohort_id:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'cohort_id')) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('slmta-lab-type', Lang::choice('messages.slmta-lab-type', 1), array('class' => 'col-sm-4 control-label', 'id' => 'slmta-lab-type')) !!}
-                                <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->labType->name !!}</p>
-                                </div>
-                            </div>
+                            {{--<div class="form-group">--}}
+                                {{--{!! Form::label('tests-before-slmta', Lang::choice('messages.tests-before-slmta', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-before-slmta')) !!}--}}
+                                {{--<div class="col-sm-6">--}}
+                                    {{--{!! Form::text('tests_before_slmta', $slmta?$slmta->tests_before_slmta:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'tests_before_slmta')) !!}--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="form-group">--}}
+                                {{--{!! Form::label('tests-this-year', Lang::choice('messages.tests-this-year', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-this-year')) !!}--}}
+                                {{--<div class="col-sm-6">--}}
+                                    {{--{!! Form::text('tests_this_year', $slmta?$slmta->tests_this_year:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'tests_this_year')) !!}--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="form-group">--}}
+                                {{--{!! Form::label('cohort-id', Lang::choice('messages.cohort-id', 1), array('class' => 'col-sm-4 control-label', 'id' => 'cohort-id')) !!}--}}
+                                {{--<div class="col-sm-6">--}}
+                                    {{--{!! Form::text('cohort_id', $slmta?$slmta->cohort_id:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'cohort_id')) !!}--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="form-group">--}}
+                                {{--{!! Form::label('slmta-lab-type', Lang::choice('messages.slmta-lab-type', 1), array('class' => 'col-sm-4 control-label', 'id' => 'slmta-lab-type')) !!}--}}
+                                {{--<div class="col-sm-6">--}}
+                                    {{--<p class="text-primary inline">{!! $lab->labType->name !!}</p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                             <div class="form-group">
                                 {!! Form::label('baseline-audit-date', Lang::choice('messages.baseline-audit-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
@@ -170,13 +170,13 @@
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                {!! Form::label('exit-audit-date', Lang::choice('messages.exit-audit-date', 1), array('class' => 'col-sm-4 control-label')) !!}
-                                <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                    {!! Form::text('exit_audit_date', $slmta?$slmta->exit_audit_date:'', array('class' => 'form-control')) !!}
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </div>
+                            {{--<div class="form-group">--}}
+                                {{--{!! Form::label('exit-audit-date', Lang::choice('messages.exit-audit-date', 1), array('class' => 'col-sm-4 control-label')) !!}--}}
+                                {{--<div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">--}}
+                                    {{--{!! Form::text('exit_audit_date', $slmta?$slmta->exit_audit_date:'', array('class' => 'form-control')) !!}--}}
+                                    {{--<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                             <div class="form-group">
                                 {!! Form::label('baseline-score', Lang::choice('messages.baseline-score', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
@@ -846,7 +846,7 @@
                 <div class="row">
                     <div class="col-sm-10">
                         <p>Ensure that you have filled in the SLMTA INFO first before proceeding to other sections.</p>
-                        <p>For the following fields, if you're not sure of the information just fill in 0 (numbers only):<br/> SLMTA Audit,<br/> Total Tests before SLMTA, <br/>Total tests this year, <br/>Cohort ID,<br/>Baseline Score, <br/>Exit Score and<br/> Score for Last Audit </p>
+                        {{--<p>For the following fields, if you're not sure of the information just fill in 0 (numbers only):<br/> SLMTA Audit,<br/> Total Tests before SLMTA, <br/>Total tests this year, <br/>Cohort ID,<br/>Baseline Score, <br/>Exit Score and<br/> Score for Last Audit </p>--}}
                         <p> For the following fields, if you're not sure of the information just leave them blank,<br/> Dates of baseline audit,<br/> SLMTA workshop #1, <br/>Exit audit performed and <br/>Date of Last Audit  </p>
 
                         <p><i>Ensure that the SLMTA Audit, Audit Start and Audit End Date are filled in.</i></p>
