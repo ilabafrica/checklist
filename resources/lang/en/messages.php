@@ -213,7 +213,7 @@ return [
 //	'cohort-id'	=>	'Cohort ID',
 //	'slmta-lab-type'	=>	'SLMTA Labtype',
 	'baseline-audit-date'	=>	'Date of baseline audit',
-	'slmta-workshop-date'	=>	'Date of SLMTA workshop #1',
+	'slmta-workshop-date'	=>	'Date of SLMTA workshop ',
 //	'exit-audit-date'	=>	'Date of exit audit performed',
 	'baseline-score'	=>	'Baseline Score',
 	'baseline-stars'	=>	'Stars obtained',

@@ -165,7 +165,12 @@
                             </div>
                             <div class="form-group">
                                 {!! Form::label('slmta-workshop-date', Lang::choice('messages.slmta-workshop-date', 1), array('class' => 'col-sm-4 control-label')) !!}
-                                <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
+                                {{--{!! Form::label('workshop_id', Lang::choice('messages.slmta-audit', 1), array('class' => 'col-sn-4 control-lable')) !!}--}}
+                                <div class="col-sm-2">
+                                    {!! Form::select('workshop_id', array(''=>trans('message.select'))+$workshops->toArray(),$slmta?$slmta->workshop_id:'',
+                                        array('class' => 'form-control validate[required]', 'id'=> 'workshop_id')) !!}
+                                </div>
+                                <div class="col-sm-4 form-group input-group input-append date datepicker" style="padding-left:15px;">
                                     {!! Form::text('slmta_workshop_date', $slmta?$slmta->slmta_workshop_date:'', array('class' => 'form-control')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
@@ -684,6 +689,17 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Hidden field for Workshop Number -->
+                        {!! Form::hidden('workshop_data', 1, array('id' => 'workshop_data')) !!}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-danger">
+                                    <div class="panel-body">
+                                        {!! Lang::choice('message.general-note', 1) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <h4>{{ $page->label }}</h4>
                         @if(count($page->questions)>0)
                             @foreach($page->questions as $question)
@@ -847,7 +863,7 @@
                     <div class="col-sm-10">
                         <p>Ensure that you have filled in the SLMTA INFO first before proceeding to other sections.</p>
                         {{--<p>For the following fields, if you're not sure of the information just fill in 0 (numbers only):<br/> SLMTA Audit,<br/> Total Tests before SLMTA, <br/>Total tests this year, <br/>Cohort ID,<br/>Baseline Score, <br/>Exit Score and<br/> Score for Last Audit </p>--}}
-                        <p> For the following fields, if you're not sure of the information just leave them blank,<br/> Dates of baseline audit,<br/> SLMTA workshop #1, <br/>Exit audit performed and <br/>Date of Last Audit  </p>
+                        <p> For the following fields, if you're not sure of the information just leave them blank,<br/> Dates of baseline audit,<br/> SLMTA workshop , <br/>Exit audit performed and <br/>Date of Last Audit  </p>
 
                         <p><i>Ensure that the SLMTA Audit, Audit Start and Audit End Date are filled in.</i></p>
                     </div>
@@ -867,6 +883,12 @@
         if ($("#assessment_id").val()=='') {
         $('#audit_type_check').modal('show');
     }
+    });
+
+    $(window).on('load', function(){
+        if ($("#workshop_id").val()==''){
+            $('#audit_type_check').modal('show')
+        }
     });
 
     jQuery(document).ready( function() {
