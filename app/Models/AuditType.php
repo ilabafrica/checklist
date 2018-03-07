@@ -4,6 +4,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Sofa\Revisionable\Laravel\RevisionableTrait; // trait
 use Sofa\Revisionable\Revisionable; // interface
+use DB;
 
 class AuditType extends Model implements Revisionable{
 	use SoftDeletes;
