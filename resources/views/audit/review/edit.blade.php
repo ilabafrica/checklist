@@ -167,7 +167,7 @@
                                 {!! Form::label('slmta-workshop-date', Lang::choice('messages.slmta-workshop-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 {{--{!! Form::label('workshop_id', Lang::choice('messages.slmta-audit', 1), array('class' => 'col-sn-4 control-lable')) !!}--}}
                                 <div class="col-sm-2">
-                                    {!! Form::select('workshop_id', array(''=>trans('message.select'))+$workshops->toArray(),$slmta?$slmta->workshop_id:'',
+                                    {!! Form::select('workshop_id', array(''=>trans('messages.select'))+$workshops->toArray(),$slmta?$slmta->workshop_id:'',
                                         array('class' => 'form-control validate[required]', 'id'=> 'workshop_id')) !!}
                                 </div>
                                 <div class="col-sm-4 form-group input-group input-append date datepicker" style="padding-left:15px;">
