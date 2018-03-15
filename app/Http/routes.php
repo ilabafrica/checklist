@@ -187,7 +187,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::resource('question', 'QuestionController');
 
     //	Audit data
-    Route::any("/result", array(
+    Route::any("/
+        ", array(
         "as"   => "audit.result",
         "uses" => "AuditController@result"
     ));
@@ -224,7 +225,11 @@ Route::group(['middleware' => 'auth'], function(){
 //    {
 //        return view ('faq.show');
 //    });
-
+    // eXPORT TO pdf
+    Route::any('/review/{id}/pdfexport',array(
+        "as"    =>  "report.pdf",
+        "uses"  =>   "ReportController@pdfexport"
+    ));
 
     //  Export to excel
     Route::any('/review/{id}/export', array(

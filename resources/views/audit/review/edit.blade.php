@@ -580,7 +580,7 @@
                                                         $summary = '';
                                                         foreach($audit->sections as $part)
                                                         {
-                                                            if(count(array_intersect($questions, $part->questions->lists('id')))>0)
+                                                            if(count(array_intersect($questions, $part->questions->lists('id')->toArray()))>0)
                                                             {
                                                                 $summary.="\n".$part->label."\n";
                                                                 foreach($notes as $note)
