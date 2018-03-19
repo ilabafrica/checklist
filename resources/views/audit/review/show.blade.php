@@ -301,13 +301,13 @@
                                                           <p>
                                                             <strong>{!! $part->label !!}</strong>
                                                             @foreach($notes as $note)
-                                                                @if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')))
+                                                                @if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')->toArray()))
                                                                     <br>{!! $note->note !!}
                                                                 @endif
                                                             @endforeach
                                                           </p>
                                                         @endif
-                                                    @endforeach</td>
+                                                    @endforeach</td>                                             
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.recommendations', 1) !!}</strong></td>
