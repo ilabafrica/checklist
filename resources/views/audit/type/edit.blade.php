@@ -63,7 +63,7 @@
                                     ?>
                                     <div class="col-md-3">
                                         <label  class="checkbox-inline">
-                                            <input type="checkbox" name="notes[]" value="{{ $value->id}}" 
+                                            <input type="checkbox" name="sections[]" value="{{ $value->id}}" 
                                             {{ in_array($value->id, $auditType->sections->lists('id'))?"checked":"" }} />
                                             {{$value->name }}
                                         </label>
