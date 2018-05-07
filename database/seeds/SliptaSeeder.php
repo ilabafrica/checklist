@@ -16,6 +16,7 @@ use App\Models\Note;
 use App\Models\Country;
 use App\Models\County;
 use App\Models\Lab;
+use App\Models\Workshop;
 class SliptaSeeder extends Seeder
 {
     public function run()
@@ -241,6 +242,18 @@ class SliptaSeeder extends Seeder
             Assessment::create($assessment);
         }
         $this->command->info('Assessments table seeded');
+
+        /* Workshops */
+        $workshops = array(
+            array("name" => "workshop #1", "description" => ""),
+            array("name" => "workshop #2", "description" => ""),
+            array("name" => "workshop #3", "description" => "")
+        );
+        foreach ($workshops as $workshop) {
+            Workshop::create($workshop);
+        }
+        $this->command->info('Workshops table seeded');
+
 
         /* Answers */
         $answer_yes = Answer::create(array("name" => "Yes", "description" => "Yes(Y)", "user_id" => "1"));

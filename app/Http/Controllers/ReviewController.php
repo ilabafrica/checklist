@@ -19,6 +19,7 @@ use App\Models\ReviewQAnswer;
 use App\Models\ReviewQScore;
 use App\Models\ReviewNote;
 use App\Models\ReviewActPlan;
+use App\Models\Workshop;
 use App\Http\Requests\UserListImport;
 use Auth;
 use Input;
@@ -60,6 +61,8 @@ class ReviewController extends Controller {
         $lab = Lab::find($review->lab_id);
         //	Get all SLMTA audit types
         $assessments = Assessment::lists('name', 'id');
+        //	Get all Workshop #
+        $workshops = Workshop::lists('name', 'id');
         //	Get all SLMTA audit stars
         $stars = array(Review::NOTAUDITED => Lang::choice('messages.not-audited', 1), Review::ZEROSTARS => Lang::choice('messages.zero-stars', 1), Review::ONESTAR => Lang::choice('messages.one-star', 1), Review::TWOSTARS => Lang::choice('messages.two-stars', 1), Review::THREESTARS => Lang::choice('messages.three-stars', 1), Review::FOURSTARS => Lang::choice('messages.four-stars', 1), Review::FIVESTARS => Lang::choice('messages.five-stars', 1));
         //	Get users - to be updated to pick auditors alone
@@ -80,6 +83,8 @@ class ReviewController extends Controller {
 
 		//	Get all SLMTA audit types
         $assessments = Assessment::lists('name', 'id');
+        //	Get all Workshop #
+        $workshops = Workshop::lists('name', 'id');
         //	Get all SLMTA audit stars
         $stars = array(Review::NOTAUDITED => Lang::choice('messages.not-audited', 1), Review::ZEROSTARS => Lang::choice('messages.zero-stars', 1), Review::ONESTAR => Lang::choice('messages.one-star', 1), Review::TWOSTARS => Lang::choice('messages.two-stars', 1), Review::THREESTARS => Lang::choice('messages.three-stars', 1), Review::FOURSTARS => Lang::choice('messages.four-stars', 1), Review::FIVESTARS => Lang::choice('messages.five-stars', 1));
 		//	Get values for creation of audit response
@@ -368,6 +373,8 @@ class ReviewController extends Controller {
         $lab = Lab::find($review->lab_id);
         //	Get all SLMTA audit types
         $assessments = Assessment::lists('name', 'id');
+        //	Get all Workshop #
+        $workshops = Workshop::lists('name', 'id');
         //	Get all SLMTA audit stars
         $stars = array(Review::NOTAUDITED => Lang::choice('messages.not-audited', 1), Review::ZEROSTARS => Lang::choice('messages.zero-stars', 1), Review::ONESTAR => Lang::choice('messages.one-star', 1), Review::TWOSTARS => Lang::choice('messages.two-stars', 1), Review::THREESTARS => Lang::choice('messages.three-stars', 1), Review::FOURSTARS => Lang::choice('messages.four-stars', 1), Review::FIVESTARS => Lang::choice('messages.five-stars', 1));
         //	Get users - to be updated to pick auditors alone
@@ -383,7 +390,8 @@ class ReviewController extends Controller {
 		foreach ($notes as $note) {
 			array_push($questions, ReviewQuestion::find($note->review_question_id)->question_id);
 		}
-		return view('audit.review.edit', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors', 'slmta', 'profile', 'notes', 'questions'));
+
+		return view('audit.review.edit', compact('audit', 'lab', 'page', 'review', 'assessments', 'stars', 'assessors', 'workshops','slmta', 'profile', 'notes', 'questions'));
 	}
 	/**
 	 * Update the specified resource in storage.

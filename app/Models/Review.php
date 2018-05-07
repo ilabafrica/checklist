@@ -64,6 +64,13 @@ class Review extends Model implements Revisionable{
 	{
 		return Assessment::find($id);
 	}
+    /**
+     * Relationship with workshop #
+     */
+    public function workshop($id)
+    {
+        return Workshop::find($id);
+    }
 	/**
 	 * Auditors relationship
 	 */
