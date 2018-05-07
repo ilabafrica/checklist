@@ -80,7 +80,7 @@ return [
 
 	'key' => env('APP_KEY', 'MP7boPOxobfjWhSGxyBO2PomFIhWEber'),
 
-	'cipher' => MCRYPT_RIJNDAEL_128,
+	'cipher' => 'AES-256-CBC',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -141,6 +141,8 @@ return [
 		'Laracasts\Flash\FlashServiceProvider',
 		'Maatwebsite\Excel\ExcelServiceProvider',
 		'Sofa\Revisionable\Laravel\ServiceProvider',
+		'Barryvdh\DomPDF\ServiceProvider',
+		'Barryvdh\Snappy\ServiceProvider',
 		/*
 		 * Application Service Providers...
 		 */
@@ -203,6 +205,8 @@ return [
         'Entrust' => 'Zizaco\Entrust\EntrustFacade',
         'Flash'	=>	'Laracasts\Flash\Flash',
         'Excel' => 'Maatwebsite\Excel\Facades\Excel',
+        'PDF' => 'Barryvdh\DomPDF\Facade',
+        'PDFS' => 'Barryvdh\Snappy\Facades\SnappyPdf',
 	],
 
 ];

@@ -1,31 +1,7 @@
-@extends("layout")
+@extends("pdflayout")
 @section("content")
 <br />
-<div class="row">
-    <div class="col-lg-12">
-        <ol class="breadcrumb">
-            <li>
-                <a href="{{ url('home') }}"><i class="fa fa-dashboard"></i> {{ Lang::choice('messages.dashboard', 1) }}</a>
-            </li>
-            <li>
-                <a href="{{ url('review') }}">{{ Lang::choice('messages.audit', 1) }}</a>
-            </li>            
-            <li class="active">{{ Lang::choice('messages.view', 1) }}</li>
-        </ol>
-    </div>
-</div>
-<div class="panel panel-primary">
-
-  <div class="panel-heading"><i class="fa fa-tags"></i> {{ Lang::choice('messages.audit', 1) }} <span class="panel-btn">
-  @if(Auth::user()->can('edit-audit'))
-  <a class="btn btn-sm btn-info" href="{{ URL::to("review/" . $review->id . "/edit") }}" >
-    <i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit-audit', 1) }}</span>
-  </a>
-  @endif
-  <a class="btn btn-sm btn-info" href="" onclick="window.history.back();return false;">
-        <i class="fa fa-reply"></i><span> {{ Lang::choice('messages.back', 1) }}</span>
-  </a>
-  </span></div>
+<div class="panel panel-primary">  
     <div class="panel-body">
         <!---------------------------------------------BEGINNING  OF QUESTIONS------------------------------------------------------------ -->
 
@@ -289,14 +265,8 @@
                                         <tbody>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.commendations', 1) !!}</strong></td>
-                                                <td>                                                    
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><strong>{!! Lang::choice('messages.challenges', 1) !!}</strong></td>
-                                                <!-- <td>{!! $review->summary_challenges?$review->summary_challenges:'' !!}</td> -->
                                                 <td>
-                                                @foreach($audit->sections as $part)
+                                                    @foreach($audit->sections as $part)
                                                         @if(count(array_intersect($questions, $part->questions->lists('id')->toArray()))>0)
                                                           <p>
                                                             <strong>{!! $part->label !!}</strong>
@@ -307,7 +277,12 @@
                                                             @endforeach
                                                           </p>
                                                         @endif
-                                                    @endforeach</td>                                             
+                                                    @endforeach
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>{!! Lang::choice('messages.challenges', 1) !!}</strong></td>
+                                                <td>{!! $review->summary_challenges?$review->summary_challenges:'' !!}</td>
                                             </tr>
                                             <tr>
                                                 <td><strong>{!! Lang::choice('messages.recommendations', 1) !!}</strong></td>
