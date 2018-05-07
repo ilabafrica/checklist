@@ -15,9 +15,12 @@ use App\Models\ReviewQAnswer;
 use App\Models\ReviewQScore;
 use App\Models\ReviewNote;
 use App\Models\ReviewActPlan;
+use App\Models\AuditType;
 use Lang;
 use Excel;
 use App;
+use PDF;
+use PDFS;
 
 use Illuminate\Http\Request;
 
@@ -381,6 +384,21 @@ class ReportController extends Controller {
 		    });
 
 		})->export('csv');
+	}
+	public function  pdfexport($id){
+		$review = Review::find($id);        
+		//	Get notes for main questions, sanitize and post to view
+		$notes = $review->notes($id);
+
+		$questions = [];
+		foreach ($notes as $note) {
+			array_push($questions, ReviewQuestion::find($note->review_question_id)->question_id);
+		}
+		//	Get audit type
+		$audit = AuditType::find($review->audit_type_id);
+		//Convert form to pdf		
+        $pdf = PDFS::loadView('pdfdownload.pdf',compact('review', 'audit', 'notes', 'questions'));        
+        return $pdf->download('pdf');
 	}
 }
 $excel = App::make('excel');

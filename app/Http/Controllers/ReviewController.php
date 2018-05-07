@@ -672,6 +672,16 @@ class ReviewController extends Controller {
 			$review->summary_challenges = Input::get('challenges');
 		if(Input::get('recommendations'))
 			$review->recommendations = Input::get('recommendations');
+		//Save nonconformities
+		if(Input::get('nonconformity'))
+			$review->nonconformity = Input::get('nonconformity');
+		if(Input::get('nonconformity_recommendation'))
+			$review->nonconformity_recommendation = Input::get('nonconformity_recommendation');
+		if(Input::get('iso'))
+			$review->iso = Input::get('iso');
+		if(Input::get('nonconformity_section'))
+			$review->nonconformity_section = Input::get('nonconformity_section');
+
 		$review->updated_at = date('Y-m-d H:i:s');
 		$review->save();
 	    //	Get variables ready for processing of new audit

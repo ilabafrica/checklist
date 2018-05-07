@@ -22,6 +22,10 @@
                 <span class="fa fa-external-link"></span>
                 {{ Lang::choice('messages.export-audit', 1) }}
             </a>
+            <a class="btn btn-sm btn-info" href="{{ URL::to("review/".$review->id."/pdfexport") }}" >
+                <span class="fa fa-external-link"></span>
+                {{ Lang::choice('messages.export-audit-pdf', 1) }}
+            </a>
             <a class="btn btn-sm btn-info" href="{{ URL::to("review/".$review->id."/non-compliance") }}" style="display:none">
                 <span class="fa fa-puzzle-piece"></span>
                 {{ Lang::choice('messages.non-compliance-report', 1) }}

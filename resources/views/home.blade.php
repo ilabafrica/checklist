@@ -129,8 +129,31 @@
                             <td>
                               <a href="{{ URL::to("review/" . $review->id) }}" class="btn btn-success btn-sm"><i class="fa fa-eye"></i><span> {{ Lang::choice('messages.view', 1) }}</span></a>
                               <a href="{{ URL::to("review/" . $review->id . "/edit") }}" class="btn btn-warning btn-sm"><i class="fa fa-edit"></i><span> {{ Lang::choice('messages.edit', 1) }}</span></a>
-                              <a href="{{ URL::to("review/" . $review->id . "/export") }}" class="btn btn-default btn-sm"><i class="fa fa-external-link"></i><span> {{ Lang::choice('messages.export-audit', 1) }}</span></a>
+                              <a class="btn btn-sm btn-default" role="button" data-toggle="modal" data-target="#modal-delete-{{ $review->id }}"><span class="fa fa-download"></span>{!! Lang::choice('messages.download-report', 1) !!}</a>
                               <a href="{{ URL::to("report/" . $review->id) }}" class="btn btn-info btn-sm"><i class="fa fa-bar-chart"></i><span> {{ Lang::choice('messages.run-reports', 1) }}</span></a>
+
+                              <!-- Download modal -->
+                            <div class="modal fade" id="modal-delete-{{ $review->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                             <div class="modal-dialog">  
+                                <div class="modal-content">                     
+                                    <div class="modal-header"> 
+                                    {!! Lang::choice('messages.export-document',1) !!}            
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> &times;</button>
+                                    </div>           
+                                    <div class="modal-body" style="text-align:center"> 
+                                        <a class="btn btn-sm btn-info" id="lab" href="{{ URL::to("review/".$review->id."/export") }}">
+                                        <span class="fa fa-external-link"  ></span>
+                                        {{ Lang::choice('messages.export-audit', 1) }}
+                                         </a>
+                                         <a class="btn btn-sm btn-info" href="{{ URL::to("review/".$review->id."/pdfexport") }}">
+                                        <span class="fa fa-external-link"></span>
+                                        {{ Lang::choice('messages.export-audit-pdf', 1) }}
+                                       </a>                    
+                                    </div> 
+                                 </div>                                           
+                                </div>
+                            </div>
+                            <!-- End of download modal -->
 
                               @if(Entrust::can('complete-audit'))
                               <a href="{{ URL::to("review/" . $review->id . "/complete") }}" class="btn btn-danger btn-sm"><i class="fa fa-check-square-o"></i><span> {{ Lang::choice('messages.mark-audit-complete', 1) }}</span></a>

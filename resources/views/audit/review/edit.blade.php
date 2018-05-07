@@ -111,6 +111,7 @@
                                                         <input type="checkbox" name="assessors[]" value="{{ $value->id}}"
 
 
+
                                                         {{ in_array($value->id, $review->assessors?$review->assessors->lists('id')->toArray():[])||$value->id==Auth::user()->id?"checked":"" }}
                                                         
                                                         {{ $review->user_id == $value->id?"disabled='true'":"" }}
@@ -128,6 +129,7 @@
                             <div class="form-group">
                                 {!! Form::label('assessment_id', Lang::choice('messages.slmta-audit', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
+
                                     {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments->toArray(),$slmta?$slmta->assessment_id:'',
                                         array('class' => 'form-control validate[required]', 'id' => 'assessment_id')) !!}
                                 </div>
@@ -580,26 +582,8 @@
                                         <div class="panel-heading">{!! Lang::choice('messages.commendations', 1) !!}</div>
                                         <div class="panel-body">
                                             <div class="form-group">
-                                                <div class="col-sm-12">
-                                                    <?php
-                                                        $summary = '';
-                                                        foreach($audit->sections as $part)
-                                                        {
-                                                            if(count(array_intersect($questions, $part->questions->lists('id')))>0)
-                                                            {
-                                                                $summary.="\n".$part->label."\n";
-                                                                foreach($notes as $note)
-                                                                {
-                                                                    if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')))
-                                                                    {
-                                                                        $summary.="\n".$note->note;
-                                                                    }
-                                                                }
-                                                            $summary.="\n";
-                                                            }
-                                                        }
-                                                    ?>
-                                                    {!! Form::textarea('commendations', html_entity_decode($summary), array('class' => 'form-control', 'rows' => '3')) !!}
+                                                <div class="col-sm-12">                                          
+                                                    {!! Form::textarea('commendations',$review->summary_commendations, array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -613,7 +597,25 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    {!! Form::textarea('challenges', $review->summary_challenges, array('class' => 'form-control', 'rows' => '3')) !!}
+                                                <?php
+                                                        $summary = '';
+                                                        foreach($audit->sections as $part)
+                                                        {
+                                                            if(count(array_intersect($questions, $part->questions->lists('id')->toArray()))>0)
+                                                            {
+                                                                $summary.="\n".$part->label."\n";
+                                                                foreach($notes as $note)
+                                                                {
+                                                                    if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')->toArray()))
+                                                                    {
+                                                                        $summary.="\n".$note->note;
+                                                                    }
+                                                                }
+                                                            $summary.="\n";
+                                                            }
+                                                        }
+                                                    ?>
+                                                    {!! Form::textarea('challenges',html_entity_decode($summary), array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -630,6 +632,37 @@
                                                     {!! Form::textarea('recommendations', $review->recommendations, array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             @elseif($page->name == 'Non-Conformance')
+                            <h4>{{ $page->label }}</h4>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">{!! Lang::choice('messages.nonconformance', 1) !!}</div>
+                                        <div class="panel-body">
+                                            <table class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <td><strong>{!! Lang::choice('messages.no', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.nonconformity', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.recommendations', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.iso', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.section', 1) !!}</strong></td>
+                                                        </tr>
+                                                    </thead>    
+                                                    <tbody id="nonconformance_{{$review->id}}">
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>{!! Form::text('nonconformity', '', array('class' => 'form-control',  'id' => 'nonconformity')) !!}</td>
+                                                                <td>{!! Form::text('nonconformity_recommendation', '', array('class' => 'form-control',  'id' => 'nonconformity_recommendation')) !!}</td>
+                                                                <td>{!! Form::text('iso', '', array('class' => 'form-control',  'id' => 'iso')) !!}</td>
+                                                                <td>{!! Form::text('nonconformity_section', '', array('class' => 'form-control',  'id' => 'nonconformity_section')) !!}</td>
+                                                                </tr>
+                                                    </tbody>
+                                                </table>
                                         </div>
                                     </div>
                                 </div>

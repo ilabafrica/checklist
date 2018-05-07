@@ -162,7 +162,7 @@ return [
 	'show-owners'	=>	'Show Owners',
 	'view-audit'	=>	'View Audit',
 	'edit-audit'	=>	'Edit Audit',
-	'export-audit'	=>	'Export Audit Data',
+	'export-audit'	=>	'Export to Excel',
 	'delete-audit'	=>	'Delete Audit',
 	'change-audit-state'	=>	'Change Audit State:',
 	'mark-audit-complete'	=>	'Mark Audit Complete',
@@ -180,6 +180,9 @@ return [
 	'selected-audit'	=>	'Selected Audit: ',
 	'non-compliant'	=>	'Non-Compliant',
 	'audit-status'	=>	'Complete|Incomplete',
+	'export-audit-pdf' => 'Export to PDF',
+	'download-report'  => 'Download Report',
+	'export-document' => 'Export Document',
 
 	/* Notes */
 	'note'	=>	'Note|Notes',
@@ -299,6 +302,8 @@ return [
 	'commendations'	=>	'Commendations',
 	'challenges'	=>	'Challenges',
 	'recommendations'	=>	'Recommendations',
+	/* Non-Conformance*/
+	'nonconformity' => 'Non-Conformity',
 	/* Action Plan */
 	'action-plan'	=>	'ACTION PLAN (if applicable)|Action Plan',
 	'follow-up-actions'	=>	'Follow-Up Actions',

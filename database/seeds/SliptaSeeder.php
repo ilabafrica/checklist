@@ -456,7 +456,8 @@ class SliptaSeeder extends Seeder
         $sec_sec12 = Section::create(array("name" => "Section 12", "label" => "12.0 FACILITIES & BIOSAFETY", "description" => "", "total_points" => "43", "order" => $sec_sec11->id, "user_id" => "1"));
         $sec_part3 = Section::create(array("name" => "Part III", "label" => "Part III", "description" => "", "total_points" => "0", "order" => 0, "user_id" => "1"));
         $sec_summary = Section::create(array("name" => "Summary", "label" => "PART III: SUMMARY OF AUDIT FINDINGS", "description" => "", "total_points" => "0", "order" => $sec_sec12->id, "user_id" => "1"));
-        $sec_actionP = Section::create(array("name" => "Action Plan", "label" => "ACTION PLAN (IF APPLICABLE)", "description" => "", "total_points" => "0", "order" => $sec_summary->id, "user_id" => "1"));
+        $sec_nonconformance = Section::create(array("name" => "Non-Conformance", "label" => "Non-Conformance", "description" => "", "total_points" => "0", "order" => $sec_summary->id, "user_id" => "1"));
+        $sec_actionP = Section::create(array("name" => "Action Plan", "label" => "ACTION PLAN (IF APPLICABLE)", "description" => "", "total_points" => "0", "order" => $sec_nonconformance->id, "user_id" => "1"));
         $sec_sliptaCert = Section::create(array("name" => "SLIPTA Certification", "label" => "Criteria for SLIPTA 5 star certification and accreditation of international standards)", "description" => "", "total_points" => "0", "order" => $sec_actionP->id, "user_id" => "1"));
         $this->command->info('Sections table seeded');
         /* audit-type-sections */
@@ -505,6 +506,8 @@ class SliptaSeeder extends Seeder
         DB::table('audit_type_sections')->insert(
             array("audit_type_id" => "1", "section_id" => $sec_summary->id));
         DB::table('audit_type_sections')->insert(
+            array("audit_type_id" => "1", "section_id" => $sec_nonconformance->id));
+        DB::table('audit_type_sections')->insert(
             array("audit_type_id" => "1", "section_id" => $sec_actionP->id));
         DB::table('audit_type_sections')->insert(
             array("audit_type_id" => "1", "section_id" => $sec_sliptaCert->id));
@@ -546,6 +549,8 @@ class SliptaSeeder extends Seeder
             array("section_id" => $sec_sec12->id, "parent_id" => $sec_part2->id));
         DB::table('section_parent_child')->insert(
             array("section_id" => $sec_summary->id, "parent_id" => $sec_part3->id));
+        DB::table('section_parent_child')->insert(
+            array("section_id" => $sec_nonconformance->id, "parent_id" => $sec_part3->id));        
         DB::table('section_parent_child')->insert(
             array("section_id" => $sec_actionP->id, "parent_id" => $sec_part3->id));
         DB::table('section_parent_child')->insert(

@@ -17,14 +17,14 @@
             <a class="btn btn-sm btn-info" href="{{ URL::to("lab") }}" >
                 <span class="glyphicon glyphicon-plus-sign"></span>
                 {{ Lang::choice('messages.create-audit', 1) }}
-            </a>
-            <a class="btn btn-sm btn-info" href="{{ URL::to("review/".$review->id."/export") }}" >
-                <span class="fa fa-external-link"></span>
-                {{ Lang::choice('messages.export-audit', 1) }}
-            </a>
+            </a>                        
             <a class="btn btn-sm btn-info" href="{{ URL::to("review/".$review->id."/non-compliance") }}" style="display:none">
                 <span class="fa fa-puzzle-piece"></span>
                 {{ Lang::choice('messages.non-compliance-report', 1) }}
+            </a>
+            <a class="btn btn-sm btn-info" data-toggle="modal" data-target=".export-data-modal">
+                 <span class="fa fa-download"></span> 
+                {!! Lang::choice('messages.download-report', 1) !!}
             </a>
             <a class="btn btn-sm btn-info" href="" onclick="window.history.back();return false;">
                 <i class="fa fa-reply"></i><span> {{ Lang::choice('messages.back', 1) }}</span>
@@ -80,6 +80,31 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+<!-- Download modal -->
+<div class="modal fade export-data-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">                     
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    &times;</button>
+                <h4 class="modal-title" id="myModalLabel">                    
+                    {!! Lang::choice('messages.export-document',1) !!}
+                    </span>
+                </h4>
+            </div>           
+            <div class="modal-body" style="text-align:center">                
+                <a class="btn btn-sm btn-info"  href="{{ URL::to("review/".$review->id."/export") }}">
+                <span class="fa fa-external-link"  ></span>
+                {{ Lang::choice('messages.export-audit', 1) }}
+                 </a>
+                 <a class="btn btn-sm btn-info" href="{{ URL::to("review/".$review->id."/pdfexport") }}">
+                <span class="fa fa-external-link"></span>
+                {{ Lang::choice('messages.export-audit-pdf', 1) }}
+               </a>
+            </div>        
         </div>
     </div>
 </div>
