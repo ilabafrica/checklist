@@ -299,6 +299,9 @@ return [
 	'commendations'	=>	'Commendations',
 	'challenges'	=>	'Challenges',
 	'recommendations'	=>	'Recommendations',
+	/* Nonconformance*/
+	'nonconformance' => 'Non-Conformance',
+	'iso' => 'ISO Clause',
 	/* Action Plan */
 	'action-plan'	=>	'ACTION PLAN (if applicable)|Action Plan',
 	'follow-up-actions'	=>	'Follow-Up Actions',
