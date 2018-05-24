@@ -19,9 +19,9 @@
         <div class="btn-group btn-breadcrumb">
             <a href="#" class="btn btn-sm btn-default" style="margin-bottom:5px;"><i class="fa fa-home"></i> {!! $audit->name !!}</a>
             @foreach($audit->sections as $section)
-                @if($section->order!=0)
+                <!-- @if($section->order!=0) -->
                     <a href="{{ URL::to('review/'.$review->id.'/edit/'.$section->id) }}" class="btn btn-sm {{ Request::segment(4)==$section->id?'btn-danger':'btn-default' }} btn-default" style="margin-bottom:5px;"><div>{!! $section->name !!}</div></a>
-                @endif
+                <!-- @endif -->
             @endforeach
         </div>
     </div>
@@ -660,6 +660,35 @@
                                                                 <td>{!! Form::text('nonconformity_recommendation', '', array('class' => 'form-control',  'id' => 'nonconformity_recommendation')) !!}</td>
                                                                 <td>{!! Form::text('iso', '', array('class' => 'form-control',  'id' => 'iso')) !!}</td>
                                                                 <td>{!! Form::text('nonconformity_section', '', array('class' => 'form-control',  'id' => 'nonconformity_section')) !!}</td>
+                                                                </tr>
+                                                    </tbody>
+                                                </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @elseif($page->name == 'Nonconformance')
+                            <h4>{{ $page->label }}</h4>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">{!! Lang::choice('messages.nonconformance', 1) !!}</div>
+                                        <div class="panel-body">
+                                            <table class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <td><strong>{!! Lang::choice('messages.no', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.nonconformance', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.iso', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.section', 1) !!}</strong></td>
+                                                        </tr>
+                                                    </thead>    
+                                                    <tbody id="nonconformance_{{$review->id}}">
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>{!! Form::text('person_'.$review->id, '', array('class' => 'form-control',  'id' => 'nonconformance_'.$review->id)) !!}</td>
+                                                                <td>{!! Form::text('timeline_'.$review->id, '', array('class' => 'form-control',  'id' => 'iso_'.$review->id)) !!}</td>
+                                                                <td>{!! Form::text('timeline_'.$review->id, '', array('class' => 'form-control',  'id' => 'section_'.$review->id)) !!}</td>
                                                                 </tr>
                                                     </tbody>
                                                 </table>
