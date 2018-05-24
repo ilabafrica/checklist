@@ -111,7 +111,8 @@
                                                         <input type="checkbox" name="assessors[]" value="{{ $value->id}}"
 
 
-                                                        {{ in_array($value->id, $review->assessors?$review->assessors->lists('id'):[])||$value->id==Auth::user()->id?"checked":"" }} 
+
+                                                        {{ in_array($value->id, $review->assessors?$review->assessors->lists('id')->toArray():[])||$value->id==Auth::user()->id?"checked":"" }}
                                                         
                                                         {{ $review->user_id == $value->id?"disabled='true'":"" }}
 
@@ -128,34 +129,35 @@
                             <div class="form-group">
                                 {!! Form::label('assessment_id', Lang::choice('messages.slmta-audit', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
-                                    {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments,$slmta?$slmta->assessment_id:'', 
+
+                                    {!! Form::select('assessment_id', array(''=>trans('messages.select'))+$assessments->toArray(),$slmta?$slmta->assessment_id:'',
                                         array('class' => 'form-control validate[required]', 'id' => 'assessment_id')) !!}
                                 </div>
                             </div>
-                            <div class="form-group">
-                                {!! Form::label('tests-before-slmta', Lang::choice('messages.tests-before-slmta', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-before-slmta')) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('tests_before_slmta', $slmta?$slmta->tests_before_slmta:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'tests_before_slmta')) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('tests-this-year', Lang::choice('messages.tests-this-year', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-this-year')) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('tests_this_year', $slmta?$slmta->tests_this_year:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'tests_this_year')) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('cohort-id', Lang::choice('messages.cohort-id', 1), array('class' => 'col-sm-4 control-label', 'id' => 'cohort-id')) !!}
-                                <div class="col-sm-6">
-                                    {!! Form::text('cohort_id', $slmta?$slmta->cohort_id:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'cohort_id')) !!}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                {!! Form::label('slmta-lab-type', Lang::choice('messages.slmta-lab-type', 1), array('class' => 'col-sm-4 control-label', 'id' => 'slmta-lab-type')) !!}
-                                <div class="col-sm-6">
-                                    <p class="text-primary inline">{!! $lab->labType->name !!}</p>
-                                </div>
-                            </div>
+                            {{--<div class="form-group">--}}
+                                {{--{!! Form::label('tests-before-slmta', Lang::choice('messages.tests-before-slmta', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-before-slmta')) !!}--}}
+                                {{--<div class="col-sm-6">--}}
+                                    {{--{!! Form::text('tests_before_slmta', $slmta?$slmta->tests_before_slmta:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'tests_before_slmta')) !!}--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="form-group">--}}
+                                {{--{!! Form::label('tests-this-year', Lang::choice('messages.tests-this-year', 1), array('class' => 'col-sm-4 control-label', 'id' => 'tests-this-year')) !!}--}}
+                                {{--<div class="col-sm-6">--}}
+                                    {{--{!! Form::text('tests_this_year', $slmta?$slmta->tests_this_year:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'tests_this_year')) !!}--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="form-group">--}}
+                                {{--{!! Form::label('cohort-id', Lang::choice('messages.cohort-id', 1), array('class' => 'col-sm-4 control-label', 'id' => 'cohort-id')) !!}--}}
+                                {{--<div class="col-sm-6">--}}
+                                    {{--{!! Form::text('cohort_id', $slmta?$slmta->cohort_id:'', array('class' => 'form-control validate[required,custom[integer]', 'id' => 'cohort_id')) !!}--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="form-group">--}}
+                                {{--{!! Form::label('slmta-lab-type', Lang::choice('messages.slmta-lab-type', 1), array('class' => 'col-sm-4 control-label', 'id' => 'slmta-lab-type')) !!}--}}
+                                {{--<div class="col-sm-6">--}}
+                                    {{--<p class="text-primary inline">{!! $lab->labType->name !!}</p>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                             <div class="form-group">
                                 {!! Form::label('baseline-audit-date', Lang::choice('messages.baseline-audit-date', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
@@ -165,18 +167,23 @@
                             </div>
                             <div class="form-group">
                                 {!! Form::label('slmta-workshop-date', Lang::choice('messages.slmta-workshop-date', 1), array('class' => 'col-sm-4 control-label')) !!}
-                                <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
+                                {{--{!! Form::label('workshop_id', Lang::choice('messages.slmta-audit', 1), array('class' => 'col-sn-4 control-lable')) !!}--}}
+                                <div class="col-sm-2">
+                                    {!! Form::select('workshop_id', array(''=>trans('messages.select'))+$workshops->toArray(),$slmta?$slmta->workshop_id:'',
+                                        array('class' => 'form-control validate[required]', 'id'=> 'workshop_id')) !!}
+                                </div>
+                                <div class="col-sm-4 form-group input-group input-append date datepicker" style="padding-left:15px;">
                                     {!! Form::text('slmta_workshop_date', $slmta?$slmta->slmta_workshop_date:'', array('class' => 'form-control')) !!}
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                {!! Form::label('exit-audit-date', Lang::choice('messages.exit-audit-date', 1), array('class' => 'col-sm-4 control-label')) !!}
-                                <div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">
-                                    {!! Form::text('exit_audit_date', $slmta?$slmta->exit_audit_date:'', array('class' => 'form-control')) !!}
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                            </div>
+                            {{--<div class="form-group">--}}
+                                {{--{!! Form::label('exit-audit-date', Lang::choice('messages.exit-audit-date', 1), array('class' => 'col-sm-4 control-label')) !!}--}}
+                                {{--<div class="col-sm-6 form-group input-group input-append date datepicker" style="padding-left:15px;">--}}
+                                    {{--{!! Form::text('exit_audit_date', $slmta?$slmta->exit_audit_date:'', array('class' => 'form-control')) !!}--}}
+                                    {{--<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
                             <div class="form-group">
                                 {!! Form::label('baseline-score', Lang::choice('messages.baseline-score', 1), array('class' => 'col-sm-4 control-label')) !!}
                                 <div class="col-sm-6">
@@ -575,26 +582,8 @@
                                         <div class="panel-heading">{!! Lang::choice('messages.commendations', 1) !!}</div>
                                         <div class="panel-body">
                                             <div class="form-group">
-                                                <div class="col-sm-12">
-                                                    <?php
-                                                        $summary = '';
-                                                        foreach($audit->sections as $part)
-                                                        {
-                                                            if(count(array_intersect($questions, $part->questions->lists('id')))>0)
-                                                            {
-                                                                $summary.="\n".$part->label."\n";
-                                                                foreach($notes as $note)
-                                                                {
-                                                                    if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')))
-                                                                    {
-                                                                        $summary.="\n".$note->note;
-                                                                    }
-                                                                }
-                                                            $summary.="\n";
-                                                            }
-                                                        }
-                                                    ?>
-                                                    {!! Form::textarea('commendations', html_entity_decode($summary), array('class' => 'form-control', 'rows' => '3')) !!}
+                                                <div class="col-sm-12">                                          
+                                                    {!! Form::textarea('commendations',$review->summary_commendations, array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -608,7 +597,25 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <div class="col-sm-12">
-                                                    {!! Form::textarea('challenges', $review->summary_challenges, array('class' => 'form-control', 'rows' => '3')) !!}
+                                                <?php
+                                                        $summary = '';
+                                                        foreach($audit->sections as $part)
+                                                        {
+                                                            if(count(array_intersect($questions, $part->questions->lists('id')->toArray()))>0)
+                                                            {
+                                                                $summary.="\n".$part->label."\n";
+                                                                foreach($notes as $note)
+                                                                {
+                                                                    if(in_array(App\Models\ReviewQuestion::find($note->review_question_id)->question_id, $part->questions->lists('id')->toArray()))
+                                                                    {
+                                                                        $summary.="\n".$note->note;
+                                                                    }
+                                                                }
+                                                            $summary.="\n";
+                                                            }
+                                                        }
+                                                    ?>
+                                                    {!! Form::textarea('challenges',html_entity_decode($summary), array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -625,6 +632,37 @@
                                                     {!! Form::textarea('recommendations', $review->recommendations, array('class' => 'form-control', 'rows' => '3')) !!}
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             @elseif($page->name == 'Non-Conformance')
+                            <h4>{{ $page->label }}</h4>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">{!! Lang::choice('messages.nonconformance', 1) !!}</div>
+                                        <div class="panel-body">
+                                            <table class="table table-striped table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <td><strong>{!! Lang::choice('messages.no', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.nonconformity', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.recommendations', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.iso', 1) !!}</strong></td>
+                                                            <td><strong>{!! Lang::choice('messages.section', 1) !!}</strong></td>
+                                                        </tr>
+                                                    </thead>    
+                                                    <tbody id="nonconformance_{{$review->id}}">
+                                                            <tr>
+                                                                <td></td>
+                                                                <td>{!! Form::text('nonconformity', '', array('class' => 'form-control',  'id' => 'nonconformity')) !!}</td>
+                                                                <td>{!! Form::text('nonconformity_recommendation', '', array('class' => 'form-control',  'id' => 'nonconformity_recommendation')) !!}</td>
+                                                                <td>{!! Form::text('iso', '', array('class' => 'form-control',  'id' => 'iso')) !!}</td>
+                                                                <td>{!! Form::text('nonconformity_section', '', array('class' => 'form-control',  'id' => 'nonconformity_section')) !!}</td>
+                                                                </tr>
+                                                    </tbody>
+                                                </table>
                                         </div>
                                     </div>
                                 </div>
@@ -709,6 +747,17 @@
                                 <div class="panel panel-default">
                                     <div class="panel-body">
                                         {!! Lang::choice('messages.general-note', 1) !!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Hidden field for Workshop Number -->
+                        {!! Form::hidden('workshop_data', 1, array('id' => 'workshop_data')) !!}
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="panel panel-danger">
+                                    <div class="panel-body">
+                                        {!! Lang::choice('message.general-note', 1) !!}
                                     </div>
                                 </div>
                             </div>
@@ -875,8 +924,8 @@
                 <div class="row">
                     <div class="col-sm-10">
                         <p>Ensure that you have filled in the SLMTA INFO first before proceeding to other sections.</p>
-                        <p>For the following fields, if you're not sure of the information just fill in 0 (numbers only):<br/> SLMTA Audit,<br/> Total Tests before SLMTA, <br/>Total tests this year, <br/>Cohort ID,<br/>Baseline Score, <br/>Exit Score and<br/> Score for Last Audit </p>
-                        <p> For the following fields, if you're not sure of the information just leave them blank,<br/> Dates of baseline audit,<br/> SLMTA workshop #1, <br/>Exit audit performed and <br/>Date of Last Audit  </p>
+                        {{--<p>For the following fields, if you're not sure of the information just fill in 0 (numbers only):<br/> SLMTA Audit,<br/> Total Tests before SLMTA, <br/>Total tests this year, <br/>Cohort ID,<br/>Baseline Score, <br/>Exit Score and<br/> Score for Last Audit </p>--}}
+                        <p> For the following fields, if you're not sure of the information just leave them blank,<br/> Dates of baseline audit,<br/> SLMTA workshop , <br/>Exit audit performed and <br/>Date of Last Audit  </p>
 
                         <p><i>Ensure that the SLMTA Audit, Audit Start and Audit End Date are filled in.</i></p>
                     </div>
@@ -896,6 +945,12 @@
         if ($("#assessment_id").val()=='') {
         $('#audit_type_check').modal('show');
     }
+    });
+
+    $(window).on('load', function(){
+        if ($("#workshop_id").val()==''){
+            $('#audit_type_check').modal('show')
+        }
     });
 
     jQuery(document).ready( function() {
